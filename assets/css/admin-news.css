@@ -5,3 +5,5 @@
 .stats small{display:block;font-size:11px;color:#64748b;margin-top:4px}.status{display:block;font-size:11px;font-style:normal;margin-top:3px}.status.normal{color:#64748b}.status.saved{color:#16794a}.status.restored{color:#8a5a00}.status.dirty{color:#b42318}.status.error{color:#b42318;font-weight:800}.image-warning{display:none!important;margin-top:8px!important;padding:8px 10px;border-radius:6px;background:#fff4e5;color:#9a5b00!important;line-height:1.5}.image-warning.show{display:block!important}
 
 .image-button-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.cms-status{display:flex;justify-content:space-between;gap:12px;align-items:center}.cms-status b{margin-right:10px}.cms-status #cmsStatus{font-weight:700}.cms-online{color:#087a3d}.cms-offline{color:#a65b00}

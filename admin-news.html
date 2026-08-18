@@ -11,20 +11,26 @@
 <body>
   <header class="admin-header">
     <div class="admin-wrap header-inner">
-      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.1.12</small></span></a>
+      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.2.0</small></span></a>
       <div class="header-actions">
         <button id="newBtn" class="btn primary" type="button">＋ 새 기사</button>
         <button id="exportBtn" class="btn gold" type="button">news.json 내려받기</button>
+        <button id="cmsLoginBtn" class="btn" type="button">관리자 로그인</button>
+        <button id="cmsPublishBtn" class="btn primary" type="button">온라인 발행</button>
       </div>
     </div>
   </header>
 
   <main class="admin-wrap admin-main">
     <section class="notice">
-      <strong>GitHub Pages용 안전 편집 방식</strong>
-      <p>이 페이지에서 기사를 작성·수정하면 브라우저에 <b>자동 임시저장</b>되어 새로고침 후에도 복원됩니다. 작업을 마친 뒤 <b>news.json 내려받기</b>를 누르세요. 새 사진은 브라우저에 함께 임시저장되어 새로고침 후에도 복원됩니다. 최종 작업 후 <b>이미지 파일 내려받기</b>도 함께 누른 뒤 GitHub의 같은 경로에 업로드하면 실제 사이트에 반영됩니다. 이 페이지 자체는 GitHub 저장소에 직접 쓰지 않습니다.</p>
+      <strong>온라인 편집국 CMS · v3.2.0</strong>
+      <p>기존 v3.1.12의 자동 임시저장·이미지 복원 기능을 그대로 유지하면서 <b>Supabase 온라인 발행</b>을 준비한 CMS 1단계입니다. Supabase 연결 전에는 기존 GitHub 방식으로 안전하게 동작하고, 연결 후에는 로그인한 관리자만 온라인 발행·수정·비공개·삭제를 사용할 수 있습니다.</p>
     </section>
 
+    <section class="cms-status cardbox">
+      <div><b>CMS 연결 상태</b><span id="cmsStatus">설정 확인 중…</span></div>
+      <small>Supabase 미연결 상태에서는 v3.1.12 방식(news.json + 이미지 업로드)이 그대로 작동합니다.</small>
+    </section>
     <section class="toolbar cardbox">
       <div>
         <label for="searchInput">기사 검색</label>
@@ -85,7 +91,7 @@
           <label>태그 <small>쉼표로 구분</small><input id="fTags" placeholder="태권검도, 무도, 교육"></label>
           <div class="form-grid three checks">
             <label><input id="fFeatured" type="checkbox"> 주요뉴스</label>
-            <label><input id="fPinned" type="checkbox"> TOP NEWS 고정</label>
+            <label><input id="fPinned" type="checkbox"> TOP NEWS 고정</label><label><input id="fPublished" type="checkbox" checked> 공개</label>
             <label>표시 스타일<select id="fVisualStyle"><option value="normal">일반</option><option value="top">TOP</option><option value="spotlight">스포트라이트</option><option value="breaking">속보 강조</option></select></label>
           </div>
           <div class="savebar">
