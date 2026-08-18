@@ -1,8 +1,10 @@
 // Global News24 v3.2.0 Supabase configuration
-// 아래 두 값을 Global News24용 Supabase 프로젝트 값으로 교체하세요.
-// 값이 비어 있으면 기존 GitHub/news.json 편집 방식으로 자동 작동합니다.
+// GLOBAL-NEWS24 전용 Supabase 프로젝트 연결
+// 브라우저에는 Publishable Key만 사용합니다.
+// Secret Key / service_role Key / Database Password는 절대 넣지 않습니다.
+
 window.GN24_SUPABASE = {
-  url: "",
-  anonKey: "",
+  url: "https://plqqowwdbgixtczzyanr.supabase.co",
+  anonKey: "sb_publishable_EnPEZ3d5-hXuJdb8Qrve3A_WB9gLcQy",
   bucket: "news-images"
 };
