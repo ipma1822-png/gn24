@@ -6,12 +6,12 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>기사 편집실 | Global News24</title>
   <link rel="icon" href="/assets/images/logos/gn24-icon.svg">
-  <link rel="stylesheet" href="/assets/css/admin-news.css?v=3.1.10">
+  <link rel="stylesheet" href="/assets/css/admin-news.css?v=3.1.11">
 </head>
 <body>
   <header class="admin-header">
     <div class="admin-wrap header-inner">
-      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.1.10</small></span></a>
+      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.1.11</small></span></a>
       <div class="header-actions">
         <button id="newBtn" class="btn primary" type="button">＋ 새 기사</button>
         <button id="exportBtn" class="btn gold" type="button">news.json 내려받기</button>
@@ -22,7 +22,7 @@
   <main class="admin-wrap admin-main">
     <section class="notice">
       <strong>GitHub Pages용 안전 편집 방식</strong>
-      <p>이 페이지에서 기사를 작성·수정·삭제한 뒤 <b>news.json 내려받기</b>를 누르세요. 새 사진이 있다면 <b>이미지 파일 내려받기</b>도 함께 누른 뒤 GitHub의 같은 경로에 업로드하면 실제 사이트에 반영됩니다. 이 페이지 자체는 GitHub 저장소에 직접 쓰지 않습니다.</p>
+      <p>이 페이지에서 기사를 작성·수정하면 브라우저에 <b>자동 임시저장</b>되어 새로고침 후에도 복원됩니다. 작업을 마친 뒤 <b>news.json 내려받기</b>를 누르세요. 새 사진이 있다면 <b>이미지 파일 내려받기</b>도 함께 누른 뒤 GitHub의 같은 경로에 업로드하면 실제 사이트에 반영됩니다. 이 페이지 자체는 GitHub 저장소에 직접 쓰지 않습니다.</p>
     </section>
 
     <section class="toolbar cardbox">
@@ -32,9 +32,9 @@
       </div>
       <div class="toolbar-actions">
         <label class="file-btn">news.json 불러오기<input id="importInput" type="file" accept="application/json,.json"></label>
-        <button id="restoreBtn" class="btn" type="button">사이트 원본 다시 불러오기</button>
+        <button id="restoreBtn" class="btn" type="button">임시편집본 초기화</button>
       </div>
-      <div class="stats"><b id="articleCount">0</b><span>기사</span><em id="dirtyState">원본 상태</em></div>
+      <div class="stats"><b id="articleCount">0</b><span>기사</span><em id="dirtyState" class="status normal">원본 상태</em><small id="draftInfo">임시편집본 확인 중</small></div>
     </section>
 
     <div class="admin-grid">
@@ -71,7 +71,7 @@
                 <label>새 이미지 선택<input id="imageInput" type="file" accept="image/*"></label>
                 <label>저장할 이미지 파일명<input id="imageFilename" placeholder="20260819-example.jpg"></label>
                 <button id="downloadImageBtn" class="btn" type="button" disabled>이미지 파일 내려받기</button>
-                <small>권장 업로드 위치: <code>assets/images/news/</code></small>
+                <small>권장 업로드 위치: <code>assets/images/news/</code></small><small id="imageRefreshWarning" class="image-warning">⚠ 새로 선택한 이미지 파일 자체는 새로고침 후 자동 복원되지 않습니다. 새로고침 전에 이미지 파일을 내려받거나 다시 선택해 주세요.</small>
               </div>
             </div>
             <label>사진 설명(캡션)<input id="fImageCaption" placeholder="▲ 사진 설명"></label>
@@ -97,9 +97,9 @@
     </div>
 
     <section class="help cardbox">
-      <h2>GitHub 반영 순서</h2>
+      <h2>자동 임시저장 + GitHub 반영 순서</h2>
       <ol>
-        <li>기사 작성·수정 후 <b>현재 기사 저장</b></li>
+        <li>기사 작성·수정 내용은 브라우저에 <b>자동 임시저장</b>됩니다. 새로고침해도 복원됩니다.</li><li>한 기사 편집을 마치면 <b>현재 기사 저장</b>을 눌러 편집본에 확정</li>
         <li>상단의 <b>news.json 내려받기</b></li>
         <li>새 사진이 있으면 <b>이미지 파일 내려받기</b></li>
         <li>GitHub에서 <code>data/news.json</code>을 새 파일로 교체</li>
@@ -108,6 +108,6 @@
       <p>기사 상세페이지·최신뉴스·카테고리 영역은 <code>news.json</code>을 읽기 때문에 반영 후 자동으로 갱신됩니다.</p>
     </section>
   </main>
-  <script src="/assets/js/news-admin.js?v=3.1.10"></script>
+  <script src="/assets/js/news-admin.js?v=3.1.11"></script>
 </body>
 </html>
