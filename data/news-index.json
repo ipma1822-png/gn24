@@ -5,8 +5,8 @@
     "subtitle": "PC·모바일 뉴스 접근성 강화… 디지털 뉴스룸 재정비와 함께 서비스 재개",
     "date": "2026-08-19",
     "category": "공지",
-    "summary": "Global News24가 2026년 8월 19일 홈페이지 전면 개편과 디지털 뉴스룸 재정비를 마치고 서비스를 새롭게 시작합니다.",
-    "image": "/assets/images/news/gn24-default-news.svg",
+    "summary": "Global News24가 2026년 8월 19일 홈페이지 전면 개편을 마치고 새 디지털 뉴스룸으로 서비스를 재개했다.",
+    "image": "/assets/images/news/gn24-20260819-reopen-homepage.jpg",
     "author": "Global News24 편집부",
     "sourceName": "Global News24",
     "sourceUrl": "",
@@ -16,6 +16,82 @@
       "서비스 재개",
       "디지털 뉴스룸",
       "공지"
+    ]
+  },
+  {
+    "id": "gn24-20260819-acts-renewal",
+    "title": "ACTS 선교연합, 홈페이지 고도화…온라인 교육·기도·선교지원 기능 강화",
+    "subtitle": "교육·자료·기도센터와 참여 기능을 한곳에…디지털 선교지원 플랫폼 구축",
+    "date": "2026-08-19",
+    "category": "공익",
+    "summary": "ACTS 선교연합이 홈페이지를 고도화하며 온라인 교육, 기도센터, 자료실, 참여·협력 기능을 중심으로 디지털 선교지원 플랫폼을 정비하고 있다.",
+    "image": "/assets/images/news/acts-homepage-update.jpg",
+    "author": "Global News24 편집부",
+    "sourceName": "ACTS 선교연합",
+    "sourceUrl": "https://acts.pe.kr",
+    "tags": [
+      "ACTS",
+      "선교연합",
+      "홈페이지 개편",
+      "온라인 교육",
+      "공익"
+    ]
+  },
+  {
+    "id": "gn24-20260819-taekwonkumdo-renewal",
+    "title": "세계태권검도연맹, 홈페이지 개편…수련·교육 콘텐츠 디지털화 확대",
+    "subtitle": "태권검도 교육·영상·회원 서비스를 하나의 플랫폼으로 연결",
+    "date": "2026-08-19",
+    "category": "무도·스포츠",
+    "summary": "세계태권검도연맹이 태권검도 수련과 교육 콘텐츠의 접근성을 높이기 위한 홈페이지 개편을 진행하고 있다.",
+    "image": "/assets/images/news/taekwonkumdo-homepage-update.jpg",
+    "author": "Global News24 편집부",
+    "sourceName": "세계태권검도연맹",
+    "sourceUrl": "https://ipma1822-png.github.io/taekwonkumdo/",
+    "tags": [
+      "태권검도",
+      "세계태권검도연맹",
+      "홈페이지 개편",
+      "무도",
+      "온라인 교육"
+    ]
+  },
+  {
+    "id": "gn24-20260819-ipma-renewal",
+    "title": "국제경찰무도연합회, 디지털 플랫폼 개편…교육·회원 네트워크 강화",
+    "subtitle": "경찰무도·호신술 교육과 국제 회원 서비스를 온라인으로 확대",
+    "date": "2026-08-19",
+    "category": "무도·스포츠",
+    "summary": "국제경찰무도연합회가 경찰무도와 호신술 교육, 국제 회원·지부 네트워크를 연결하는 디지털 플랫폼 개편을 추진하고 있다.",
+    "image": "/assets/images/news/ipma-homepage-update.jpg",
+    "author": "Global News24 편집부",
+    "sourceName": "국제경찰무도연합회",
+    "sourceUrl": "",
+    "tags": [
+      "국제경찰무도연합회",
+      "IPMA",
+      "경찰무도",
+      "호신술",
+      "홈페이지 개편"
+    ]
+  },
+  {
+    "id": "gn24-20260819-dronepatrol-renewal",
+    "title": "국제드론순찰대, 온라인 플랫폼 구축 본격화…안전·드론 공익활동 기반 마련",
+    "subtitle": "드론 기술과 지역 안전활동을 연결하는 디지털 네트워크 추진",
+    "date": "2026-08-19",
+    "category": "안전·드론",
+    "summary": "국제드론순찰대가 드론 기술을 활용한 지역 안전·공익활동과 전국 네트워크 구축을 지원하기 위한 온라인 플랫폼을 정비하고 있다.",
+    "image": "/assets/images/news/dronepatrol-homepage-update.jpg",
+    "author": "Global News24 편집부",
+    "sourceName": "국제드론순찰대",
+    "sourceUrl": "",
+    "tags": [
+      "국제드론순찰대",
+      "드론",
+      "안전",
+      "순찰",
+      "공익"
     ]
   },
   {
@@ -211,7 +287,7 @@
   },
   {
     "id": "gn24-001",
-    "title": "DOUBLE CROSS KOREA 제1기 공식지정도장 모집",
+    "title": "DOUBLE CROSS KOREA, 제1기 공식지정도장 50개 한정 선발 선언",
     "subtitle": "누구에게나 허락되지 않는다",
     "date": "2026-02-18",
     "category": "무도·스포츠",
@@ -223,56 +299,66 @@
     "tags": [
       "더블크로스",
       "공식지정도장",
+      "무도·스포츠",
       "교차원리"
     ]
   },
   {
     "id": "gn24-002",
-    "title": "글로벌 무도 네트워크 확장",
-    "subtitle": "51개국 협력 네트워크 구축",
-    "date": "2026-02-18",
-    "category": "무도·스포츠",
-    "summary": "글로벌 무도 네트워크가 확대되며 국제 협력 기반의 교육 및 교류가 활성화되고 있다.",
+    "title": "계명태권도, 11월 자심감캠프 개최",
+    "subtitle": "7년 전통의 리더십·효 교육 프로그램, 국제대회 가산점 인정",
+    "date": "2025-11-14",
+    "category": "청소년·문화",
+    "summary": "계명태권도장이 11월 14일부터 15일까지 7년째 이어지고 있는 자심감캠프를 개최한다. 이번 캠프는 협동심과 리더십, 효 교육을 함께 배우는 프로그램으로 국제대회 가산점과 디지털 수료증도 제공된다.",
     "image": "/assets/images/news/gn24-002.jpg",
     "author": "GN24",
-    "sourceName": "GN24",
-    "sourceUrl": "",
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr",
     "tags": [
-      "무도",
-      "국제"
+      "계명태권도",
+      "자심감캠프",
+      "청소년교육",
+      "리더십",
+      "효교육"
     ]
   },
   {
     "id": "gn24-003",
-    "title": "세계 안전 교육 프로그램 확대",
-    "subtitle": "국제 협력 교육 체계 구축",
-    "date": "2026-02-19",
-    "category": "교육",
-    "summary": "세계 안전 교육 프로그램이 확대되며 국제 협력 기반의 교육 체계가 구축되고 있다.",
+    "title": "국제경찰무도연합회 공식회원도장 모집",
+    "subtitle": "AI·호신술·무기술·출판·국제대회·언론시스템까지 한 번에 제공되는 국내 최강 멤버십",
+    "date": "2025-11-15",
+    "category": "무도·스포츠",
+    "summary": "국제경찰무도연합회(IPMA)가 공식 도장·지도자 회원 모집을 실시한다. 이번 모집은 AI, 실전호신술, 무기술, 국제대회, 출판, 언론 홍보, 블록체인 인증이 결합된 통합형 멤버십으로 주목받고 있다.",
     "image": "/assets/images/news/gn24-003.jpg",
     "author": "GN24",
-    "sourceName": "GN24",
-    "sourceUrl": "",
+    "sourceName": "국제경찰무도연합회",
+    "sourceUrl": "https://www.ipma.kr",
     "tags": [
-      "안전",
-      "교육"
+      "IPMA",
+      "국제경찰무도연합회",
+      "공식회원도장",
+      "호신술",
+      "태권검도",
+      "삼단봉"
     ]
   },
   {
     "id": "gn24-004",
-    "title": "DOUBLE CROSS KOREA 공식 프로그램 발표",
-    "subtitle": "교차원리 기반 무도 프로그램",
-    "date": "2026-02-20",
+    "title": "울산 개명태권도, 12월 12일 제9회 국제 마샬아츠 챔피언십 출전 준비 뜨겁게 달아오르다",
+    "subtitle": "유치부부터 초등부까지 전 세대가 하나 되어 도전",
+    "date": "2025-11-16",
     "category": "무도·스포츠",
-    "summary": "DOUBLE CROSS KOREA가 교차원리 기반 무도 프로그램을 공식 발표하며 새로운 무도 교육 체계를 제시했다.",
+    "summary": "울산 개명태권도가 12월 12일 개최되는 제9회 국제 마샬아츠 챔피언십을 앞두고 도장 전체가 열기로 가득 차 있다. 유치부부터 초등부까지 전 세대가 각자의 자리에서 수련에 몰입하며 대회를 준비하고 있다.",
     "image": "/assets/images/news/gn24-004.jpg",
     "author": "GN24",
-    "sourceName": "DOUBLE CROSS KOREA",
-    "sourceUrl": "https://doublecross.kr",
+    "sourceName": "계명태권도",
+    "sourceUrl": "https://news24.ai.kr",
     "tags": [
-      "더블크로스",
-      "무도",
-      "교육"
+      "개명태권도",
+      "국제마샬아츠챔피언십",
+      "대회준비",
+      "유치부",
+      "초등부"
     ]
   },
   {
