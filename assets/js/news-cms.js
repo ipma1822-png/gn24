@@ -34,12 +34,23 @@ async function refreshAuth(){
 }
 async function login(){
   if(currentSession){await sb.auth.signOut();return refreshAuth();}
-  const email=prompt('Global News24 관리자 이메일'); if(!email)return;
-  const password=prompt('관리자 비밀번호'); if(!password)return;
-  setStatus('로그인 확인 중…','busy');
-  const {error}=await sb.auth.signInWithPassword({email,password});
-  if(error){setStatus('로그인 실패','off',error.message);alert('로그인 실패: '+error.message);return;}
-  await refreshAuth();
+  const email=prompt('Global News24 관리자 이메일');
+  if(!email)return;
+  setStatus('로그인 링크 발송 중…','busy','이메일을 확인해 주세요.');
+  const redirectTo='https://news24.ai.kr/admin-news.html';
+  const {error}=await sb.auth.signInWithOtp({
+    email:email.trim(),
+    options:{emailRedirectTo:redirectTo,shouldCreateUser:false}
+  });
+  if(error){
+    const msg=String(error.message||'');
+    const friendly=/rate limit/i.test(msg)?'이메일 발송 제한에 걸렸습니다. 잠시 후 다시 한 번만 시도해 주세요.':msg;
+    setStatus('로그인 링크 발송 실패','off',friendly);
+    alert('로그인 링크 발송 실패: '+friendly);
+    return;
+  }
+  setStatus('로그인 링크 발송 완료','busy','Gmail에서 방금 받은 로그인 링크를 누르면 이 편집실로 돌아옵니다. 비밀번호는 필요하지 않습니다.');
+  alert('관리자 이메일로 로그인 링크를 보냈습니다.\n\nGmail에서 방금 받은 링크를 눌러주세요.\n비밀번호는 필요하지 않습니다.');
 }
 function formArticle(){
   const value=id=>$(id)?.value??'';

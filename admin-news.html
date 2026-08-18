@@ -11,11 +11,11 @@
 <body>
   <header class="admin-header">
     <div class="admin-wrap header-inner">
-      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.2.1</small></span></a>
+      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.2.2</small></span></a>
       <div class="header-actions">
         <button id="newBtn" class="btn primary" type="button">＋ 새 기사</button>
         <button id="exportBtn" class="btn gold" type="button">news.json 내려받기</button>
-        <button id="cmsLoginBtn" class="btn" type="button">관리자 로그인</button>
+        <button id="cmsLoginBtn" class="btn" type="button">이메일로 관리자 로그인</button>
         <button id="cmsPublishBtn" class="btn primary" type="button">온라인 저장·발행</button>
         <button id="cmsMigrateBtn" class="btn" type="button">기존 기사 DB 이관</button>
         <button id="cmsDeleteBtn" class="btn danger" type="button">온라인 삭제</button>
@@ -25,7 +25,7 @@
 
   <main class="admin-wrap admin-main">
     <section class="notice">
-      <strong>온라인 편집국 CMS · v3.2.1</strong>
+      <strong>온라인 편집국 CMS · v3.2.2</strong>
       <p>기존 v3.1.12의 자동 임시저장·이미지 복원 기능을 그대로 유지하면서 <b>Supabase와 <b>실제 저장</b>을 연결한 CMS 2단계입니다. 기존 자동 임시저장과 GitHub 백업 방식은 그대로 유지하면서, 등록된 관리자만 기사 DB 저장·공개/비공개·이미지 Storage 업로드·온라인 삭제를 사용할 수 있습니다.</p>
     </section>
 
@@ -105,10 +105,10 @@
     </div>
 
     <section class="help cardbox">
-      <h2>v3.2.1 온라인 편집국 사용 순서</h2>
+      <h2>v3.2.2 온라인 편집국 사용 순서</h2>
       <ol>
         <li>Supabase Authentication에서 관리자 계정을 만든 뒤 <code>gn24_admins</code>에 관리자 이메일을 등록합니다.</li>
-        <li><b>관리자 로그인</b> 후 상단 상태가 <b>온라인 연결 · 관리자 인증</b>으로 바뀌는지 확인합니다.</li>
+        <li><b>이메일로 관리자 로그인</b>을 누르고 관리자 이메일을 입력합니다. Gmail로 도착한 로그인 링크를 누르면 비밀번호 없이 편집실로 돌아옵니다.</li>
         <li>처음 한 번만 <b>기존 기사 DB 이관</b>을 눌러 현재 <code>data/news.json</code> 기사들을 Supabase로 복사할 수 있습니다.</li>
         <li>기사 작성·수정 후 <b>온라인 저장·발행</b>을 누르면 DB에 즉시 저장됩니다. 새 대표사진이 있으면 <code>news-images</code> Storage에도 함께 올라갑니다.</li>
         <li><b>공개</b> 체크를 해제하고 저장하면 비공개 상태로 저장됩니다.</li>
