@@ -3,3 +3,49 @@
 @keyframes pulse{50%{opacity:.45}}@keyframes shine{0%,55%{left:-55%}75%,100%{left:125%}}@keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 @media(max-width:900px){.utility-top,.mast-center,.searchbox,.iconbtn span{display:none}.wrap{width:min(100% - 24px,var(--wrap))}.site-header{position:sticky}.mast{height:76px}.brand{min-width:0}.brand img{width:42px;height:42px}.brand b{font-size:21px}.brand small{font-size:11px}.tools{margin-left:auto}.iconbtn{display:block;font-size:22px;padding:7px 11px}.primary-nav{overflow:visible}.nav-scroll{width:100%;overflow-x:auto;scrollbar-width:none}.nav-scroll::-webkit-scrollbar{display:none}.nav-link,.nav-btn{padding:13px 14px;font-size:15px}.has-mega:hover .mega{display:none}.nav-item.open .mega{display:block;position:fixed;left:12px;right:12px;top:132px;width:auto;max-height:calc(100vh - 150px);overflow:auto;border-radius:0 0 12px 12px;z-index:90}.mega-head span{display:block;margin-top:5px}.mega-links{grid-template-columns:1fr 1fr}.utility-panel{position:fixed;top:76px;left:0;right:0;z-index:100}.utility-grid{grid-template-columns:1fr 1fr}.breaking-inner{height:36px}.breaking a{display:none}.lead-layout{grid-template-columns:1fr;gap:18px;padding-top:16px}.lead-media{height:230px}.lead-copy{padding:14px 15px}.lead-copy h1{font-size:24px}.lead-copy p{font-size:14px}.ranking{padding:0}.ranking a{padding:10px 2px}.section{padding-top:24px;padding-bottom:24px}.section-head h2{font-size:21px}.thumb-grid{grid-template-columns:1fr 1fr;gap:10px}.news-card .thumb{height:120px}.news-card .body{padding:11px}.news-card h3{font-size:15px;margin:7px 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.spotlight:after{height:120px}.quick-grid{display:flex;overflow-x:auto}.quick-grid a{min-width:145px;padding:15px}.news-columns{grid-template-columns:1fr;gap:22px}.latest-list{grid-template-columns:1fr}.latest-row{grid-template-columns:115px 1fr;padding:10px 0}.latest-row .thumb{height:76px}.latest-row h3{font-size:15px}.attention-panel{padding:14px}.beats{grid-template-columns:1fr;gap:18px}.media-grid{grid-template-columns:1fr 1fr}.media-grid a{padding:20px 16px;border-bottom:1px solid var(--line)}.footer-grid{grid-template-columns:1fr;padding:28px 0}.footer-links{justify-content:flex-start;flex-wrap:wrap;gap:12px 18px}.footer-bottom{display:block}.footer-bottom small{display:block;margin:4px 0}.article-row,.item{grid-template-columns:110px 1fr;gap:12px}.article-row .thumb,.item .thumb{height:76px}.article-row h3,.item h3,.it-title{font-size:16px}.article-hero,#aHero{min-height:240px}}
 @media(max-width:420px){.brand b{font-size:19px}.nav-link,.nav-btn{font-size:14px;padding:12px}.lead-media{height:205px}.thumb-grid{gap:8px}.news-card .thumb{height:105px}.news-card h3{font-size:14px}.media-grid{grid-template-columns:1fr 1fr}.media-grid b{font-size:17px}}
+
+
+/* ===== Global News24 v3.1 responsive refinement ===== */
+@media (min-width:901px){
+  :root{--wrap:1320px}
+  .mast{height:92px}
+  .lead-layout{grid-template-columns:minmax(0,2.15fr) minmax(300px,.85fr)}
+  .lead-media{height:360px}
+  .thumb-grid{gap:18px}
+  .news-card .thumb{height:190px}
+}
+@media (max-width:900px){
+  .mast{height:68px}
+  .brand{gap:10px}
+  .brand img{width:40px;height:40px}
+  .brand b{font-size:20px;line-height:1.1}
+  .brand small{font-size:10px;margin-top:3px}
+  .iconbtn{font-size:20px;padding:6px 10px}
+  .nav-item.open .mega{top:124px;max-height:calc(100vh - 140px)}
+  .nav-link,.nav-btn{padding:11px 12px;font-size:14px}
+  .breaking-inner{height:34px}
+  .lead-layout{padding-top:14px}
+  .lead-media{height:190px;background-position:center}
+  .lead-copy{padding:13px 14px 14px}
+  .lead-copy h1{font-size:23px;line-height:1.28;margin:.35em 0}
+  .lead-copy p{font-size:13px;line-height:1.55}
+  .section{padding-top:22px;padding-bottom:22px}
+  .thumb-grid{gap:10px}
+  .news-card .thumb{height:108px}
+  .news-card .body{padding:10px 11px 12px}
+  .news-card h3{font-size:14px;line-height:1.42}
+  .latest-row{grid-template-columns:105px 1fr;gap:12px;padding:9px 0}
+  .latest-row .thumb{height:72px}
+  .media-grid a{min-height:128px}
+}
+@media (max-width:420px){
+  .mast{height:64px}
+  .brand img{width:38px;height:38px}
+  .brand b{font-size:18px}
+  .nav-link,.nav-btn{font-size:13.5px;padding:10px 11px}
+  .nav-item.open .mega{top:116px}
+  .lead-media{height:176px}
+  .lead-copy h1{font-size:21px}
+  .news-card .thumb{height:100px}
+  .latest-row{grid-template-columns:98px 1fr}
+}
