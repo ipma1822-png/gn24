@@ -13,7 +13,7 @@ async function loadNewsroom(){const list=$('#articleList');if(!list)return;let d
 async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id'),data=await getJSON('/data/news.json'),a=data.find(x=>x.id===id)||data[0];if(!a)return;document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(a.author||'편집부')}</span><span>Global News24</span>`;if(a.image)$('#aHero').style.backgroundImage=`url('${a.image}')`;const body=Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[a.summary||'']);$('#aBody').innerHTML=body.map(p=>`<p>${esc(p)}</p>`).join('');$('#aSource')&&($('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`)}
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
 
-// v3.1.2: mobile hamburger contains real accordion mega menus.
+// v3.1.3: mobile hamburger contains real accordion mega menus.
 document.addEventListener('DOMContentLoaded',()=>{
   const panel=document.querySelector('#utilityPanel .utility-grid');
   if(!panel) return;

@@ -70,7 +70,7 @@
 @media(max-width:420px){.utility-panel{top:64px}.article-shell h1{font-size:26px}.utility-grid,.mobile-menu-links{grid-template-columns:1fr 1fr}}
 
 
-/* ===== Global News24 v3.1.2 mobile accordion mega menu ===== */
+/* ===== Global News24 v3.1.3 mobile accordion mega menu ===== */
 .mobile-mega-wrap{display:none}
 @media(max-width:900px){
   .mobile-menu-title,.mobile-menu-links{display:none!important}
@@ -98,3 +98,7 @@
   .mobile-mega-trigger b{font-size:16px}
   .mobile-mega-panel{grid-template-columns:1fr 1fr}
 }
+
+/* ===== v3.1.3: horizontal mega menu stays visible on mobile ===== */
+@media(max-width:900px){.primary-nav{display:block!important;overflow:visible;background:#fff;position:relative;z-index:80}.primary-nav .nav-scroll{width:100%;display:flex;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 4px}.primary-nav .nav-scroll::-webkit-scrollbar{display:none}.primary-nav .nav-item{flex:0 0 auto;position:static}.primary-nav .nav-link,.primary-nav .nav-btn{font-size:14px;padding:11px 12px;min-height:44px}.primary-nav .nav-item.open .mega{display:block;position:fixed;left:8px;right:8px;top:112px;width:auto;max-height:calc(100vh - 128px);overflow:auto;border-radius:0 0 10px 10px;z-index:140}.primary-nav .mega-links{grid-template-columns:1fr 1fr}.utility-panel{top:68px;z-index:160}}
+@media(max-width:420px){.primary-nav .nav-link,.primary-nav .nav-btn{font-size:13.5px;padding:10px 11px}.primary-nav .nav-item.open .mega{top:108px;left:6px;right:6px;max-height:calc(100vh - 122px)}}
