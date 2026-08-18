@@ -70,3 +70,17 @@ document.addEventListener('DOMContentLoaded',()=>{
   panel.prepend(wrap);
   document.querySelectorAll('.brand small').forEach(el=>el.textContent='글로벌뉴스24');
 });
+
+// v3.1.5: hint that the horizontal mobile menu continues to the right.
+document.addEventListener('DOMContentLoaded',()=>{
+  const nav=document.querySelector('.primary-nav');
+  const scroller=nav?.querySelector('.nav-scroll');
+  if(!nav||!scroller) return;
+  const updateHint=()=>{
+    const atEnd=scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 8;
+    nav.classList.toggle('nav-at-end',atEnd);
+  };
+  scroller.addEventListener('scroll',updateHint,{passive:true});
+  window.addEventListener('resize',updateHint);
+  updateHint();
+});

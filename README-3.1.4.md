@@ -1,4 +1,4 @@
-# Global News24 v3.1.4
+# Global News24 v3.1.5
 
 - 모든 페이지의 상단 메뉴를 동일한 최종 메뉴로 통일
 - PC: 가로 메뉴 + hover mega menu + hamburger

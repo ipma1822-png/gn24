@@ -121,3 +121,12 @@
   .primary-nav .nav-link,.primary-nav .nav-btn{height:44px!important;padding:0 11px!important;font-size:13.5px!important}
   .primary-nav .nav-item.open .mega{top:116px!important;left:6px!important;right:6px!important;max-height:calc(100vh - 130px)!important}
 }
+
+/* ===== Global News24 v3.1.5 mobile nav discoverability ===== */
+@media(max-width:900px){
+  .primary-nav{position:relative}
+  .primary-nav:after{content:'›';position:absolute;right:0;top:0;width:34px;height:46px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;font-size:25px;font-weight:400;color:var(--gold);pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 48%,#fff 100%);transition:opacity .2s}
+  .primary-nav.nav-at-end:after{opacity:0}
+  .primary-nav .nav-scroll{padding-right:34px!important}
+}
+@media(max-width:420px){.primary-nav:after{height:44px}}
