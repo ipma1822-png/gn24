@@ -1,87 +1,12 @@
-(function () {
-  "use strict";
 
-  const menuBtn = document.getElementById("menuBtn");
-  const menuPanel = document.getElementById("menuPanel");
-  const todayEl = document.getElementById("today");
-
-  if (todayEl) {
-    const d = new Date();
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    todayEl.textContent = `${yyyy}.${mm}.${dd}`;
-  }
-
-  if (menuBtn && menuPanel) {
-    menuBtn.addEventListener("click", function () {
-      const isHidden = menuPanel.hasAttribute("hidden");
-
-      if (isHidden) {
-        menuPanel.removeAttribute("hidden");
-        menuBtn.setAttribute("aria-expanded", "true");
-      } else {
-        menuPanel.setAttribute("hidden", "");
-        menuBtn.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    document.addEventListener("click", function (e) {
-      const clickedInsideMenu = menuPanel.contains(e.target);
-      const clickedButton = menuBtn.contains(e.target);
-
-      if (!clickedInsideMenu && !clickedButton && !menuPanel.hasAttribute("hidden")) {
-        menuPanel.setAttribute("hidden", "");
-        menuBtn.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  const navLinks = document.querySelectorAll(".nav-link");
-  const currentUrl = new URL(window.location.href);
-  const currentPath = currentUrl.pathname;
-  const currentCat = currentUrl.searchParams.get("cat");
-
-  navLinks.forEach((link) => {
-    try {
-      const linkUrl = new URL(link.href, window.location.origin);
-      const linkPath = linkUrl.pathname;
-      const linkCat = linkUrl.searchParams.get("cat");
-
-      if (currentPath === linkPath) {
-        if (!currentCat && !linkCat) {
-          link.classList.add("is-active");
-        }
-        if (currentCat && linkCat && currentCat === linkCat) {
-          link.classList.add("is-active");
-        }
-      }
-    } catch (err) {
-      console.warn("nav parse error:", err);
-    }
-  });
-
-  window.GN24 = window.GN24 || {};
-
-  window.GN24.fetchJSON = async function (path) {
-    const res = await fetch(path, { cache: "no-store" });
-    if (!res.ok) {
-      throw new Error(`데이터를 불러오지 못했습니다: ${path}`);
-    }
-    return res.json();
-  };
-
-  window.GN24.escapeHtml = function (str) {
-    return String(str ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  };
-
-  window.GN24.formatDate = function (value) {
-    if (!value) return "";
-    return String(value).replaceAll("-", ".");
-  };
-})();
+const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>[...p.querySelectorAll(s)];
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmt(d){if(!d)return'';return d.replaceAll('-','.')} 
+async function getJSON(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw Error(path);return r.json()}
+function articleURL(id){return `/pages/article/?id=${encodeURIComponent(id)}`}
+function setupNav(){const util=$('#utilityBtn'), panel=$('#utilityPanel');if(util&&panel)util.onclick=()=>{panel.classList.toggle('open');util.setAttribute('aria-expanded',panel.classList.contains('open'))};$$('.nav-btn').forEach(btn=>btn.addEventListener('click',e=>{if(innerWidth<=900){e.preventDefault();const item=btn.closest('.nav-item');$$('.nav-item.open').filter(x=>x!==item).forEach(x=>x.classList.remove('open'));item.classList.toggle('open')}}));document.addEventListener('click',e=>{if(innerWidth<=900&&!e.target.closest('.nav-item'))$$('.nav-item.open').forEach(x=>x.classList.remove('open'))})}
+function card(a,i=0){const style=a.visualStyle||((i===0)?'top':'normal');const cls=style==='top'?'shine':style==='breaking'?'breaking-card':'';const img=a.image?`style="background-image:url('${esc(a.image)}')"`:'';return `<a class="news-card ${cls}" href="${articleURL(a.id)}"><div class="thumb" ${img}></div><div class="body"><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="muted">${esc(fmt(a.date))}</div></div></a>`}
+async function loadHome(){const target=$('#homeNews'); if(!target)return; const data=await getJSON('/data/news.json'); target.innerHTML=data.slice(0,8).map(card).join(''); const lead=data[0]; if(lead){$('#leadTitle').textContent=lead.title;$('#leadSummary').textContent=lead.summary||'';$('#leadMeta').textContent=`${lead.category} · ${fmt(lead.date)}`;$('#leadLink').href=articleURL(lead.id); if(lead.image)$('#leadMedia').style.backgroundImage=`url('${lead.image}')`;} $('#breakingText').textContent=(data.find(x=>x.visualStyle==='breaking')||data[1]||data[0]).title }
+async function loadNewsroom(){const list=$('#articleList');if(!list)return;let data=await getJSON('/data/news.json');const q=new URLSearchParams(location.search);const cat=q.get('cat');const term=(q.get('q')||'').trim().toLowerCase();if(cat)data=data.filter(x=>x.category===cat);if(term)data=data.filter(x=>(x.title+' '+(x.summary||'')+' '+(x.tags||[]).join(' ')).toLowerCase().includes(term));list.innerHTML=data.map(a=>`<a class="article-row" href="${articleURL(a.id)}"><div class="thumb" ${a.image?`style="background-image:url('${esc(a.image)}')"`:''}></div><div class="body"><span class="badge">${esc(a.category)}</span><h3>${esc(a.title)}</h3><div class="muted">${esc(fmt(a.date))} · ${esc(a.author||'편집부')}</div><p>${esc(a.summary||'')}</p></div></a>`).join('')||'<p>해당 조건의 기사가 없습니다.</p>';}
+async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id');const data=await getJSON('/data/news.json');const a=data.find(x=>x.id===id)||data[0];document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(a.author||'편집부')}</span><span>Global News24</span>`;if(a.image)$('#aHero').style.backgroundImage=`url('${a.image}')`;$('#aBody').innerHTML=(a.content||a.body||[a.summary]).map(p=>`<p>${esc(p)}</p>`).join('');$('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`;}
+document.addEventListener('DOMContentLoaded',()=>{setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})

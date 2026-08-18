@@ -10,7 +10,12 @@
     "author": "GN24",
     "sourceName": "DOUBLE CROSS KOREA",
     "sourceUrl": "https://doublecross.kr",
-    "tags": ["더블크로스", "공식지정도장", "무도·스포츠", "교차원리"],
+    "tags": [
+      "더블크로스",
+      "공식지정도장",
+      "무도·스포츠",
+      "교차원리"
+    ],
     "content": [
       "DOUBLE CROSS KOREA가 2026년 상반기 제1기 공식지정도장 50개를 한정 선발한다고 공식 발표했다.",
       "이번 모집은 일반적인 프로그램 확산 방식과는 다르다.",
@@ -27,7 +32,9 @@
     ],
     "linkLabel": "공식 홈페이지 바로가기",
     "linkUrl": "https://doublecross.kr",
-    "featured": true
+    "featured": true,
+    "visualStyle": "top",
+    "relatedOrgs": []
   },
   {
     "id": "gn24-002",
@@ -40,7 +47,13 @@
     "author": "GN24",
     "sourceName": "Global News24",
     "sourceUrl": "https://news24.ai.kr",
-    "tags": ["계명태권도", "자심감캠프", "청소년교육", "리더십", "효교육"],
+    "tags": [
+      "계명태권도",
+      "자심감캠프",
+      "청소년교육",
+      "리더십",
+      "효교육"
+    ],
     "content": [
       "계명태권도장은 11월 14일 금요일 오후 8시부터 15일 토요일 오전 9시까지 7년째 이어지고 있는 전통 있는 행사인 '11월 자심감캠프'를 개최한다.",
       "이번 캠프는 보이스카우트의 창립 정신과 기원을 배우고 협동심과 리더십을 기르는 프로그램으로, 매월 한 차례 정기적으로 진행되고 있다.",
@@ -56,7 +69,11 @@
     ],
     "linkLabel": "관련 안내",
     "linkUrl": "https://news24.ai.kr",
-    "featured": false
+    "featured": false,
+    "visualStyle": "breaking",
+    "relatedOrgs": [
+      "태권검도"
+    ]
   },
   {
     "id": "gn24-003",
@@ -69,7 +86,14 @@
     "author": "GN24",
     "sourceName": "국제경찰무도연합회",
     "sourceUrl": "https://www.ipma.kr",
-    "tags": ["IPMA", "국제경찰무도연합회", "공식회원도장", "호신술", "태권검도", "삼단봉"],
+    "tags": [
+      "IPMA",
+      "국제경찰무도연합회",
+      "공식회원도장",
+      "호신술",
+      "태권검도",
+      "삼단봉"
+    ],
     "content": [
       "대한민국을 대표하는 무도 단체이자 전 세계 51개국 145개 해외지부와 함께 성장하고 있는 국제경찰무도연합회(IPMA)가 공식 도장 및 지도자 회원 모집을 실시한다.",
       "이번 모집은 기존의 무도 단체와는 차원이 다른 AI, 실전호신술, 무기술, 출판, 국제대회, 언론 홍보, 블록체인 인증이 결합된 대한민국 최초의 통합형 멤버십으로 주목받고 있다.",
@@ -85,7 +109,9 @@
     ],
     "linkLabel": "공식 홈페이지 바로가기",
     "linkUrl": "https://www.ipma.kr",
-    "featured": false
+    "featured": false,
+    "visualStyle": "normal",
+    "relatedOrgs": []
   },
   {
     "id": "gn24-004",
@@ -98,7 +124,13 @@
     "author": "GN24",
     "sourceName": "계명태권도",
     "sourceUrl": "https://news24.ai.kr",
-    "tags": ["개명태권도", "국제마샬아츠챔피언십", "대회준비", "유치부", "초등부"],
+    "tags": [
+      "개명태권도",
+      "국제마샬아츠챔피언십",
+      "대회준비",
+      "유치부",
+      "초등부"
+    ],
     "content": [
       "울산 개명태권도가 오는 12월 12일 개최되는 국제 마샬아츠 챔피언십 출전을 앞두고 도장 전체가 뜨거운 열기로 가득 차 있다.",
       "유치부부터 초등부까지 모든 아이들이 각자의 자리에서 최선을 다해 수련에 몰입하며 밝은 미래를 향해 한 걸음씩 나아가고 있다.",
@@ -115,6 +147,10 @@
     ],
     "linkLabel": "문의 안내",
     "linkUrl": "https://news24.ai.kr",
-    "featured": false
+    "featured": false,
+    "visualStyle": "normal",
+    "relatedOrgs": [
+      "태권검도"
+    ]
   }
 ]
