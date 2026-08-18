@@ -12,3 +12,15 @@ async function loadHome(){const target=$('#homeNews');if(!target)return;const da
 async function loadNewsroom(){const list=$('#articleList');if(!list)return;let data=await getJSON('/data/news.json');const q=new URLSearchParams(location.search),cat=q.get('cat'),term=(q.get('q')||'').trim().toLowerCase();if(cat)data=data.filter(x=>x.category===cat);if(term)data=data.filter(x=>JSON.stringify(x).toLowerCase().includes(term));list.innerHTML=data.map(a=>`<a class="article-row" href="${articleURL(a.id)}"><div class="thumb" ${a.image?`style="background-image:url('${esc(a.image)}')"`:''}></div><div class="body"><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="muted">${esc(fmt(a.date))} · ${esc(a.author||'편집부')}</div><p>${esc(a.summary||'')}</p></div></a>`).join('')||'<p>해당 조건의 기사가 없습니다.</p>'}
 async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id'),data=await getJSON('/data/news.json'),a=data.find(x=>x.id===id)||data[0];if(!a)return;document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(a.author||'편집부')}</span><span>Global News24</span>`;if(a.image)$('#aHero').style.backgroundImage=`url('${a.image}')`;const body=Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[a.summary||'']);$('#aBody').innerHTML=body.map(p=>`<p>${esc(p)}</p>`).join('');$('#aSource')&&($('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`)}
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
+
+// v3.1.1: mobile hamburger gets the main newsroom navigation in one panel.
+document.addEventListener('DOMContentLoaded',()=>{
+  const panel=document.querySelector('#utilityPanel .utility-grid');
+  if(panel && !panel.querySelector('.mobile-menu-links')){
+    const title=document.createElement('div'); title.className='mobile-menu-title'; title.textContent='뉴스 전체메뉴';
+    const links=document.createElement('div'); links.className='mobile-menu-links';
+    links.innerHTML=`<a href="/">홈</a><a href="/pages/newsroom/?q=속보">속보</a><a href="/pages/newsroom/">종합뉴스</a><a href="/pages/newsroom/?cat=무도·스포츠">무도·스포츠</a><a href="/pages/newsroom/?q=드론">안전·드론</a><a href="/pages/newsroom/?q=ACTS">선교·공익</a><a href="/pages/press/">보도자료</a><a href="/pages/archive/">아카이브</a>`;
+    panel.prepend(links); panel.prepend(title);
+  }
+  document.querySelectorAll('.brand small').forEach(el=>el.textContent='글로벌뉴스24');
+});
