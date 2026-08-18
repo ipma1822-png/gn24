@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>기사 편집실 | Global News24</title>
+  <link rel="icon" href="/assets/images/logos/gn24-icon.svg">
+  <link rel="stylesheet" href="/assets/css/admin-news.css?v=3.1.10">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="admin-wrap header-inner">
+      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.1.10</small></span></a>
+      <div class="header-actions">
+        <button id="newBtn" class="btn primary" type="button">＋ 새 기사</button>
+        <button id="exportBtn" class="btn gold" type="button">news.json 내려받기</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-wrap admin-main">
+    <section class="notice">
+      <strong>GitHub Pages용 안전 편집 방식</strong>
+      <p>이 페이지에서 기사를 작성·수정·삭제한 뒤 <b>news.json 내려받기</b>를 누르세요. 새 사진이 있다면 <b>이미지 파일 내려받기</b>도 함께 누른 뒤 GitHub의 같은 경로에 업로드하면 실제 사이트에 반영됩니다. 이 페이지 자체는 GitHub 저장소에 직접 쓰지 않습니다.</p>
+    </section>
+
+    <section class="toolbar cardbox">
+      <div>
+        <label for="searchInput">기사 검색</label>
+        <input id="searchInput" type="search" placeholder="제목·카테고리·태그 검색">
+      </div>
+      <div class="toolbar-actions">
+        <label class="file-btn">news.json 불러오기<input id="importInput" type="file" accept="application/json,.json"></label>
+        <button id="restoreBtn" class="btn" type="button">사이트 원본 다시 불러오기</button>
+      </div>
+      <div class="stats"><b id="articleCount">0</b><span>기사</span><em id="dirtyState">원본 상태</em></div>
+    </section>
+
+    <div class="admin-grid">
+      <aside class="article-panel cardbox">
+        <div class="panel-title"><h2>기사 목록</h2><span id="listCount"></span></div>
+        <div id="articleList" class="article-list"></div>
+      </aside>
+
+      <section class="editor-panel cardbox">
+        <div class="panel-title"><h2 id="editorTitle">기사 편집</h2><div class="editor-top-actions"><button id="duplicateBtn" class="btn small" type="button">복제</button><button id="deleteBtn" class="btn danger small" type="button">삭제</button></div></div>
+        <form id="articleForm" autocomplete="off">
+          <div class="form-grid two">
+            <label>기사 ID<input id="fId" required></label>
+            <label>날짜<input id="fDate" type="date" required></label>
+          </div>
+          <label>제목<input id="fTitle" required placeholder="기사 제목"></label>
+          <label>부제목<input id="fSubtitle" placeholder="부제목 또는 한 줄 설명"></label>
+          <div class="form-grid two">
+            <label>카테고리
+              <select id="fCategory">
+                <option>속보</option><option>공지</option><option>국내소식</option><option>국제뉴스</option><option>경제</option><option>사회</option><option>청소년·문화</option><option>무도·스포츠</option><option>안전·드론</option><option>안전·구조</option><option>공익</option><option>AI·혁신기술</option><option>오피니언</option><option>보도자료</option>
+              </select>
+            </label>
+            <label>기자·작성자<input id="fAuthor" value="Global News24 편집부"></label>
+          </div>
+          <label>기사 요약<textarea id="fSummary" rows="3" placeholder="목록과 메인에 표시될 요약"></textarea></label>
+
+          <fieldset class="image-box">
+            <legend>대표 이미지</legend>
+            <div class="image-grid">
+              <div id="imagePreview" class="image-preview"><span>이미지 미리보기</span></div>
+              <div class="image-controls">
+                <label>홈페이지 이미지 경로<input id="fImage" placeholder="/assets/images/news/example.jpg"></label>
+                <label>새 이미지 선택<input id="imageInput" type="file" accept="image/*"></label>
+                <label>저장할 이미지 파일명<input id="imageFilename" placeholder="20260819-example.jpg"></label>
+                <button id="downloadImageBtn" class="btn" type="button" disabled>이미지 파일 내려받기</button>
+                <small>권장 업로드 위치: <code>assets/images/news/</code></small>
+              </div>
+            </div>
+            <label>사진 설명(캡션)<input id="fImageCaption" placeholder="▲ 사진 설명"></label>
+          </fieldset>
+
+          <label>본문 <small>문단과 문단 사이는 빈 줄로 구분</small><textarea id="fContent" rows="14" placeholder="첫 번째 문단\n\n두 번째 문단"></textarea></label>
+          <div class="form-grid two">
+            <label>자료·출처<input id="fSourceName" placeholder="기관명 또는 Global News24"></label>
+            <label>원문·관련자료 URL<input id="fSourceUrl" type="url" placeholder="https://"></label>
+          </div>
+          <label>태그 <small>쉼표로 구분</small><input id="fTags" placeholder="태권검도, 무도, 교육"></label>
+          <div class="form-grid three checks">
+            <label><input id="fFeatured" type="checkbox"> 주요뉴스</label>
+            <label><input id="fPinned" type="checkbox"> TOP NEWS 고정</label>
+            <label>표시 스타일<select id="fVisualStyle"><option value="normal">일반</option><option value="top">TOP</option><option value="spotlight">스포트라이트</option><option value="breaking">속보 강조</option></select></label>
+          </div>
+          <div class="savebar">
+            <button class="btn primary large" type="submit">현재 기사 저장</button>
+            <span id="saveMessage">편집 후 저장을 눌러주세요.</span>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <section class="help cardbox">
+      <h2>GitHub 반영 순서</h2>
+      <ol>
+        <li>기사 작성·수정 후 <b>현재 기사 저장</b></li>
+        <li>상단의 <b>news.json 내려받기</b></li>
+        <li>새 사진이 있으면 <b>이미지 파일 내려받기</b></li>
+        <li>GitHub에서 <code>data/news.json</code>을 새 파일로 교체</li>
+        <li>사진은 <code>assets/images/news/</code>에 업로드</li>
+      </ol>
+      <p>기사 상세페이지·최신뉴스·카테고리 영역은 <code>news.json</code>을 읽기 때문에 반영 후 자동으로 갱신됩니다.</p>
+    </section>
+  </main>
+  <script src="/assets/js/news-admin.js?v=3.1.10"></script>
+</body>
+</html>
