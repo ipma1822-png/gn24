@@ -13,14 +13,60 @@ async function loadNewsroom(){const list=$('#articleList');if(!list)return;let d
 async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id'),data=await getJSON('/data/news.json'),a=data.find(x=>x.id===id)||data[0];if(!a)return;document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(a.author||'편집부')}</span><span>Global News24</span>`;if(a.image)$('#aHero').style.backgroundImage=`url('${a.image}')`;const body=Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[a.summary||'']);$('#aBody').innerHTML=body.map(p=>`<p>${esc(p)}</p>`).join('');$('#aSource')&&($('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`)}
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
 
-// v3.1.1: mobile hamburger gets the main newsroom navigation in one panel.
+// v3.1.2: mobile hamburger contains real accordion mega menus.
 document.addEventListener('DOMContentLoaded',()=>{
   const panel=document.querySelector('#utilityPanel .utility-grid');
-  if(panel && !panel.querySelector('.mobile-menu-links')){
-    const title=document.createElement('div'); title.className='mobile-menu-title'; title.textContent='뉴스 전체메뉴';
-    const links=document.createElement('div'); links.className='mobile-menu-links';
-    links.innerHTML=`<a href="/">홈</a><a href="/pages/newsroom/?q=속보">속보</a><a href="/pages/newsroom/">종합뉴스</a><a href="/pages/newsroom/?cat=무도·스포츠">무도·스포츠</a><a href="/pages/newsroom/?q=드론">안전·드론</a><a href="/pages/newsroom/?q=ACTS">선교·공익</a><a href="/pages/press/">보도자료</a><a href="/pages/archive/">아카이브</a>`;
-    panel.prepend(links); panel.prepend(title);
-  }
+  if(!panel) return;
+
+  // Remove the simple v3.1.1 mobile links if they exist.
+  panel.querySelectorAll('.mobile-menu-title,.mobile-menu-links,.mobile-mega-wrap').forEach(el=>el.remove());
+
+  const wrap=document.createElement('div');
+  wrap.className='mobile-mega-wrap';
+  wrap.innerHTML=`
+    <div class="mobile-mega-title">뉴스 전체메뉴</div>
+    <div class="mobile-quick-links">
+      <a href="/">홈</a>
+      <a class="urgent" href="/pages/newsroom/?q=속보">속보</a>
+    </div>
+    <div class="mobile-accordion"></div>`;
+
+  const acc=wrap.querySelector('.mobile-accordion');
+  document.querySelectorAll('.primary-nav .nav-item.has-mega').forEach((item,i)=>{
+    const btn=item.querySelector('.nav-btn');
+    const head=item.querySelector('.mega-head');
+    const links=item.querySelector('.mega-links');
+    if(!btn||!links) return;
+    const section=document.createElement('section');
+    section.className='mobile-mega-section';
+    section.innerHTML=`
+      <button class="mobile-mega-trigger" type="button" aria-expanded="false">
+        <span><b>${esc(btn.textContent.trim())}</b>${head?.querySelector('span')?`<small>${esc(head.querySelector('span').textContent.trim())}</small>`:''}</span>
+        <i>＋</i>
+      </button>
+      <div class="mobile-mega-panel"></div>`;
+    const mp=section.querySelector('.mobile-mega-panel');
+    links.querySelectorAll('a').forEach(a=>{
+      const clone=a.cloneNode(true);
+      mp.appendChild(clone);
+    });
+    section.querySelector('.mobile-mega-trigger').addEventListener('click',e=>{
+      e.stopPropagation();
+      const open=section.classList.toggle('open');
+      section.querySelector('.mobile-mega-trigger').setAttribute('aria-expanded',String(open));
+      section.querySelector('.mobile-mega-trigger i').textContent=open?'−':'＋';
+      acc.querySelectorAll('.mobile-mega-section.open').forEach(other=>{
+        if(other!==section){
+          other.classList.remove('open');
+          const ob=other.querySelector('.mobile-mega-trigger');
+          ob.setAttribute('aria-expanded','false');
+          ob.querySelector('i').textContent='＋';
+        }
+      });
+    });
+    acc.appendChild(section);
+  });
+
+  panel.prepend(wrap);
   document.querySelectorAll('.brand small').forEach(el=>el.textContent='글로벌뉴스24');
 });
