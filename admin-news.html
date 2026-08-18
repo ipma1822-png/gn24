@@ -6,30 +6,32 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>기사 편집실 | Global News24</title>
   <link rel="icon" href="/assets/images/logos/gn24-icon.svg">
-  <link rel="stylesheet" href="/assets/css/admin-news.css?v=3.1.12">
+  <link rel="stylesheet" href="/assets/css/admin-news.css?v=3.2.1">
 </head>
 <body>
   <header class="admin-header">
     <div class="admin-wrap header-inner">
-      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.2.0</small></span></a>
+      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.2.1</small></span></a>
       <div class="header-actions">
         <button id="newBtn" class="btn primary" type="button">＋ 새 기사</button>
         <button id="exportBtn" class="btn gold" type="button">news.json 내려받기</button>
         <button id="cmsLoginBtn" class="btn" type="button">관리자 로그인</button>
-        <button id="cmsPublishBtn" class="btn primary" type="button">온라인 발행</button>
+        <button id="cmsPublishBtn" class="btn primary" type="button">온라인 저장·발행</button>
+        <button id="cmsMigrateBtn" class="btn" type="button">기존 기사 DB 이관</button>
+        <button id="cmsDeleteBtn" class="btn danger" type="button">온라인 삭제</button>
       </div>
     </div>
   </header>
 
   <main class="admin-wrap admin-main">
     <section class="notice">
-      <strong>온라인 편집국 CMS · v3.2.0</strong>
-      <p>기존 v3.1.12의 자동 임시저장·이미지 복원 기능을 그대로 유지하면서 <b>Supabase 온라인 발행</b>을 준비한 CMS 1단계입니다. Supabase 연결 전에는 기존 GitHub 방식으로 안전하게 동작하고, 연결 후에는 로그인한 관리자만 온라인 발행·수정·비공개·삭제를 사용할 수 있습니다.</p>
+      <strong>온라인 편집국 CMS · v3.2.1</strong>
+      <p>기존 v3.1.12의 자동 임시저장·이미지 복원 기능을 그대로 유지하면서 <b>Supabase와 <b>실제 저장</b>을 연결한 CMS 2단계입니다. 기존 자동 임시저장과 GitHub 백업 방식은 그대로 유지하면서, 등록된 관리자만 기사 DB 저장·공개/비공개·이미지 Storage 업로드·온라인 삭제를 사용할 수 있습니다.</p>
     </section>
 
     <section class="cms-status cardbox">
       <div><b>CMS 연결 상태</b><span id="cmsStatus">설정 확인 중…</span></div>
-      <small>Supabase 미연결 상태에서는 v3.1.12 방식(news.json + 이미지 업로드)이 그대로 작동합니다.</small>
+      <small id="cmsDetail">연결 전에는 기존 news.json 방식이 그대로 작동합니다.</small>
     </section>
     <section class="toolbar cardbox">
       <div>
@@ -103,17 +105,21 @@
     </div>
 
     <section class="help cardbox">
-      <h2>자동 임시저장 + GitHub 반영 순서</h2>
+      <h2>v3.2.1 온라인 편집국 사용 순서</h2>
       <ol>
-        <li>기사 작성·수정 내용은 브라우저에 <b>자동 임시저장</b>됩니다. 새로고침해도 복원됩니다.</li><li>한 기사 편집을 마치면 <b>현재 기사 저장</b>을 눌러 편집본에 확정</li>
-        <li>상단의 <b>news.json 내려받기</b></li>
-        <li>새 사진은 새로고침 후에도 자동 복원됩니다. 최종 반영 전에 <b>이미지 파일 내려받기</b></li>
-        <li>GitHub에서 <code>data/news.json</code>을 새 파일로 교체</li>
-        <li>사진은 <code>assets/images/news/</code>에 업로드</li>
+        <li>Supabase Authentication에서 관리자 계정을 만든 뒤 <code>gn24_admins</code>에 관리자 이메일을 등록합니다.</li>
+        <li><b>관리자 로그인</b> 후 상단 상태가 <b>온라인 연결 · 관리자 인증</b>으로 바뀌는지 확인합니다.</li>
+        <li>처음 한 번만 <b>기존 기사 DB 이관</b>을 눌러 현재 <code>data/news.json</code> 기사들을 Supabase로 복사할 수 있습니다.</li>
+        <li>기사 작성·수정 후 <b>온라인 저장·발행</b>을 누르면 DB에 즉시 저장됩니다. 새 대표사진이 있으면 <code>news-images</code> Storage에도 함께 올라갑니다.</li>
+        <li><b>공개</b> 체크를 해제하고 저장하면 비공개 상태로 저장됩니다.</li>
+        <li><b>온라인 삭제</b>는 Supabase DB의 현재 기사만 삭제하며, 기존 GitHub의 <code>news.json</code> 원본은 건드리지 않습니다.</li>
       </ol>
-      <p>기사 상세페이지·최신뉴스·카테고리 영역은 <code>news.json</code>을 읽기 때문에 반영 후 자동으로 갱신됩니다.</p>
+      <p><b>안전장치:</b> 기존 Local Storage/IndexedDB 임시저장과 <code>news.json 내려받기</code> 기능은 계속 유지됩니다.</p>
     </section>
   </main>
-  <script src="/assets/js/news-admin.js?v=3.1.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/assets/js/gn24-supabase-config.js?v=3.2.1"></script>
+  <script src="/assets/js/news-admin.js?v=3.2.1"></script>
+  <script src="/assets/js/news-cms.js?v=3.2.1"></script>
 </body>
 </html>

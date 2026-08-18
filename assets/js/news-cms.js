@@ -1,56 +1,110 @@
 (()=>{
 'use strict';
 const cfg=window.GN24_SUPABASE||{};
-const status=document.querySelector('#cmsStatus'), loginBtn=document.querySelector('#cmsLoginBtn'), pubBtn=document.querySelector('#cmsPublishBtn');
+const $=s=>document.querySelector(s);
+const status=$('#cmsStatus'), detail=$('#cmsDetail'), loginBtn=$('#cmsLoginBtn'), pubBtn=$('#cmsPublishBtn'), migrateBtn=$('#cmsMigrateBtn'), onlineDeleteBtn=$('#cmsDeleteBtn');
 const configured=!!(cfg.url&&cfg.anonKey&&window.supabase);
-let sb=null;
-function setStatus(t,on=false){if(!status)return;status.textContent=t;status.className=on?'cms-online':'cms-offline'}
-if(!configured){setStatus('Supabase 미연결 · GitHub 안전 편집 모드'); if(pubBtn)pubBtn.disabled=true; return;}
+let sb=null, currentSession=null, adminOK=false;
+
+function setStatus(text, mode='off', extra=''){
+  if(status){status.textContent=text;status.className=mode==='on'?'cms-online':mode==='busy'?'cms-offline cms-busy':'cms-offline';}
+  if(detail && extra) detail.textContent=extra;
+}
+function buttons(){
+  const ready=!!currentSession&&adminOK;
+  if(loginBtn) loginBtn.textContent=currentSession?'로그아웃':'관리자 로그인';
+  [pubBtn,migrateBtn,onlineDeleteBtn].forEach(b=>{if(b)b.disabled=!ready;});
+}
+if(!configured){setStatus('Supabase 미연결','off','기존 GitHub/news.json 안전 편집 모드로 작동 중입니다.');buttons();return;}
 sb=window.supabase.createClient(cfg.url,cfg.anonKey);
-async function session(){return (await sb.auth.getSession()).data.session}
-async function refresh(){
- const s=await session();
- setStatus(s?`온라인 연결 · ${s.user.email}`:'연결됨 · 로그인 필요',!!s);
- if(loginBtn)loginBtn.textContent=s?'로그아웃':'관리자 로그인';
- if(pubBtn)pubBtn.disabled=!s;
+
+async function isAdmin(){
+  if(!currentSession) return false;
+  const {data,error}=await sb.rpc('is_gn24_admin');
+  if(error){console.error(error);return false;}
+  return data===true;
+}
+async function refreshAuth(){
+  const {data}=await sb.auth.getSession(); currentSession=data.session;
+  adminOK=await isAdmin();
+  if(currentSession&&adminOK) setStatus(`온라인 연결 · 관리자 인증`,'on',currentSession.user.email);
+  else if(currentSession) setStatus('로그인됨 · 관리자 권한 없음','off','Supabase gn24_admins 등록을 확인하세요.');
+  else setStatus('연결됨 · 로그인 필요','off','관리자 계정으로 로그인하면 온라인 저장 기능이 활성화됩니다.');
+  buttons();
 }
 async function login(){
- const s=await session();
- if(s){await sb.auth.signOut();return refresh();}
- const email=prompt('Global News24 관리자 이메일을 입력하세요.');
- if(!email)return;
- const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.href.split('?')[0]}});
- if(error)return alert('로그인 요청 실패: '+error.message);
- alert('이메일로 로그인 링크를 보냈습니다. 링크를 눌러 다시 접속하세요.');
+  if(currentSession){await sb.auth.signOut();return refreshAuth();}
+  const email=prompt('Global News24 관리자 이메일'); if(!email)return;
+  const password=prompt('관리자 비밀번호'); if(!password)return;
+  setStatus('로그인 확인 중…','busy');
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  if(error){setStatus('로그인 실패','off',error.message);alert('로그인 실패: '+error.message);return;}
+  await refreshAuth();
 }
 function formArticle(){
- const v=id=>document.querySelector(id);
- return {
-  id:v('#fId').value.trim(), date:v('#fDate').value, title:v('#fTitle').value.trim(),
-  subtitle:v('#fSubtitle').value.trim(), category:v('#fCategory').value, author:v('#fAuthor').value.trim(),
-  summary:v('#fSummary').value.trim(), image:v('#fImage').value.trim(), image_caption:v('#fImageCaption').value.trim(),
-  content:v('#fContent').value, source_name:v('#fSourceName').value.trim(), source_url:v('#fSourceUrl').value.trim(),
-  tags:v('#fTags').value.split(',').map(x=>x.trim()).filter(Boolean), featured:v('#fFeatured').checked,
-  pinned:v('#fPinned').checked, visual_style:v('#fVisualStyle').value, is_published:v('#fPublished')?.checked!==false,
-  updated_at:new Date().toISOString()
- };
+  const value=id=>$(id)?.value??'';
+  const tags=value('#fTags').split(',').map(x=>x.trim()).filter(Boolean);
+  return {
+    id:value('#fId').trim(), date:value('#fDate'), title:value('#fTitle').trim(), subtitle:value('#fSubtitle').trim(),
+    category:value('#fCategory'), author:value('#fAuthor').trim()||'Global News24 편집부', summary:value('#fSummary').trim(),
+    image:value('#fImage').trim(), image_caption:value('#fImageCaption').trim(), content:value('#fContent'),
+    source_name:value('#fSourceName').trim(), source_url:value('#fSourceUrl').trim(), tags,
+    featured:!!$('#fFeatured')?.checked, pinned:!!$('#fPinned')?.checked,
+    visual_style:value('#fVisualStyle')||'normal', is_published:$('#fPublished')?.checked!==false,
+    updated_at:new Date().toISOString()
+  };
+}
+async function requireAdmin(){
+  const {data}=await sb.auth.getSession(); currentSession=data.session; adminOK=await isAdmin(); buttons();
+  if(!currentSession){alert('관리자 로그인이 필요합니다.');return false;}
+  if(!adminOK){alert('이 계정은 Global News24 관리자 목록에 등록되어 있지 않습니다.');return false;}
+  return true;
+}
+async function uploadSelectedImage(article){
+  const input=$('#imageInput'); const file=input?.files?.[0]; if(!file)return article;
+  const raw=($('#imageFilename')?.value||file.name).trim().replace(/[^a-zA-Z0-9._-]+/g,'-');
+  const folder=article.date||new Date().toISOString().slice(0,10); const path=`${folder}/${Date.now()}-${raw}`;
+  setStatus('대표이미지 업로드 중…','busy');
+  const {error}=await sb.storage.from(cfg.bucket||'news-images').upload(path,file,{upsert:false,contentType:file.type||'image/jpeg'});
+  if(error) throw new Error('이미지 업로드 실패: '+error.message);
+  const {data}=sb.storage.from(cfg.bucket||'news-images').getPublicUrl(path);
+  article.image=data.publicUrl; if($('#fImage'))$('#fImage').value=article.image;
+  return article;
 }
 async function publish(){
- const s=await session(); if(!s)return alert('관리자 로그인이 필요합니다.');
- const a=formArticle(); if(!a.title)return alert('기사 제목을 입력해 주세요.');
- const file=document.querySelector('#imageInput')?.files?.[0];
- if(file){
-   const name=document.querySelector('#imageFilename').value.trim()||file.name;
-   const path=`${a.date||'undated'}/${name}`;
-   const up=await sb.storage.from(cfg.bucket||'news-images').upload(path,file,{upsert:true,contentType:file.type});
-   if(up.error)return alert('이미지 업로드 실패: '+up.error.message);
-   a.image=sb.storage.from(cfg.bucket||'news-images').getPublicUrl(path).data.publicUrl;
-   document.querySelector('#fImage').value=a.image;
- }
- const {error}=await sb.from('gn24_articles').upsert(a,{onConflict:'id'});
- if(error)return alert('온라인 발행 실패: '+error.message);
- alert(a.is_published?'온라인 발행이 완료되었습니다.':'비공개 상태로 저장되었습니다.');
+  if(!(await requireAdmin()))return;
+  let a=formArticle(); if(!a.id||!a.title||!a.date)return alert('기사 ID·날짜·제목은 필수입니다.');
+  try{a=await uploadSelectedImage(a);}catch(e){setStatus('이미지 업로드 오류','off',e.message);return alert(e.message);}
+  setStatus('기사 DB 저장 중…','busy');
+  const {error}=await sb.from('gn24_articles').upsert(a,{onConflict:'id'});
+  if(error){setStatus('온라인 저장 실패','off',error.message);return alert('온라인 저장 실패: '+error.message);}
+  setStatus('온라인 연결 · 관리자 인증','on',`저장 완료 · ${new Date().toLocaleTimeString('ko-KR')}`);
+  alert(a.is_published?'온라인 기사 저장·발행 완료':'비공개 기사로 온라인 저장 완료');
 }
-loginBtn?.addEventListener('click',login); pubBtn?.addEventListener('click',publish);
-sb.auth.onAuthStateChange(()=>refresh()); refresh();
+function normalizeLegacy(x){
+  const content=Array.isArray(x.content)?x.content.join('\n\n'):(x.content||'');
+  return {id:x.id,date:x.date,title:x.title||'',subtitle:x.subtitle||'',category:x.category||'국내소식',author:x.author||'Global News24 편집부',summary:x.summary||'',image:x.image||'',image_caption:x.imageCaption||x.image_caption||'',content,source_name:x.sourceName||x.source_name||'',source_url:x.sourceUrl||x.source_url||'',tags:Array.isArray(x.tags)?x.tags:[],featured:!!x.featured,pinned:!!x.pinned,visual_style:x.visualStyle||x.visual_style||'normal',is_published:x.isPublished!==false&&x.is_published!==false,updated_at:new Date().toISOString()};
+}
+async function migrate(){
+  if(!(await requireAdmin()))return;
+  if(!confirm('현재 data/news.json의 기사를 Supabase DB로 이관할까요? 같은 ID는 최신 내용으로 갱신됩니다.'))return;
+  setStatus('기존 기사 읽는 중…','busy');
+  let res; try{res=await fetch('/data/news.json?v='+Date.now(),{cache:'no-store'});}catch(e){return alert('news.json 읽기 실패');}
+  if(!res.ok)return alert('news.json 읽기 실패: '+res.status);
+  const raw=await res.json(); const rows=(Array.isArray(raw)?raw:(raw.articles||raw.items||[])).map(normalizeLegacy);
+  if(!rows.length)return alert('이관할 기사가 없습니다.');
+  setStatus(`${rows.length}건 DB 이관 중…`,'busy');
+  const {error}=await sb.from('gn24_articles').upsert(rows,{onConflict:'id'});
+  if(error){setStatus('기사 이관 실패','off',error.message);return alert('기사 이관 실패: '+error.message);}
+  setStatus('온라인 연결 · 관리자 인증','on',`기존 기사 ${rows.length}건 DB 이관 완료`);alert(`기존 기사 ${rows.length}건을 Supabase로 이관했습니다.`);
+}
+async function deleteOnline(){
+  if(!(await requireAdmin()))return; const id=$('#fId')?.value.trim(); if(!id)return alert('삭제할 기사 ID가 없습니다.');
+  if(!confirm(`온라인 DB에서 이 기사를 삭제할까요?\n${id}\n\nGitHub news.json 원본은 삭제되지 않습니다.`))return;
+  setStatus('온라인 기사 삭제 중…','busy'); const {error}=await sb.from('gn24_articles').delete().eq('id',id);
+  if(error){setStatus('온라인 삭제 실패','off',error.message);return alert('온라인 삭제 실패: '+error.message);}
+  setStatus('온라인 연결 · 관리자 인증','on','온라인 DB 기사 삭제 완료');alert('Supabase DB에서 삭제했습니다.');
+}
+loginBtn?.addEventListener('click',login);pubBtn?.addEventListener('click',publish);migrateBtn?.addEventListener('click',migrate);onlineDeleteBtn?.addEventListener('click',deleteOnline);
+sb.auth.onAuthStateChange(()=>setTimeout(refreshAuth,0));refreshAuth();
 })();

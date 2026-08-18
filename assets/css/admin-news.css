@@ -7,3 +7,12 @@
 .image-button-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 
 .cms-status{display:flex;justify-content:space-between;gap:12px;align-items:center}.cms-status b{margin-right:10px}.cms-status #cmsStatus{font-weight:700}.cms-online{color:#087a3d}.cms-offline{color:#a65b00}
+
+/* v3.2.1 CMS */
+.cms-status{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+.cms-status #cmsStatus{display:inline-block;margin-left:10px;padding:4px 9px;border-radius:999px;background:#fff4d8;border:1px solid #e7c66f;font-weight:800}
+.cms-status #cmsDetail{color:#637083}
+.cms-online{color:#087a3d!important;background:#eaf8f0!important;border-color:#9cd4b5!important}
+.cms-offline{color:#9a5b00!important}
+.cms-busy{opacity:.65;pointer-events:none}
+@media(max-width:900px){.header-actions{gap:5px}.header-actions .btn{font-size:11px;padding:8px 9px}.cms-status{align-items:flex-start}}
