@@ -1,1 +1,205 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>홈 | Global News24</title><meta name="description" content="Global News24 디지털 뉴스룸"><meta name="theme-color" content="#07101c"><link rel="icon" href="/assets/images/logos/gn24-icon.svg"><link rel="stylesheet" href="/assets/css/style.css"></head><body><header class="site-header"><div class="wrap mast"><a class="brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>Global Digital Newsroom</small></span></a><div class="tools"><form class="searchbox" action="/pages/newsroom/"><input name="q" placeholder="기사 검색"><button>🔎</button></form><button id="utilityBtn" class="iconbtn" aria-expanded="false" aria-label="전체 메뉴">☰</button></div></div><nav class="primary-nav"><div class="wrap nav-scroll"><div class="nav-item"><a class="nav-link" href="/">홈</a></div><div class="nav-item"><button class="nav-btn">뉴스</button><div class="mega"><a href="/pages/newsroom/?cat=국제뉴스">국제뉴스</a><a href="/pages/newsroom/?cat=국내소식">국내소식</a><a href="/pages/newsroom/?cat=사회">사회</a><a href="/pages/newsroom/?cat=경제">경제</a></div></div><div class="nav-item"><button class="nav-btn">안전·교육</button><div class="mega"><a href="/pages/newsroom/?cat=안전·구조">안전·구조</a><a href="/pages/newsroom/?cat=청소년·문화">청소년·문화</a><a href="/pages/newsroom/?cat=AI·혁신기술">AI·혁신기술</a><a href="/pages/newsroom/?cat=무도·스포츠">무도·스포츠</a></div></div><div class="nav-item"><button class="nav-btn">전문 네트워크</button><div class="mega"><a href="/pages/newsroom/?q=태권검도">태권검도</a><a href="/pages/newsroom/?q=경찰무도">경찰무도</a><a href="/pages/newsroom/?q=드론">드론순찰대</a><a href="/pages/newsroom/?q=ACTS">ACTS 선교·공익</a></div></div><div class="nav-item"><a class="nav-link" href="/pages/press/">보도자료</a></div><div class="nav-item"><a class="nav-link" href="/pages/archive/">아카이브</a></div></div></nav><div id="utilityPanel" class="utility-panel"><div class="wrap utility-grid"><a href="/pages/about/">신문사 소개</a><a href="/pages/policy/">편집정책</a><a href="/pages/contact/">기사제보·문의</a><a href="/pages/newsroom/">전체기사</a></div></div></header><div class="breaking"><div class="wrap"><strong>BREAKING</strong><span id="breakingText">Global News24 디지털 뉴스룸 2.0</span></div></div><main><div class="wrap hero-grid"><a id="leadLink" class="lead-card shine" href="/pages/newsroom/"><div id="leadMedia" class="lead-media"></div><div class="lead-body"><div id="leadMeta" class="kicker">TOP NEWS</div><h1 id="leadTitle">Global News24 2.0</h1><p id="leadSummary" class="muted">디지털 뉴스룸으로 개편합니다.</p></div></a><div class="side-stack"><section class="panel side-card"><div class="section-title"><h2>편집국 바로가기</h2></div><p><b>뉴스룸 중심 운영</b></p><p class="muted">기사 → 검토 → 발행 → 관련 단체 홈페이지 공유 구조로 확장합니다.</p><a href="/pages/newsroom/">전체기사 보기 →</a></section><section class="panel side-card"><div class="section-title"><h2>콘텐츠 생태계</h2></div><p class="muted">교재 발간, 유튜브, 칼럼, 대회, 세미나, 선교·봉사 소식을 하나의 뉴스 네트워크로 연결합니다.</p></section></div></div><section class="wrap section"><div class="section-title"><h2>주요 뉴스</h2><a href="/pages/newsroom/">전체보기 →</a></div><div id="homeNews" class="thumb-grid"></div></section><section class="wrap section"><div class="section-title"><h2>GLOBAL NEWS24 NETWORK</h2></div><div class="ecosystem"><a class="eco" href="/pages/newsroom/?q=ACTS"><b>ACTS</b><small>선교·기도·봉사·교육</small></a><a class="eco" href="/pages/newsroom/?q=태권검도"><b>태권검도</b><small>교육·교재·대회·세미나</small></a><a class="eco" href="/pages/newsroom/?q=경찰무도"><b>경찰무도</b><small>호신술·안전·국제활동</small></a><a class="eco" href="/pages/newsroom/?q=드론"><b>드론순찰대</b><small>드론·안전·순찰·교육</small></a><a class="eco" href="/pages/newsroom/"><b>GLOBAL NEWS24</b><small>보도·칼럼·아카이브</small></a></div></section></main><footer><div class="wrap"><b>GLOBAL NEWS24</b><p>정식 인터넷신문 기반의 디지털 뉴스룸을 지향합니다. 기사·보도자료·전문분야 콘텐츠를 체계적으로 기록하고 연결합니다.</p><small>© Global News24. All rights reserved.</small></div></footer><script src="/assets/js/app.js"></script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Global News24 | 디지털 뉴스룸</title>
+<meta name="description" content="Global News24 디지털 뉴스룸 — 국내외 뉴스, 무도·안전, 드론, 선교·공익, 칼럼과 보도자료를 연결합니다.">
+<meta name="theme-color" content="#07101c">
+<link rel="icon" href="/assets/images/logos/gn24-icon.svg">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header" id="siteHeader">
+  <div class="topline"><div class="wrap topbar"><span>GLOBAL NEWS24 · DIGITAL NEWSROOM</span><span class="edition">신문사 통합 플랫폼 <b>v2.1.0</b></span></div></div>
+  <div class="wrap mast">
+    <a class="brand" href="/" aria-label="Global News24 홈">
+      <img src="/assets/images/logos/gn24-icon.svg" alt="GN24">
+      <span><b>GLOBAL NEWS24</b><small>Global Digital Newsroom</small></span>
+    </a>
+    <div class="mast-center"><span class="date-label" id="todayLabel"></span><strong>NEWS · MEDIA · NETWORK</strong></div>
+    <div class="tools">
+      <form class="searchbox" action="/pages/newsroom/"><input name="q" placeholder="기사 검색" aria-label="기사 검색"><button aria-label="검색">⌕</button></form>
+      <button id="utilityBtn" class="iconbtn" aria-expanded="false" aria-controls="utilityPanel"><span class="hamb">☰</span><span class="util-label">전체메뉴</span></button>
+    </div>
+  </div>
+
+  <nav class="primary-nav" aria-label="주요 뉴스 메뉴">
+    <div class="wrap nav-scroll" id="navScroll">
+      <div class="nav-item"><a class="nav-link active" href="/">홈</a></div>
+      <div class="nav-item"><a class="nav-link urgent" href="/pages/newsroom/?q=속보">속보</a></div>
+
+      <div class="nav-item has-mega">
+        <button class="nav-btn">종합뉴스</button>
+        <div class="mega mega-wide">
+          <div class="mega-head"><b>종합뉴스</b><span>국내외 주요 이슈를 분야별로 빠르게 확인합니다.</span></div>
+          <div class="mega-links">
+            <a href="/pages/newsroom/?cat=국내소식"><b>국내</b><small>지역·사회·현장</small></a>
+            <a href="/pages/newsroom/?cat=국제뉴스"><b>국제</b><small>세계·글로벌 네트워크</small></a>
+            <a href="/pages/newsroom/?cat=경제"><b>경제</b><small>산업·비즈니스</small></a>
+            <a href="/pages/newsroom/?cat=사회"><b>사회</b><small>사건·생활·공익</small></a>
+            <a href="/pages/newsroom/?cat=청소년·문화"><b>문화·교육</b><small>청소년·문화·교육</small></a>
+            <a href="/pages/newsroom/"><b>전체기사</b><small>뉴스룸 전체 보기</small></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item has-mega">
+        <button class="nav-btn">무도·스포츠</button>
+        <div class="mega mega-wide">
+          <div class="mega-head"><b>무도·스포츠</b><span>교육·대회·세미나·지도자·출판 소식을 연결합니다.</span></div>
+          <div class="mega-links">
+            <a href="/pages/newsroom/?q=태권검도"><b>태권검도</b><small>교육·교재·대회·세미나</small></a>
+            <a href="/pages/newsroom/?q=경찰무도"><b>경찰무도</b><small>호신술·안전·국제활동</small></a>
+            <a href="/pages/newsroom/?cat=무도·스포츠"><b>무도·스포츠</b><small>종합 무도 뉴스</small></a>
+            <a href="/pages/newsroom/?q=대회"><b>대회소식</b><small>국내외 경기·행사</small></a>
+            <a href="/pages/newsroom/?q=세미나"><b>세미나·교육</b><small>지도자 교육과 연수</small></a>
+            <a href="/pages/newsroom/?q=교재"><b>출판·교재</b><small>신간·교본·연구자료</small></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item has-mega">
+        <button class="nav-btn">안전·드론</button>
+        <div class="mega mega-wide">
+          <div class="mega-head"><b>안전·드론</b><span>사람과 기술이 함께 만드는 미래형 안전 콘텐츠입니다.</span></div>
+          <div class="mega-links">
+            <a href="/pages/newsroom/?cat=안전·구조"><b>안전·구조</b><small>생활안전·재난·구조</small></a>
+            <a href="/pages/newsroom/?q=드론"><b>드론순찰대</b><small>순찰·교육·시뮬레이터</small></a>
+            <a href="/pages/newsroom/?cat=AI·혁신기술"><b>AI·혁신기술</b><small>AI·디지털·신기술</small></a>
+            <a href="/pages/newsroom/?q=호신술"><b>호신·예방</b><small>범죄예방·호신교육</small></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item has-mega">
+        <button class="nav-btn">선교·공익</button>
+        <div class="mega mega-wide">
+          <div class="mega-head"><b>선교·공익</b><span>선교·기도·봉사·교육·지역사회의 의미 있는 현장을 기록합니다.</span></div>
+          <div class="mega-links">
+            <a href="/pages/newsroom/?q=ACTS"><b>ACTS</b><small>선교·교육·전문인 사역</small></a>
+            <a href="/pages/newsroom/?q=선교"><b>선교현장</b><small>국내외 선교 활동</small></a>
+            <a href="/pages/newsroom/?q=기도"><b>기도·교회</b><small>기도운동·교회소식</small></a>
+            <a href="/pages/newsroom/?q=봉사"><b>봉사·나눔</b><small>지역사회·공익 활동</small></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item has-mega">
+        <button class="nav-btn">미디어</button>
+        <div class="mega mega-wide">
+          <div class="mega-head"><b>미디어</b><span>기사 한 건을 영상·사진·칼럼·보도자료로 확장합니다.</span></div>
+          <div class="mega-links">
+            <a href="/pages/newsroom/?q=유튜브"><b>영상뉴스</b><small>YouTube·현장영상</small></a>
+            <a href="/pages/newsroom/?q=사진"><b>포토뉴스</b><small>행사·현장·기록사진</small></a>
+            <a href="/pages/newsroom/?q=칼럼"><b>칼럼</b><small>전문가·지도자 오피니언</small></a>
+            <a href="/pages/press/"><b>보도자료</b><small>기관·단체 공식자료</small></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item"><a class="nav-link" href="/pages/press/">보도자료</a></div>
+      <div class="nav-item"><a class="nav-link" href="/pages/archive/">아카이브</a></div>
+    </div>
+  </nav>
+
+  <div id="utilityPanel" class="utility-panel">
+    <div class="wrap utility-grid">
+      <a href="/pages/about/"><b>신문사 소개</b><small>Global News24 소개</small></a>
+      <a href="/pages/policy/"><b>편집정책</b><small>취재·보도 원칙</small></a>
+      <a href="/pages/contact/"><b>기사제보</b><small>보도자료·제보 접수</small></a>
+      <a href="/pages/contact/"><b>광고·제휴문의</b><small>협력·파트너십</small></a>
+      <a href="/pages/newsroom/"><b>전체기사</b><small>뉴스룸 보기</small></a>
+      <a href="/pages/archive/"><b>뉴스 아카이브</b><small>과거 기사 검색</small></a>
+    </div>
+  </div>
+</header>
+
+<div class="breaking" aria-label="속보">
+  <div class="wrap breaking-inner"><strong><i></i> BREAKING</strong><div class="ticker"><span id="breakingText">Global News24 디지털 뉴스룸 2.1</span></div><a href="/pages/newsroom/">전체기사 →</a></div>
+</div>
+
+<main>
+  <section class="wrap hero-grid">
+    <a id="leadLink" class="lead-card shine" href="/pages/newsroom/">
+      <div id="leadMedia" class="lead-media"></div>
+      <div class="lead-overlay"></div>
+      <div class="lead-body">
+        <div id="leadMeta" class="kicker">TOP NEWS</div>
+        <h1 id="leadTitle">Global News24 2.1</h1>
+        <p id="leadSummary">뉴스·미디어·전문 네트워크가 연결되는 디지털 뉴스룸입니다.</p>
+      </div>
+    </a>
+    <div class="side-stack">
+      <section class="panel newsroom-panel">
+        <div class="panel-label">DIGITAL NEWSROOM</div>
+        <h2>활동 하나가 여러 콘텐츠로</h2>
+        <p>교재 발간 · 유튜브 등재 · 칼럼 · 대회 · 세미나 · 선교 · 봉사 소식을 기사로 기록하고 다시 각 단체 홈페이지에서 공유합니다.</p>
+        <div class="flow"><span>활동</span><b>→</b><span>기사</span><b>→</b><span>공유</span><b>→</b><span>확산</span></div>
+        <a class="text-link" href="/pages/newsroom/">디지털 뉴스룸 보기 →</a>
+      </section>
+      <section class="panel network-mini">
+        <div class="section-title"><h2>전문 네트워크</h2><span>CONNECTED</span></div>
+        <div class="mini-links">
+          <a href="/pages/newsroom/?q=ACTS">ACTS</a><a href="/pages/newsroom/?q=태권검도">태권검도</a><a href="/pages/newsroom/?q=경찰무도">경찰무도</a><a href="/pages/newsroom/?q=드론">드론순찰대</a>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-title headline-title"><div><span class="eyebrow">EDITOR'S PICK</span><h2>주요 뉴스</h2></div><a href="/pages/newsroom/">전체보기 →</a></div>
+    <div id="homeNews" class="thumb-grid"></div>
+  </section>
+
+  <section class="category-strip">
+    <div class="wrap category-grid">
+      <a href="/pages/newsroom/?q=태권검도"><span>01</span><b>태권검도</b><small>교육·교재·대회</small></a>
+      <a href="/pages/newsroom/?q=경찰무도"><span>02</span><b>경찰무도</b><small>호신·안전·국제활동</small></a>
+      <a href="/pages/newsroom/?q=드론"><span>03</span><b>드론순찰대</b><small>기술·순찰·교육</small></a>
+      <a href="/pages/newsroom/?q=ACTS"><span>04</span><b>ACTS</b><small>선교·기도·봉사</small></a>
+      <a href="/pages/press/"><span>05</span><b>보도자료</b><small>기관·단체 공식자료</small></a>
+    </div>
+  </section>
+
+  <section class="wrap section two-col-news">
+    <div>
+      <div class="section-title headline-title"><div><span class="eyebrow">LATEST</span><h2>최신 뉴스</h2></div><a href="/pages/newsroom/">더보기 →</a></div>
+      <div id="latestNews" class="latest-list"></div>
+    </div>
+    <aside class="attention-panel">
+      <div class="section-title"><h2>주목 뉴스</h2><span>NOW</span></div>
+      <ol id="attentionList"></ol>
+    </aside>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-title headline-title"><div><span class="eyebrow">GLOBAL NEWS24 NETWORK</span><h2>콘텐츠 생태계</h2></div></div>
+    <p class="section-intro">각 단체의 활동은 Global News24 기사로 기록되고, 기사 링크는 다시 각 단체 홈페이지·유튜브·SNS로 확산됩니다. 하나의 활동이 하나의 기록으로 끝나지 않도록 연결합니다.</p>
+    <div class="ecosystem">
+      <a class="eco eco-acts" href="/pages/newsroom/?q=ACTS"><span class="eco-num">01</span><b>ACTS</b><small>선교 · 기도 · 봉사 · 교육</small><em>관련기사 보기 →</em></a>
+      <a class="eco" href="/pages/newsroom/?q=태권검도"><span class="eco-num">02</span><b>태권검도</b><small>교육 · 교재 · 대회 · 세미나</small><em>관련기사 보기 →</em></a>
+      <a class="eco" href="/pages/newsroom/?q=경찰무도"><span class="eco-num">03</span><b>경찰무도</b><small>호신술 · 안전 · 국제활동</small><em>관련기사 보기 →</em></a>
+      <a class="eco" href="/pages/newsroom/?q=드론"><span class="eco-num">04</span><b>드론순찰대</b><small>드론 · 순찰 · 안전 · 교육</small><em>관련기사 보기 →</em></a>
+      <a class="eco eco-gn" href="/pages/newsroom/"><span class="eco-num">05</span><b>GLOBAL NEWS24</b><small>보도 · 칼럼 · 미디어 · 아카이브</small><em>전체기사 보기 →</em></a>
+    </div>
+  </section>
+
+  <section class="media-band">
+    <div class="wrap media-grid">
+      <div class="media-card"><span>VIDEO</span><h2>영상뉴스</h2><p>YouTube에 등재한 교육·행사·인터뷰 영상을 기사와 함께 연결할 수 있도록 준비된 영역입니다.</p><a href="/pages/newsroom/?q=유튜브">영상 관련기사 →</a></div>
+      <div class="media-card"><span>PHOTO</span><h2>포토뉴스</h2><p>대회·세미나·선교·봉사 현장의 사진을 뉴스 기록으로 축적합니다.</p><a href="/pages/newsroom/?q=사진">포토 관련기사 →</a></div>
+      <div class="media-card"><span>OPINION</span><h2>칼럼·전문가</h2><p>무도·안전·교육·선교·기술 분야의 전문 칼럼과 인터뷰를 확장합니다.</p><a href="/pages/newsroom/?q=칼럼">칼럼 관련기사 →</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div><div class="footer-brand">GLOBAL NEWS24</div><p>뉴스와 전문 콘텐츠를 기록하고, 각 단체와 독자를 연결하는 디지털 뉴스룸.</p></div>
+    <div class="footer-links"><a href="/pages/about/">신문사 소개</a><a href="/pages/policy/">편집정책</a><a href="/pages/contact/">기사제보·문의</a><a href="/pages/archive/">아카이브</a></div>
+  </div>
+  <div class="wrap footer-bottom"><small>© Global News24. All rights reserved.</small><small class="version">GLOBAL NEWS24 DIGITAL NEWSROOM · <b>v2.1.0</b></small></div>
+</footer>
+<script src="/assets/js/app.js"></script>
+</body></html>
