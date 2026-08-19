@@ -58,6 +58,22 @@ if(sideRelated){
   const sideRel=(rel.length?rel:data.filter(x=>x.id!==a.id).slice(0,4)).slice(0,4);
   sideRelated.innerHTML=sideRel.map(x=>`<a class="side-related-item" href="${articleURL(x.id)}"><div class="side-related-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
 }
+
+const authorName=$('#articleAuthorName');
+if(authorName) authorName.textContent=a.author||'Global News24 편집부';
+
+const bottomHeadline=$('#bottomHeadline');
+if(bottomHeadline){
+  const featured=data.filter(x=>x.id!==a.id && (x.featured||x.pinned)).slice(0,4);
+  const rows=(featured.length?featured:data.filter(x=>x.id!==a.id).slice(0,4));
+  bottomHeadline.innerHTML=rows.map(x=>`<a class="bottom-news-item" href="${articleURL(x.id)}"><div class="bottom-news-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
+}
+const bottomLatest=$('#bottomLatest');
+if(bottomLatest){
+  bottomLatest.innerHTML=data.filter(x=>x.id!==a.id).slice(0,6).map(x=>`<a class="bottom-latest-item" href="${articleURL(x.id)}">${esc(x.title)}</a>`).join('');
+}
+
+setupArticleTools(a);
 }
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
 
@@ -132,3 +148,69 @@ document.addEventListener('DOMContentLoaded',()=>{
   window.addEventListener('resize',updateHint);
   updateHint();
 });
+
+
+function setupArticleTools(article){
+  const url=location.href;
+  const title=article?.title||document.title||'Global News24';
+  const shareUrl=(kind)=>{
+    const u=encodeURIComponent(url), t=encodeURIComponent(title);
+    const urls={
+      facebook:`https://www.facebook.com/sharer/sharer.php?u=${u}`,
+      x:`https://twitter.com/intent/tweet?url=${u}&text=${t}`,
+      band:`https://band.us/plugin/share?body=${t}%0A${u}`,
+      telegram:`https://t.me/share/url?url=${u}&text=${t}`
+    };
+    if(kind==='native'){
+      if(navigator.share) navigator.share({title,text:title,url}).catch(()=>{});
+      else navigator.clipboard?.writeText(url).then(()=>alert('기사 링크를 복사했습니다.'));
+      return;
+    }
+    if(urls[kind]) window.open(urls[kind],'gn24share','width=720,height=620,noopener,noreferrer');
+  };
+  document.querySelectorAll('[data-share]').forEach(btn=>{
+    btn.onclick=()=>shareUrl(btn.dataset.share);
+  });
+
+  const copyBtn=document.getElementById('copyArticleLink');
+  if(copyBtn) copyBtn.onclick=async()=>{
+    try{await navigator.clipboard.writeText(url); alert('기사 링크를 복사했습니다.');}
+    catch(e){prompt('아래 주소를 복사하세요.',url);}
+  };
+  const printBtn=document.getElementById('printArticle');
+  if(printBtn) printBtn.onclick=()=>window.print();
+
+  let articleFont=16;
+  const body=document.getElementById('aBody');
+  const applyFont=()=>{
+    articleFont=Math.max(14,Math.min(22,articleFont));
+    if(body) body.style.setProperty('--reader-font-size',articleFont+'px');
+  };
+  const plus=document.getElementById('fontPlus');
+  const minus=document.getElementById('fontMinus');
+  if(plus) plus.onclick=()=>{articleFont+=1;applyFont();};
+  if(minus) minus.onclick=()=>{articleFont-=1;applyFont();};
+  applyFont();
+
+  const likeBtn=document.getElementById('articleLikeBtn');
+  const likeCount=document.getElementById('articleLikeCount');
+  if(likeBtn && likeCount && article?.id){
+    const key='gn24-like-'+article.id;
+    const countKey='gn24-like-count-'+article.id;
+    let liked=localStorage.getItem(key)==='1';
+    let count=Number(localStorage.getItem(countKey)||0);
+    const render=()=>{
+      likeBtn.classList.toggle('liked',liked);
+      likeBtn.setAttribute('aria-pressed',liked?'true':'false');
+      likeCount.textContent=String(count);
+    };
+    likeBtn.onclick=()=>{
+      liked=!liked;
+      count=Math.max(0,count+(liked?1:-1));
+      localStorage.setItem(key,liked?'1':'0');
+      localStorage.setItem(countKey,String(count));
+      render();
+    };
+    render();
+  }
+}
