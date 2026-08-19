@@ -555,25 +555,47 @@ function setArticleSocialMeta(article){
   if(!canonicalEl){canonicalEl=document.createElement('link');canonicalEl.rel='canonical';document.head.appendChild(canonicalEl);}
   canonicalEl.href=url;
 }
-function gn24InitKakao(){
-  const key=String(window.GN24_KAKAO?.javascriptKey||'').trim();
-  if(!key || !window.Kakao) return false;
-  try{
-    if(!Kakao.isInitialized()) Kakao.init(key);
-    return Kakao.isInitialized();
-  }catch(e){console.warn('Kakao init failed',e);return false;}
+// ===== GN24 v3.4.2 · robust Kakao SDK loader =====
+const GN24_KAKAO_JS_KEY_FALLBACK='8622bbffea31804f3bd4f03c89f5d0c1';
+function gn24KakaoKey(){
+  return String(window.GN24_KAKAO?.javascriptKey||GN24_KAKAO_JS_KEY_FALLBACK||'').trim();
 }
-function gn24ShareKakao(article){
+function gn24LoadKakaoSdk(){
+  if(window.Kakao) return Promise.resolve(window.Kakao);
+  if(window.__gn24KakaoSdkPromise) return window.__gn24KakaoSdkPromise;
+  window.__gn24KakaoSdkPromise=new Promise((resolve,reject)=>{
+    const existing=document.querySelector('script[data-gn24-kakao-sdk]');
+    if(existing){
+      existing.addEventListener('load',()=>resolve(window.Kakao),{once:true});
+      existing.addEventListener('error',()=>reject(new Error('Kakao SDK load failed')),{once:true});
+      return;
+    }
+    const script=document.createElement('script');
+    script.src='https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';
+    script.async=true;
+    script.dataset.gn24KakaoSdk='1';
+    script.onload=()=>window.Kakao?resolve(window.Kakao):reject(new Error('Kakao SDK unavailable after load'));
+    script.onerror=()=>reject(new Error('Kakao SDK load failed'));
+    document.head.appendChild(script);
+  });
+  return window.__gn24KakaoSdkPromise;
+}
+async function gn24InitKakao(){
+  const key=gn24KakaoKey();
+  if(!key) throw new Error('Kakao JavaScript key missing');
+  await gn24LoadKakaoSdk();
+  if(!window.Kakao) throw new Error('Kakao SDK unavailable');
+  if(!Kakao.isInitialized()) Kakao.init(key);
+  if(!Kakao.isInitialized()) throw new Error('Kakao initialization failed');
+  return true;
+}
+async function gn24ShareKakao(article){
   const title=String(article?.title||'Global News24');
   const desc=gn24ArticleDescription(article);
   const image=gn24AbsoluteUrl(article?.image);
   const url=shareArticleURL(article?.id);
-
-  if(!gn24InitKakao()){
-    alert('카카오톡 공유 설정이 아직 완료되지 않았습니다. 카카오 JavaScript 키를 먼저 연결해 주세요.');
-    return;
-  }
   try{
+    await gn24InitKakao();
     Kakao.Share.sendDefault({
       objectType:'feed',
       content:{
@@ -582,14 +604,11 @@ function gn24ShareKakao(article){
         imageUrl:image,
         link:{mobileWebUrl:url,webUrl:url}
       },
-      buttons:[{
-        title:'기사 보기',
-        link:{mobileWebUrl:url,webUrl:url}
-      }]
+      buttons:[{title:'기사 보기',link:{mobileWebUrl:url,webUrl:url}}]
     });
   }catch(e){
-    console.error(e);
-    alert('카카오톡 공유를 시작하지 못했습니다.');
+    console.error('GN24 Kakao share error:',e);
+    alert('카카오톡 공유 연결에 실패했습니다. 페이지를 새로고침한 뒤 다시 눌러주세요.');
   }
 }
 

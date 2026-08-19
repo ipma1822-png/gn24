@@ -1,15 +1,12 @@
-Global News24 대표이미지 16:9 표시 패치
-기준: 1600×900px (16:9)
+Global News24 v3.4.2 Kakao direct-share fix
 
-교체 파일:
-assets/css/style.css
+GitHub repository root에 폴더 구조 그대로 덮어쓰기:
+- assets/js/app.js
+- assets/js/gn24-kakao-config.js
+- pages/article/index.html
 
-적용 내용:
-- 메인 TOP NEWS 대표이미지 16:9
-- 주요뉴스 카드 이미지 16:9
-- 최신/목록 이미지 16:9
-- 기사 상세 대표이미지 16:9
-- 모바일 동일 비율 유지
-- 기존 기능/DB/Supabase/관리자 편집기 변경 없음
-
-GitHub에서 assets/css/style.css 파일만 교체해도 됩니다.
+수정 내용:
+- Kakao SDK가 늦게 로드되거나 누락돼도 버튼 클릭 시 자동 로드
+- JavaScript 키 초기화 안정화
+- 캐시 버전 v3.4.2 적용
+- 기존 기사/기자/Supabase/푸터/공유 URL 구조 유지
