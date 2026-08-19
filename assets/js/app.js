@@ -210,11 +210,32 @@ function setupArticleTools(article){
     btn.onclick=()=>shareUrl(btn.dataset.share);
   });
 
+  const shareHubTitle=document.getElementById('shareHubTitle');
+  if(shareHubTitle) shareHubTitle.textContent=article?.title||'Global News24 기사';
+  const shareHubThumb=document.getElementById('shareHubThumb');
+  if(shareHubThumb && article?.image){
+    shareHubThumb.style.backgroundImage=`url("${gn24AbsoluteUrl(article.image).replace(/"/g,'%22')}")`;
+  }
+  const shareHubMessage=document.getElementById('shareHubMessage');
+
+  async function copyCurrentArticle(){
+    try{
+      await navigator.clipboard.writeText(url);
+      if(shareHubMessage){
+        shareHubMessage.textContent='기사 링크를 복사했습니다. 카카오톡이나 문자에 바로 붙여넣을 수 있습니다.';
+        setTimeout(()=>{shareHubMessage.textContent='';},3200);
+      }else alert('카카오·SNS용 기사 링크를 복사했습니다.');
+    }catch(e){
+      prompt('아래 주소를 복사하세요.',url);
+    }
+  }
+
+  document.querySelectorAll('[data-copy-article]').forEach(btn=>{
+    btn.onclick=copyCurrentArticle;
+  });
+
   const copyBtn=document.getElementById('copyArticleLink');
-  if(copyBtn) copyBtn.onclick=async()=>{
-    try{await navigator.clipboard.writeText(url); alert('카카오·SNS용 기사 링크를 복사했습니다.');}
-    catch(e){prompt('아래 주소를 복사하세요.',url);}
-  };
+  if(copyBtn) copyBtn.onclick=copyCurrentArticle;
   const printBtn=document.getElementById('printArticle');
   if(printBtn) printBtn.onclick=()=>window.print();
 
