@@ -76,6 +76,7 @@ if(bottomLatest){
   bottomLatest.innerHTML=data.filter(x=>x.id!==a.id).slice(0,6).map(x=>`<a class="bottom-latest-item" href="${articleURL(x.id)}">${esc(x.title)}</a>`).join('');
 }
 
+setArticleSocialMeta(a);
 setupArticleTools(a);
 setupArticleCommunity(a);
 setupArticleViewsAndPopular(a,data);
@@ -159,6 +160,7 @@ function setupArticleTools(article){
   const url=location.href;
   const title=article?.title||document.title||'Global News24';
   const shareUrl=(kind)=>{
+    if(kind==='kakao'){gn24ShareKakao(article);return;}
     const u=encodeURIComponent(url), t=encodeURIComponent(title);
     const urls={
       facebook:`https://www.facebook.com/sharer/sharer.php?u=${u}`,
@@ -451,4 +453,92 @@ async function setupArticleViewsAndPopular(article, allArticles){
       }).join('') || '<li class="popular-empty">조회 데이터가 쌓이는 중입니다.</li>';
     }
   }catch(e){ console.warn('GN24 popular load failed',e); }
+}
+
+
+/* ===== GN24 v3.2.20 · SNS / Kakao share ===== */
+function gn24AbsoluteUrl(value){
+  const raw=String(value||'').trim();
+  if(!raw) return 'https://news24.ai.kr/assets/images/logos/gn24-og-default.jpg';
+  try{return new URL(raw,location.origin).href;}catch(e){return raw;}
+}
+function gn24ArticleDescription(article){
+  const raw=article?.summary || article?.subtitle ||
+    (Array.isArray(article?.content)?article.content.join(' '):String(article?.content||''));
+  return String(raw||'Global News24 디지털 뉴스룸').replace(/\s+/g,' ').trim().slice(0,180);
+}
+function gn24SetMeta(selector,attr,value){
+  let el=document.head.querySelector(selector);
+  if(!el){
+    el=document.createElement('meta');
+    const m=selector.match(/\[(property|name)="([^"]+)"\]/);
+    if(m) el.setAttribute(m[1],m[2]);
+    document.head.appendChild(el);
+  }
+  el.setAttribute(attr,value);
+}
+function setArticleSocialMeta(article){
+  if(!article) return;
+  const title=String(article.title||'Global News24');
+  const desc=gn24ArticleDescription(article);
+  const image=gn24AbsoluteUrl(article.image);
+  const canonical=new URL(location.href);
+  canonical.hash='';
+  const url=canonical.href;
+
+  document.title=title+' | Global News24';
+  const description=document.head.querySelector('meta[name="description"]');
+  if(description) description.setAttribute('content',desc);
+
+  gn24SetMeta('meta[property="og:type"]','content','article');
+  gn24SetMeta('meta[property="og:site_name"]','content','Global News24');
+  gn24SetMeta('meta[property="og:title"]','content',title);
+  gn24SetMeta('meta[property="og:description"]','content',desc);
+  gn24SetMeta('meta[property="og:image"]','content',image);
+  gn24SetMeta('meta[property="og:url"]','content',url);
+  gn24SetMeta('meta[name="twitter:card"]','content','summary_large_image');
+  gn24SetMeta('meta[name="twitter:title"]','content',title);
+  gn24SetMeta('meta[name="twitter:description"]','content',desc);
+  gn24SetMeta('meta[name="twitter:image"]','content',image);
+
+  let canonicalEl=document.head.querySelector('link[rel="canonical"]');
+  if(!canonicalEl){canonicalEl=document.createElement('link');canonicalEl.rel='canonical';document.head.appendChild(canonicalEl);}
+  canonicalEl.href=url;
+}
+function gn24InitKakao(){
+  const key=String(window.GN24_KAKAO?.javascriptKey||'').trim();
+  if(!key || !window.Kakao) return false;
+  try{
+    if(!Kakao.isInitialized()) Kakao.init(key);
+    return Kakao.isInitialized();
+  }catch(e){console.warn('Kakao init failed',e);return false;}
+}
+function gn24ShareKakao(article){
+  const title=String(article?.title||'Global News24');
+  const desc=gn24ArticleDescription(article);
+  const image=gn24AbsoluteUrl(article?.image);
+  const url=location.href;
+
+  if(!gn24InitKakao()){
+    alert('카카오톡 공유 설정이 아직 완료되지 않았습니다. 카카오 JavaScript 키를 먼저 연결해 주세요.');
+    return;
+  }
+  try{
+    Kakao.Share.sendDefault({
+      objectType:'feed',
+      content:{
+        title,
+        description:desc,
+        imageUrl:image,
+        link:{mobileWebUrl:url,webUrl:url}
+      },
+      buttons:[{
+        title:'기사 보기',
+        link:{mobileWebUrl:url,webUrl:url}
+      }]
+    });
+  }catch(e){
+    console.error(e);
+    alert('카카오톡 공유를 시작하지 못했습니다.');
+  }
 }

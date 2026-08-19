@@ -846,3 +846,17 @@
 #sidePopular li{grid-template-columns:29px minmax(0,1fr) auto}
 #sidePopular .popular-views{padding-top:2px;color:#9aa1aa;font-size:9px;white-space:nowrap}
 #sidePopular .popular-empty{display:block;padding:18px 0;color:#8a9199;font-size:11px}
+
+
+/* ===== GN24 v3.2.20 · Kakao share ===== */
+.article-tool-btn.kakao-share-btn{
+  min-width:68px;
+  background:#FEE500;
+  border-color:#F2D900;
+  color:#191919;
+  font-weight:800;
+}
+.article-tool-btn.kakao-share-btn:hover{
+  background:#f7df00;
+  color:#111;
+}
