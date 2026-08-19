@@ -2,7 +2,7 @@
 'use strict';
 const cfg=window.GN24_SUPABASE||{};
 const $=s=>document.querySelector(s);
-const status=$('#cmsStatus'), detail=$('#cmsDetail'), loginBtn=$('#cmsLoginBtn'), pubBtn=$('#cmsPublishBtn'), migrateBtn=$('#cmsMigrateBtn'), onlineDeleteBtn=$('#cmsDeleteBtn');
+const status=$('#cmsStatus'), detail=$('#cmsDetail'), loginBtn=$('#cmsLoginBtn'), loadBtn=$('#cmsLoadBtn'), pubBtn=$('#cmsPublishBtn'), migrateBtn=$('#cmsMigrateBtn'), onlineDeleteBtn=$('#cmsDeleteBtn');
 const configured=!!(cfg.url&&cfg.anonKey&&window.supabase);
 let sb=null, currentSession=null, adminOK=false;
 
@@ -13,7 +13,7 @@ function setStatus(text, mode='off', extra=''){
 function buttons(){
   const ready=!!currentSession&&adminOK;
   if(loginBtn) loginBtn.textContent=currentSession?'로그아웃':'관리자 로그인';
-  [pubBtn,migrateBtn,onlineDeleteBtn].forEach(b=>{if(b)b.disabled=!ready;});
+  [loadBtn,pubBtn,migrateBtn,onlineDeleteBtn].forEach(b=>{if(b)b.disabled=!ready;});
 }
 if(!configured){setStatus('Supabase 미연결','off','기존 GitHub/news.json 안전 편집 모드로 작동 중입니다.');buttons();return;}
 sb=window.supabase.createClient(cfg.url,cfg.anonKey);
@@ -71,6 +71,23 @@ async function requireAdmin(){
   if(!adminOK){alert('이 계정은 Global News24 관리자 목록에 등록되어 있지 않습니다.');return false;}
   return true;
 }
+
+async function loadDbArticles(){
+  if(!(await requireAdmin()))return;
+  if(!window.GN24Admin?.loadDbArticles){
+    return alert('관리자 편집 모듈이 아직 준비되지 않았습니다. Ctrl+F5 후 다시 시도해 주세요.');
+  }
+  if(!confirm('Supabase DB의 현재 기사 목록을 편집실로 불러올까요?\n브라우저에 남아 있던 오래된 임시편집본은 초기화됩니다.'))return;
+  setStatus('Supabase 기사 불러오는 중…','busy');
+  const {data,error}=await sb.from('gn24_articles').select('*').order('date',{ascending:false}).order('id',{ascending:false});
+  if(error){
+    setStatus('DB 기사 불러오기 실패','off',error.message);
+    return alert('Supabase 기사 불러오기 실패: '+error.message);
+  }
+  await window.GN24Admin.loadDbArticles(data||[]);
+  setStatus('온라인 연결 · 관리자 인증','on',`Supabase 기사 ${(data||[]).length}건 불러옴`);
+}
+
 async function uploadSelectedImage(article){
   const input=$('#imageInput'); const file=input?.files?.[0]; if(!file)return article;
   const raw=($('#imageFilename')?.value||file.name).trim().replace(/[^a-zA-Z0-9._-]+/g,'-');
@@ -116,6 +133,6 @@ async function deleteOnline(){
   if(error){setStatus('온라인 삭제 실패','off',error.message);return alert('온라인 삭제 실패: '+error.message);}
   setStatus('온라인 연결 · 관리자 인증','on','온라인 DB 기사 삭제 완료');alert('Supabase DB에서 삭제했습니다.');
 }
-loginBtn?.addEventListener('click',login);pubBtn?.addEventListener('click',publish);migrateBtn?.addEventListener('click',migrate);onlineDeleteBtn?.addEventListener('click',deleteOnline);
+loginBtn?.addEventListener('click',login);loadBtn?.addEventListener('click',loadDbArticles);pubBtn?.addEventListener('click',publish);migrateBtn?.addEventListener('click',migrate);onlineDeleteBtn?.addEventListener('click',deleteOnline);
 sb.auth.onAuthStateChange(()=>setTimeout(refreshAuth,0));refreshAuth();
 })();
