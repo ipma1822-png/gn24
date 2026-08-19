@@ -16,3 +16,13 @@
 .cms-offline{color:#9a5b00!important}
 .cms-busy{opacity:.65;pointer-events:none}
 @media(max-width:900px){.header-actions{gap:5px}.header-actions .btn{font-size:11px;padding:8px 9px}.cms-status{align-items:flex-start}}
+
+/* Global News24 v3.2.18 · 댓글 관리자 */
+.comment-btn{position:relative}.pending-badge{display:inline-grid;place-items:center;min-width:19px;height:19px;margin-left:4px;padding:0 5px;border-radius:999px;background:#dfe5ec;color:#4b5563;font-size:10px}.pending-badge.has-pending{background:#d92d20;color:#fff}
+.comment-manager{margin:16px 0;padding:0;overflow:hidden;scroll-margin-top:90px}.comment-manager[hidden]{display:none!important}
+.comment-manager-head{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line);background:#fbfcfe}
+.comment-manager-head h2{margin:0;font-size:18px}.comment-manager-head p{margin:5px 0 0;color:var(--muted);font-size:12px}.comment-filter{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.comment-filter .active{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.comment-manager-status{padding:10px 18px;color:var(--muted);font-size:12px;border-bottom:1px solid #edf0f3}
+.admin-comment-list{padding:0 18px 18px}.admin-comment-card{padding:16px 2px;border-bottom:1px solid #e5e9ee}.admin-comment-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.admin-comment-top>div{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.admin-comment-top b{font-size:13px}.admin-comment-top time,.admin-comment-top small{font-size:11px;color:#7b8794}.comment-state{display:inline-block;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:800}.comment-state.pending{background:#fff2cc;color:#8a5a00}.comment-state.approved{background:#e7f6ec;color:#087a3d}.comment-state.hidden{background:#eef1f4;color:#5c6672}
+.admin-comment-article{display:inline-block;margin-top:9px;color:#174d82;font-size:12px;font-weight:700;text-decoration:none}.admin-comment-article:hover{text-decoration:underline}.admin-comment-card p{margin:10px 0 12px;padding:12px 14px;background:#f7f9fb;border-left:3px solid #d5dce5;font-size:13px;line-height:1.65;white-space:normal}.admin-comment-actions{display:flex;gap:7px;flex-wrap:wrap}.admin-comment-empty{padding:38px;text-align:center;color:var(--muted)}
+@media(max-width:760px){.comment-manager-head{display:block}.comment-filter{margin-top:12px}.admin-comment-top{align-items:flex-start;display:block}.admin-comment-top small{display:block;margin-top:6px}}

@@ -31,6 +31,7 @@ async function refreshAuth(){
   else if(currentSession) setStatus('로그인됨 · 관리자 권한 없음','off','Supabase gn24_admins 등록을 확인하세요.');
   else setStatus('연결됨 · 로그인 필요','off','관리자 계정으로 로그인하면 온라인 저장 기능이 활성화됩니다.');
   buttons();
+  if(currentSession&&adminOK) setTimeout(refreshCommentCounts,0);
 }
 async function login(){
   if(currentSession){await sb.auth.signOut();return refreshAuth();}
@@ -155,6 +156,110 @@ async function deleteOnline(){
   if(error){setStatus('온라인 삭제 실패','off',error.message);return alert('온라인 삭제 실패: '+error.message);}
   setStatus('온라인 연결 · 관리자 인증','on','온라인 DB 기사 삭제 완료');alert('Supabase DB에서 삭제했습니다.');
 }
+
+const commentManageBtn=$('#commentManageBtn'), commentManager=$('#commentManager'),
+      commentList=$('#adminCommentList'), commentManagerStatus=$('#commentManagerStatus'),
+      pendingBadge=$('#pendingCommentBadge');
+let commentFilter='pending';
+
+function escComment(v){
+  return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+function commentDate(v){
+  if(!v)return '';
+  try{return new Date(v).toLocaleString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
+  catch(e){return String(v);}
+}
+async function refreshCommentCounts(){
+  if(!(currentSession&&adminOK))return;
+  const states=['pending','approved','hidden'];
+  const counts={};
+  for(const st of states){
+    const {count,error}=await sb.from('gn24_article_comments').select('id',{count:'exact',head:true}).eq('status',st);
+    counts[st]=error?0:(count||0);
+  }
+  $('#pendingCount').textContent=counts.pending;
+  $('#approvedCount').textContent=counts.approved;
+  $('#hiddenCount').textContent=counts.hidden;
+  if(pendingBadge){
+    pendingBadge.textContent=counts.pending;
+    pendingBadge.classList.toggle('has-pending',counts.pending>0);
+  }
+}
+async function loadAdminComments(filter=commentFilter){
+  if(!(await requireAdmin()))return;
+  commentFilter=filter;
+  document.querySelectorAll('[data-comment-filter]').forEach(b=>b.classList.toggle('active',b.dataset.commentFilter===filter));
+  if(commentManagerStatus)commentManagerStatus.textContent='댓글을 불러오는 중…';
+  const {data,error}=await sb.from('gn24_article_comments')
+    .select('id,article_id,nickname,content,status,created_at,updated_at')
+    .eq('status',filter).order('created_at',{ascending:false}).limit(200);
+  if(error){
+    if(commentManagerStatus)commentManagerStatus.textContent='댓글 불러오기 실패: '+error.message;
+    return;
+  }
+  const rows=data||[];
+  if(commentManagerStatus)commentManagerStatus.textContent=`${filter==='pending'?'승인대기':filter==='approved'?'공개':'숨김'} 댓글 ${rows.length}건`;
+  if(!rows.length){
+    commentList.innerHTML='<div class="admin-comment-empty">해당 댓글이 없습니다.</div>';
+    await refreshCommentCounts(); return;
+  }
+  const articleIds=[...new Set(rows.map(x=>x.article_id).filter(Boolean))];
+  let titles={};
+  if(articleIds.length){
+    const {data:arts}=await sb.from('gn24_articles').select('id,title').in('id',articleIds);
+    (arts||[]).forEach(a=>titles[a.id]=a.title);
+  }
+  commentList.innerHTML=rows.map(c=>`
+    <article class="admin-comment-card" data-comment-id="${c.id}">
+      <div class="admin-comment-top">
+        <div><span class="comment-state ${escComment(c.status)}">${c.status==='pending'?'승인대기':c.status==='approved'?'공개':'숨김'}</span>
+        <b>${escComment(c.nickname||'독자')}</b><time>${escComment(commentDate(c.created_at))}</time></div>
+        <small>${escComment(c.article_id||'')}</small>
+      </div>
+      <a class="admin-comment-article" href="/pages/article/?id=${encodeURIComponent(c.article_id||'')}" target="_blank" rel="noopener">${escComment(titles[c.article_id]||'기사 확인')}</a>
+      <p>${escComment(c.content||'').replace(/\n/g,'<br>')}</p>
+      <div class="admin-comment-actions">
+        ${c.status!=='approved'?`<button class="btn small approve-comment" type="button">✓ 승인·공개</button>`:''}
+        ${c.status!=='hidden'?`<button class="btn small hide-comment" type="button">숨김</button>`:''}
+        <button class="btn danger small delete-comment" type="button">삭제</button>
+      </div>
+    </article>`).join('');
+  await refreshCommentCounts();
+}
+async function setCommentStatus(id,newStatus){
+  if(!(await requireAdmin()))return;
+  const label=newStatus==='approved'?'승인·공개':'숨김';
+  if(!confirm(`이 댓글을 ${label} 처리할까요?`))return;
+  const {error}=await sb.from('gn24_article_comments').update({status:newStatus,updated_at:new Date().toISOString()}).eq('id',id);
+  if(error)return alert('댓글 처리 실패: '+error.message);
+  await loadAdminComments(commentFilter);
+}
+async function deleteComment(id){
+  if(!(await requireAdmin()))return;
+  if(!confirm('이 댓글을 완전히 삭제할까요? 삭제 후 복구할 수 없습니다.'))return;
+  const {error}=await sb.from('gn24_article_comments').delete().eq('id',id);
+  if(error)return alert('댓글 삭제 실패: '+error.message);
+  await loadAdminComments(commentFilter);
+}
+commentManageBtn?.addEventListener('click',async()=>{
+  if(!(await requireAdmin()))return;
+  commentManager.hidden=false;
+  commentManager.scrollIntoView({behavior:'smooth',block:'start'});
+  await loadAdminComments('pending');
+});
+$('#commentCloseBtn')?.addEventListener('click',()=>{commentManager.hidden=true;});
+$('#commentRefreshBtn')?.addEventListener('click',()=>loadAdminComments(commentFilter));
+document.querySelectorAll('[data-comment-filter]').forEach(b=>b.addEventListener('click',()=>loadAdminComments(b.dataset.commentFilter)));
+commentList?.addEventListener('click',e=>{
+  const card=e.target.closest('[data-comment-id]'); if(!card)return;
+  const id=card.dataset.commentId;
+  if(e.target.closest('.approve-comment'))setCommentStatus(id,'approved');
+  else if(e.target.closest('.hide-comment'))setCommentStatus(id,'hidden');
+  else if(e.target.closest('.delete-comment'))deleteComment(id);
+});
+
+
 loginBtn?.addEventListener('click',login);loadBtn?.addEventListener('click',loadDbArticles);pubBtn?.addEventListener('click',publish);migrateBtn?.addEventListener('click',migrate);onlineDeleteBtn?.addEventListener('click',deleteOnline);
 sb.auth.onAuthStateChange(()=>setTimeout(refreshAuth,0));refreshAuth();
 })();
