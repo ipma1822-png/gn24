@@ -133,3 +133,43 @@
 
 /* v3.1.9 article newsroom */
 .article-shell{max-width:920px}.article-shell h1{font-size:44px;line-height:1.22;letter-spacing:-.035em;margin:16px 0 12px}.article-subtitle{font-size:20px;line-height:1.6;color:#586474;margin:0 0 16px}.article-meta{display:flex;gap:14px;flex-wrap:wrap;color:#7a8491;font-size:14px;padding:13px 0 20px;border-bottom:1px solid var(--line)}.article-figure{margin:26px 0 32px}.article-figure .article-hero{border-radius:2px}.article-figure figcaption{font-size:13px;color:#7a8491;margin-top:9px;line-height:1.5}.article-body{margin:0 auto}.article-body .article-lead{font-weight:600;color:#172033}.sourcebox{max-width:780px;margin:34px auto 0;padding:18px 20px;background:#f7f9fb;border-top:2px solid #102746;line-height:1.7}.article-related{margin-top:48px;padding-top:28px;border-top:1px solid var(--line)}.related-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.related-grid .news-card h3{font-size:17px}.related-grid .thumb{aspect-ratio:16/9}@media(max-width:700px){.article-shell h1{font-size:31px}.article-subtitle{font-size:17px}.related-grid{grid-template-columns:1fr}.article-figure{margin:20px 0 26px}}
+
+/* ===== Global News24 v3.2.10 — 16:9 news image display patch =====
+   Standard representative image: 1600×900 (16:9)
+   Keeps the complete image visible without top/bottom cropping. */
+.lead-media,
+.news-card .thumb,
+.latest-row .thumb,
+.mini-story .thumb,
+.article-row .thumb,
+.item .thumb,
+.article-hero,
+#aHero,
+.related-grid .thumb {
+  aspect-ratio: 16 / 9 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Main TOP NEWS representative image */
+.lead-media {
+  width: 100%;
+}
+
+/* Article detail representative image: preserve exact 16:9 frame */
+.article-figure .article-hero,
+#aHero {
+  width: 100%;
+}
+
+/* Card/list thumbnails also follow the same 16:9 editorial standard */
+.news-card .thumb,
+.latest-row .thumb,
+.mini-story .thumb,
+.article-row .thumb,
+.item .thumb {
+  width: 100%;
+}
