@@ -125,9 +125,10 @@ async function publish(){
   let a=formArticle(); if(!a.id||!a.title||!a.date)return alert('기사 ID·날짜·제목은 필수입니다.');
   try{a=await uploadSelectedImage(a);}catch(e){setStatus('이미지 업로드 오류','off',e.message);return alert(e.message);}
   setStatus('기사 DB 저장 중…','busy');
-  const {error}=await sb.from('gn24_articles').upsert(a,{onConflict:'id'});
+  const {data,error}=await sb.from('gn24_articles').upsert(a,{onConflict:'id'}).select('*').single();
   if(error){setStatus('온라인 저장 실패','off',error.message);return alert('온라인 저장 실패: '+error.message);}
-  setStatus('온라인 연결 · 관리자 인증','on',`기사·이미지 저장 완료 · ${new Date().toLocaleTimeString('ko-KR')}`);
+  if(window.GN24Admin?.syncSavedArticle) window.GN24Admin.syncSavedArticle(data||a);
+  setStatus('온라인 연결 · 관리자 인증','on',`기사·이미지 저장 완료 · 목록 자동갱신 · ${new Date().toLocaleTimeString('ko-KR')}`);
   alert(a.is_published?'온라인 기사 저장·발행 완료':'비공개 기사로 온라인 저장 완료');
 }
 function normalizeLegacy(x){

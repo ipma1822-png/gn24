@@ -228,11 +228,31 @@
     els.saveMessage.textContent='대표이미지가 Supabase Storage에 업로드되고 기사에 연결되었습니다.';
   }
 
+  function syncSavedArticle(row){
+    if(!row)return;
+    const a=normalizeDbArticle(row);
+    const oldId=state.selectedId;
+    let idx=state.articles.findIndex(x=>x.id===a.id);
+    if(idx<0 && oldId) idx=state.articles.findIndex(x=>x.id===oldId);
+    if(idx<0) state.articles.unshift(a);
+    else state.articles[idx]=a;
+    state.selectedId=a.id;
+    state.dirty=false;
+    state.restored=false;
+    renderList();
+    select(a.id,{keepMessage:true});
+    saveDraft('manual');
+    setStatus('온라인 저장 완료 · 목록 자동갱신','saved');
+    if(els.draftInfo)els.draftInfo.textContent='Supabase 저장 내용 반영됨';
+    els.saveMessage.textContent='온라인 저장 내용이 왼쪽 기사 목록에도 즉시 반영되었습니다.';
+  }
+
   window.GN24Admin = {
     loadDbArticles: replaceWithDbArticles,
     getSelectedId: ()=>state.selectedId,
     getPendingImage,
-    markImageUploaded
+    markImageUploaded,
+    syncSavedArticle
   };
 
   loadSite().catch(err=>{els.list.innerHTML=`<div class="empty">${err.message}<br>상단의 news.json 불러오기를 이용해 주세요.</div>`;newArticle()});
