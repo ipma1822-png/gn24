@@ -644,3 +644,197 @@
   }
 }
 
+
+
+/* ===== Global News24 v3.2.16 · public reactions + moderated comments ===== */
+.article-engagement{
+  max-width:820px;
+  margin:38px 0 30px;
+  padding:24px 0 30px;
+  border-top:1px solid #e1e5ea;
+  border-bottom:2px solid #171717;
+  text-align:center;
+  font-family:Arial,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+}
+.reaction-title{
+  margin-bottom:15px;
+  color:#3c434d;
+  font-size:13px;
+  font-weight:700;
+}
+.article-reaction-bar{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.reaction-btn{
+  min-width:112px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:10px 13px;
+  border:1px solid #d8dde4;
+  border-radius:5px;
+  background:#fff;
+  color:#404751;
+  font-size:12px;
+  cursor:pointer;
+}
+.reaction-btn:hover{background:#f7f8fa;border-color:#bfc7d1}
+.reaction-btn.active{
+  border-color:#b8953e;
+  background:#fffaf0;
+  color:#7d5d0c;
+}
+.reaction-btn:disabled{opacity:.55;cursor:wait}
+.reaction-emoji{font-size:18px;line-height:1}
+.reaction-btn b{
+  min-width:16px;
+  color:#111;
+  font-size:12px;
+}
+.reaction-message{
+  min-height:18px;
+  margin-top:10px;
+  color:#7b8490;
+  font-size:11px;
+}
+
+.article-comments-ready{
+  max-width:820px;
+  margin:30px 0 42px;
+  font-family:Arial,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+}
+.comments-title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:20px;
+  padding-bottom:10px;
+  border-bottom:2px solid #222;
+}
+.comments-title{
+  padding:0;
+  border:0;
+  margin:0;
+  color:#111;
+  font-size:20px;
+  font-weight:800;
+}
+.comments-title span{color:#a47b17;font-size:15px}
+.comments-guide{color:#858c95;font-size:11px;text-align:right}
+.comment-form{
+  margin-top:14px;
+  padding:15px;
+  border:1px solid #dfe3e8;
+  border-radius:6px;
+  background:#fbfcfd;
+}
+.comment-form-top{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.comment-form-top label span{
+  display:block;
+  margin-bottom:5px;
+  color:#555e68;
+  font-size:11px;
+  font-weight:700;
+}
+#commentNickname{
+  width:190px;
+  height:36px;
+  padding:0 10px;
+  border:1px solid #d3d9e0;
+  background:#fff;
+  font:inherit;
+  font-size:12px;
+}
+.comment-status-note{
+  color:#9a7a2c;
+  font-size:10px;
+  font-weight:700;
+}
+#commentContent{
+  width:100%;
+  min-height:110px;
+  resize:vertical;
+  padding:12px;
+  border:1px solid #d3d9e0;
+  background:#fff;
+  color:#222;
+  font-family:inherit;
+  font-size:13px;
+  line-height:1.65;
+  box-sizing:border-box;
+}
+.comment-form-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:9px;
+}
+#commentCharCount{color:#8a929b;font-size:10px}
+#commentSubmitBtn{
+  padding:9px 17px;
+  border:0;
+  border-radius:3px;
+  background:#102746;
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+#commentSubmitBtn:disabled{opacity:.55;cursor:wait}
+.comment-message{
+  min-height:18px;
+  margin-top:8px;
+  color:#6f7781;
+  font-size:11px;
+}
+.comment-list{
+  margin-top:16px;
+  border-top:1px solid #e1e5e9;
+}
+.comment-item{
+  padding:17px 4px;
+  border-bottom:1px solid #e7eaee;
+}
+.comment-item-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+.comment-item-head b{color:#222;font-size:12px}
+.comment-item-head span{color:#9299a2;font-size:10px}
+.comment-item p{
+  margin:0;
+  color:#373d44;
+  font-size:13px;
+  line-height:1.7;
+  font-weight:400;
+  word-break:break-word;
+}
+.comment-empty{
+  padding:24px 6px;
+  color:#8a919a;
+  text-align:center;
+  font-size:12px;
+  border-bottom:1px solid #e7eaee;
+}
+@media(max-width:600px){
+  .article-reaction-bar{display:grid;grid-template-columns:1fr 1fr}
+  .reaction-btn{min-width:0}
+  .comments-title-row{display:block}
+  .comments-guide{margin-top:5px;text-align:left;line-height:1.5}
+  .comment-form-top{align-items:start}
+  #commentNickname{width:150px}
+}

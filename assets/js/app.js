@@ -74,6 +74,7 @@ if(bottomLatest){
 }
 
 setupArticleTools(a);
+setupArticleCommunity(a);
 }
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
 
@@ -192,25 +193,219 @@ function setupArticleTools(article){
   if(minus) minus.onclick=()=>{articleFont-=1;applyFont();};
   applyFont();
 
-  const likeBtn=document.getElementById('articleLikeBtn');
-  const likeCount=document.getElementById('articleLikeCount');
-  if(likeBtn && likeCount && article?.id){
-    const key='gn24-like-'+article.id;
-    const countKey='gn24-like-count-'+article.id;
-    let liked=localStorage.getItem(key)==='1';
-    let count=Number(localStorage.getItem(countKey)||0);
-    const render=()=>{
-      likeBtn.classList.toggle('liked',liked);
-      likeBtn.setAttribute('aria-pressed',liked?'true':'false');
-      likeCount.textContent=String(count);
-    };
-    likeBtn.onclick=()=>{
-      liked=!liked;
-      count=Math.max(0,count+(liked?1:-1));
-      localStorage.setItem(key,liked?'1':'0');
-      localStorage.setItem(countKey,String(count));
-      render();
-    };
-    render();
+}
+
+
+/* ===== Global News24 v3.2.16 · Supabase reactions & comments ===== */
+function gn24GetVisitorId(){
+  const key='gn24-visitor-id';
+  let id=localStorage.getItem(key);
+  if(!id){
+    id=(crypto?.randomUUID?.() || ('v-'+Date.now()+'-'+Math.random().toString(36).slice(2)));
+    localStorage.setItem(key,id);
   }
+  return id;
+}
+
+function gn24SupabaseInfo(){
+  const cfg=window.GN24_SUPABASE||{};
+  return {
+    url:String(cfg.url||'').replace(/\/$/,''),
+    key:String(cfg.anonKey||'')
+  };
+}
+
+async function gn24DbFetch(path, options={}){
+  const {url,key}=gn24SupabaseInfo();
+  if(!url||!key) throw new Error('Supabase 연결 설정이 없습니다.');
+  const headers={
+    apikey:key,
+    Authorization:`Bearer ${key}`,
+    'Content-Type':'application/json',
+    ...(options.headers||{})
+  };
+  const res=await fetch(url+'/rest/v1/'+path,{...options,headers});
+  if(!res.ok){
+    let msg='요청 처리 중 오류가 발생했습니다.';
+    try{
+      const body=await res.json();
+      msg=body?.message||body?.details||body?.hint||msg;
+    }catch(e){}
+    const err=new Error(msg);
+    err.status=res.status;
+    throw err;
+  }
+  if(res.status===204) return null;
+  const text=await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+async function setupArticleCommunity(article){
+  if(!article?.id) return;
+
+  const articleId=String(article.id);
+  const visitorId=gn24GetVisitorId();
+  const bar=document.getElementById('articleReactionBar');
+  const reactionMessage=document.getElementById('reactionMessage');
+
+  async function loadReactions(){
+    if(!bar) return;
+    try{
+      const rows=await gn24DbFetch(
+        `gn24_article_reactions?article_id=eq.${encodeURIComponent(articleId)}&select=reaction_type`
+      ) || [];
+
+      const counts={like:0,heart:0,support:0,useful:0};
+      rows.forEach(r=>{
+        if(Object.prototype.hasOwnProperty.call(counts,r.reaction_type)) counts[r.reaction_type]++;
+      });
+
+      Object.entries(counts).forEach(([type,count])=>{
+        const el=bar.querySelector(`[data-count="${type}"]`);
+        if(el) el.textContent=String(count);
+      });
+
+      // Browser's own reaction state is private and is not inferred from public rows.
+      ['like','heart','support','useful'].forEach(type=>{
+        const pressed=localStorage.getItem(`gn24-reacted:${articleId}:${type}`)==='1';
+        const btn=bar.querySelector(`[data-reaction="${type}"]`);
+        if(btn){
+          btn.classList.toggle('active',pressed);
+          btn.setAttribute('aria-pressed',pressed?'true':'false');
+        }
+      });
+    }catch(e){
+      console.warn('GN24 reaction load failed:',e);
+      if(reactionMessage) reactionMessage.textContent='반응 수를 불러오지 못했습니다.';
+    }
+  }
+
+  if(bar){
+    bar.querySelectorAll('[data-reaction]').forEach(btn=>{
+      btn.addEventListener('click',async()=>{
+        const type=btn.dataset.reaction;
+        const localKey=`gn24-reacted:${articleId}:${type}`;
+        if(localStorage.getItem(localKey)==='1'){
+          if(reactionMessage) reactionMessage.textContent='이미 이 반응을 남기셨습니다.';
+          return;
+        }
+        btn.disabled=true;
+        if(reactionMessage) reactionMessage.textContent='반응을 저장하는 중입니다…';
+        try{
+          await gn24DbFetch('gn24_article_reactions',{
+            method:'POST',
+            headers:{Prefer:'return=minimal'},
+            body:JSON.stringify({
+              article_id:articleId,
+              reaction_type:type,
+              visitor_id:visitorId
+            })
+          });
+          localStorage.setItem(localKey,'1');
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed','true');
+          if(reactionMessage) reactionMessage.textContent='소중한 반응이 반영되었습니다.';
+          await loadReactions();
+        }catch(e){
+          if(e.status===409){
+            localStorage.setItem(localKey,'1');
+            if(reactionMessage) reactionMessage.textContent='이미 이 반응을 남기셨습니다.';
+            await loadReactions();
+          }else{
+            console.error(e);
+            if(reactionMessage) reactionMessage.textContent='반응 저장에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+          }
+        }finally{
+          btn.disabled=false;
+        }
+      });
+    });
+    loadReactions();
+  }
+
+  const form=document.getElementById('articleCommentForm');
+  const list=document.getElementById('articleCommentList');
+  const countEl=document.getElementById('approvedCommentCount');
+  const message=document.getElementById('commentMessage');
+  const nickname=document.getElementById('commentNickname');
+  const content=document.getElementById('commentContent');
+  const charCount=document.getElementById('commentCharCount');
+  const submitBtn=document.getElementById('commentSubmitBtn');
+
+  const savedNickname=localStorage.getItem('gn24-comment-nickname');
+  if(nickname && savedNickname) nickname.value=savedNickname;
+
+  if(content && charCount){
+    const updateCount=()=>{charCount.textContent=`${content.value.length} / 1000`;};
+    content.addEventListener('input',updateCount);
+    updateCount();
+  }
+
+  async function loadComments(){
+    if(!list) return;
+    try{
+      const rows=await gn24DbFetch(
+        `gn24_article_comments?article_id=eq.${encodeURIComponent(articleId)}&status=eq.approved&select=id,nickname,content,created_at&order=created_at.desc`
+      ) || [];
+      if(countEl) countEl.textContent=String(rows.length);
+      if(!rows.length){
+        list.innerHTML='<div class="comment-empty">등록된 공개 댓글이 없습니다. 첫 의견을 남겨보세요.</div>';
+        return;
+      }
+      list.innerHTML=rows.map(row=>{
+        const date=row.created_at ? new Date(row.created_at).toLocaleString('ko-KR',{
+          year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'
+        }) : '';
+        return `<article class="comment-item">
+          <div class="comment-item-head"><b>${esc(row.nickname||'독자')}</b><span>${esc(date)}</span></div>
+          <p>${esc(row.content||'').replace(/\n/g,'<br>')}</p>
+        </article>`;
+      }).join('');
+    }catch(e){
+      console.warn('GN24 comments load failed:',e);
+      list.innerHTML='<div class="comment-empty">댓글을 불러오지 못했습니다.</div>';
+    }
+  }
+
+  if(form){
+    form.addEventListener('submit',async(ev)=>{
+      ev.preventDefault();
+      const nick=(nickname?.value||'').trim();
+      const text=(content?.value||'').trim();
+      if(nick.length<1||nick.length>30){
+        if(message) message.textContent='닉네임은 1~30자로 입력해 주세요.';
+        return;
+      }
+      if(text.length<2||text.length>1000){
+        if(message) message.textContent='댓글은 2~1,000자로 입력해 주세요.';
+        return;
+      }
+      if(submitBtn) submitBtn.disabled=true;
+      if(message) message.textContent='댓글을 등록하는 중입니다…';
+      try{
+        await gn24DbFetch('gn24_article_comments',{
+          method:'POST',
+          headers:{Prefer:'return=minimal'},
+          body:JSON.stringify({
+            article_id:articleId,
+            nickname:nick,
+            content:text,
+            visitor_id:visitorId,
+            status:'pending'
+          })
+        });
+        localStorage.setItem('gn24-comment-nickname',nick);
+        if(content) content.value='';
+        if(charCount) charCount.textContent='0 / 1000';
+        if(message) message.textContent='댓글이 등록되었습니다. 관리자 확인 후 공개됩니다.';
+      }catch(e){
+        console.error(e);
+        if(message) message.textContent='댓글 등록에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+      }finally{
+        if(submitBtn) submitBtn.disabled=false;
+      }
+    });
+  }
+
+  loadComments();
 }
