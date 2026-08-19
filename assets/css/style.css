@@ -838,3 +838,11 @@
   .comment-form-top{align-items:start}
   #commentNickname{width:150px}
 }
+
+/* ===== GN24 v3.2.19 · views / popular ===== */
+.article-viewline{margin:-8px 0 13px;color:#8a9199;font-size:11px;font-family:Arial,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+.article-viewline b{color:#4f5965;font-weight:700}
+.side-popular-block{margin-top:0}
+#sidePopular li{grid-template-columns:29px minmax(0,1fr) auto}
+#sidePopular .popular-views{padding-top:2px;color:#9aa1aa;font-size:9px;white-space:nowrap}
+#sidePopular .popular-empty{display:block;padding:18px 0;color:#8a9199;font-size:11px}

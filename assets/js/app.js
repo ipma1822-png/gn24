@@ -78,6 +78,7 @@ if(bottomLatest){
 
 setupArticleTools(a);
 setupArticleCommunity(a);
+setupArticleViewsAndPopular(a,data);
 }
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
 
@@ -411,4 +412,43 @@ async function setupArticleCommunity(article){
   }
 
   loadComments();
+}
+
+
+/* ===== GN24 v3.2.19 · real views + popular news ===== */
+async function setupArticleViewsAndPopular(article, allArticles){
+  if(!article?.id) return;
+  const articleId=String(article.id);
+  const viewEl=document.getElementById('articleViewCount');
+
+  try{
+    // RPC increments once per page load. SQL function is SECURITY DEFINER.
+    const {url,key}=gn24SupabaseInfo();
+    if(url&&key){
+      const res=await fetch(url+'/rest/v1/rpc/gn24_increment_article_view',{
+        method:'POST',
+        headers:{apikey:key,Authorization:`Bearer ${key}`,'Content-Type':'application/json'},
+        body:JSON.stringify({p_article_id:articleId})
+      });
+      if(res.ok){
+        const payload=await res.json();
+        const count=Array.isArray(payload)?payload[0]:payload;
+        if(viewEl) viewEl.textContent=Number(count||0).toLocaleString('ko-KR');
+      }
+    }
+  }catch(e){ console.warn('GN24 view increment failed',e); }
+
+  try{
+    const rows=await gn24DbFetch('gn24_article_views?select=article_id,view_count&order=view_count.desc&limit=10')||[];
+    const titleMap={};
+    (allArticles||[]).forEach(a=>titleMap[String(a.id)]=a);
+    const popular=document.getElementById('sidePopular');
+    if(popular){
+      popular.innerHTML=rows.map((r,i)=>{
+        const a=titleMap[String(r.article_id)];
+        if(!a) return '';
+        return `<li><span class="side-rank">${String(i+1).padStart(2,'0')}</span><a href="${articleURL(a.id)}">${esc(a.title)}</a><small class="popular-views">${Number(r.view_count||0).toLocaleString('ko-KR')}</small></li>`;
+      }).join('') || '<li class="popular-empty">조회 데이터가 쌓이는 중입니다.</li>';
+    }
+  }catch(e){ console.warn('GN24 popular load failed',e); }
 }
