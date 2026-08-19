@@ -89,14 +89,35 @@ async function loadDbArticles(){
 }
 
 async function uploadSelectedImage(article){
-  const input=$('#imageInput'); const file=input?.files?.[0]; if(!file)return article;
-  const raw=($('#imageFilename')?.value||file.name).trim().replace(/[^a-zA-Z0-9._-]+/g,'-');
-  const folder=article.date||new Date().toISOString().slice(0,10); const path=`${folder}/${Date.now()}-${raw}`;
-  setStatus('대표이미지 업로드 중…','busy');
-  const {error}=await sb.storage.from(cfg.bucket||'news-images').upload(path,file,{upsert:false,contentType:file.type||'image/jpeg'});
+  const input=$('#imageInput');
+  let file=input?.files?.[0]||null;
+  let pending=null;
+  if(!file && window.GN24Admin?.getPendingImage){
+    pending=await window.GN24Admin.getPendingImage();
+    file=pending?.file||null;
+  }
+  if(!file)return article;
+
+  const wantedName=($('#imageFilename')?.value||pending?.filename||file.name||'news-image.jpg').trim();
+  const raw=wantedName.replace(/[^a-zA-Z0-9._-]+/g,'-')||'news-image.jpg';
+  const folder=(article.date||new Date().toISOString().slice(0,10)).replace(/[^0-9-]/g,'');
+  const articleFolder=String(article.id||'article').replace(/[^a-zA-Z0-9._-]+/g,'-');
+  const path=`${folder}/${articleFolder}/${Date.now()}-${raw}`;
+
+  setStatus('대표이미지 Storage 업로드 중…','busy','Supabase news-images 버킷에 업로드하고 있습니다.');
+  const {error}=await sb.storage.from(cfg.bucket||'news-images').upload(path,file,{
+    upsert:false,
+    contentType:file.type||'image/jpeg',
+    cacheControl:'3600'
+  });
   if(error) throw new Error('이미지 업로드 실패: '+error.message);
+
   const {data}=sb.storage.from(cfg.bucket||'news-images').getPublicUrl(path);
-  article.image=data.publicUrl; if($('#fImage'))$('#fImage').value=article.image;
+  const publicUrl=data?.publicUrl;
+  if(!publicUrl)throw new Error('이미지 공개 URL 생성에 실패했습니다.');
+  article.image=publicUrl;
+  if($('#fImage'))$('#fImage').value=publicUrl;
+  if(window.GN24Admin?.markImageUploaded)await window.GN24Admin.markImageUploaded(publicUrl);
   return article;
 }
 async function publish(){
@@ -106,7 +127,7 @@ async function publish(){
   setStatus('기사 DB 저장 중…','busy');
   const {error}=await sb.from('gn24_articles').upsert(a,{onConflict:'id'});
   if(error){setStatus('온라인 저장 실패','off',error.message);return alert('온라인 저장 실패: '+error.message);}
-  setStatus('온라인 연결 · 관리자 인증','on',`저장 완료 · ${new Date().toLocaleTimeString('ko-KR')}`);
+  setStatus('온라인 연결 · 관리자 인증','on',`기사·이미지 저장 완료 · ${new Date().toLocaleTimeString('ko-KR')}`);
   alert(a.is_published?'온라인 기사 저장·발행 완료':'비공개 기사로 온라인 저장 완료');
 }
 function normalizeLegacy(x){

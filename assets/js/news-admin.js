@@ -52,7 +52,7 @@
     if(rec.filename)els.imageFilename.value=rec.filename;if(rec.path)els.image.value=rec.path;
     els.downloadImage.disabled=false;els.clearDraftImage.disabled=false;
     const w=$('#imageRefreshWarning');if(w){w.classList.add('show');w.textContent='✓ 새 이미지가 브라우저에 임시저장되어 새로고침 후 복원되었습니다.'}
-    els.saveMessage.textContent='새 이미지 임시편집본이 복원되었습니다. 최종 반영 시 이미지 파일도 내려받아 GitHub에 업로드하세요.';
+    els.saveMessage.textContent='새 이미지 임시편집본이 복원되었습니다. 온라인 저장 시 Supabase Storage에 자동 업로드됩니다.';
     return true;
   }
 
@@ -146,7 +146,7 @@
   function exportJSON(){if(state.selectedId&&!saveCurrent())return;const out=sortArticles(state.articles);downloadBlob(new Blob([JSON.stringify(out,null,2)+'\n'],{type:'application/json;charset=utf-8'}),'news.json');els.saveMessage.textContent='news.json을 내려받았습니다. GitHub data/news.json에 교체 업로드하세요.';setStatus('news.json 다운로드 완료 · GitHub 업로드 필요','dirty')}
   async function importJSON(file){const txt=await file.text();const data=JSON.parse(txt);if(!Array.isArray(data))throw new Error('기사 배열 형식이 아닙니다.');state.articles=data;state.selectedId=sortArticles(data)[0]?.id||null;setDirty(true);renderList();if(state.selectedId)select(state.selectedId);saveDraft('manual');setStatus('불러온 편집본 임시저장됨','saved')}
 
-  async function chooseImage(file){resetImageFile();if(!file)return;state.imageFile=file;state.imageObjectUrl=URL.createObjectURL(file);imageBg(state.imageObjectUrl);const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const base=`${ymd(els.date.value||today())}-news-${String(Date.now()).slice(-4)}.${ext}`;const path=`/assets/images/news/${base}`;els.imageFilename.value=base;els.image.value=path;els.downloadImage.disabled=false;els.clearDraftImage.disabled=false;els.caption.focus();const w=$('#imageRefreshWarning');if(w){w.classList.add('show');w.textContent='✓ 새 이미지가 브라우저에 임시저장되었습니다. 새로고침해도 복원됩니다.'}try{await putDraftImage(state.selectedId,file,base,path)}catch(err){console.warn(err);if(w)w.textContent='⚠ 이미지 임시저장에 실패했습니다. 새로고침 전에 이미지 파일을 내려받아 주세요.'}els.saveMessage.textContent='새 이미지가 선택되고 임시저장되었습니다. 최종 반영 시 이미지 파일도 내려받아 GitHub에 업로드하세요.';setDirty(true);scheduleDraft()}
+  async function chooseImage(file){resetImageFile();if(!file)return;state.imageFile=file;state.imageObjectUrl=URL.createObjectURL(file);imageBg(state.imageObjectUrl);const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const base=`${ymd(els.date.value||today())}-news-${String(Date.now()).slice(-4)}.${ext}`;const path=`/assets/images/news/${base}`;els.imageFilename.value=base;els.image.value=path;els.downloadImage.disabled=false;els.clearDraftImage.disabled=false;els.caption.focus();const w=$('#imageRefreshWarning');if(w){w.classList.add('show');w.textContent='✓ 새 이미지가 브라우저에 임시저장되었습니다. 새로고침해도 복원됩니다.'}try{await putDraftImage(state.selectedId,file,base,path)}catch(err){console.warn(err);if(w)w.textContent='⚠ 이미지 임시저장에 실패했습니다. 새로고침 전에 이미지 파일을 내려받아 주세요.'}els.saveMessage.textContent='새 이미지가 선택되고 임시저장되었습니다. 온라인 저장 시 Supabase Storage에 자동 업로드됩니다.';setDirty(true);scheduleDraft()}
   function downloadImage(){if(!state.imageFile)return;const name=clean(els.imageFilename.value)||state.imageFile.name;downloadBlob(state.imageFile,name);els.saveMessage.textContent='이미지 파일을 내려받았습니다. GitHub assets/images/news/에 업로드하세요.'}
 
   async function clearDraftImage(){
@@ -203,9 +203,36 @@
     els.saveMessage.textContent=`Supabase에서 기사 ${state.articles.length}건을 불러왔습니다.`;
   }
 
+  async function getPendingImage(){
+    if(state.imageFile){
+      return {articleId:state.selectedId,file:state.imageFile,filename:clean(els.imageFilename.value)||state.imageFile.name||'news-image.jpg'};
+    }
+    const rec=await getDraftImage(state.selectedId);
+    if(rec?.file){
+      return {articleId:state.selectedId,file:rec.file,filename:rec.filename||rec.file.name||'news-image.jpg'};
+    }
+    return null;
+  }
+
+  async function markImageUploaded(publicUrl){
+    if(!publicUrl)return;
+    const id=state.selectedId;
+    els.image.value=publicUrl;
+    imageBg(publicUrl);
+    const a=current();
+    if(a)a.image=publicUrl;
+    await deleteDraftImage(id);
+    resetImageFile();
+    if(els.imageFilename)els.imageFilename.value=(publicUrl.split('/').pop()||'').split('?')[0];
+    saveDraft('manual');
+    els.saveMessage.textContent='대표이미지가 Supabase Storage에 업로드되고 기사에 연결되었습니다.';
+  }
+
   window.GN24Admin = {
     loadDbArticles: replaceWithDbArticles,
-    getSelectedId: ()=>state.selectedId
+    getSelectedId: ()=>state.selectedId,
+    getPendingImage,
+    markImageUploaded
   };
 
   loadSite().catch(err=>{els.list.innerHTML=`<div class="empty">${err.message}<br>상단의 news.json 불러오기를 이용해 주세요.</div>`;newArticle()});
