@@ -9,14 +9,21 @@ function normalizeDbArticle(r){return {
   relatedOrgs:parseMaybeJSON(r.related_orgs,[]),linkLabel:r.link_label||'',linkUrl:r.link_url||'',featured:!!r.featured,pinned:!!r.pinned,visualStyle:r.visual_style||'normal',isPublished:r.is_published!==false,
   createdAt:r.created_at||'',updatedAt:r.updated_at||''
 }}
-function loadSupabaseConfig(){return new Promise(resolve=>{if(window.GN24_SUPABASE)return resolve(window.GN24_SUPABASE);const sc=document.createElement('script');sc.src='/assets/js/gn24-supabase-config.js?v=3.2.7';sc.onload=()=>resolve(window.GN24_SUPABASE||{});sc.onerror=()=>resolve({});document.head.appendChild(sc)})}
+function loadSupabaseConfig(){return new Promise(resolve=>{if(window.GN24_SUPABASE)return resolve(window.GN24_SUPABASE);const sc=document.createElement('script');sc.src='/assets/js/gn24-supabase-config.js?v=3.2.9';sc.onload=()=>resolve(window.GN24_SUPABASE||{});sc.onerror=()=>resolve({});document.head.appendChild(sc)})}
 async function loadNewsData(){if(__gn24NewsPromise)return __gn24NewsPromise;__gn24NewsPromise=(async()=>{
   try{
     const cfg=await loadSupabaseConfig();
     if(cfg&&cfg.url&&cfg.anonKey){
       const endpoint=cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_articles?select=*&is_published=eq.true&order=date.desc,created_at.desc';
       const r=await fetch(endpoint,{cache:'no-store',headers:{apikey:cfg.anonKey}});
-      if(r.ok){const rows=await r.json();if(Array.isArray(rows)&&rows.length)return rows.map(normalizeDbArticle)}
+      if(r.ok){
+        const rows=await r.json();
+        if(Array.isArray(rows)){
+          const published=rows.map(normalizeDbArticle).filter(a=>a.isPublished!==false);
+          if(published.length)return published;
+          if(rows.length===0)return [];
+        }
+      }
     }
   }catch(e){console.warn('GN24 Supabase read fallback:',e)}
   return getJSON('/data/news.json');
@@ -25,7 +32,8 @@ function articleURL(id){return `/pages/article/?id=${encodeURIComponent(id)}`}
 const DEFAULT_NEWS_IMAGE='/assets/images/news/gn24-default-news.svg';
 function bgStyle(src){const safe=esc(src||DEFAULT_NEWS_IMAGE);return `style=\"background-image:url('${safe}'),url('${DEFAULT_NEWS_IMAGE}')\"`}
 function applyBg(el,src){if(!el)return;el.style.backgroundImage=`url('${src||DEFAULT_NEWS_IMAGE}'),url('${DEFAULT_NEWS_IMAGE}')`}
-function sortNews(data){return [...data].sort((a,b)=>
+function publicOnly(data){return (Array.isArray(data)?data:[]).filter(a=>a && a.isPublished!==false && a.is_published!==false)}
+function sortNews(data){return publicOnly(data).sort((a,b)=>
   String(b.date||'').localeCompare(String(a.date||'')) ||
   String(b.createdAt||b.created_at||'').localeCompare(String(a.createdAt||a.created_at||'')) ||
   String(b.updatedAt||b.updated_at||'').localeCompare(String(a.updatedAt||a.updated_at||'')) ||
