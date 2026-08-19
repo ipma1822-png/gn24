@@ -891,3 +891,41 @@
 .gn24-footer-bottom span{color:#d8bd74;font-size:10px;font-weight:800;letter-spacing:.08em}.gn24-footer-bottom small{color:#788697;font-size:10px}
 @media(max-width:900px){.gn24-footer-grid{grid-template-columns:1fr 1fr}.gn24-footer-brand{grid-column:1/-1}}
 @media(max-width:620px){.gn24-footer{margin-top:44px}.gn24-footer-grid{grid-template-columns:1fr;gap:28px;padding-top:32px!important;padding-bottom:28px!important}.gn24-footer-brand{grid-column:auto}.gn24-footer-links nav{grid-template-columns:1fr 1fr}.gn24-footer-bottom .wrap{display:block;padding-top:14px;padding-bottom:14px}.gn24-footer-bottom small{display:block;margin-top:6px}}
+
+
+/* ===== Global News24 v3.3.4 · Compact registration footer ===== */
+.gn24-footer-register{margin:0}
+.gn24-footer-register .register-row{
+  display:block;
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.gn24-footer-register .register-row-double{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+}
+.gn24-footer-register .register-field{
+  display:grid;
+  grid-template-columns:max-content 1fr;
+  align-items:baseline;
+  gap:9px;
+  min-width:0;
+}
+.gn24-footer-register .register-field dt{
+  color:#8797a9;
+  font-size:11px;
+  white-space:nowrap;
+}
+.gn24-footer-register .register-field dd{
+  margin:0;
+  color:#e8edf3;
+  font-size:11px;
+  line-height:1.5;
+  min-width:0;
+}
+.gn24-footer-register .register-field a{color:#e8edf3;text-decoration:none}
+.gn24-footer-register .register-address{grid-template-columns:max-content 1fr}
+@media(max-width:700px){
+  .gn24-footer-register .register-row-double{grid-template-columns:1fr;gap:6px}
+}
