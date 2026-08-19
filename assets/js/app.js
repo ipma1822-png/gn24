@@ -14,7 +14,7 @@ async function loadNewsData(){if(__gn24NewsPromise)return __gn24NewsPromise;__gn
     const cfg=await loadSupabaseConfig();
     if(cfg&&cfg.url&&cfg.anonKey){
       const endpoint=cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_articles?select=*&is_published=eq.true&order=date.desc,created_at.desc';
-      const r=await fetch(endpoint,{cache:'no-store',headers:{apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey}});
+      const r=await fetch(endpoint,{cache:'no-store',headers:{apikey:cfg.anonKey}});
       if(r.ok){const rows=await r.json();if(Array.isArray(rows)&&rows.length)return rows.map(normalizeDbArticle)}
     }
   }catch(e){console.warn('GN24 Supabase read fallback:',e)}
