@@ -149,6 +149,16 @@
             <label>직책<input id="rRole" value="기자" placeholder="기자 / 편집국장 / 특파원"></label>
           </div>
           <div class="form-grid two">
+            <label>권한
+              <select id="rAccessLevel">
+                <option value="editor">편집국 · 전체 기사 관리/발행</option>
+                <option value="reporter" selected>정식기자 · 자기 기사 작성/수정</option>
+                <option value="contributor">객원기자 · 작성 후 승인요청</option>
+              </select>
+            </label>
+            <label>로그인 이메일<input id="rLoginEmail" type="email" placeholder="기자 로그인용 이메일"></label>
+          </div>
+          <div class="form-grid two">
             <label>소속<input id="rAffiliation" value="Global News24"></label>
             <label>지역·담당<input id="rRegion" placeholder="서울 / 울산 / 중국 / 국제"></label>
           </div>
