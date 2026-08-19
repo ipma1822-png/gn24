@@ -129,7 +129,7 @@ async function publish(){
   const {data,error}=await sb.from('gn24_articles').upsert(a,{onConflict:'id'}).select('*').single();
   if(error){setStatus('온라인 저장 실패','off',error.message);return alert('온라인 저장 실패: '+error.message);}
   if(window.GN24Admin?.syncSavedArticle) window.GN24Admin.syncSavedArticle(data||a);
-  setStatus('온라인 연결 · 관리자 인증','on',`기사·이미지 저장 완료 · 목록 자동갱신 · ${new Date().toLocaleTimeString('ko-KR')}`);
+  setStatus('온라인 연결 · 관리자 인증','on',`기사·이미지 저장 완료 · 공유 OG는 최대 5분 내 자동생성 · ${new Date().toLocaleTimeString('ko-KR')}`);
   alert(a.is_published?'온라인 기사 저장·발행 완료':'비공개 기사로 온라인 저장 완료');
 }
 function normalizeLegacy(x){

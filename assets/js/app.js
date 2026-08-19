@@ -29,6 +29,8 @@ async function loadNewsData(){if(__gn24NewsPromise)return __gn24NewsPromise;__gn
   return getJSON('/data/news.json');
 })();return __gn24NewsPromise}
 function articleURL(id){return `/pages/article/?id=${encodeURIComponent(id)}`}
+function shareArticleSlug(id){return String(id||'article').replace(/[^A-Za-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'')||'article'}
+function shareArticleURL(id){return `${location.origin}/share/${shareArticleSlug(id)}/`}
 const DEFAULT_NEWS_IMAGE='/assets/images/news/gn24-default-news.svg';
 function bgStyle(src){const safe=esc(src||DEFAULT_NEWS_IMAGE);return `style=\"background-image:url('${safe}'),url('${DEFAULT_NEWS_IMAGE}')\"`}
 function applyBg(el,src){if(!el)return;el.style.backgroundImage=`url('${src||DEFAULT_NEWS_IMAGE}'),url('${DEFAULT_NEWS_IMAGE}')`}
@@ -77,6 +79,7 @@ if(bottomLatest){
 }
 
 setArticleSocialMeta(a);
+gn24PromoteStaticShareUrl(a);
 setupArticleTools(a);
 setupArticleCommunity(a);
 setupArticleViewsAndPopular(a,data);
@@ -157,7 +160,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 function setupArticleTools(article){
-  const url=location.href;
+  const url=shareArticleURL(article?.id);
   const title=article?.title||document.title||'Global News24';
   const shareUrl=(kind)=>{
     if(kind==='kakao'){gn24ShareKakao(article);return;}
@@ -181,7 +184,7 @@ function setupArticleTools(article){
 
   const copyBtn=document.getElementById('copyArticleLink');
   if(copyBtn) copyBtn.onclick=async()=>{
-    try{await navigator.clipboard.writeText(url); alert('기사 링크를 복사했습니다.');}
+    try{await navigator.clipboard.writeText(url); alert('카카오·SNS용 기사 링크를 복사했습니다.');}
     catch(e){prompt('아래 주소를 복사하세요.',url);}
   };
   const printBtn=document.getElementById('printArticle');
@@ -482,9 +485,7 @@ function setArticleSocialMeta(article){
   const title=String(article.title||'Global News24');
   const desc=gn24ArticleDescription(article);
   const image=gn24AbsoluteUrl(article.image);
-  const canonical=new URL(location.href);
-  canonical.hash='';
-  const url=canonical.href;
+  const url=shareArticleURL(article.id);
 
   document.title=title+' | Global News24';
   const description=document.head.querySelector('meta[name="description"]');
@@ -517,7 +518,7 @@ function gn24ShareKakao(article){
   const title=String(article?.title||'Global News24');
   const desc=gn24ArticleDescription(article);
   const image=gn24AbsoluteUrl(article?.image);
-  const url=location.href;
+  const url=shareArticleURL(article?.id);
 
   if(!gn24InitKakao()){
     alert('카카오톡 공유 설정이 아직 완료되지 않았습니다. 카카오 JavaScript 키를 먼저 연결해 주세요.');
@@ -541,4 +542,13 @@ function gn24ShareKakao(article){
     console.error(e);
     alert('카카오톡 공유를 시작하지 못했습니다.');
   }
+}
+
+async function gn24PromoteStaticShareUrl(article){
+  if(!article?.id || !location.pathname.startsWith('/pages/article')) return;
+  const share=shareArticleURL(article.id);
+  try{
+    const r=await fetch(share,{method:'HEAD',cache:'no-store'});
+    if(r.ok) history.replaceState({gn24ArticleId:article.id},'',new URL(share).pathname);
+  }catch(e){}
 }
