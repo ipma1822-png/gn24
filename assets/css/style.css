@@ -534,3 +534,113 @@
   .article-author-card,.article-comments-ready,.article-bottom-news,.article-related,footer{display:none!important}
   .article-shell,.article-reading-layout,.article-reading-main{width:100%!important;max-width:none!important;display:block!important}
 }
+
+
+/* ===== Global News24 v3.2.15 · photo-left / sidebar-from-top / compact tools ===== */
+
+/* 상단 기사 도구: 좌우 끝으로 벌어지지 않고 자연스럽게 연결 */
+.article-tool-row.article-tool-top{
+  justify-content:flex-start;
+  gap:12px;
+}
+.article-tool-row.article-tool-top .article-action-group{
+  margin-left:4px;
+  padding-left:12px;
+  border-left:1px solid #dfe3e8;
+}
+.article-tool-row.article-tool-top .article-share-group,
+.article-tool-row.article-tool-top .article-action-group{
+  flex-wrap:nowrap;
+}
+.article-tool-row.article-tool-top .article-tool-btn{
+  min-width:36px;
+  height:35px;
+  padding:0 9px;
+}
+.article-tool-row.article-tool-top .article-tool-wide{
+  min-width:66px;
+}
+
+/* PC: 이미지/본문 왼쪽, 최신뉴스는 이미지 상단부터 오른쪽 */
+@media (min-width:1001px){
+  .article-shell{
+    width:min(1180px,calc(100% - 48px));
+    max-width:1180px;
+  }
+
+  .article-shell h1,
+  .article-shell>.badge,
+  .article-subtitle,
+  .article-meta,
+  .article-tool-top{
+    max-width:1180px;
+  }
+
+  .article-reading-layout{
+    display:grid;
+    grid-template-columns:minmax(0,820px) 300px;
+    gap:38px;
+    align-items:start;
+    width:100%;
+    margin-top:18px;
+  }
+
+  .article-reading-main{
+    min-width:0;
+  }
+
+  .article-reading-main .article-figure{
+    width:100%;
+    max-width:none;
+    margin:0 0 30px;
+  }
+
+  .article-reading-main .article-figure .article-hero,
+  .article-reading-main #aHero{
+    width:100%;
+    aspect-ratio:16/9;
+    min-height:0!important;
+    height:auto!important;
+    background-size:contain!important;
+    background-position:center!important;
+    background-repeat:no-repeat!important;
+    background-color:#f5f6f8;
+  }
+
+  .article-reading-main .article-figure figcaption{
+    margin-top:7px;
+  }
+
+  .article-sidebar{
+    position:sticky;
+    top:18px;
+    margin-top:0;
+    align-self:start;
+  }
+
+  .article-body,#aBody,.sourcebox{
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+  }
+}
+
+/* 모바일/태블릿은 기존 1단 유지 */
+@media (max-width:1000px){
+  .article-reading-layout{display:block}
+  .article-reading-main .article-figure{margin:20px 0 26px}
+  .article-sidebar{display:none}
+  .article-tool-row.article-tool-top{
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .article-tool-row.article-tool-top .article-action-group{
+    margin-left:0;
+    padding-left:0;
+    border-left:0;
+    width:auto;
+    flex-wrap:wrap;
+  }
+}
+
