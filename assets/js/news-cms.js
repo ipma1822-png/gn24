@@ -31,7 +31,7 @@ async function refreshAuth(){
   else if(currentSession) setStatus('로그인됨 · 관리자 권한 없음','off','Supabase gn24_admins 등록을 확인하세요.');
   else setStatus('연결됨 · 로그인 필요','off','관리자 계정으로 로그인하면 온라인 저장 기능이 활성화됩니다.');
   buttons();
-  if(currentSession&&adminOK) setTimeout(refreshCommentCounts,0);
+  if(currentSession&&adminOK){setTimeout(refreshCommentCounts,0);setTimeout(loadReporters,150);}
 }
 async function login(){
   if(currentSession){await sb.auth.signOut();return refreshAuth();}
@@ -58,7 +58,7 @@ function formArticle(){
   const tags=value('#fTags').split(',').map(x=>x.trim()).filter(Boolean);
   return {
     id:value('#fId').trim(), date:value('#fDate'), title:value('#fTitle').trim(), subtitle:value('#fSubtitle').trim(),
-    category:value('#fCategory'), author:value('#fAuthor').trim()||'Global News24 편집부', summary:value('#fSummary').trim(),
+    category:value('#fCategory'), reporter_id:value('#fReporterId').trim()||null, author:value('#fAuthor').trim()||'Global News24 편집부', summary:value('#fSummary').trim(),
     image:value('#fImage').trim(), image_caption:value('#fImageCaption').trim(), content:value('#fContent'),
     source_name:value('#fSourceName').trim(), source_url:value('#fSourceUrl').trim(), tags,
     featured:!!$('#fFeatured')?.checked, pinned:!!$('#fPinned')?.checked,
@@ -134,7 +134,7 @@ async function publish(){
 }
 function normalizeLegacy(x){
   const content=Array.isArray(x.content)?x.content.join('\n\n'):(x.content||'');
-  return {id:x.id,date:x.date,title:x.title||'',subtitle:x.subtitle||'',category:x.category||'국내소식',author:x.author||'Global News24 편집부',summary:x.summary||'',image:x.image||'',image_caption:x.imageCaption||x.image_caption||'',content,source_name:x.sourceName||x.source_name||'',source_url:x.sourceUrl||x.source_url||'',tags:Array.isArray(x.tags)?x.tags:[],featured:!!x.featured,pinned:!!x.pinned,visual_style:x.visualStyle||x.visual_style||'normal',is_published:x.isPublished!==false&&x.is_published!==false,updated_at:new Date().toISOString()};
+  return {id:x.id,date:x.date,title:x.title||'',subtitle:x.subtitle||'',category:x.category||'국내소식',reporter_id:x.reporterId||x.reporter_id||null,author:x.author||'Global News24 편집부',summary:x.summary||'',image:x.image||'',image_caption:x.imageCaption||x.image_caption||'',content,source_name:x.sourceName||x.source_name||'',source_url:x.sourceUrl||x.source_url||'',tags:Array.isArray(x.tags)?x.tags:[],featured:!!x.featured,pinned:!!x.pinned,visual_style:x.visualStyle||x.visual_style||'normal',is_published:x.isPublished!==false&&x.is_published!==false,updated_at:new Date().toISOString()};
 }
 async function migrate(){
   if(!(await requireAdmin()))return;
@@ -259,6 +259,106 @@ commentList?.addEventListener('click',e=>{
   else if(e.target.closest('.delete-comment'))deleteComment(id);
 });
 
+
+
+
+/* ===== GN24 v3.3.1 · 기자 관리자 ===== */
+const reporterManageBtn=$('#reporterManageBtn'), reporterManager=$('#reporterManager'),
+      reporterList=$('#adminReporterList'), reporterForm=$('#reporterForm');
+let reporterRows=[], reporterFilter='active', selectedReporterId='';
+
+function reporterEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function reporterValue(id){return ($(id)?.value||'').trim()}
+function reporterBlank(){
+  selectedReporterId='';
+  $('#rId').value=''; $('#rName').value=''; $('#rRole').value='기자'; $('#rAffiliation').value='Global News24';
+  $('#rRegion').value=''; $('#rPhoto').value=''; $('#rSpecialties').value=''; $('#rEmail').value='';
+  $('#rBio').value=''; $('#rStatus').value='active'; $('#rOrder').value='100';
+  $('#reporterManagerStatus').textContent='새 기자 정보를 입력하세요.';
+}
+function reporterFill(r){
+  if(!r)return reporterBlank();
+  selectedReporterId=r.id;
+  $('#rId').value=r.id||''; $('#rName').value=r.name||''; $('#rRole').value=r.role||'기자';
+  $('#rAffiliation').value=r.affiliation||'Global News24'; $('#rRegion').value=r.region||'';
+  $('#rPhoto').value=r.photo_url||''; $('#rSpecialties').value=(r.specialties||[]).join(', ');
+  $('#rEmail').value=r.public_email||''; $('#rBio').value=r.bio||''; $('#rStatus').value=r.status||'active';
+  $('#rOrder').value=String(r.display_order??100);
+  $('#reporterManagerStatus').textContent=`${r.name} 기자 정보를 편집 중입니다.`;
+}
+function reporterRender(){
+  document.querySelectorAll('[data-reporter-filter]').forEach(b=>b.classList.toggle('active',b.dataset.reporterFilter===reporterFilter));
+  $('#reporterActiveCount').textContent=reporterRows.filter(r=>r.status==='active').length;
+  $('#reporterPendingCount').textContent=reporterRows.filter(r=>r.status==='pending').length;
+  $('#reporterSuspendedCount').textContent=reporterRows.filter(r=>r.status==='suspended').length;
+  const rows=reporterRows.filter(r=>r.status===reporterFilter);
+  reporterList.innerHTML=rows.length?rows.map(r=>`
+    <button type="button" class="admin-reporter-item ${r.id===selectedReporterId?'active':''}" data-reporter-id="${reporterEsc(r.id)}">
+      <span class="admin-reporter-avatar" ${r.photo_url?`style="background-image:url('${reporterEsc(r.photo_url)}')"`:''}>${r.photo_url?'':reporterEsc((r.name||'기').slice(0,1))}</span>
+      <span><b>${reporterEsc(r.name)}</b><small>${reporterEsc(r.role||'기자')} · ${reporterEsc(r.affiliation||'Global News24')}</small></span>
+    </button>`).join(''):'<div class="admin-comment-empty">해당 기자가 없습니다.</div>';
+}
+async function loadReporters(){
+  if(!(await requireAdmin()))return;
+  const {data,error}=await sb.from('gn24_reporters').select('*').order('display_order',{ascending:true}).order('name',{ascending:true});
+  if(error){$('#reporterManagerStatus').textContent='기자 불러오기 실패: '+error.message;return;}
+  reporterRows=data||[];
+  reporterRender();
+  refreshReporterSelect();
+}
+function refreshReporterSelect(){
+  const sel=$('#fReporterId'); if(!sel)return;
+  const old=sel.value;
+  sel.innerHTML='<option value="">직접 입력 / 편집부</option>'+reporterRows.filter(r=>r.status==='active').map(r=>`<option value="${reporterEsc(r.id)}">${reporterEsc(r.name)} · ${reporterEsc(r.role||'기자')}</option>`).join('');
+  if([...sel.options].some(o=>o.value===old))sel.value=old;
+}
+async function saveReporter(e){
+  e.preventDefault();
+  if(!(await requireAdmin()))return;
+  const id=reporterValue('#rId').replace(/[^A-Za-z0-9._-]+/g,'-');
+  const name=reporterValue('#rName');
+  if(!id||!name)return alert('기자 ID와 이름은 필수입니다.');
+  const row={
+    id,name,role:reporterValue('#rRole')||'기자',affiliation:reporterValue('#rAffiliation')||'Global News24',
+    photo_url:reporterValue('#rPhoto'),bio:reporterValue('#rBio'),
+    specialties:reporterValue('#rSpecialties').split(',').map(x=>x.trim()).filter(Boolean),
+    region:reporterValue('#rRegion'),public_email:reporterValue('#rEmail'),
+    status:$('#rStatus').value||'active',display_order:Number($('#rOrder').value||100),
+    updated_at:new Date().toISOString()
+  };
+  const {error}=await sb.from('gn24_reporters').upsert(row,{onConflict:'id'});
+  if(error)return alert('기자 저장 실패: '+error.message);
+  selectedReporterId=id;
+  $('#reporterManagerStatus').textContent='기자 정보가 저장되었습니다.';
+  await loadReporters();
+}
+async function deleteReporter(){
+  if(!(await requireAdmin()))return;
+  const id=selectedReporterId||reporterValue('#rId'); if(!id)return alert('삭제할 기자를 선택하세요.');
+  const r=reporterRows.find(x=>x.id===id);
+  if(!confirm(`${r?.name||id} 기자 정보를 삭제할까요?\n\n연결된 기존 기사의 작성자명은 유지됩니다.`))return;
+  const {error}=await sb.from('gn24_reporters').delete().eq('id',id);
+  if(error)return alert('기자 삭제 실패: '+error.message);
+  reporterBlank(); await loadReporters();
+}
+
+reporterManageBtn?.addEventListener('click',async()=>{
+  if(!(await requireAdmin()))return;
+  reporterManager.hidden=false;
+  reporterManager.scrollIntoView({behavior:'smooth',block:'start'});
+  await loadReporters();
+});
+$('#reporterCloseBtn')?.addEventListener('click',()=>reporterManager.hidden=true);
+$('#reporterRefreshBtn')?.addEventListener('click',loadReporters);
+$('#reporterNewBtn')?.addEventListener('click',reporterBlank);
+reporterForm?.addEventListener('submit',saveReporter);
+$('#reporterDeleteBtn')?.addEventListener('click',deleteReporter);
+document.querySelectorAll('[data-reporter-filter]').forEach(b=>b.addEventListener('click',()=>{reporterFilter=b.dataset.reporterFilter;reporterRender()}));
+reporterList?.addEventListener('click',e=>{const b=e.target.closest('[data-reporter-id]');if(!b)return;reporterFill(reporterRows.find(r=>r.id===b.dataset.reporterId));reporterRender()});
+$('#fReporterId')?.addEventListener('change',e=>{
+  const r=reporterRows.find(x=>x.id===e.target.value);
+  if(r&&$('#fAuthor'))$('#fAuthor').value=r.name;
+});
 
 loginBtn?.addEventListener('click',login);loadBtn?.addEventListener('click',loadDbArticles);pubBtn?.addEventListener('click',publish);migrateBtn?.addEventListener('click',migrate);onlineDeleteBtn?.addEventListener('click',deleteOnline);
 sb.auth.onAuthStateChange(()=>setTimeout(refreshAuth,0));refreshAuth();

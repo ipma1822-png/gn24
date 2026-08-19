@@ -9,7 +9,7 @@
   const state={articles:[],selectedId:null,dirty:false,imageFile:null,imageObjectUrl:null,saveTimer:null,restored:false};
   const els={
     list:$('#articleList'),count:$('#articleCount'),listCount:$('#listCount'),dirty:$('#dirtyState'),search:$('#searchInput'),form:$('#articleForm'),
-    id:$('#fId'),date:$('#fDate'),title:$('#fTitle'),subtitle:$('#fSubtitle'),category:$('#fCategory'),author:$('#fAuthor'),summary:$('#fSummary'),image:$('#fImage'),caption:$('#fImageCaption'),content:$('#fContent'),sourceName:$('#fSourceName'),sourceUrl:$('#fSourceUrl'),tags:$('#fTags'),featured:$('#fFeatured'),pinned:$('#fPinned'),published:$('#fPublished'),visualStyle:$('#fVisualStyle'),preview:$('#imagePreview'),imageInput:$('#imageInput'),imageFilename:$('#imageFilename'),downloadImage:$('#downloadImageBtn'),clearDraftImage:$('#clearDraftImageBtn'),saveMessage:$('#saveMessage'),draftInfo:$('#draftInfo')
+    id:$('#fId'),date:$('#fDate'),title:$('#fTitle'),subtitle:$('#fSubtitle'),category:$('#fCategory'),reporter:$('#fReporterId'),author:$('#fAuthor'),summary:$('#fSummary'),image:$('#fImage'),caption:$('#fImageCaption'),content:$('#fContent'),sourceName:$('#fSourceName'),sourceUrl:$('#fSourceUrl'),tags:$('#fTags'),featured:$('#fFeatured'),pinned:$('#fPinned'),published:$('#fPublished'),visualStyle:$('#fVisualStyle'),preview:$('#imagePreview'),imageInput:$('#imageInput'),imageFilename:$('#imageFilename'),downloadImage:$('#downloadImageBtn'),clearDraftImage:$('#clearDraftImageBtn'),saveMessage:$('#saveMessage'),draftInfo:$('#draftInfo')
   };
   const clean=s=>String(s??'').trim();
   const clone=x=>JSON.parse(JSON.stringify(x));
@@ -67,7 +67,7 @@
 
   function formData(){
     const paragraphs=els.content.value.split(/\n\s*\n/).map(clean).filter(Boolean);
-    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value||'뉴스',summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,featured:els.featured.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,isPublished:els.published?els.published.checked:true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
+    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value||'뉴스',summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,reporterId:clean(els.reporter?.value),author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,featured:els.featured.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,isPublished:els.published?els.published.checked:true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
   }
 
   function pendingForm(){
@@ -110,14 +110,14 @@
     if(!p)return;
     els.id.value=p.id||els.id.value;els.date.value=p.date||els.date.value;els.title.value=p.title||'';els.subtitle.value=p.subtitle||'';
     if(p.category){if(![...els.category.options].some(o=>o.value===p.category)){const o=document.createElement('option');o.value=o.textContent=p.category;els.category.append(o)}els.category.value=p.category}
-    els.author.value=p.author||'Global News24 편집부';els.summary.value=p.summary||'';els.image.value=p.image||DEFAULT_IMAGE;els.caption.value=p.imageCaption||'';els.content.value=(p.content||[]).join('\n\n');els.sourceName.value=p.sourceName||'';els.sourceUrl.value=p.sourceUrl||'';els.tags.value=(p.tags||[]).join(', ');els.featured.checked=!!p.featured;els.pinned.checked=!!p.pinned;if(els.published)els.published.checked=p.isPublished!==false;els.visualStyle.value=p.visualStyle||'normal';els.imageFilename.value=p._imageFilename||(p.image||'').split('/').pop()||'';imageBg(p.image||DEFAULT_IMAGE);
+    if(els.reporter)els.reporter.value=p.reporterId||'';els.author.value=p.author||'Global News24 편집부';els.summary.value=p.summary||'';els.image.value=p.image||DEFAULT_IMAGE;els.caption.value=p.imageCaption||'';els.content.value=(p.content||[]).join('\n\n');els.sourceName.value=p.sourceName||'';els.sourceUrl.value=p.sourceUrl||'';els.tags.value=(p.tags||[]).join(', ');els.featured.checked=!!p.featured;els.pinned.checked=!!p.pinned;if(els.published)els.published.checked=p.isPublished!==false;els.visualStyle.value=p.visualStyle||'normal';els.imageFilename.value=p._imageFilename||(p.image||'').split('/').pop()||'';imageBg(p.image||DEFAULT_IMAGE);
   }
 
   function select(id,opts={}){
     state.selectedId=id;resetImageFile();const a=current();if(!a)return;
     els.id.value=a.id||'';els.date.value=a.date||today();els.title.value=a.title||'';els.subtitle.value=a.subtitle||'';els.category.value=a.category||'국내소식';
     if(![...els.category.options].some(o=>o.value===(a.category||''))){const o=document.createElement('option');o.value=o.textContent=a.category||'뉴스';els.category.append(o);els.category.value=o.value}
-    els.author.value=a.author||'Global News24 편집부';els.summary.value=a.summary||'';els.image.value=a.image||'';els.caption.value=a.imageCaption||'';els.content.value=(Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[])).join('\n\n');els.sourceName.value=a.sourceName||'';els.sourceUrl.value=a.sourceUrl||'';els.tags.value=(a.tags||[]).join(', ');els.featured.checked=!!a.featured;els.pinned.checked=!!a.pinned;if(els.published)els.published.checked=a.isPublished!==false;els.visualStyle.value=a.visualStyle||'normal';els.imageFilename.value=(a.image||'').split('/').pop()||`${ymd(a.date)}-news.jpg`;imageBg(a.image);$('#editorTitle').textContent=`기사 편집 · ${a.category||'뉴스'}`;if(!opts.keepMessage)els.saveMessage.textContent='편집 후 저장을 눌러주세요.';renderList();restoreDraftImage(id);
+    if(els.reporter)els.reporter.value=a.reporterId||'';els.author.value=a.author||'Global News24 편집부';els.summary.value=a.summary||'';els.image.value=a.image||'';els.caption.value=a.imageCaption||'';els.content.value=(Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[])).join('\n\n');els.sourceName.value=a.sourceName||'';els.sourceUrl.value=a.sourceUrl||'';els.tags.value=(a.tags||[]).join(', ');els.featured.checked=!!a.featured;els.pinned.checked=!!a.pinned;if(els.published)els.published.checked=a.isPublished!==false;els.visualStyle.value=a.visualStyle||'normal';els.imageFilename.value=(a.image||'').split('/').pop()||`${ymd(a.date)}-news.jpg`;imageBg(a.image);$('#editorTitle').textContent=`기사 편집 · ${a.category||'뉴스'}`;if(!opts.keepMessage)els.saveMessage.textContent='편집 후 저장을 눌러주세요.';renderList();restoreDraftImage(id);
   }
 
   function renderList(){
@@ -136,7 +136,7 @@
     }
   }
 
-  function newArticle(){const d=today(),id=makeId(d);state.articles.unshift({id,title:'',subtitle:'',date:d,category:'국내소식',summary:'',image:DEFAULT_IMAGE,author:'Global News24 편집부',sourceName:'Global News24',sourceUrl:'',tags:[],content:[],featured:false,pinned:false,visualStyle:'normal',isPublished:true,relatedOrgs:[]});state.selectedId=id;setDirty(true);select(id);els.title.focus();els.saveMessage.textContent='새 기사를 작성하세요. 입력 내용은 자동 임시저장됩니다.';saveDraft('manual')}
+  function newArticle(){const d=today(),id=makeId(d);state.articles.unshift({id,title:'',subtitle:'',date:d,category:'국내소식',summary:'',image:DEFAULT_IMAGE,reporterId:'',author:'Global News24 편집부',sourceName:'Global News24',sourceUrl:'',tags:[],content:[],featured:false,pinned:false,visualStyle:'normal',isPublished:true,relatedOrgs:[]});state.selectedId=id;setDirty(true);select(id);els.title.focus();els.saveMessage.textContent='새 기사를 작성하세요. 입력 내용은 자동 임시저장됩니다.';saveDraft('manual')}
 
   function saveCurrent(e){e?.preventDefault();const a=formData();if(!a.title){alert('기사 제목을 입력해 주세요.');els.title.focus();return false}const oldId=state.selectedId;const idx=state.articles.findIndex(x=>x.id===oldId);if(idx<0)state.articles.push(a);else state.articles[idx]=a;state.selectedId=a.id;setDirty(true);renderList();saveDraft('manual');els.saveMessage.textContent='현재 기사가 편집본에 저장되었습니다. 새로고침해도 유지됩니다.';setStatus('편집본 저장됨 · GitHub 반영 필요','dirty');return true}
 
@@ -173,6 +173,7 @@
     return {
       id:x.id||'', title:x.title||'', subtitle:x.subtitle||'', date:x.date||today(),
       category:x.category||'국내소식', summary:x.summary||'', image:x.image||DEFAULT_IMAGE,
+      reporterId:x.reporter_id||x.reporterId||'',
       author:x.author||'Global News24 편집부',
       sourceName:x.source_name||x.sourceName||'',
       sourceUrl:x.source_url||x.sourceUrl||'',

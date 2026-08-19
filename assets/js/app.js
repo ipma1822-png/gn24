@@ -110,6 +110,7 @@ gn24PromoteStaticShareUrl(a);
 setupArticleTools(a);
 setupArticleCommunity(a);
 setupArticleViewsAndPopular(a,data);
+setupArticleReporter(a);
 }
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
 
@@ -578,4 +579,36 @@ async function gn24PromoteStaticShareUrl(article){
     const r=await fetch(share,{method:'HEAD',cache:'no-store'});
     if(r.ok) history.replaceState({gn24ArticleId:article.id},'',new URL(share).pathname);
   }catch(e){}
+}
+
+
+async function setupArticleReporter(article){
+  const authorName=document.getElementById('articleAuthorName');
+  const avatar=document.querySelector('.article-author-card .author-avatar');
+  const info=document.querySelector('.article-author-card .author-info');
+  const more=document.querySelector('.article-author-card .author-more');
+  if(!authorName)return;
+
+  authorName.textContent=article?.author||'Global News24 편집부';
+  if(!article?.reporterId){
+    if(more) more.href='/pages/reporters/';
+    return;
+  }
+  try{
+    const rows=await gn24DbFetch(`gn24_reporters?id=eq.${encodeURIComponent(article.reporterId)}&status=eq.active&select=id,name,role,affiliation,photo_url,bio,specialties,region,public_email&limit=1`)||[];
+    const r=rows[0]; if(!r)return;
+    authorName.textContent=r.name||article.author||'Global News24 편집부';
+    if(avatar){
+      if(r.photo_url){
+        avatar.textContent='';
+        avatar.style.backgroundImage=`url("${String(r.photo_url).replace(/"/g,'%22')}")`;
+        avatar.classList.add('reporter-photo');
+      }else avatar.textContent=(r.name||'GN').slice(0,1);
+    }
+    const span=info?.querySelector('span');
+    const p=info?.querySelector('p');
+    if(span)span.textContent=[r.role,r.affiliation,r.region].filter(Boolean).join(' · ');
+    if(p)p.textContent=r.bio||`${r.name} 기자의 Global News24 기사입니다.`;
+    if(more){more.href=`/pages/reporters/?id=${encodeURIComponent(r.id)}`;more.textContent='기자 프로필·다른 기사 보기 ›';}
+  }catch(e){console.warn('GN24 reporter profile load failed',e)}
 }
