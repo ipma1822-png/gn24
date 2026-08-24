@@ -1263,3 +1263,80 @@
   .gn24-breaking-track{animation:none!important}
   #topLatest[data-scroll-ready="1"],.thumb-grid.gn24-motion-row{transition:none!important}
 }
+
+
+/* ============================================================
+   GN24 v3.4.5 · HARD MOTION FIX
+   Render timing independent + obvious visible movement.
+   ============================================================ */
+.breaking .ticker{
+  min-width:0!important;
+  overflow:hidden!important;
+  position:relative!important;
+}
+.gn24-breaking-track{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  width:max-content!important;
+  min-width:max-content!important;
+  animation:gn24Marquee345 22s linear infinite!important;
+  will-change:transform!important;
+}
+.gn24-breaking-track:hover{animation-play-state:paused!important}
+.gn24-breaking-item{
+  display:flex!important;
+  flex:0 0 auto!important;
+  align-items:center!important;
+  white-space:nowrap!important;
+  gap:8px!important;
+  padding-right:46px!important;
+}
+@keyframes gn24Marquee345{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+
+/* Most viewed: list actually moves one row at a time */
+.ranking.gn24-ranking-scroll{
+  overflow:hidden!important;
+  position:relative!important;
+}
+#topLatest[data-scroll-ready="1"]{
+  position:relative!important;
+  will-change:transform!important;
+  transform:translate3d(0,0,0);
+}
+
+/* Editor's Pick: 4 visible cards, then one card slides left */
+.gn24-editor-viewport{
+  width:100%!important;
+  overflow:hidden!important;
+  position:relative!important;
+}
+#homeNews.gn24-motion-row{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  gap:16px!important;
+  width:auto!important;
+  will-change:transform!important;
+}
+#homeNews.gn24-motion-row > *{
+  flex:0 0 calc((100% - 48px)/4)!important;
+  min-width:0!important;
+}
+
+/* subtle live pulse to visibly verify JS/CSS motion is active */
+.gn24-hero-breathe .lead-media{
+  animation:gn24HeroBreathe345 8s ease-in-out infinite alternate!important;
+}
+@keyframes gn24HeroBreathe345{
+  from{filter:brightness(1); transform:scale(1)}
+  to{filter:brightness(1.035); transform:scale(1.012)}
+}
+
+@media(max-width:900px){
+  .gn24-breaking-track{animation-duration:18s!important}
+  .gn24-editor-viewport{overflow:hidden!important}
+  #homeNews.gn24-motion-row > *{flex-basis:78%!important}
+}
