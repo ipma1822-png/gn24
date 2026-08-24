@@ -1479,3 +1479,43 @@
     animation-duration:6s!important;
   }
 }
+
+
+/* ============================================================
+   GN24 v3.4.10 · NETWORK PANEL POSITION / WIDTH FIX
+   v3.4.9에서 .gn24-network-electric 자체에 inline-block이 적용되어
+   전체 네트워크 바가 왼쪽 작은 박스로 축소된 문제를 수정.
+   ============================================================ */
+
+/* Full-width dark network bar restored */
+.gn24-network-electric{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+/* Keep only the number itself inline */
+.gn24-network-electric .network-count,
+.gn24-network-electric [data-network-count],
+.gn24-network-electric strong,
+.gn24-network-electric .gn24-electric-number{
+  display:inline-block!important;
+}
+
+/* Preserve original inner layout: title on the left, number on the right */
+.gn24-network-electric > .container,
+.gn24-network-electric > .wrap,
+.gn24-network-electric > .inner,
+.gn24-network-electric > div{
+  max-width:1180px;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* Do not let the electric effect change text wrapping or panel geometry */
+.gn24-network-electric .gn24-electric-number{
+  white-space:nowrap!important;
+}
