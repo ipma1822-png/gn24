@@ -1265,78 +1265,55 @@
 }
 
 
-/* ============================================================
-   GN24 v3.4.5 · HARD MOTION FIX
-   Render timing independent + obvious visible movement.
-   ============================================================ */
-.breaking .ticker{
-  min-width:0!important;
-  overflow:hidden!important;
-  position:relative!important;
-}
+
+/* GN24 v3.4.6 · READABLE MOTION */
+.breaking .ticker{overflow:hidden!important;min-width:0!important}
 .gn24-breaking-track{
-  display:flex!important;
-  flex-wrap:nowrap!important;
-  align-items:center!important;
-  width:max-content!important;
-  min-width:max-content!important;
-  animation:gn24Marquee345 22s linear infinite!important;
-  will-change:transform!important;
+ display:flex!important;align-items:center!important;flex-wrap:nowrap!important;
+ width:max-content!important;animation:gn24Ticker346 58s linear infinite!important;
+ will-change:transform
 }
 .gn24-breaking-track:hover{animation-play-state:paused!important}
 .gn24-breaking-item{
-  display:flex!important;
-  flex:0 0 auto!important;
-  align-items:center!important;
-  white-space:nowrap!important;
-  gap:8px!important;
-  padding-right:46px!important;
+ display:flex!important;align-items:center!important;flex:0 0 auto!important;
+ white-space:nowrap!important;gap:9px!important;padding-right:58px!important
 }
-@keyframes gn24Marquee345{
-  from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(-50%,0,0)}
+.gn24-breaking-item i{font-style:normal;font-size:6px;opacity:.45}
+@keyframes gn24Ticker346{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ranking: exactly one row clipped, no text overlap */
+.gn24-ranking-viewport{
+ overflow:hidden!important;position:relative!important;width:100%!important;
+ height:58px!important
+}
+.gn24-ranking-list{
+ margin:0!important;padding:0!important;will-change:transform!important;
+ transform:translateY(0)
+}
+.gn24-ranking-list>*{
+ min-height:58px!important;height:58px!important;box-sizing:border-box!important;
+ overflow:hidden!important
 }
 
-/* Most viewed: list actually moves one row at a time */
-.ranking.gn24-ranking-scroll{
-  overflow:hidden!important;
-  position:relative!important;
+/* editor: real slide, no flashing */
+.gn24-editor-viewport{overflow:hidden!important;width:100%!important;position:relative!important}
+#homeNews.gn24-editor-row{
+ display:flex!important;flex-wrap:nowrap!important;gap:16px!important;
+ width:100%!important;will-change:transform!important;transform:translateX(0)
 }
-#topLatest[data-scroll-ready="1"]{
-  position:relative!important;
-  will-change:transform!important;
-  transform:translate3d(0,0,0);
+#homeNews.gn24-editor-row>*{
+ flex:0 0 calc((100% - 48px)/4)!important;min-width:0!important
 }
-
-/* Editor's Pick: 4 visible cards, then one card slides left */
-.gn24-editor-viewport{
-  width:100%!important;
-  overflow:hidden!important;
-  position:relative!important;
+/* Disable previous card flash/shine animations in this area */
+#homeNews.gn24-editor-row *, #homeNews.gn24-editor-row *::before, #homeNews.gn24-editor-row *::after{
+ animation-name:none!important
 }
-#homeNews.gn24-motion-row{
-  display:flex!important;
-  flex-wrap:nowrap!important;
-  gap:16px!important;
-  width:auto!important;
-  will-change:transform!important;
-}
-#homeNews.gn24-motion-row > *{
-  flex:0 0 calc((100% - 48px)/4)!important;
-  min-width:0!important;
-}
-
-/* subtle live pulse to visibly verify JS/CSS motion is active */
-.gn24-hero-breathe .lead-media{
-  animation:gn24HeroBreathe345 8s ease-in-out infinite alternate!important;
-}
-@keyframes gn24HeroBreathe345{
-  from{filter:brightness(1); transform:scale(1)}
-  to{filter:brightness(1.035); transform:scale(1.012)}
-}
+#homeNews.gn24-editor-row img{transition:transform .35s ease!important}
+#homeNews.gn24-editor-row a:hover img{transform:scale(1.025)}
 
 @media(max-width:900px){
-  .gn24-breaking-track{animation-duration:18s!important}
-  .gn24-editor-viewport{overflow:hidden!important}
-  #homeNews.gn24-motion-row > *{flex-basis:78%!important}
+ .gn24-breaking-track{animation-duration:68s!important}
+ .gn24-ranking-viewport{height:54px!important}
+ .gn24-ranking-list>*{height:54px!important;min-height:54px!important}
+ #homeNews.gn24-editor-row>*{flex-basis:82%!important}
 }
