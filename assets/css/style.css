@@ -1373,3 +1373,109 @@
  .gn24-ranking-viewport.gn24-ranking-all9{min-height:486px!important}
  .gn24-ranking-track>li{min-height:54px!important}
 }
+
+
+/* ============================================================
+   GN24 v3.4.9 · GLOBAL NETWORK ELECTRIC SCOREBOARD
+   ============================================================ */
+
+/* Works with the existing network number regardless of exact inner span */
+.gn24-network-electric,
+.gn24-network-electric .network-count,
+.gn24-network-electric [data-network-count],
+.gn24-network-electric strong{
+  position:relative!important;
+  display:inline-block!important;
+  font-variant-numeric:tabular-nums lining-nums!important;
+  letter-spacing:.02em!important;
+}
+
+/* LED-like luminous number */
+.gn24-network-electric .gn24-electric-number{
+  position:relative!important;
+  display:inline-block!important;
+  color:#fff7d0!important;
+  text-shadow:
+    0 0 4px rgba(255,235,150,.95),
+    0 0 10px rgba(255,202,67,.85),
+    0 0 22px rgba(255,170,0,.72),
+    0 0 42px rgba(255,128,0,.38)!important;
+  animation:
+    gn24ElectricPulse349 2.4s ease-in-out infinite,
+    gn24ElectricFlicker349 7s linear infinite!important;
+  will-change:filter,text-shadow,transform,opacity!important;
+}
+
+/* Moving light band across the digits */
+.gn24-network-electric .gn24-electric-number::after{
+  content:""!important;
+  position:absolute!important;
+  inset:-8% -10%!important;
+  pointer-events:none!important;
+  background:linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(255,255,255,0) 42%,
+    rgba(255,255,255,.7) 48%,
+    rgba(255,220,120,.95) 50%,
+    rgba(255,255,255,.65) 52%,
+    rgba(255,255,255,0) 58%,
+    transparent 64%,
+    transparent 100%
+  )!important;
+  mix-blend-mode:screen!important;
+  transform:translateX(-135%) skewX(-12deg)!important;
+  animation:gn24ElectricSweep349 4.8s ease-in-out infinite!important;
+  filter:blur(.6px)!important;
+}
+
+/* Tiny live dot also pulses like a control-room indicator */
+.gn24-network-electric .gn24-electric-live-dot{
+  display:inline-block!important;
+  width:7px!important;
+  height:7px!important;
+  margin-right:6px!important;
+  border-radius:50%!important;
+  background:#37f49a!important;
+  box-shadow:0 0 7px #37f49a, 0 0 14px rgba(55,244,154,.7)!important;
+  vertical-align:middle!important;
+  animation:gn24ElectricLive349 1.15s ease-in-out infinite!important;
+}
+
+@keyframes gn24ElectricPulse349{
+  0%,100%{
+    transform:scale(1);
+    filter:brightness(1) saturate(1);
+  }
+  50%{
+    transform:scale(1.025);
+    filter:brightness(1.18) saturate(1.18);
+  }
+}
+@keyframes gn24ElectricFlicker349{
+  0%,9%,11%,47%,49%,77%,79%,100%{opacity:1}
+  10%{opacity:.90}
+  48%{opacity:.94}
+  78%{opacity:.91}
+}
+@keyframes gn24ElectricSweep349{
+  0%,12%{transform:translateX(-135%) skewX(-12deg);opacity:0}
+  20%{opacity:.9}
+  42%{transform:translateX(135%) skewX(-12deg);opacity:.75}
+  48%,100%{transform:translateX(135%) skewX(-12deg);opacity:0}
+}
+@keyframes gn24ElectricLive349{
+  0%,100%{opacity:.5;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.18)}
+}
+
+/* Keep it elegant on mobile */
+@media(max-width:900px){
+  .gn24-network-electric .gn24-electric-number{
+    animation-duration:3.2s,8s!important;
+  }
+  .gn24-network-electric .gn24-electric-number::after{
+    animation-duration:6s!important;
+  }
+}
