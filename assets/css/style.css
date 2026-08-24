@@ -1152,3 +1152,81 @@
   .gn24-network-copy h2{font-size:18px}
   .gn24-network-number strong{font-size:38px}
 }
+
+/* =========================================================
+   GN24 v3.4.3 · LIVE NEWSROOM MOTION
+   움직임은 뉴스 정보 영역에만 제한해 언론사 톤을 유지한다.
+   ========================================================= */
+:root{--gn24-motion-ease:cubic-bezier(.22,.61,.36,1)}
+
+/* 1) 다중 속보 티커 */
+.breaking .ticker{position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 2%,#000 98%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 2%,#000 98%,transparent)}
+.breaking .ticker span{animation:none}
+.gn24-breaking-track{display:flex!important;align-items:center;width:max-content;gap:0;will-change:transform;animation:gn24BreakingMarquee 34s linear infinite}
+.gn24-breaking-track:hover{animation-play-state:paused}
+.gn24-breaking-item{display:inline-flex;align-items:center;gap:8px;padding-right:42px;color:#fff;font-weight:650}
+.gn24-breaking-item em{font-style:normal;color:#f1ce73;font-size:10px;font-weight:900;letter-spacing:.08em;border:1px solid rgba(241,206,115,.42);padding:3px 6px;border-radius:12px}
+.gn24-breaking-item i{width:3px!important;height:3px!important;background:rgba(255,255,255,.42)!important;animation:none!important}
+@keyframes gn24BreakingMarquee{to{transform:translateX(-50%)}}
+
+/* 2) 메인 대표뉴스 자동 전환 + Ken Burns */
+.lead-story{isolation:isolate}
+.lead-media{overflow:hidden;transition:opacity .42s var(--gn24-motion-ease),filter .42s var(--gn24-motion-ease);will-change:opacity,transform;background-size:cover}
+.lead-story.gn24-hero-changing .lead-media{opacity:.18;filter:blur(1.5px)}
+.lead-story.gn24-hero-changing .lead-copy{opacity:.25;transform:translateY(8px)}
+.lead-copy{transition:opacity .38s ease,transform .38s var(--gn24-motion-ease)}
+.lead-story.gn24-hero-active .lead-media{animation:gn24KenBurns 7s ease-out both}
+@keyframes gn24KenBurns{from{background-size:100% auto}to{background-size:106% auto}}
+.gn24-hero-controls{position:absolute;left:16px;top:354px;z-index:5;display:flex;align-items:center;gap:7px;background:rgba(8,25,47,.74);backdrop-filter:blur(5px);padding:7px 10px;border-radius:999px}
+.gn24-hero-dot{width:7px;height:7px;border:0;border-radius:50%;padding:0;background:rgba(255,255,255,.45);cursor:pointer;transition:.25s}
+.gn24-hero-dot.active{width:22px;border-radius:5px;background:#e1bd5d}
+.gn24-hero-pause{border:0;background:transparent;color:#fff;font-size:11px;line-height:1;cursor:pointer;padding:0 0 0 3px}
+.gn24-hero-progress{position:absolute;left:0;right:0;top:0;height:3px;z-index:5;background:rgba(255,255,255,.16)}
+.gn24-hero-progress span{display:block;height:100%;width:0;background:#d3a93f}
+.gn24-hero-progress.running span{animation:gn24HeroProgress 6.5s linear forwards}
+@keyframes gn24HeroProgress{to{width:100%}}
+
+/* 3) 주요뉴스 가로 스냅 롤링 */
+.gn24-editor-viewport{overflow:hidden;position:relative;margin-left:-2px;margin-right:-2px;padding:2px}
+.gn24-editor-viewport:after{content:'';position:absolute;right:0;top:0;bottom:0;width:62px;pointer-events:none;background:linear-gradient(90deg,transparent,#fff)}
+.thumb-grid.gn24-motion-row{display:flex!important;gap:16px;transition:transform .62s var(--gn24-motion-ease);will-change:transform}
+.thumb-grid.gn24-motion-row .news-card{flex:0 0 calc((100% - 48px)/4);min-width:0}
+.gn24-editor-nav{display:flex;align-items:center;gap:6px;margin-left:12px}
+.gn24-editor-nav button{width:30px;height:30px;border:1px solid #d5dae1;background:#fff;color:#102746;font-weight:900;cursor:pointer;transition:.2s}
+.gn24-editor-nav button:hover{border-color:#b68b25;background:#fbf7ec}
+
+/* 4) LIVE NEWS 세로 순환 */
+.attention-panel{position:relative;overflow:hidden}
+.attention-panel .section-head span{display:inline-flex;align-items:center;gap:5px;color:#15965b;font-weight:900}
+.attention-panel .section-head span:before{content:'';width:6px;height:6px;border-radius:50%;background:#1fc97c;box-shadow:0 0 0 0 rgba(31,201,124,.45);animation:gn24LivePulse 1.7s infinite}
+@keyframes gn24LivePulse{70%{box-shadow:0 0 0 8px rgba(31,201,124,0)}}
+#attentionList.gn24-live-list{position:relative;transition:transform .6s var(--gn24-motion-ease);will-change:transform}
+#attentionList.gn24-live-list li{background:#f7f9fb;transition:opacity .35s}
+
+/* 5) 이미지 호버 - 아주 약한 확대 + 빛 */
+.news-card .thumb,.latest-row .thumb,.mini-story .thumb{position:relative;overflow:hidden;transition:background-size .55s var(--gn24-motion-ease),filter .35s ease;background-size:cover}
+.news-card:hover .thumb,.latest-row:hover .thumb,.mini-story:hover .thumb{background-size:105%;filter:saturate(1.05) contrast(1.02)}
+.news-card:has(.thumb):hover:after{content:'';position:absolute;z-index:2;top:0;left:-45%;width:22%;height:46%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:gn24CardFlash .8s ease-out 1;pointer-events:none}
+@keyframes gn24CardFlash{to{left:125%}}
+
+/* 6) 네트워크 LIVE 숫자 영역에 생동감 */
+.gn24-network-number strong{font-variant-numeric:tabular-nums}
+.gn24-network-number small:before{content:'';display:inline-block;width:6px;height:6px;background:#27c47d;border-radius:50%;margin-right:7px;vertical-align:1px;animation:pulse 1.5s infinite}
+
+@media(max-width:900px){
+  .gn24-hero-controls{top:198px;left:11px;padding:6px 8px}
+  .thumb-grid.gn24-motion-row{overflow-x:auto;scroll-snap-type:x mandatory;transform:none!important;padding-bottom:6px;scrollbar-width:none}
+  .thumb-grid.gn24-motion-row::-webkit-scrollbar{display:none}
+  .thumb-grid.gn24-motion-row .news-card{flex:0 0 72%;scroll-snap-align:start}
+  .gn24-editor-viewport{overflow:visible}
+  .gn24-editor-viewport:after,.gn24-editor-nav{display:none}
+  @keyframes gn24KenBurns{from{background-size:cover}to{background-size:cover}}
+}
+@media(max-width:420px){
+  .gn24-hero-controls{top:173px}
+  .thumb-grid.gn24-motion-row .news-card{flex-basis:82%}
+}
+@media(prefers-reduced-motion:reduce){
+  .gn24-breaking-track,.lead-story.gn24-hero-active .lead-media,.gn24-network-number small:before,.attention-panel .section-head span:before{animation:none!important}
+  .thumb-grid.gn24-motion-row,#attentionList.gn24-live-list{transition:none!important}
+}
