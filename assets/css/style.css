@@ -1317,3 +1317,32 @@
  .gn24-ranking-list>*{height:54px!important;min-height:54px!important}
  #homeNews.gn24-editor-row>*{flex-basis:82%!important}
 }
+
+/* GN24 v3.4.7 · MOST VIEWED NEWS FIX */
+.gn24-ranking-viewport{
+  overflow:hidden!important;
+  position:relative!important;
+  width:100%!important;
+  height:300px!important; /* 약 5개 뉴스가 동시에 보이도록 */
+}
+.gn24-ranking-track{
+  position:relative!important;
+  width:100%!important;
+  transform:translateY(0);
+  will-change:transform!important;
+}
+.gn24-ranking-track>*{
+  display:block!important;
+  min-height:58px!important;
+  height:auto!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+#topLatest{ /* 원본은 데이터 공급원으로만 유지 */
+  display:none!important;
+}
+
+@media(max-width:900px){
+  .gn24-ranking-viewport{height:270px!important}
+  .gn24-ranking-track>*{min-height:54px!important}
+}

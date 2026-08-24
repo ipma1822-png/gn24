@@ -1,4 +1,4 @@
-/* Global News24 v3.4.6 · readable newsroom motion */
+/* Global News24 v3.4.7 · ranking scroll fix */
 (() => {
 'use strict';
 const S={breaking:false,ranking:false,editor:false};
@@ -28,31 +28,59 @@ function breaking(){
 function ranking(){
   if(S.ranking) return true;
   const list=document.getElementById('topLatest');
-  if(!list||list.children.length<3) return false;
+  if(!list||list.children.length<4) return false;
+
+  // 9개 뉴스가 들어있는 실제 목록을 복제해서 전용 롤링 트랙을 만듦.
+  const originalItems=[...list.children];
   const viewport=document.createElement('div');
   viewport.className='gn24-ranking-viewport';
-  list.parentNode.insertBefore(viewport,list); viewport.appendChild(list);
-  list.classList.add('gn24-ranking-list');
+  const track=document.createElement('div');
+  track.className='gn24-ranking-track';
+
+  originalItems.forEach(el=>track.appendChild(el.cloneNode(true)));
+
+  list.style.display='none';
+  list.parentNode.insertBefore(viewport,list);
+  viewport.appendChild(track);
+
   S.ranking=true;
-  let busy=false,timer;
-  function move(){
-    if(busy||list.children.length<2)return;
-    busy=true;
-    const first=list.firstElementChild;
-    const h=first.getBoundingClientRect().height;
-    list.style.transition='transform 1.45s ease-in-out';
-    list.style.transform=`translateY(-${h}px)`;
-    setTimeout(()=>{
-      list.style.transition='none';
-      list.appendChild(first);
-      list.style.transform='translateY(0)';
-      void list.offsetHeight;
-      busy=false;
-    },1500);
+  let busy=false,timer=null;
+
+  function rowHeight(){
+    const first=track.firstElementChild;
+    if(!first) return 58;
+    const rect=first.getBoundingClientRect();
+    const style=getComputedStyle(first);
+    const mb=parseFloat(style.marginBottom)||0;
+    return Math.max(52,rect.height+mb);
   }
-  const start=()=>{clearInterval(timer);timer=setInterval(move,4800)};
-  viewport.onmouseenter=()=>clearInterval(timer);
-  viewport.onmouseleave=start; start(); return true;
+
+  function move(){
+    if(busy||track.children.length<2) return;
+    busy=true;
+    const first=track.firstElementChild;
+    const h=rowHeight();
+
+    track.style.transition='transform 1.2s ease-in-out';
+    track.style.transform=`translateY(-${h}px)`;
+
+    setTimeout(()=>{
+      track.style.transition='none';
+      track.appendChild(first);
+      track.style.transform='translateY(0)';
+      void track.offsetHeight;
+      busy=false;
+    },1250);
+  }
+
+  const start=()=>{
+    clearInterval(timer);
+    timer=setInterval(move,4300);
+  };
+  viewport.addEventListener('mouseenter',()=>clearInterval(timer));
+  viewport.addEventListener('mouseleave',start);
+  start();
+  return true;
 }
 
 function editor(){
@@ -90,8 +118,8 @@ function editor(){
 
 function init(){breaking();ranking();editor();}
 document.addEventListener('DOMContentLoaded',()=>{
- init(); [500,1000,1800,3000,5000].forEach(x=>setTimeout(init,x));
+  init(); [500,1000,1800,3000,5000].forEach(x=>setTimeout(init,x));
 });
 new MutationObserver(()=>requestAnimationFrame(init))
- .observe(document.documentElement,{childList:true,subtree:true});
+  .observe(document.documentElement,{childList:true,subtree:true});
 })();
