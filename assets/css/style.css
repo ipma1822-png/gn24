@@ -1346,3 +1346,30 @@
   .gn24-ranking-viewport{height:270px!important}
   .gn24-ranking-track>*{min-height:54px!important}
 }
+
+/* GN24 v3.4.8 · ALL 9 MOST VIEWED / FIXED RANK NUMBERS */
+#topLatest.gn24-ranking-source{display:none!important}
+.gn24-ranking-viewport.gn24-ranking-all9{
+ width:100%!important;min-height:520px!important;overflow:hidden!important;position:relative!important
+}
+.gn24-ranking-track{width:100%!important;position:relative!important;margin:0!important;padding:0!important;will-change:transform!important}
+.gn24-ranking-track>li{
+ display:block!important;position:relative!important;min-height:58px!important;height:auto!important;
+ margin:0!important;padding:0!important;border-bottom:1px solid var(--line)!important;counter-increment:none!important
+}
+.gn24-ranking-track>li>a{
+ display:grid!important;grid-template-columns:30px minmax(0,1fr)!important;gap:7px!important;
+ padding:13px 2px!important;font-weight:700!important;line-height:1.35!important
+}
+.gn24-ranking-track>li>a::before{
+ content:attr(data-fixed-rank)!important;color:var(--gold)!important;font-weight:900!important
+}
+.gn24-ranking-track .home-view-count{
+ position:absolute!important;right:2px!important;bottom:4px!important;font-size:10px!important;color:#98a2b3!important
+}
+.gn24-breaking-track{animation-duration:58s!important}
+#homeNews.gn24-editor-row *,#homeNews.gn24-editor-row *::before,#homeNews.gn24-editor-row *::after{animation-name:none!important}
+@media(max-width:900px){
+ .gn24-ranking-viewport.gn24-ranking-all9{min-height:486px!important}
+ .gn24-ranking-track>li{min-height:54px!important}
+}
