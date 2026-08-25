@@ -188,10 +188,22 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 function setupArticleTools(article){
-  const url=shareArticleURL(article?.id);
+  const realArticleUrl=new URL(articleURL(article?.id),location.origin).href;
+  const verifiedShareUrl=()=>location.pathname.startsWith('/share/')
+    ? new URL(location.pathname,location.origin).href
+    : realArticleUrl;
+  let url=verifiedShareUrl();
+  document.addEventListener('gn24:share-ready',e=>{
+    if(e?.detail?.articleId===article?.id) url=e.detail.url;
+  });
   const title=article?.title||document.title||'Global News24';
   const shareUrl=(kind)=>{
-    if(kind==='kakao'){gn24ShareKakao(article);return;}
+    url=verifiedShareUrl();
+    if(kind==='kakao'){
+      // 카카오 버튼은 대표이미지 카드 기능을 유지합니다.
+      gn24ShareKakao(article);
+      return;
+    }
     const u=encodeURIComponent(url), t=encodeURIComponent(title);
     const urls={
       facebook:`https://www.facebook.com/sharer/sharer.php?u=${u}`,
@@ -219,6 +231,7 @@ function setupArticleTools(article){
   const shareHubMessage=document.getElementById('shareHubMessage');
 
   async function copyCurrentArticle(){
+    url=verifiedShareUrl();
     try{
       await navigator.clipboard.writeText(url);
       if(shareHubMessage){
@@ -613,11 +626,55 @@ async function gn24ShareKakao(article){
   }
 }
 
-// ===== GN24 v3.4.4 · safe article URL =====
-// /share/<기사ID>/ 생성이 늦어져도 방문자가 404를 보지 않도록
-// 주소창은 항상 실제 기사 URL(/pages/article/?id=...)을 유지합니다.
+// ===== GN24 v3.4.6 · verified Kakao OG URL auto promotion =====
+// 새 기사는 Supabase에 즉시 발행되지만 /share/<기사ID>/ 정적 OG 페이지는
+// GitHub Actions가 생성한 뒤에야 존재합니다.
+// 실제 OG 페이지가 200으로 확인된 경우에만 주소창을 /share/... 로 바꿉니다.
+// 따라서 주소창을 그대로 복사해 카카오톡에 붙여넣으면 기사 대표이미지/제목/요약이 표시됩니다.
 async function gn24PromoteStaticShareUrl(article){
-  return;
+  if(!article?.id || !location.pathname.startsWith('/pages/article')) return;
+
+  const share=shareArticleURL(article.id);
+  const sharePath=new URL(share).pathname;
+  const started=Date.now();
+  const maxWait=10*60*1000;
+  const retryMs=12000;
+  let stopped=false;
+
+  async function sharePageReady(){
+    try{
+      const r=await fetch(share+'?ogcheck='+Date.now(),{
+        method:'GET',
+        cache:'no-store',
+        redirect:'follow'
+      });
+      if(!r.ok) return false;
+      const html=await r.text();
+      return /property=["']og:title["']/i.test(html)
+        && /property=["']og:image["']/i.test(html)
+        && html.includes(String(article.id));
+    }catch(e){
+      return false;
+    }
+  }
+
+  async function promote(){
+    if(stopped) return;
+    if(await sharePageReady()){
+      stopped=true;
+      history.replaceState({gn24ArticleId:article.id,gn24ShareReady:true},'',sharePath);
+      document.dispatchEvent(new CustomEvent('gn24:share-ready',{detail:{url:share,articleId:article.id}}));
+      return;
+    }
+    if(Date.now()-started < maxWait) setTimeout(promote,retryMs);
+  }
+
+  promote();
+
+  // 백그라운드 탭이었다가 다시 돌아오면 즉시 한 번 더 확인합니다.
+  document.addEventListener('visibilitychange',()=>{
+    if(!stopped && document.visibilityState==='visible') promote();
+  });
 }
 
 
