@@ -593,7 +593,8 @@ async function gn24ShareKakao(article){
   const title=String(article?.title||'Global News24');
   const desc=gn24ArticleDescription(article);
   const image=gn24AbsoluteUrl(article?.image);
-  const url=shareArticleURL(article?.id);
+  // v3.4.4: 미리보기는 기사 대표이미지, 클릭은 실제 기사 페이지로 연결
+  const url=articleURL(article?.id);
   try{
     await gn24InitKakao();
     Kakao.Share.sendDefault({
@@ -612,30 +613,11 @@ async function gn24ShareKakao(article){
   }
 }
 
-// ===== GN24 v3.4.3 · published article URL -> Kakao OG share URL =====
-// GitHub Actions builds /share/<article-id>/ from Supabase every 5 minutes.
-// A newly published article can therefore need a short delay before its OG page exists.
-// Keep checking quietly; as soon as it exists, change only the address bar (no reload),
-// so copying the browser URL gives Kakao/Facebook the server-readable OG page.
+// ===== GN24 v3.4.4 · safe article URL =====
+// /share/<기사ID>/ 생성이 늦어져도 방문자가 404를 보지 않도록
+// 주소창은 항상 실제 기사 URL(/pages/article/?id=...)을 유지합니다.
 async function gn24PromoteStaticShareUrl(article){
-  if(!article?.id || !location.pathname.startsWith('/pages/article')) return;
-  const share=shareArticleURL(article.id);
-  const sharePath=new URL(share).pathname;
-  const started=Date.now();
-  const maxWait=6*60*1000;
-  const retryMs=15000;
-
-  const promote=async()=>{
-    try{
-      const r=await fetch(share+'?ogcheck='+Date.now(),{method:'GET',cache:'no-store'});
-      if(r.ok){
-        history.replaceState({gn24ArticleId:article.id},'',sharePath);
-        return;
-      }
-    }catch(e){}
-    if(Date.now()-started < maxWait) setTimeout(promote,retryMs);
-  };
-  promote();
+  return;
 }
 
 
