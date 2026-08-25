@@ -612,13 +612,30 @@ async function gn24ShareKakao(article){
   }
 }
 
+// ===== GN24 v3.4.3 · published article URL -> Kakao OG share URL =====
+// GitHub Actions builds /share/<article-id>/ from Supabase every 5 minutes.
+// A newly published article can therefore need a short delay before its OG page exists.
+// Keep checking quietly; as soon as it exists, change only the address bar (no reload),
+// so copying the browser URL gives Kakao/Facebook the server-readable OG page.
 async function gn24PromoteStaticShareUrl(article){
   if(!article?.id || !location.pathname.startsWith('/pages/article')) return;
   const share=shareArticleURL(article.id);
-  try{
-    const r=await fetch(share,{method:'HEAD',cache:'no-store'});
-    if(r.ok) history.replaceState({gn24ArticleId:article.id},'',new URL(share).pathname);
-  }catch(e){}
+  const sharePath=new URL(share).pathname;
+  const started=Date.now();
+  const maxWait=6*60*1000;
+  const retryMs=15000;
+
+  const promote=async()=>{
+    try{
+      const r=await fetch(share+'?ogcheck='+Date.now(),{method:'GET',cache:'no-store'});
+      if(r.ok){
+        history.replaceState({gn24ArticleId:article.id},'',sharePath);
+        return;
+      }
+    }catch(e){}
+    if(Date.now()-started < maxWait) setTimeout(promote,retryMs);
+  };
+  promote();
 }
 
 
