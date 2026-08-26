@@ -840,8 +840,10 @@
 }
 
 /* ===== GN24 v3.2.19 · views / popular ===== */
-.article-viewline{margin:-8px 0 13px;color:#8a9199;font-size:11px;font-family:Arial,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
-.article-viewline b{color:#4f5965;font-weight:700}
+.article-viewline{margin-left:auto;color:#8a9199;font-size:11px;font-family:Arial,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;white-space:nowrap}
+.article-viewline b{display:inline-block;color:#b58516;font-weight:800;animation:gn24ViewGlow 1.8s ease-in-out infinite}
+@keyframes gn24ViewGlow{0%,100%{color:#b58516;text-shadow:0 0 0 rgba(216,170,54,0);opacity:.78}50%{color:#e0ac27;text-shadow:0 0 8px rgba(216,170,54,.72);opacity:1}}
+@media (prefers-reduced-motion:reduce){.article-viewline b{animation:none}}
 .side-popular-block{margin-top:0}
 #sidePopular li{grid-template-columns:29px minmax(0,1fr) auto}
 #sidePopular .popular-views{padding-top:2px;color:#9aa1aa;font-size:9px;white-space:nowrap}
