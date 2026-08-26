@@ -15,7 +15,7 @@ def esc(v):
 def abs_url(v):
     v = str(v or "").strip()
     if not v:
-        return SITE + "/assets/images/logos/gn24-og-default.jpg"
+        return SITE + "/assets/images/logos/global-news24-header.jpg"
     if v.startswith("http://") or v.startswith("https://"):
         return v
     return SITE + (v if v.startswith("/") else "/" + v)
