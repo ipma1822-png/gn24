@@ -24,10 +24,26 @@ def desc(a):
     s = a.get("summary") or a.get("subtitle") or a.get("title") or "Global News24"
     return re.sub(r"\s+", " ", str(s)).strip()[:220]
 
+def share_version(a):
+    raw = str(a.get("updated_at") or a.get("image") or "")
+    value = 2166136261
+    for ch in raw:
+        value ^= ord(ch)
+        value = (value * 16777619) & 0xffffffff
+    chars = "0123456789abcdefghijklmnopqrstuvwxyz"
+    if value == 0:
+        return "0"
+    out = ""
+    while value:
+        value, rem = divmod(value, 36)
+        out = chars[rem] + out
+    return out
+
 def page(a):
     aid = str(a.get("id") or "")
     s = slug(aid)
-    share_url = f"{SITE}/share/{s}/"
+    version = share_version(a)
+    share_url = f"{SITE}/share/{s}/?v={urllib.parse.quote(version)}"
     article_url = f"{SITE}/pages/article/?id={urllib.parse.quote(aid)}"
     title = str(a.get("title") or "Global News24")
     description = desc(a)
@@ -91,7 +107,7 @@ def load_config():
 def load_remote():
     url, key = load_config()
     q = urllib.parse.urlencode({
-        "select":"id,title,subtitle,summary,image,date,category,is_published",
+        "select":"id,title,subtitle,summary,image,date,category,is_published,updated_at",
         "is_published":"eq.true",
         "order":"date.desc,id.desc"
     })

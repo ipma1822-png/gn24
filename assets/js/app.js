@@ -30,7 +30,20 @@ async function loadNewsData(){if(__gn24NewsPromise)return __gn24NewsPromise;__gn
 })();return __gn24NewsPromise}
 function articleURL(id){return `/pages/article/?id=${encodeURIComponent(id)}`}
 function shareArticleSlug(id){return String(id||'article').replace(/[^A-Za-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'')||'article'}
-function shareArticleURL(id){return `${location.origin}/share/${shareArticleSlug(id)}/`}
+function shareArticleVersion(article){
+  const raw=article?.updatedAt||article?.updated_at||article?.image||'';
+  let hash=2166136261;
+  for(const ch of String(raw)){
+    hash^=ch.charCodeAt(0);
+    hash=Math.imul(hash,16777619);
+  }
+  return (hash>>>0).toString(36);
+}
+function shareArticleURL(id,article=null){
+  const base=`${location.origin}/share/${shareArticleSlug(id)}/`;
+  const version=article?shareArticleVersion(article):'';
+  return version?`${base}?v=${encodeURIComponent(version)}`:base;
+}
 const DEFAULT_NEWS_IMAGE='/assets/images/news/gn24-default-news.svg';
 function bgStyle(src){const safe=esc(src||DEFAULT_NEWS_IMAGE);return `style=\"background-image:url('${safe}'),url('${DEFAULT_NEWS_IMAGE}')\"`}
 function applyBg(el,src){if(!el)return;el.style.backgroundImage=`url('${src||DEFAULT_NEWS_IMAGE}'),url('${DEFAULT_NEWS_IMAGE}')`}
@@ -550,7 +563,7 @@ function setArticleSocialMeta(article){
   const title=String(article.title||'Global News24');
   const desc=gn24ArticleDescription(article);
   const image=gn24AbsoluteUrl(article.image);
-  const url=shareArticleURL(article.id);
+  const url=shareArticleURL(article.id,article);
 
   document.title=title+' | Global News24';
   const description=document.head.querySelector('meta[name="description"]');
@@ -637,8 +650,11 @@ async function gn24ShareKakao(article){
 async function gn24PromoteStaticShareUrl(article){
   if(!article?.id || !location.pathname.startsWith('/pages/article')) return;
 
-  const share=shareArticleURL(article.id);
-  const sharePath=new URL(share).pathname;
+  const share=shareArticleURL(article.id,article);
+  const shareLocation=new URL(share);
+  const sharePath=shareLocation.pathname+shareLocation.search;
+  const expectedImage=gn24AbsoluteUrl(article.image);
+  const expectedVersion=shareLocation.searchParams.get('v')||'';
   const started=Date.now();
   const maxWait=10*60*1000;
   const retryMs=12000;
@@ -655,7 +671,9 @@ async function gn24PromoteStaticShareUrl(article){
       const html=await r.text();
       return /property=["']og:title["']/i.test(html)
         && /property=["']og:image["']/i.test(html)
-        && html.includes(String(article.id));
+        && html.includes(String(article.id))
+        && html.includes(expectedImage)
+        && (!expectedVersion || html.includes(`?v=${expectedVersion}`));
     }catch(e){
       return false;
     }
