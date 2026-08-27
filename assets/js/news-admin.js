@@ -67,7 +67,7 @@
 
   function formData(){
     const paragraphs=els.content.value.split(/\n\s*\n/).map(clean).filter(Boolean);
-    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value||'뉴스',summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,reporterId:clean(els.reporter?.value),author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,featured:els.featured.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,isPublished:els.published?els.published.checked:true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
+    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value||'뉴스',summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,galleryImages:window.GN24GalleryAdmin?.value?.()||[],reporterId:clean(els.reporter?.value),author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,featured:els.featured.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,isPublished:els.published?els.published.checked:true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
   }
 
   function pendingForm(){
@@ -110,6 +110,7 @@
     if(!p)return;
     els.id.value=p.id||els.id.value;els.date.value=p.date||els.date.value;els.title.value=p.title||'';els.subtitle.value=p.subtitle||'';
     if(p.category){if(![...els.category.options].some(o=>o.value===p.category)){const o=document.createElement('option');o.value=o.textContent=p.category;els.category.append(o)}els.category.value=p.category}
+    window.GN24GalleryAdmin?.load?.(p.galleryImages||[]);
     if(els.reporter)els.reporter.value=p.reporterId||'';els.author.value=p.author||'Global News24 편집부';els.summary.value=p.summary||'';els.image.value=p.image||DEFAULT_IMAGE;els.caption.value=p.imageCaption||'';els.content.value=(p.content||[]).join('\n\n');els.sourceName.value=p.sourceName||'';els.sourceUrl.value=p.sourceUrl||'';els.tags.value=(p.tags||[]).join(', ');els.featured.checked=!!p.featured;els.pinned.checked=!!p.pinned;if(els.published)els.published.checked=p.isPublished!==false;els.visualStyle.value=p.visualStyle||'normal';els.imageFilename.value=p._imageFilename||(p.image||'').split('/').pop()||'';imageBg(p.image||DEFAULT_IMAGE);
   }
 
@@ -117,6 +118,7 @@
     state.selectedId=id;resetImageFile();const a=current();if(!a)return;
     els.id.value=a.id||'';els.date.value=a.date||today();els.title.value=a.title||'';els.subtitle.value=a.subtitle||'';els.category.value=a.category||'국내소식';
     if(![...els.category.options].some(o=>o.value===(a.category||''))){const o=document.createElement('option');o.value=o.textContent=a.category||'뉴스';els.category.append(o);els.category.value=o.value}
+    window.GN24GalleryAdmin?.load?.(a.galleryImages||[]);
     if(els.reporter)els.reporter.value=a.reporterId||'';els.author.value=a.author||'Global News24 편집부';els.summary.value=a.summary||'';els.image.value=a.image||'';els.caption.value=a.imageCaption||'';els.content.value=(Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[])).join('\n\n');els.sourceName.value=a.sourceName||'';els.sourceUrl.value=a.sourceUrl||'';els.tags.value=(a.tags||[]).join(', ');els.featured.checked=!!a.featured;els.pinned.checked=!!a.pinned;if(els.published)els.published.checked=a.isPublished!==false;els.visualStyle.value=a.visualStyle||'normal';els.imageFilename.value=(a.image||'').split('/').pop()||`${ymd(a.date)}-news.jpg`;imageBg(a.image);$('#editorTitle').textContent=`기사 편집 · ${a.category||'뉴스'}`;if(!opts.keepMessage)els.saveMessage.textContent='편집 후 저장을 눌러주세요.';renderList();restoreDraftImage(id);
   }
 
@@ -184,6 +186,7 @@
       visualStyle:x.visual_style||x.visualStyle||'normal',
       isPublished:x.is_published!==false,
       relatedOrgs:Array.isArray(x.related_orgs)?x.related_orgs:(Array.isArray(x.relatedOrgs)?x.relatedOrgs:[]),
+      galleryImages:Array.isArray(x.gallery_images)?x.gallery_images:(Array.isArray(x.galleryImages)?x.galleryImages:[]),
       ...(x.image_caption?{imageCaption:x.image_caption}:{}),
       ...(x.link_label?{linkLabel:x.link_label}:{}),
       ...(x.link_url?{linkUrl:x.link_url}:{})

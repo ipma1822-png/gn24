@@ -59,7 +59,7 @@ function formArticle(){
   return {
     id:value('#fId').trim(), date:value('#fDate'), title:value('#fTitle').trim(), subtitle:value('#fSubtitle').trim(),
     category:value('#fCategory'), reporter_id:value('#fReporterId').trim()||null, author:value('#fAuthor').trim()||'Global News24 편집부', summary:value('#fSummary').trim(),
-    image:value('#fImage').trim(), image_caption:value('#fImageCaption').trim(), content:value('#fContent'),
+    image:value('#fImage').trim(), image_caption:value('#fImageCaption').trim(), gallery_images:window.GN24GalleryAdmin?.value?.()||[], content:value('#fContent'),
     source_name:value('#fSourceName').trim(), source_url:value('#fSourceUrl').trim(), tags,
     featured:!!$('#fFeatured')?.checked, pinned:!!$('#fPinned')?.checked,
     visual_style:value('#fVisualStyle')||'normal', is_published:$('#fPublished')?.checked!==false,
@@ -125,6 +125,11 @@ async function publish(){
   if(!(await requireAdmin()))return;
   let a=formArticle(); if(!a.id||!a.title||!a.date)return alert('기사 ID·날짜·제목은 필수입니다.');
   try{a=await uploadSelectedImage(a);}catch(e){setStatus('이미지 업로드 오류','off',e.message);return alert(e.message);}
+  try{
+    if(window.GN24GalleryAdmin){
+      a.gallery_images=await window.GN24GalleryAdmin.uploadPending(sb,cfg.bucket||'news-images',a,(done,total)=>setStatus(`추가 사진 업로드 중… ${done}/${total}`,'busy','최대 10장의 기사 갤러리를 저장하고 있습니다.'));
+    }
+  }catch(e){setStatus('추가 사진 업로드 오류','off',e.message);return alert(e.message);}
   setStatus('기사 DB 저장 중…','busy');
   const {data,error}=await sb.from('gn24_articles').upsert(a,{onConflict:'id'}).select('*').single();
   if(error){setStatus('온라인 저장 실패','off',error.message);return alert('온라인 저장 실패: '+error.message);}
@@ -134,7 +139,7 @@ async function publish(){
 }
 function normalizeLegacy(x){
   const content=Array.isArray(x.content)?x.content.join('\n\n'):(x.content||'');
-  return {id:x.id,date:x.date,title:x.title||'',subtitle:x.subtitle||'',category:x.category||'국내소식',reporter_id:x.reporterId||x.reporter_id||null,author:x.author||'Global News24 편집부',summary:x.summary||'',image:x.image||'',image_caption:x.imageCaption||x.image_caption||'',content,source_name:x.sourceName||x.source_name||'',source_url:x.sourceUrl||x.source_url||'',tags:Array.isArray(x.tags)?x.tags:[],featured:!!x.featured,pinned:!!x.pinned,visual_style:x.visualStyle||x.visual_style||'normal',is_published:x.isPublished!==false&&x.is_published!==false,updated_at:new Date().toISOString()};
+  return {id:x.id,date:x.date,title:x.title||'',subtitle:x.subtitle||'',category:x.category||'국내소식',reporter_id:x.reporterId||x.reporter_id||null,author:x.author||'Global News24 편집부',summary:x.summary||'',image:x.image||'',image_caption:x.imageCaption||x.image_caption||'',gallery_images:Array.isArray(x.galleryImages)?x.galleryImages:(Array.isArray(x.gallery_images)?x.gallery_images:[]),content,source_name:x.sourceName||x.source_name||'',source_url:x.sourceUrl||x.source_url||'',tags:Array.isArray(x.tags)?x.tags:[],featured:!!x.featured,pinned:!!x.pinned,visual_style:x.visualStyle||x.visual_style||'normal',is_published:x.isPublished!==false&&x.is_published!==false,updated_at:new Date().toISOString()};
 }
 async function migrate(){
   if(!(await requireAdmin()))return;
