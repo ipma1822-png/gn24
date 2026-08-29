@@ -62,7 +62,7 @@ function formArticle(){
     image:value('#fImage').trim(), image_caption:value('#fImageCaption').trim(), gallery_images:window.GN24GalleryAdmin?.value?.()||[], content:value('#fContent'),
     source_name:value('#fSourceName').trim(), source_url:value('#fSourceUrl').trim(), tags,
     featured:!!$('#fFeatured')?.checked, pinned:!!$('#fPinned')?.checked,
-    visual_style:value('#fVisualStyle')||'normal', is_published:$('#fPublished')?.checked!==false,
+    visual_style:value('#fVisualStyle')||'normal', is_published:value('#fVisibility')!=='admin',
     updated_at:new Date().toISOString()
   };
 }
@@ -135,7 +135,12 @@ async function publish(){
   if(error){setStatus('온라인 저장 실패','off',error.message);return alert('온라인 저장 실패: '+error.message);}
   if(window.GN24Admin?.syncSavedArticle) window.GN24Admin.syncSavedArticle(data||a);
   setStatus('온라인 연결 · 관리자 인증','on',`기사·이미지 저장 완료 · 공유 OG는 최대 5분 내 자동생성 · ${new Date().toLocaleTimeString('ko-KR')}`);
-  alert(a.is_published?'온라인 기사 저장·발행 완료':'비공개 기사로 온라인 저장 완료');
+  if(a.is_published){
+    alert('온라인 기사 저장·발행 완료');
+  }else{
+    const privateUrl=`${location.origin}/pages/private-article/?id=${encodeURIComponent(a.id)}`;
+    prompt('관리자 전용 기사로 저장했습니다.\n홈·검색·기사목록에는 표시되지 않습니다.\n아래 전용 주소를 복사해 보관하세요.',privateUrl);
+  }
 }
 function normalizeLegacy(x){
   const content=Array.isArray(x.content)?x.content.join('\n\n'):(x.content||'');
