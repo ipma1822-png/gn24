@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
 const $=(s,p=document)=>p.querySelector(s);
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const cfg=window.GN24_SUPABASE||{};
 const base=String(cfg.url||'').replace(/\/$/,'');
 const key=String(cfg.anonKey||'');
