@@ -40,5 +40,6 @@ begin
   update public.gn24_reporter_submissions set status='published',linked_article_id=v_id,approved_at=coalesce(approved_at,v_now),published_at=v_now,reviewed_at=coalesce(reviewed_at,v_now),updated_at=v_now where id=p_submission_id;
   return query select v_id,v_now;
 end;$$;
-grant execute on function public.gn24_publish_submission(uuid) to authenticated;
+revoke execute on function public.gn24_publish_submission(uuid) from public;
 revoke execute on function public.gn24_publish_submission(uuid) from anon;
+grant execute on function public.gn24_publish_submission(uuid) to authenticated;
