@@ -9,6 +9,10 @@ async function db(path){
   const r=await fetch(base+'/rest/v1/'+path,{headers:{apikey:key,Authorization:'Bearer '+key}});
   if(!r.ok)throw new Error(await r.text());return r.json();
 }
+async function publicReporters(){
+  const r=await fetch(base+'/rest/v1/rpc/gn24_public_reporters',{method:'POST',headers:{apikey:key,Authorization:'Bearer '+key,'Content-Type':'application/json'},body:'{}'});
+  if(!r.ok)throw new Error(await r.text());return r.json();
+}
 const articleUrl=id=>`/pages/article/?id=${encodeURIComponent(id)}`;
 const imgStyle=u=>u?`style="background-image:url('${esc(u)}')"`:'';
 const reporterNo=r=>r.reporter_number?`<small class="reporter-number">기자번호 · ${esc(r.reporter_number)}</small>`:'';
@@ -17,7 +21,7 @@ async function run(){
   const box=$('#reporterDirectory');
   if(!box)return;
   try{
-    const reporters=await db('gn24_reporters?status=eq.active&select=id,reporter_number,name,role,affiliation,photo_url,bio,specialties,region,public_email,display_order&order=display_order.asc,name.asc');
+    const reporters=await publicReporters();
     const id=new URLSearchParams(location.search).get('id');
     if(id){
       const r=reporters.find(x=>x.id===id);
