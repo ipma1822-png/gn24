@@ -1,0 +1,13 @@
+-- GLOBAL NEWS24 AI NEWSROOM v3.12.5
+-- Kakao reporter identity binding
+-- Production migration applied as: gn24_phase_8_5_kakao_reporter_binding
+--
+-- Design:
+-- 1. Reporter authorization no longer depends on email matching.
+-- 2. gn24_reporters.auth_user_id binds an approved reporter to Supabase Auth user id.
+-- 3. First Kakao authentication creates/refreshes gn24_reporter_auth_requests.
+-- 4. Final admin approves the binding with gn24_admin_approve_reporter_auth_link().
+-- 5. gn24_my_reporter_id()/gn24_my_access_level() resolve by auth.uid().
+--
+-- The live production migration is recorded in Supabase migration history.
+-- This repository file intentionally documents the contract and does not contain secrets.
