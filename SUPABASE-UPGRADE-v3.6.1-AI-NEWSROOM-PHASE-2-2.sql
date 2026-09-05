@@ -31,6 +31,10 @@ create index if not exists gn24_reporter_applications_phone_idx on public.gn24_r
 
 alter table public.gn24_reporter_applications enable row level security;
 
+grant insert on table public.gn24_reporter_applications to anon, authenticated;
+grant select on table public.gn24_reporter_applications to authenticated;
+grant update, delete on table public.gn24_reporter_applications to authenticated;
+
 drop policy if exists "gn24 applications public insert" on public.gn24_reporter_applications;
 create policy "gn24 applications public insert" on public.gn24_reporter_applications
 for insert to anon, authenticated
