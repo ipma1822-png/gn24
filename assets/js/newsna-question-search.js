@@ -1,0 +1,18 @@
+(()=>{'use strict';
+const stop=new Set('은 는 이 가 을 를 에 에서 의 와 과 도 로 으로 한 하는 하고 합니다 있나요 있습니까 어떻게 무엇 뭐예요 되나요 됩니까 수'.split(' '));
+const aliases=[
+ ['기자증 면허 자격증 신분증 출입증',[6,7,12,20,21]],['경력 무경력 초보 처음',[1,3,16]],['지원 신청 되고싶 기자되고',[0,13,14,33]],['심사 승인 보류 재심 소명',[4,5,13,14,15,16,32]],['해촉 징계 정지 취소',[4,7,17,18,19,20]],['돈 금품 향응 거래 민원',[11,12]],['AI 인공지능 뉴스룸 초안 기사작성',[8,9,10,29,30]],['음성 말 사진 제보 취재',[8,9,10]],['시민리포터 시민기자',[22]],['청소년 어린이 학생 미성년',[23]],['객원',[24]],['해외 통신원 외국',[25]],['지역 지부 지부장 지역기자',[2,26,27,28]],['편집 발행 최종승인',[10,29,30,31]],['오보 잘못 정정 수정 반론',[30,31]],['개인정보 공개 심사사유',[17,23,32]]
+];
+function norm(s=''){return String(s).toLowerCase().replace(/global news24|gn24|뉴스나/g,' ').replace(/[^0-9a-z가-힣]+/g,' ').trim()}
+function tokens(s){return norm(s).split(/\s+/).filter(x=>x.length>1&&!stop.has(x))}
+function boot(){const api=window.NewsnaQA34;if(!api||!Array.isArray(api.QA))return setTimeout(boot,120);const chat=document.getElementById('chat'),choices=document.getElementById('choices');if(!chat||!choices)return;
+ const style=document.createElement('style');style.textContent='.newsna-search{display:flex;gap:7px;padding:0 14px 14px;background:#f8fbff}.newsna-search input{min-width:0;flex:1;border:1px solid #c8d9e7;border-radius:12px;padding:12px 13px;font:inherit;font-size:14px;background:#fff}.newsna-search button{border:0;border-radius:12px;background:#0877d7;color:#fff;padding:0 16px;font-weight:900;min-height:44px}.newsna-hint{padding:0 14px 10px;color:#748591;font-size:11px;background:#f8fbff}@media(max-width:600px){.newsna-search{padding:0 10px 10px}.newsna-search input{font-size:16px}.newsna-search button{padding:0 13px}}';document.head.appendChild(style);
+ const hint=document.createElement('div');hint.className='newsna-hint';hint.textContent='또는 직접 질문해 보세요. 예: “경력이 없어도 기자가 될 수 있나요?”';
+ const box=document.createElement('form');box.className='newsna-search';box.innerHTML='<input type="search" aria-label="뉴스나에게 직접 질문" placeholder="궁금한 내용을 직접 입력하세요" autocomplete="off"><button type="submit">질문하기</button>';
+ choices.parentNode.insertBefore(hint,choices);choices.parentNode.insertBefore(box,choices);const input=box.querySelector('input');
+ function score(q,i){const [title,answer]=api.QA[i],ts=tokens(q),hay=norm(title+' '+answer);let s=0;ts.forEach(t=>{if(norm(title).includes(t))s+=6;else if(hay.includes(t))s+=2});aliases.forEach(([words,ids])=>{if(tokens(words).some(w=>norm(q).includes(w))&&ids.includes(i))s+=5});return s}
+ function ask(q){q=q.trim();if(!q)return;let ranked=api.QA.map((_,i)=>[i,score(q,i)]).sort((a,b)=>b[1]-a[1]);if(!ranked[0]||ranked[0][1]<2){const d=document.createElement('div');d.className='msg user';d.textContent=q;chat.appendChild(d);const b=document.createElement('div');b.className='msg bot';b.textContent='이 질문은 현재 공식 Q&A 34에서 정확한 답을 찾기 어렵습니다. 아래 분야를 선택하거나 고객센터로 문의해 주세요. 뉴스나는 공식 기준에 없는 내용을 임의로 만들지 않습니다.';chat.appendChild(b);chat.scrollTop=chat.scrollHeight;api.showGroups();return}
+ const best=ranked[0][0];const u=document.createElement('div');u.className='msg user';u.textContent=q;chat.appendChild(u);api.answer(best,true);const related=ranked.slice(1,4).filter(x=>x[1]>0).map(x=>x[0]);if(related.length){const label=document.createElement('div');label.className='newsna-hint';label.textContent='관련 질문도 이어서 확인할 수 있습니다.';choices.parentNode.insertBefore(label,choices);setTimeout(()=>label.remove(),3500)}}
+ box.addEventListener('submit',e=>{e.preventDefault();ask(input.value);input.value=''});window.NewsnaQuestionSearch={ask,version:'2.1'};
+}
+boot();})();
