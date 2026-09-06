@@ -1,0 +1,21 @@
+-- GLOBAL NEWS24 v3.14.3 INTEGRATED CONTRIBUTIONS
+-- Applied migration: gn24_integrated_contributions_v3143
+-- Core policy: one person pays only the highest applicable operating contribution.
+-- Canonical monthly / annual amounts:
+-- reporter 10,000 / 120,000
+-- guest 0 / 0
+-- overseas 0 / 0
+-- branch_head 30,000 / 360,000
+-- regional_head 50,000 / 600,000
+-- operating_member 10,000 / 120,000
+-- operating_committee 20,000 / 240,000
+-- professional_committee 20,000 / 240,000
+-- operating_director 50,000 / 600,000
+-- standing_operating_director 100,000 / 1,200,000
+-- New table: gn24_contribution_profiles (monthly/annual + anchor_date)
+-- Existing ledger extended with billing_cycle, period_start, period_end, source_role_code, source_role_label.
+-- RPC: gn24_admin_effective_contributions() calculates the highest role per active reporter.
+-- RPC: gn24_admin_generate_contribution_ledger(date) creates/repairs the selected month ledger.
+-- Annual billing is generated only in the month containing the configured anchor date.
+-- Payment statuses remain exactly: paid(normal), unpaid, deferred, exempt.
+-- Payment status is separate from reporter activity, appointment and disciplinary status.
