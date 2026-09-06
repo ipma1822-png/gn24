@@ -1,0 +1,12 @@
+-- GLOBAL NEWS24 v3.14.2 HQ operations
+-- Production migration applied through Supabase: gn24_hq_operations_v3142
+-- Canonical roles and contributions:
+-- OPERATING_MEMBER 운영회원: 10,000/month, 120,000/year, default 1-year term
+-- OPERATING_COMMITTEE 운영위원: 20,000/month, 240,000/year, default 2-year term
+-- PROFESSIONAL_COMMITTEE 전문위원: 20,000/month, 240,000/year, default 2-year term
+-- OPERATING_DIRECTOR 운영이사: 50,000/month, 600,000/year, default 2-year term
+-- STANDING_OPERATING_DIRECTOR 상임운영이사: 100,000/month, 1,200,000/year, default 2-year term
+-- Table: public.gn24_hq_members
+-- RLS: authenticated GN24 admins only
+-- RPC: public.gn24_admin_upsert_hq_member(...) SECURITY INVOKER
+-- Principle: operating title != editorial authority != system administrator authority.
