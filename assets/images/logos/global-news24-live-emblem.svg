@@ -3,11 +3,11 @@
 <desc id="desc">Official SHOWROOM gold camera and globe emblem</desc>
 <defs>
   <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
-    <feGaussianBlur stdDeviation="7" result="blur"/>
-    <feColorMatrix in="blur" type="matrix" values="1 0 0 0 .16  0 .75 0 0 .08  0 0 .15 0 0  0 0 0 .32 0" result="gold"/>
+    <feGaussianBlur stdDeviation="5" result="blur"/>
+    <feColorMatrix in="blur" type="matrix" values="1 0 0 0 .16  0 .75 0 0 .08  0 0 .15 0 0  0 0 0 .24 0" result="gold"/>
     <feMerge><feMergeNode in="gold"/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
 </defs>
 <rect width="900" height="600" fill="#03070d"/>
-<image href="gn24-showroom-logo.jpg?v=122" x="0" y="0" width="900" height="600" preserveAspectRatio="xMidYMid meet" filter="url(#goldGlow)"/>
+<image href="https://news24.ai.kr/assets/images/logos/gn24-showroom-logo.jpg?v=122" x="0" y="0" width="900" height="600" preserveAspectRatio="xMidYMid meet" filter="url(#goldGlow)"/>
 </svg>
