@@ -1,0 +1,18 @@
+-- GLOBAL NEWS24 v3.14.1
+-- Regional branch + appointment system reference.
+-- Production migration applied in Supabase as:
+--   gn24_regional_branch_appointments_v3141
+--   gn24_regional_branch_admin_write_policies_v3141
+--
+-- Main objects created/changed:
+--   public.gn24_regional_branches
+--   public.gn24_appointments
+--   public.gn24_reporters.regional_branch_code
+--   public.gn24_admin_upsert_regional_branch(...)
+--   public.gn24_admin_set_regional_head(...)
+--
+-- Policy principles:
+--   HQ -> 17 regional HQs -> approved city/county/district branches -> reporters
+--   Regional HQ head / branch head term: 2 years by default
+--   Branch contribution default: KRW 30,000 per month
+--   Appointment rights remain with GLOBAL NEWS24 headquarters.
