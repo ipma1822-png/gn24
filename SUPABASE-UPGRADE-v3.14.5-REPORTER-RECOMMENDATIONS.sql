@@ -1,0 +1,9 @@
+-- GLOBAL NEWS24 v3.14.5
+-- Production migration: gn24_regional_reporter_recommendations_v3145
+-- Table: gn24_reporter_recommendations
+-- Regional HQ/branch heads may submit candidate recommendations only within their authenticated regional scope.
+-- HQ admins review: under_review / approved_to_apply / rejected.
+-- Recommendation does NOT appoint a reporter. Formal application -> HQ approval -> probation -> official appointment remains separate.
+-- RLS: HQ admin full access; recommender read-own only.
+-- RPC gn24_regional_recommend_reporter: SECURITY INVOKER, authenticated only.
+-- RPC gn24_admin_review_recommendation: SECURITY INVOKER, authenticated only + is_gn24_admin check.
