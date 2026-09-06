@@ -1,0 +1,9 @@
+-- GLOBAL NEWS24 v3.14.4 — Regional manager scoped dashboard
+-- Production migration: gn24_regional_dashboard_v3144
+-- RPC public.gn24_my_regional_scope(): authenticated user -> own regional scope only
+-- RPC public.gn24_my_regional_dashboard():
+--   시·도본부장 -> own regional_hq_code reporters + branches + current contribution status summary
+--   시·군·구 지부장 -> own regional_branch_code reporters + current contribution status summary
+-- Both functions are SECURITY INVOKER.
+-- anon/public EXECUTE revoked; authenticated EXECUTE only.
+-- No global database, full financial ledger, editorial, appointment, promotion or admin permission is granted by these RPCs.
