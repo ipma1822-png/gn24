@@ -8,3 +8,17 @@ window.GN24_SUPABASE = {
   anonKey: "sb_publishable_EnPEZ3d5-hXuJdb8Qrve3A_WB9gLcQy",
   bucket: "news-images"
 };
+
+// NEWSNA v1.9 — Hand Wizard personal-link bridge.
+// 일반 방문에는 아무 변화가 없고, 기자안내센터의 유효한 ?m= 개인 링크에서만 로드합니다.
+(() => {
+  if (!/^\/pages\/reporter-guide\/?$/.test(location.pathname)) return;
+  const id = new URLSearchParams(location.search).get('m');
+  if (!id || !/^[A-Za-z0-9]{8,24}$/.test(id)) return;
+  if (document.querySelector('script[data-newsna-personalization]')) return;
+  const script = document.createElement('script');
+  script.src = '/assets/js/newsna-personalization.js?v=1.2';
+  script.defer = true;
+  script.dataset.newsnaPersonalization = 'v1.2';
+  document.head.appendChild(script);
+})();
