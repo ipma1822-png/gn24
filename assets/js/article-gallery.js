@@ -33,3 +33,45 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load();
 })();
+
+/* ===== GN24 v3.13.2 · reporter rank / HQ article byline ===== */
+(()=>{
+  'use strict';
+  const HQ={SEOUL:'서울',BUSAN:'부산',DAEGU:'대구',INCHEON:'인천',GWANGJU:'광주',DAEJEON:'대전',ULSAN:'울산',SEJONG:'세종',GYEONGGI:'경기',GANGWON:'강원',CHUNGBUK:'충북',CHUNGNAM:'충남',JEONBUK:'전북',JEONNAM:'전남',GYEONGBUK:'경북',GYEONGNAM:'경남',JEJU:'제주'};
+  const safe=v=>String(v??'').trim();
+  const ensureConfig=()=>new Promise(resolve=>{if(window.GN24_SUPABASE)return resolve(window.GN24_SUPABASE);const existing=document.querySelector('script[src*="gn24-supabase-config"]');if(existing){existing.addEventListener('load',()=>resolve(window.GN24_SUPABASE||{}),{once:true});setTimeout(()=>resolve(window.GN24_SUPABASE||{}),2000);return}const s=document.createElement('script');s.src='/assets/js/gn24-supabase-config.js?v=3.13.2';s.onload=()=>resolve(window.GN24_SUPABASE||{});s.onerror=()=>resolve({});document.head.append(s)});
+  async function api(path,opt={}){const cfg=await ensureConfig();if(!cfg.url||!cfg.anonKey)throw new Error('Supabase 설정 없음');const r=await fetch(cfg.url.replace(/\/$/,'')+'/rest/v1/'+path,{cache:'no-store',...opt,headers:{apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey,'Content-Type':'application/json',...(opt.headers||{})}});if(!r.ok)throw new Error(await r.text());return r.status===204?null:r.json()}
+  function hqLabel(code){return HQ[code]?(HQ[code]+'본부'):''}
+  function byline(r,fallback){const name=safe(r?.name)||safe(fallback)||'Global News24 편집부';const rank=safe(r?.reporter_rank);const hq=hqLabel(r?.regional_hq_code);return [name,rank,hq].filter(Boolean).join(' | ').replace(' | 기자 | ',' 기자 | ').replace(/^(.*?) \| (기자|선임기자|수석기자)(?: \| |$)/,'$1 $2$3')}
+  window.setupArticleReporter=async function(article){
+    const authorName=document.getElementById('articleAuthorName');
+    const avatar=document.querySelector('.article-author-card .author-avatar');
+    const info=document.querySelector('.article-author-card .author-info');
+    const more=document.querySelector('.article-author-card .author-more');
+    let reporterId=safe(article?.reporterId);
+    let fallback=safe(article?.author)||'Global News24 편집부';
+    try{
+      if(!reporterId&&article?.id){
+        const rows=await api(`gn24_articles?id=eq.${encodeURIComponent(article.id)}&select=reporter_id,author&limit=1`);
+        reporterId=safe(rows?.[0]?.reporter_id);
+        fallback=safe(rows?.[0]?.author)||fallback;
+      }
+      if(!reporterId){if(authorName)authorName.textContent=fallback;if(more)more.href='/pages/reporters/';return;}
+      const reporters=await api('rpc/gn24_public_reporters',{method:'POST',body:'{}'});
+      const r=(Array.isArray(reporters)?reporters:[]).find(x=>String(x.id)===reporterId);
+      if(!r){if(authorName)authorName.textContent=fallback;return;}
+      const label=byline(r,fallback);
+      if(authorName)authorName.textContent=label;
+      const meta=document.getElementById('aMeta');
+      const metaSpans=meta?.querySelectorAll(':scope > span');
+      if(metaSpans&&metaSpans[1])metaSpans[1].textContent=label;
+      if(avatar){if(r.photo_url){avatar.textContent='';avatar.style.backgroundImage=`url("${String(r.photo_url).replace(/"/g,'%22')}")`;avatar.classList.add('reporter-photo')}else avatar.textContent=(safe(r.name)||'GN').slice(0,1)}
+      const span=info?.querySelector('span');
+      const p=info?.querySelector('p');
+      const details=[safe(r.reporter_type),safe(r.organization_position),hqLabel(r.regional_hq_code),safe(r.affiliation),safe(r.region)].filter(Boolean);
+      if(span)span.textContent=details.join(' · ')||'Global News24 기자';
+      if(p)p.textContent=safe(r.bio)||`${safe(r.name)} ${safe(r.reporter_rank)||'기자'}의 Global News24 기사입니다.`;
+      if(more){more.href=`/pages/reporters/?id=${encodeURIComponent(r.id)}`;more.textContent='기자 프로필·다른 기사 보기 ›'}
+    }catch(e){console.warn('GN24 reporter identity load failed',e);if(authorName&&!authorName.textContent)authorName.textContent=fallback}
+  };
+})();
