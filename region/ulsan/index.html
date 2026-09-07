@@ -1,65 +1,12 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="index,follow">
-<title>GLOBAL NEWS24 울산 | ULSAN EDITION</title>
-<meta name="description" content="GLOBAL NEWS24 울산 지역판. 본사 뉴스 플랫폼과 동일한 구조에서 울산 지역 주요뉴스를 제공합니다.">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" href="/assets/images/logos/gn24-icon.svg">
-<link rel="stylesheet" href="/assets/css/style.css?v=3.4.10">
-<link rel="stylesheet" href="/assets/css/region-main.css?v=3.17.0">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/assets/js/gn24-supabase-config.js?v=3.17.0"></script>
-</head>
-<body data-region="ulsan" data-region-name="울산">
-<header class="site-header" id="siteHeader">
-  <div class="utility-top"><div class="wrap"><span>GLOBAL NEWS24 · 인터넷신문</span><span>REGIONAL EDITION <b>ULSAN</b></span></div></div>
-  <div class="wrap mast">
-    <a class="brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>글로벌뉴스24</small></span></a>
-    <div class="mast-center"><strong>NEWS · MEDIA · NETWORK</strong><span id="todayLabel">ULSAN EDITION</span></div>
-    <div class="tools"><form class="searchbox" action="/pages/newsroom/"><input name="q" placeholder="기사 검색"><button>검색</button></form><button id="utilityBtn" class="iconbtn" aria-expanded="false">☰<span>전체메뉴</span></button></div>
-  </div>
-  <nav class="primary-nav"><div class="wrap nav-scroll">
-    <div class="nav-item"><a class="nav-link" href="/region/ulsan/">울산홈</a></div>
-    <div class="nav-item"><a class="nav-link urgent-link" href="/#breaking">속보</a></div>
-    <div class="nav-item has-mega"><button class="nav-btn" type="button">종합뉴스</button><div class="mega"><div class="mega-head"><b>종합뉴스</b><span>GLOBAL NEWS24 본사 뉴스</span></div><div class="mega-links"><a href="/pages/newsroom/?cat=국내소식"><b>국내</b><small>지역·사회·현장</small></a><a href="/pages/newsroom/?cat=국제뉴스"><b>국제</b><small>세계·글로벌</small></a><a href="/pages/newsroom/?cat=경제"><b>경제</b><small>산업·비즈니스</small></a><a href="/pages/newsroom/?cat=사회"><b>사회</b><small>생활·공익</small></a></div></div></div>
-    <div class="nav-item has-mega"><button class="nav-btn" type="button">지역뉴스</button><div class="mega"><div class="mega-head"><b>17개 시·도 지역판</b><span>현재 울산 지역판을 시범 운영 중입니다.</span></div><div class="mega-links"><a href="/region/ulsan/"><b>울산</b><small>ULSAN · OPEN</small></a><a href="/region/"><b>전체 지역판</b><small>17개 시·도 네트워크</small></a><span><b>서울</b><small>준비중</small></span><span><b>부산</b><small>준비중</small></span><span><b>대구</b><small>준비중</small></span><span><b>경기</b><small>준비중</small></span></div></div></div>
-    <div class="nav-item has-mega"><button class="nav-btn" type="button">무도·스포츠</button><div class="mega"><div class="mega-head"><b>무도·스포츠</b><span>교육·대회·세미나·지도자 소식</span></div><div class="mega-links"><a href="/pages/newsroom/?q=태권검도"><b>태권검도</b><small>교육·교재·대회</small></a><a href="/pages/newsroom/?q=경찰무도"><b>경찰무도</b><small>호신·안전·국제활동</small></a><a href="/pages/newsroom/?cat=무도·스포츠"><b>종합무도</b><small>무도·스포츠 뉴스</small></a></div></div></div>
-    <div class="nav-item"><a class="nav-link" href="/pages/press/">보도자료</a></div>
-  </div></nav>
-  <div id="utilityPanel" class="utility-panel"><div class="wrap utility-grid"><a href="/"><b>전국 메인</b><small>GLOBAL NEWS24 본사</small></a><a href="/region/"><b>지역뉴스 네트워크</b><small>17개 시·도 지역판</small></a><a href="/pages/newsroom/"><b>전체기사</b><small>뉴스룸 전체</small></a><a href="/pages/contact/"><b>기사제보</b><small>보도자료·제보 접수</small></a></div></div>
-</header>
-
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="index,follow"><title>GLOBAL NEWS24 울산 | ULSAN EDITION</title><meta name="description" content="GLOBAL NEWS24 울산 지역판"><meta name="theme-color" content="#ffffff"><link rel="icon" href="/assets/images/logos/gn24-icon.svg"><link rel="stylesheet" href="/assets/css/style.css?v=3.4.10"><link rel="stylesheet" href="/assets/css/region-main.css?v=3.17.1"><script src="/assets/js/gn24-supabase-config.js?v=3.17.1"></script></head><body data-region="ulsan" data-region-name="울산">
+<header class="site-header" id="siteHeader"><div class="utility-top"><div class="wrap"><span>GLOBAL NEWS24 · 인터넷신문</span><span>REGIONAL EDITION <b>ULSAN</b></span></div></div><div class="wrap mast"><a class="brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>글로벌뉴스24</small></span></a><div class="mast-center"><strong>NEWS · MEDIA · NETWORK</strong><span id="todayLabel"></span></div><div class="tools"><form class="searchbox" action="/pages/newsroom/"><input name="q" placeholder="기사 검색"><button>검색</button></form><button id="utilityBtn" class="iconbtn" aria-expanded="false">☰<span>전체메뉴</span></button></div></div>
+<nav class="primary-nav"><div class="wrap nav-scroll"><div class="nav-item"><a class="nav-link" href="/region/ulsan/">울산홈</a></div><div class="nav-item"><a class="nav-link urgent-link" href="#breaking">속보</a></div><div class="nav-item has-mega"><button class="nav-btn" type="button">종합뉴스</button><div class="mega"><div class="mega-head"><b>종합뉴스</b><span>국내외 주요 이슈</span></div><div class="mega-links"><a href="/pages/newsroom/?cat=국내소식"><b>국내</b><small>지역·사회·현장</small></a><a href="/pages/newsroom/?cat=국제뉴스"><b>국제</b><small>세계·글로벌</small></a><a href="/pages/newsroom/?cat=경제"><b>경제</b><small>산업·비즈니스</small></a><a href="/pages/newsroom/?cat=사회"><b>사회</b><small>생활·공익</small></a></div></div></div><div class="nav-item has-mega"><button class="nav-btn" type="button">지역뉴스</button><div class="mega"><div class="mega-head"><b>17개 시·도 지역판</b><span>GLOBAL NEWS24 KOREA NETWORK</span></div><div class="mega-links"><a href="/region/ulsan/"><b>울산</b><small>ULSAN · OPEN</small></a><a href="/region/"><b>17개 지역판</b><small>지역뉴스 네트워크</small></a><span><b>서울</b><small>준비중</small></span><span><b>부산</b><small>준비중</small></span></div></div></div><div class="nav-item has-mega"><button class="nav-btn" type="button">무도·스포츠</button><div class="mega"><div class="mega-head"><b>무도·스포츠</b></div><div class="mega-links"><a href="/pages/newsroom/?q=태권검도"><b>태권검도</b></a><a href="/pages/newsroom/?q=경찰무도"><b>경찰무도</b></a><a href="/pages/newsroom/?cat=무도·스포츠"><b>종합무도</b></a></div></div></div><div class="nav-item has-mega"><button class="nav-btn" type="button">안전·드론</button><div class="mega"><div class="mega-head"><b>안전·드론</b></div><div class="mega-links"><a href="/pages/newsroom/?q=드론"><b>드론순찰대</b></a><a href="/pages/newsroom/?q=안전"><b>생활안전</b></a></div></div></div><div class="nav-item"><a class="nav-link" href="/pages/press/">보도자료</a></div></div></nav><div id="utilityPanel" class="utility-panel"><div class="wrap utility-grid"><a href="/"><b>전국 메인</b><small>GLOBAL NEWS24 본사</small></a><a href="/region/"><b>지역뉴스 네트워크</b><small>17개 시·도 지역판</small></a><a href="/pages/newsroom/"><b>전체기사</b><small>뉴스룸</small></a><a href="/pages/contact/"><b>기사제보</b><small>제보 접수</small></a></div></div></header>
 <div class="region-edition-bar"><div class="region-edition-inner"><div class="region-edition-title"><b>GLOBAL NEWS24 울산</b><span>ULSAN EDITION</span></div><div class="region-edition-actions"><a href="/">전국 메인</a><a href="/region/">17개 지역판</a></div></div></div>
-
 <div class="breaking" id="breaking"><div class="wrap breaking-inner"><strong><i></i> 속보</strong><div class="ticker"><span id="breakingText">Global News24 실시간 주요뉴스</span></div><a href="/pages/newsroom/">전체보기</a></div></div>
-
-<main>
-  <section class="wrap lead-layout"><a id="leadLink" class="lead-story shine" href="/pages/newsroom/"><div id="leadMedia" class="lead-media"></div><div class="lead-copy"><div id="leadMeta" class="kicker">TOP NEWS</div><h1 id="leadTitle">Global News24</h1><p id="leadSummary">뉴스와 현장을 빠르고 정확하게 연결합니다.</p></div></a><aside class="ranking"><div class="section-head"><h2>많이 본 뉴스</h2><a href="/pages/newsroom/">더보기</a></div><ol id="topLatest"></ol></aside></section>
-
-  <section class="wrap section region-local-feature">
-    <div class="region-local-head"><div><span class="eyebrow">ULSAN EDITOR'S PICK</span><h2>울산 주요 뉴스 <span class="region-badge-inline">ULSAN</span></h2></div><div class="region-local-note">울산 등록 기사 <b id="regionLocalCount">불러오는 중…</b></div></div>
-    <div id="regionLocalNews" class="region-local-grid"><div class="region-local-empty">울산 지역뉴스를 불러오는 중입니다.</div></div>
-  </section>
-
-  <section class="quick-network"><div class="wrap quick-grid"><a href="/region/ulsan/"><b>울산 지역뉴스</b><small>울산 현장·사람·소식</small></a><a href="/pages/newsroom/?q=태권검도"><b>태권검도</b><small>교육·교재·대회</small></a><a href="/pages/newsroom/?q=드론"><b>드론순찰대</b><small>기술·순찰·교육</small></a><a href="/pages/press/"><b>보도자료</b><small>기관·단체 공식자료</small></a><a href="/region/"><b>17개 지역판</b><small>대한민국 지역뉴스 네트워크</small></a></div></section>
-
-  <section class="wrap section news-columns"><div class="main-column"><div class="section-head"><div><span class="eyebrow">LATEST</span><h2>전국 최신 뉴스</h2></div><a href="/pages/newsroom/">더보기 →</a></div><div id="latestNews" class="latest-list"></div></div><aside class="attention-panel"><div class="section-head"><h2>주목 뉴스</h2><span>NOW</span></div><ol id="attentionList"></ol></aside></section>
-
-  <section class="wrap section beats"><div class="beat"><div class="section-head"><h2>무도·스포츠</h2><a href="/pages/newsroom/?cat=무도·스포츠">더보기</a></div><div id="beatMartial" class="beat-list"></div></div><div class="beat"><div class="section-head"><h2>안전·드론</h2><a href="/pages/newsroom/?q=드론">더보기</a></div><div id="beatSafety" class="beat-list"></div></div><div class="beat"><div class="section-head"><h2>공익</h2><a href="/pages/newsroom/?q=공익">더보기</a></div><div id="beatActs" class="beat-list"></div></div></section>
-</main>
-
-<footer class="regional-footer">
-  <div class="wrap regional-footer-grid">
-    <section><h2>GLOBAL NEWS24 울산본부</h2><p>GLOBAL NEWS24 본사 뉴스 플랫폼 안에서 운영되는 울산 지역판입니다. 울산의 현장과 사람, 지역사회의 중요한 소식을 취재해 전국 독자와 연결합니다.</p></section>
-    <section><dl><div><dt>지역판</dt><dd>울산광역시 · ULSAN EDITION</dd></div><div><dt>본부장</dt><dd>준비중</dd></div><div><dt>본부 주소</dt><dd>준비중</dd></div><div><dt>대표 연락처</dt><dd>준비중</dd></div><div><dt>운영</dt><dd>GLOBAL NEWS24 본사 통합 시스템</dd></div></dl></section>
-  </div>
-  <div class="wrap regional-footer-bottom">GLOBAL NEWS24 울산은 별도 언론사가 아닌 GLOBAL NEWS24의 공식 지역판입니다. 최종 편집·발행 및 브랜드 관리는 본사 체계에 따릅니다.</div>
-</footer>
-
-<script src="/assets/js/app.js?v=3.4.10" defer></script>
-<script src="/assets/js/region-main.js?v=3.17.0" defer></script>
-</body>
-</html>
+<main><section class="wrap lead-layout"><a id="leadLink" class="lead-story shine" href="/pages/newsroom/"><div id="leadMedia" class="lead-media"></div><div class="lead-copy"><div id="leadMeta" class="kicker">TOP NEWS</div><h1 id="leadTitle">Global News24</h1><p id="leadSummary">뉴스와 현장을 빠르고 정확하게 연결합니다.</p></div></a><aside class="ranking"><div class="section-head"><h2>많이 본 뉴스</h2><a href="/pages/newsroom/">더보기</a></div><ol id="topLatest"></ol></aside></section>
+<section class="wrap section region-local-feature"><div class="region-local-head"><div><span class="eyebrow">ULSAN EDITOR'S PICK</span><h2>울산 주요 뉴스 <span class="region-badge-inline">ULSAN</span></h2></div><div class="region-local-note">울산 등록 기사 <b id="regionLocalCount">불러오는 중…</b></div></div><div id="homeNews" class="thumb-grid"></div></section>
+<section class="quick-network"><div class="wrap quick-grid"><a href="/region/ulsan/"><b>울산 지역뉴스</b><small>울산 현장·사람·소식</small></a><a href="/pages/newsroom/?q=태권검도"><b>태권검도</b><small>교육·교재·대회</small></a><a href="/pages/newsroom/?q=드론"><b>드론순찰대</b><small>기술·순찰·교육</small></a><a href="/pages/press/"><b>보도자료</b><small>기관·단체 공식자료</small></a><a href="/region/"><b>17개 지역판</b><small>대한민국 지역뉴스</small></a></div></section>
+<section class="wrap section news-columns"><div class="main-column"><div class="section-head"><div><span class="eyebrow">LATEST</span><h2>전국 최신 뉴스</h2></div><a href="/pages/newsroom/">더보기 →</a></div><div id="latestNews" class="latest-list"></div></div><aside class="attention-panel"><div class="section-head"><h2>주목 뉴스</h2><span>NOW</span></div><ol id="attentionList"></ol></aside></section><section class="wrap section beats"><div class="beat"><div class="section-head"><h2>무도·스포츠</h2><a href="/pages/newsroom/?cat=무도·스포츠">더보기</a></div><div id="beatMartial" class="beat-list"></div></div><div class="beat"><div class="section-head"><h2>안전·드론</h2><a href="/pages/newsroom/?q=드론">더보기</a></div><div id="beatSafety" class="beat-list"></div></div><div class="beat"><div class="section-head"><h2>공익</h2><a href="/pages/newsroom/?q=공익">더보기</a></div><div id="beatActs" class="beat-list"></div></div></section></main>
+<footer class="regional-footer"><div class="wrap regional-footer-grid"><section><h2>GLOBAL NEWS24 울산본부</h2><p>GLOBAL NEWS24 본사 뉴스 플랫폼 안에서 운영되는 울산 공식 지역판입니다.</p></section><section><dl><div><dt>지역판</dt><dd>울산광역시 · ULSAN EDITION</dd></div><div><dt>본부장</dt><dd>준비중</dd></div><div><dt>본부 주소</dt><dd>준비중</dd></div><div><dt>대표 연락처</dt><dd>준비중</dd></div><div><dt>운영</dt><dd>GLOBAL NEWS24 본사 통합 시스템</dd></div></dl></section></div><div class="wrap regional-footer-bottom">GLOBAL NEWS24 울산은 별도 언론사가 아닌 GLOBAL NEWS24의 공식 지역판입니다. 최종 편집·발행 및 브랜드 관리는 본사 체계에 따릅니다.</div></footer>
+<script src="/assets/js/app.js?v=3.4.10"></script><script src="/assets/js/region-main.js?v=3.17.1"></script></body></html>
