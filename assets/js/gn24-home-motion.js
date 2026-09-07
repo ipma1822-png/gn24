@@ -1,21 +1,22 @@
 (() => {
 'use strict';
-const BUILD='v3.18.1';
-const S={breaking:false,ranking:false,editor:false,mobileCss:false,badge:false};
+const BUILD='v3.18.3';
+const S={breaking:false,ranking:false,editor:false,mobileCss:false,badge:false,leadFill:false};
 const clean=s=>(s||'').replace(/\s+/g,' ').trim();
 function ensureMobileCss(){
  if(S.mobileCss)return;
  if(document.querySelector('link[data-gn24-mobile-newsroom]')){S.mobileCss=true;return;}
  const link=document.createElement('link');
  link.rel='stylesheet';
- link.href='/assets/css/mobile-newsroom.css?v=3.18.1';
+ link.href='/assets/css/mobile-newsroom.css?v=3.18.3';
  link.dataset.gn24MobileNewsroom=BUILD;
  document.head.appendChild(link);
  S.mobileCss=true;
 }
 function buildBadge(){
- if(S.badge||document.getElementById('gn24BuildBadge'))return;
- const badge=document.createElement('div');
+ let badge=document.getElementById('gn24BuildBadge');
+ if(badge){badge.textContent='GN24 '+BUILD;return;}
+ badge=document.createElement('div');
  badge.id='gn24BuildBadge';
  badge.textContent='GN24 '+BUILD;
  badge.setAttribute('aria-label','GLOBAL NEWS24 현재 배포 버전 '+BUILD);
@@ -30,6 +31,33 @@ function links(sel,limit=10){
   seen.add(t); out.push({href:a.getAttribute('href')||'#',title:t});
  });
  return out.slice(0,limit);
+}
+function fillLeadGap(){
+ if(innerWidth>900)return false;
+ const layout=document.querySelector('.lead-layout');
+ const lead=document.getElementById('leadLink');
+ const rankingBox=layout?.querySelector('.ranking');
+ const rows=[...document.querySelectorAll('#latestNews .latest-row')];
+ if(!layout||!lead||!rankingBox||rows.length<3)return false;
+ let box=layout.querySelector('.gn24-lead-fill');
+ if(!box){
+   box=document.createElement('div');
+   box.className='gn24-lead-fill';
+   box.innerHTML='<div class="gn24-lead-fill-head"><b>주요 기사</b><a href="/pages/newsroom/">더보기 →</a></div><div class="gn24-lead-fill-list"></div>';
+   layout.insertBefore(box,rankingBox);
+ }
+ const list=box.querySelector('.gn24-lead-fill-list');
+ if(!list)return false;
+ const leadHref=lead.getAttribute('href')||'';
+ const chosen=rows.filter(r=>(r.getAttribute('href')||'')!==leadHref).slice(0,5);
+ if(!chosen.length)return false;
+ list.innerHTML='';
+ chosen.forEach(r=>{
+   const c=r.cloneNode(true);
+   c.classList.add('gn24-lead-fill-row');
+   list.appendChild(c);
+ });
+ S.leadFill=true; return true;
 }
 function breaking(){
  if(S.breaking)return true;
@@ -86,7 +114,7 @@ function editor(){
  const start=()=>{clearInterval(timer);timer=setInterval(move,5400)};
  viewport.onmouseenter=()=>clearInterval(timer); viewport.onmouseleave=start; start(); return true;
 }
-function init(){ensureMobileCss();buildBadge();breaking();ranking();editor();}
+function init(){ensureMobileCss();buildBadge();breaking();ranking();editor();fillLeadGap();}
 document.addEventListener('DOMContentLoaded',()=>{init();[500,1000,1800,3000,5000,7500].forEach(ms=>setTimeout(init,ms));});
 new MutationObserver(()=>requestAnimationFrame(init)).observe(document.documentElement,{childList:true,subtree:true});
 })();
