@@ -1,4 +1,4 @@
-// Global News24 v3.2.0 Supabase configuration
+// Global News24 v3.19.0 Supabase configuration
 // GLOBAL-NEWS24 전용 Supabase 프로젝트 연결
 // 브라우저에는 Publishable Key만 사용합니다.
 // Secret Key / service_role Key / Database Password는 절대 넣지 않습니다.
@@ -8,6 +8,37 @@ window.GN24_SUPABASE = {
   anonKey: "sb_publishable_EnPEZ3d5-hXuJdb8Qrve3A_WB9gLcQy",
   bucket: "news-images"
 };
+
+// GN24 ARTICLE REGION SELECTOR v3.19.0
+// 기사 작성 화면에서 전국 공통 또는 17개 시·도 지역판을 선택합니다.
+(() => {
+  if (!/^\/admin-news\.html$/.test(location.pathname)) return;
+  const regions=[['','전국 공통 · 지역판 지정 안 함'],['seoul','서울'],['busan','부산'],['daegu','대구'],['incheon','인천'],['gwangju','광주'],['daejeon','대전'],['ulsan','울산'],['sejong','세종'],['gyeonggi','경기'],['gangwon','강원'],['chungbuk','충북'],['chungnam','충남'],['jeonbuk','전북'],['jeonnam','전남'],['gyeongbuk','경북'],['gyeongnam','경남'],['jeju','제주']];
+  let lastId='',loadingId='';
+  function select(){return document.querySelector('#fRegionCode')}
+  function id(){return (document.querySelector('#fId')?.value||'').trim()}
+  function installUI(){
+    if(select())return true;
+    const category=document.querySelector('#fCategory');if(!category)return false;
+    const row=document.createElement('div');row.className='form-grid two gn24-region-select-row';
+    row.innerHTML=`<label>지역판 선택<select id="fRegionCode">${regions.map(([v,n])=>`<option value="${v}">${n}</option>`).join('')}</select><small style="display:block;margin-top:6px;color:#6c7a8c">예: 청주 기사 → 충북 선택 · 본사 메인과 충북 지역판에 함께 연결</small></label><div class="reporter-link-guide"><b>17개 지역판</b><span>기사 제목에는 지역판 이름을 억지로 붙이지 않습니다. 실제 취재 지역에 맞는 시·도만 선택하세요.</span></div>`;
+    category.closest('.form-grid.two')?.insertAdjacentElement('afterend',row);
+    document.querySelectorAll('.admin-brand small').forEach(x=>x.textContent='기사 편집실 · v3.19.0');
+    const notice=document.querySelector('.notice strong');if(notice)notice.textContent='온라인 편집국 CMS · v3.19.0';
+    return true;
+  }
+  async function loadRegion(articleId){
+    if(!articleId||loadingId===articleId||!select())return;loadingId=articleId;
+    try{const cfg=window.GN24_SUPABASE;const url=cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_articles?select=region_code&id=eq.'+encodeURIComponent(articleId)+'&limit=1';const r=await fetch(url,{cache:'no-store',headers:{apikey:cfg.anonKey}});if(!r.ok)return;const rows=await r.json();if(id()===articleId)select().value=rows?.[0]?.region_code||'';}catch(e){console.warn('GN24 region load',e)}finally{loadingId=''}}
+  function watch(){if(!installUI())return;const current=id();if(!current||current===lastId)return;lastId=current;select().value='';setTimeout(()=>loadRegion(current),60)}
+  function patchSupabase(){
+    if(!window.supabase?.createClient||window.supabase.__gn24RegionPatched)return;
+    const original=window.supabase.createClient.bind(window.supabase);
+    window.supabase.createClient=(...args)=>{const client=original(...args),from=client.from.bind(client);client.from=(table)=>{const q=from(table);if(table!=='gn24_articles'||!q?.upsert)return q;const upsert=q.upsert.bind(q);q.upsert=(values,options)=>{if(!Array.isArray(values)&&values&&typeof values==='object')values={...values,region_code:select()?.value||null};return upsert(values,options)};return q};return client};
+    window.supabase.__gn24RegionPatched=true;
+  }
+  installUI();patchSupabase();watch();setInterval(watch,250);
+})();
 
 // GN24 ADMIN DELETE SYNC HOTFIX v3.13.9
 // 온라인 삭제의 의미를 명확히 하고, 삭제 직후 Supabase 원본 목록으로 관리자 화면을 자동 동기화합니다.
