@@ -1,6 +1,6 @@
 (() => {
 'use strict';
-const BUILD='v3.18.6';
+const BUILD='v3.18.7';
 const S={breaking:false,ranking:false,editor:false,badge:false,leadFill:false,attentionFill:false,mobileCss:false};
 const clean=s=>(s||'').replace(/\s+/g,' ').trim();
 function ensureMobileCss(){
@@ -9,7 +9,7 @@ function ensureMobileCss(){
  if(exact){S.mobileCss=true;return;}
  const link=document.createElement('link');
  link.rel='stylesheet';
- link.href='/assets/css/mobile-newsroom.css?v=3.18.6';
+ link.href='/assets/css/mobile-newsroom.css?v=3.18.7';
  link.dataset.gn24MobileNewsroom=BUILD;
  document.head.appendChild(link);
  S.mobileCss=true;
