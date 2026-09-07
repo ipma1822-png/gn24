@@ -1,0 +1,12 @@
+-- GLOBAL NEWS24 v3.14.6 — MY GN24 integrated personal dashboard
+-- Production migration: gn24_my_gn24_dashboard_v3146
+-- Adds own-record SELECT policies for:
+--   gn24_reporter_records
+--   gn24_hq_members
+--   gn24_appointments
+-- Existing own SELECT remains for gn24_contributions and gn24_reporter_submissions.
+-- RPC: public.gn24_my_dashboard() SECURITY INVOKER, authenticated only.
+-- Returns only the currently authenticated reporter's profile, probation/appointment status,
+-- own HQ roles, own regional roles, own contribution history, own personnel/training records,
+-- own recent submissions, and own recent articles.
+-- No other reporter PII or HQ admin permissions are exposed.
