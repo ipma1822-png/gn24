@@ -11,7 +11,7 @@
 <body>
   <header class="admin-header">
     <div class="admin-wrap header-inner">
-      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.5.2</small></span></a>
+      <a class="admin-brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>기사 편집실 · v3.5.3</small></span></a>
       <div class="header-actions">
         <button id="newBtn" class="btn primary" type="button">＋ 새 기사</button>
         <button id="exportBtn" class="btn gold" type="button">news.json 내려받기</button>
@@ -28,7 +28,7 @@
 
   <main class="admin-wrap admin-main">
     <section class="notice">
-      <strong>온라인 편집국 CMS · v3.5.2</strong>
+      <strong>온라인 편집국 CMS · v3.5.3</strong>
       <p>기존 v3.1.12의 자동 임시저장·이미지 복원 기능을 그대로 유지하면서 <b>Supabase와 <b>실제 저장</b>을 연결한 CMS 2단계입니다. 기존 자동 임시저장과 GitHub 백업 방식은 그대로 유지하면서, 등록된 관리자만 기사 DB 저장·공개/비공개·이미지 Storage 업로드·온라인 삭제를 사용할 수 있습니다.</p>
     </section>
 
@@ -87,10 +87,10 @@
               <div id="imagePreview" class="image-preview"><span>이미지 미리보기</span></div>
               <div class="image-controls">
                 <label>홈페이지 이미지 경로<input id="fImage" placeholder="/assets/images/news/example.jpg"></label>
-                <label>새 이미지 선택 <small>선택 후 온라인 저장 시 Supabase Storage에 자동 업로드</small><input id="imageInput" type="file" accept="image/*"></label>
-                <label>저장할 이미지 파일명<input id="imageFilename" placeholder="20260819-example.jpg"></label>
+                <label>새 이미지 선택 <small>선택 즉시 16:9 · 1280×720 · WebP로 자동 경량화 후 Supabase Storage에 업로드</small><input id="imageInput" type="file" accept="image/*"></label>
+                <label>저장할 이미지 파일명<input id="imageFilename" placeholder="20260819-example.webp"></label>
                 <div class="image-button-row"><button id="downloadImageBtn" class="btn" type="button" disabled>이미지 파일 내려받기</button><button id="clearDraftImageBtn" class="btn" type="button" disabled>임시 이미지 취소</button></div>
-                <small>온라인 저장 시 <code>Supabase Storage / news-images</code>에 자동 업로드됩니다. 기존 GitHub 이미지 경로도 계속 사용할 수 있습니다.</small><small id="imageRefreshWarning" class="image-warning">새 이미지를 선택하면 브라우저에 임시저장되어 새로고침 후에도 복원됩니다.</small>
+                <small>온라인 저장 시 <code>Supabase Storage / news-images</code>에 자동 업로드됩니다. 기존 GitHub 이미지 경로도 계속 사용할 수 있습니다.</small><small id="imageRefreshWarning" class="image-warning">새 이미지를 선택하면 자동 경량화 후 브라우저에 임시저장되어 새로고침 후에도 복원됩니다.</small>
               </div>
             </div>
             <label>사진 설명(캡션)<input id="fImageCaption" placeholder="▲ 사진 설명"></label>
@@ -222,6 +222,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/assets/js/gn24-supabase-config.js?v=3.2.6"></script>
   <script src="/assets/js/gallery-admin.js?v=3.5.2"></script>
+  <script src="/assets/js/news-image-light.js?v=1.0.0"></script>
   <script src="/assets/js/news-admin.js?v=3.5.2"></script>
   <script src="/assets/js/news-cms.js?v=3.5.0"></script>
 </body>
