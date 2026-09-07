@@ -1,14 +1,14 @@
 (() => {
 'use strict';
-const BUILD='v3.18.3';
-const S={breaking:false,ranking:false,editor:false,mobileCss:false,badge:false,leadFill:false};
+const BUILD='v3.18.4';
+const S={breaking:false,ranking:false,editor:false,mobileCss:false,badge:false,leadFill:false,attentionFill:false};
 const clean=s=>(s||'').replace(/\s+/g,' ').trim();
 function ensureMobileCss(){
  if(S.mobileCss)return;
  if(document.querySelector('link[data-gn24-mobile-newsroom]')){S.mobileCss=true;return;}
  const link=document.createElement('link');
  link.rel='stylesheet';
- link.href='/assets/css/mobile-newsroom.css?v=3.18.3';
+ link.href='/assets/css/mobile-newsroom.css?v=3.18.4';
  link.dataset.gn24MobileNewsroom=BUILD;
  document.head.appendChild(link);
  S.mobileCss=true;
@@ -58,6 +58,31 @@ function fillLeadGap(){
    list.appendChild(c);
  });
  S.leadFill=true; return true;
+}
+function fillAttentionGap(){
+ if(innerWidth>900)return false;
+ const list=document.getElementById('attentionList');
+ if(!list)return false;
+ const current=[...list.querySelectorAll('a')];
+ const seen=new Set(current.map(a=>clean(a.textContent)));
+ if(current.length>=10){S.attentionFill=true;return true;}
+ const candidates=[...document.querySelectorAll('#latestNews .latest-row, #homeNews .news-card, #topLatest a')];
+ for(const node of candidates){
+   if(list.children.length>=10)break;
+   const a=node.matches('a')?node:node.querySelector('a');
+   const title=clean((a||node).textContent);
+   const href=(a||node).getAttribute?.('href')||'#';
+   if(title.length<4||seen.has(title))continue;
+   const li=document.createElement('li');
+   const link=document.createElement('a');
+   link.href=href;
+   link.textContent=title;
+   li.appendChild(link);
+   list.appendChild(li);
+   seen.add(title);
+ }
+ S.attentionFill=list.children.length>=8;
+ return S.attentionFill;
 }
 function breaking(){
  if(S.breaking)return true;
@@ -114,7 +139,7 @@ function editor(){
  const start=()=>{clearInterval(timer);timer=setInterval(move,5400)};
  viewport.onmouseenter=()=>clearInterval(timer); viewport.onmouseleave=start; start(); return true;
 }
-function init(){ensureMobileCss();buildBadge();breaking();ranking();editor();fillLeadGap();}
+function init(){ensureMobileCss();buildBadge();breaking();ranking();editor();fillLeadGap();fillAttentionGap();}
 document.addEventListener('DOMContentLoaded',()=>{init();[500,1000,1800,3000,5000,7500].forEach(ms=>setTimeout(init,ms));});
 new MutationObserver(()=>requestAnimationFrame(init)).observe(document.documentElement,{childList:true,subtree:true});
 })();
