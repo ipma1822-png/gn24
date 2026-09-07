@@ -1,6 +1,9 @@
 (()=>{
   'use strict';
   const MAX=10;
+  const GALLERY_MAX_SIDE=1600;
+  const WEBP_QUALITY=0.80;
+  const MAX_SOURCE_BYTES=30*1024*1024;
   const input=document.querySelector('#galleryInput');
   const hidden=document.querySelector('#fGalleryImages');
   const list=document.querySelector('#galleryAdminList');
@@ -33,6 +36,31 @@
     render();
   }
 
+  function canvasToBlob(canvas){
+    return new Promise((resolve,reject)=>canvas.toBlob(
+      blob=>blob?resolve(blob):reject(new Error('갤러리 사진 WebP 변환에 실패했습니다.')),
+      'image/webp',WEBP_QUALITY
+    ));
+  }
+
+  async function optimizeGalleryPhoto(file){
+    if(!file||!String(file.type||'').startsWith('image/'))throw new Error('갤러리에는 이미지 파일만 등록할 수 있습니다.');
+    if(file.size>MAX_SOURCE_BYTES)throw new Error('갤러리 사진 원본은 장당 30MB 이하만 등록할 수 있습니다.');
+    const bitmap=await createImageBitmap(file);
+    try{
+      const scale=Math.min(1,GALLERY_MAX_SIDE/Math.max(bitmap.width,bitmap.height));
+      const width=Math.max(1,Math.round(bitmap.width*scale));
+      const height=Math.max(1,Math.round(bitmap.height*scale));
+      const canvas=document.createElement('canvas');
+      canvas.width=width;canvas.height=height;
+      const ctx=canvas.getContext('2d');
+      if(!ctx)throw new Error('갤러리 사진 변환용 Canvas를 만들 수 없습니다.');
+      ctx.drawImage(bitmap,0,0,width,height);
+      const blob=await canvasToBlob(canvas);
+      return new File([blob],`${String(file.name||'gallery').replace(/\.[^.]+$/,'')}.webp`,{type:'image/webp',lastModified:Date.now()});
+    }finally{bitmap.close?.();}
+  }
+
   input.addEventListener('change',()=>{
     const files=[...input.files];
     if(!files.length)return;
@@ -60,11 +88,11 @@
       if(item.url){uploaded.push({url:item.url,caption:item.caption||''});continue;}
       if(!item.file)continue;
       onProgress?.(i+1,items.length);
-      const ext=(item.file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+      const optimized=await optimizeGalleryPhoto(item.file);
       const folder=String(article.date||new Date().toISOString().slice(0,10)).replace(/[^0-9-]/g,'');
       const articleFolder=String(article.id||'article').replace(/[^a-zA-Z0-9._-]+/g,'-');
-      const path=`${folder}/${articleFolder}/gallery-${Date.now()}-${i+1}.${ext}`;
-      const {error}=await sb.storage.from(bucket).upload(path,item.file,{upsert:false,contentType:item.file.type||'image/jpeg',cacheControl:'3600'});
+      const path=`${folder}/${articleFolder}/gallery-${Date.now()}-${i+1}.webp`;
+      const {error}=await sb.storage.from(bucket).upload(path,optimized,{upsert:false,contentType:'image/webp',cacheControl:'3600'});
       if(error)throw new Error(`추가 사진 ${i+1} 업로드 실패: ${error.message}`);
       const {data}=sb.storage.from(bucket).getPublicUrl(path);
       if(!data?.publicUrl)throw new Error(`추가 사진 ${i+1}의 공개 URL 생성에 실패했습니다.`);
