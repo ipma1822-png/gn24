@@ -1,7 +1,17 @@
 (() => {
 'use strict';
-const S={breaking:false,ranking:false,editor:false};
+const S={breaking:false,ranking:false,editor:false,mobileCss:false};
 const clean=s=>(s||'').replace(/\s+/g,' ').trim();
+function ensureMobileCss(){
+ if(S.mobileCss)return;
+ if(document.querySelector('link[data-gn24-mobile-newsroom]')){S.mobileCss=true;return;}
+ const link=document.createElement('link');
+ link.rel='stylesheet';
+ link.href='/assets/css/mobile-newsroom.css?v=3.18.0';
+ link.dataset.gn24MobileNewsroom='v3.18.0';
+ document.head.appendChild(link);
+ S.mobileCss=true;
+}
 function links(sel,limit=10){
  const seen=new Set(),out=[];
  document.querySelectorAll(sel).forEach(a=>{
@@ -42,7 +52,9 @@ function ranking(){
  });
  size(); window.addEventListener('resize',size);
 
- S.ranking=true; let busy=false,timer=null;
+ S.ranking=true;
+ if(innerWidth<=900)return true;
+ let busy=false,timer=null;
  function move(){
   if(busy||track.children.length<9)return; busy=true;
   const first=track.firstElementChild,cs=getComputedStyle(first);
@@ -60,6 +72,11 @@ function ranking(){
 function editor(){
  if(S.editor)return true;
  const grid=document.getElementById('homeNews'); if(!grid||grid.children.length<2)return false;
+ if(innerWidth<=900){
+   grid.classList.add('gn24-editor-mobile-static');
+   S.editor=true;
+   return true;
+ }
  let viewport=grid.parentElement;
  if(!viewport.classList.contains('gn24-editor-viewport')){
    viewport=document.createElement('div'); viewport.className='gn24-editor-viewport';
@@ -80,7 +97,7 @@ function editor(){
  const start=()=>{clearInterval(timer);timer=setInterval(move,5400)};
  viewport.onmouseenter=()=>clearInterval(timer); viewport.onmouseleave=start; start(); return true;
 }
-function init(){breaking();ranking();editor();}
+function init(){ensureMobileCss();breaking();ranking();editor();}
 document.addEventListener('DOMContentLoaded',()=>{init();[500,1000,1800,3000,5000,7500].forEach(ms=>setTimeout(init,ms));});
 new MutationObserver(()=>requestAnimationFrame(init)).observe(document.documentElement,{childList:true,subtree:true});
 })();
