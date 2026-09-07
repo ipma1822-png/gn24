@@ -1,4 +1,4 @@
-/* GLOBAL NEWS24 v3.18.3 — mobile newsroom density layer */
+/* GLOBAL NEWS24 v3.18.4 — mobile newsroom density layer */
 @media (max-width:900px){
   body{font-size:13px}
   .wrap{width:calc(100% - 20px)}
@@ -11,7 +11,6 @@
   .nav-link,.nav-btn{padding:11px 12px;font-size:13px}
   .breaking-inner{height:32px;font-size:12px;gap:10px}
 
-  /* first screen: lead + fill stories + ranking */
   .lead-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr);grid-template-areas:'lead rank' 'fill rank';gap:8px 10px;padding-top:10px;align-items:start}
   .lead-story{grid-area:lead;min-width:0}
   .ranking{grid-area:rank;min-width:0;border-top-width:2px;align-self:stretch}
@@ -65,10 +64,10 @@
   .latest-row .thumb{height:52px}
   .latest-row .badge{font-size:8px;padding:2px 5px}
   .latest-row h3{font-size:11px;line-height:1.3;margin:3px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .attention-panel{padding:9px;align-self:stretch}
+  .attention-panel{padding:9px;align-self:start}
   .attention-panel .section-head h2{font-size:14px}
   .attention-panel a{grid-template-columns:20px 1fr;gap:3px;padding:6px 0;font-size:10px;line-height:1.3}
-  .attention-panel li:nth-child(n+7){display:none}
+  .attention-panel li:nth-child(n+11){display:none}
 
   .beats{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding-top:14px;align-items:start}
   .beat{min-width:0}
