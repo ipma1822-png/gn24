@@ -1,0 +1,62 @@
+(()=>{
+'use strict';
+const PACKAGE_KEY='gn24-ai-office-publish-package-v1';
+const RECEIPTS_KEY='gn24-ai-office-publish-receipts-v1';
+const cfg=window.GN24_SUPABASE||{};
+const auth=window.GN24_REPORTER_AUTH;
+const $=id=>document.getElementById(id);
+let pkg=null,sb=null,session=null,adminOK=false;
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+function decodeB64url(v){let s=String(v||'').replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}
+function readPackage(){
+  const p=new URLSearchParams(location.hash.slice(1));const raw=p.get('package');
+  if(raw){try{const x=decodeB64url(raw);localStorage.setItem(PACKAGE_KEY,JSON.stringify(x));history.replaceState(null,'',location.pathname+location.search);return x}catch(e){console.error(e);}}
+  try{return JSON.parse(localStorage.getItem(PACKAGE_KEY)||'null')}catch(_){return null}
+}
+function valid(x){return !!(x&&x.origin==='AI OFFICE'&&x.bridgeVersion==='3.5.0'&&x.articleId&&x.title&&x.summary&&['ready','handoff'].includes(String(x.status||'ready')));}
+function seoulYmd(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}
+function category(v){const s=String(v||'').trim();if(/국제|세계/.test(s))return '국제뉴스';if(/안전|구조|재난/.test(s))return '안전·구조';if(/무도|스포츠|태권/.test(s))return '무도·스포츠';return '국내소식';}
+function tags(v){return Array.isArray(v)?v:String(v||'').split(',').map(x=>x.trim()).filter(Boolean);}
+function ensureId(){if(pkg.gn24ArticleId)return pkg.gn24ArticleId;const d=seoulYmd().replace(/-/g,'');const suffix=String(pkg.articleId).replace(/^article-/,'').replace(/[^a-zA-Z0-9]/g,'').slice(-10)||String(Date.now()).slice(-6);pkg.gn24ArticleId=`gn24-${d}-ai-${suffix}`;localStorage.setItem(PACKAGE_KEY,JSON.stringify(pkg));return pkg.gn24ArticleId;}
+function render(){
+  const box=$('article');if(!valid(pkg)){box.innerHTML='<p>유효한 AI OFFICE 발행 패키지가 없습니다. AI OFFICE 기사 제작실에서 다시 발행 연결을 시작해 주세요.</p>';return;}
+  const imageUrl=/^https?:\/\//i.test(String(pkg.imageUrl||''))?pkg.imageUrl:'/assets/images/news/gn24-default-news.svg';
+  box.innerHTML=`<h2>${esc(pkg.title)}</h2>${pkg.subtitle?`<h3>${esc(pkg.subtitle)}</h3>`:''}<div class="meta"><span>${esc(category(pkg.category))}</span>${tags(pkg.tags).map(t=>`<span>#${esc(t)}</span>`).join('')}</div><div class="summary">${esc(pkg.summary)}</div><div class="image"><img src="${esc(imageUrl)}" alt="기사 대표 이미지"></div>${pkg.imageUrl?'':'<div class="image-note">실제 대표이미지 URL이 전달되지 않아 Global News24 기본 이미지를 사용합니다. 필요하면 기존 편집실에서 대표이미지를 교체할 수 있습니다.</div>'}<div class="caption">사진 설명 · ${esc(pkg.photoCaption||'등록된 사진 설명 없음')}</div><div class="body">${esc(pkg.body||pkg.summary)}</div><div class="sources">출처·사실확인 근거\n${esc(pkg.sources||'AI OFFICE 최종 승인 자료')}</div>`;
+}
+function setMsg(t,ok=false){const m=$('msg');m.textContent=t;m.className='msg'+(ok?' ok':'');}
+async function setupAuth(){
+  if(!(cfg.url&&cfg.anonKey&&window.supabase&&auth)){setMsg('Global News24 인증 설정을 불러오지 못했습니다.');return;}
+  sb=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+  session=await auth.ensureSession();
+  if(!session){$('login').classList.remove('hidden');setMsg('Global News24 관리자 인증이 필요합니다.');return;}
+  const {error}=await sb.auth.setSession({access_token:session.access_token,refresh_token:session.refresh_token||''});if(error){setMsg('관리자 세션 연결 실패: '+error.message);return;}
+  const {data,error:rpcError}=await sb.rpc('is_gn24_admin');adminOK=!rpcError&&data===true;
+  if(!adminOK){setMsg('현재 로그인 계정은 Global News24 관리자 권한이 없습니다.');return;}
+  $('login').classList.add('hidden');$('actions').classList.remove('hidden');setMsg('Global News24 관리자 인증 완료',true);
+}
+async function kakao(){
+  if(!sb)sb=window.supabase.createClient(cfg.url,cfg.anonKey);
+  localStorage.setItem(PACKAGE_KEY,JSON.stringify(pkg));
+  const redirectTo='https://news24.ai.kr/pages/ai-office-publish/';
+  const {data,error}=await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo,skipBrowserRedirect:true}});
+  if(error||!data?.url)return setMsg('카카오 인증 시작 실패: '+(error?.message||'인증 주소 없음'));
+  location.assign(data.url);
+}
+async function publish(){
+  if(!adminOK||!valid(pkg))return;
+  const typed=prompt('Global News24에 실제 공개됩니다.\n계속하려면 “발행”이라고 입력하세요.');if(typed!=='발행')return setMsg('발행을 취소했습니다.');
+  const id=ensureId(),now=new Date().toISOString();
+  const image=/^https?:\/\//i.test(String(pkg.imageUrl||''))?pkg.imageUrl:'/assets/images/news/gn24-default-news.svg';
+  const article={id,date:seoulYmd(),title:String(pkg.title||''),subtitle:String(pkg.subtitle||''),category:category(pkg.category),reporter_id:null,author:'Global News24 편집부',summary:String(pkg.summary||''),image,image_caption:String(pkg.photoCaption||''),gallery_images:[],content:String(pkg.body||pkg.summary||''),source_name:'AI OFFICE · GEN',source_url:'',tags:tags(pkg.tags),featured:false,pinned:false,visual_style:'normal',is_published:true,updated_at:now};
+  setMsg('Global News24 기사 DB에 최종 발행 중입니다…');$('publish').disabled=true;
+  const {data,error}=await sb.from('gn24_articles').upsert(article,{onConflict:'id'}).select('*').single();
+  $('publish').disabled=false;
+  if(error)return setMsg('발행 실패: '+error.message);
+  const receipts=(()=>{try{const v=JSON.parse(localStorage.getItem(RECEIPTS_KEY)||'[]');return Array.isArray(v)?v:[]}catch(_){return []}})();receipts.unshift({articleId:id,aiArticleId:pkg.articleId,title:pkg.title,publishedAt:now});localStorage.setItem(RECEIPTS_KEY,JSON.stringify(receipts.slice(0,100)));localStorage.removeItem(PACKAGE_KEY);
+  const articleUrl=`https://news24.ai.kr/pages/private-article/?id=${encodeURIComponent(id)}`;
+  $('actions').innerHTML=`<a href="${articleUrl}" target="_blank" rel="noopener">발행 기사 확인</a><a href="/" target="_blank" rel="noopener">Global News24 홈</a>`;
+  setMsg('Global News24 최종 발행 완료',true);
+}
+async function boot(){pkg=readPackage();render();if(!valid(pkg))return;$('kakaoLogin').addEventListener('click',kakao);$('publish').addEventListener('click',publish);await setupAuth();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();
