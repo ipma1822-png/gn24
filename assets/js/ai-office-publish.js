@@ -6,7 +6,7 @@ const cfg=window.GN24_SUPABASE||{};
 const auth=window.GN24_REPORTER_AUTH;
 const $=id=>document.getElementById(id);
 let pkg=null,sb=null,session=null,adminOK=false;
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
 function decodeB64url(v){let s=String(v||'').replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}
 function readPackage(){
   const p=new URLSearchParams(location.hash.slice(1));const raw=p.get('package');
@@ -53,7 +53,7 @@ async function publish(){
   $('publish').disabled=false;
   if(error)return setMsg('발행 실패: '+error.message);
   const receipts=(()=>{try{const v=JSON.parse(localStorage.getItem(RECEIPTS_KEY)||'[]');return Array.isArray(v)?v:[]}catch(_){return []}})();receipts.unshift({articleId:id,aiArticleId:pkg.articleId,title:pkg.title,publishedAt:now});localStorage.setItem(RECEIPTS_KEY,JSON.stringify(receipts.slice(0,100)));localStorage.removeItem(PACKAGE_KEY);
-  const articleUrl=`https://news24.ai.kr/pages/private-article/?id=${encodeURIComponent(id)}`;
+  const articleUrl=`https://news24.ai.kr/pages/article/?id=${encodeURIComponent(id)}`;
   $('actions').innerHTML=`<a href="${articleUrl}" target="_blank" rel="noopener">발행 기사 확인</a><a href="/" target="_blank" rel="noopener">Global News24 홈</a>`;
   setMsg('Global News24 최종 발행 완료',true);
 }
