@@ -7,6 +7,8 @@ const WATERMARK_TEXT='GLOBAL NEWS24';
 const BRAND_SPEC_VERSION='GN24-SMART-IMAGE-v1';
 const WIDTH=1600;
 const HEIGHT=900;
+const SOURCE_MAX_BYTES=10*1024*1024;
+const SOURCE_TYPES=new Set(['image/jpeg','image/png','image/webp']);
 const STATUS={PENDING_MANUAL:'IMAGE_PENDING_MANUAL',PENDING:'IMAGE_PENDING',READY:'IMAGE_READY',FALLBACK:'IMAGE_FALLBACK',REVIEW:'IMAGE_REVIEW',ERROR:'IMAGE_ERROR',PUBLISHED:'IMAGE_PUBLISHED'};
 const STATUS_LABEL={[STATUS.PENDING_MANUAL]:'대표이미지 첨부 대기',[STATUS.PENDING]:'대표이미지 처리 중',[STATUS.READY]:'대표이미지 정상',[STATUS.FALLBACK]:'기본 이미지 미리보기',[STATUS.REVIEW]:'대표이미지 확인 필요',[STATUS.ERROR]:'대표이미지 처리 실패',[STATUS.PUBLISHED]:'발행 이미지 확정'};
 const AI_OFFICE='https://ipma1822-png.github.io/ai-office/';
@@ -37,13 +39,43 @@ function ensureImageBoard(){
   b=document.createElement('section');
   b.id='smartImageGate';
   b.style.cssText='margin-top:16px;padding:16px;border:1px solid rgba(231,191,99,.34);border-radius:15px;background:rgba(231,191,99,.055)';
-  b.innerHTML='<b style="display:block;color:#f1d68f">SMART IMAGE SAFETY GATE v1.1</b><div id="smartImageStatus" style="margin-top:7px;color:#c8d5e6"></div><label style="display:block;margin-top:12px;color:#9db0c6;font-size:12px">순수 대표이미지 URL · sourceImageUrl<input id="sourceImageInput" type="url" inputmode="url" style="display:block;width:100%;margin-top:6px;padding:11px;border:1px solid rgba(148,163,184,.3);border-radius:10px;background:#071525;color:#fff"></label><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:11px"><button id="prepareImage" type="button">대표이미지 만들기</button><button id="verifyImage" type="button">이미지 확인</button><button id="useManualImage" type="button">수동 이미지 사용</button><a id="returnImageResult" class="hidden" href="#">AI OFFICE에서 최종이미지 확인</a></div><div id="imageGateNotice" style="margin-top:11px;color:#ffd27a;white-space:pre-wrap"></div>';
+  b.innerHTML='<b style="display:block;color:#f1d68f">SMART IMAGE SAFETY GATE v1.1</b><div id="smartImageStatus" style="margin-top:7px;color:#c8d5e6"></div><input id="sourceImageFile" type="file" accept="image/jpeg,image/png,image/webp" hidden><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:11px"><button id="changeImage" type="button">대표이미지 변경</button><button id="prepareImage" type="button">대표이미지 만들기</button><button id="verifyImage" type="button">이미지 확인</button><a id="returnImageResult" class="hidden" href="#">AI OFFICE에서 최종이미지 확인</a></div><details style="margin-top:12px"><summary style="cursor:pointer;color:#9db0c6;font-size:12px">고급·비상용 URL 직접 입력</summary><label style="display:block;margin-top:8px;color:#9db0c6;font-size:12px">순수 대표이미지 URL · sourceImageUrl<input id="sourceImageInput" type="url" inputmode="url" style="display:block;width:100%;margin-top:6px;padding:11px;border:1px solid rgba(148,163,184,.3);border-radius:10px;background:#071525;color:#fff"></label><button id="useManualImage" type="button" style="margin-top:8px">입력한 URL 사용</button></details><div id="imageGateNotice" style="margin-top:11px;color:#ffd27a;white-space:pre-wrap"></div>';
   b.querySelectorAll('button,a').forEach(x=>x.style.cssText='border:1px solid rgba(148,163,184,.3);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.06);color:#fff;font-weight:850;text-decoration:none;cursor:pointer');
   $('article')?.insertAdjacentElement('afterend',b);
   $('prepareImage').addEventListener('click',()=>prepareImage(metadataReady()));
   $('verifyImage').addEventListener('click',verifyFromButton);
   $('useManualImage').addEventListener('click',useManualImage);
+  $('changeImage').addEventListener('click',()=>$('sourceImageFile').click());
+  $('sourceImageFile').addEventListener('change',uploadSourceImage);
   return b;
+}
+async function validateSourceFile(file){
+  if(!file)throw new Error('변경할 대표이미지를 선택해 주세요.');
+  if(!SOURCE_TYPES.has(file.type))throw new Error('JPG, PNG, WEBP 이미지만 사용할 수 있습니다.');
+  if(!file.size||file.size>SOURCE_MAX_BYTES)throw new Error('대표이미지는 10MB 이하만 사용할 수 있습니다.');
+  const bitmap=await createImageBitmap(file),size={width:bitmap.width,height:bitmap.height};
+  bitmap.close?.();
+  if(size.width<640||size.height<360)throw new Error('대표이미지는 최소 640 × 360 이상이어야 합니다.');
+  return size;
+}
+async function uploadSourceImage(event){
+  const input=event.currentTarget,file=input.files?.[0],button=$('changeImage');
+  if(!adminOK||!sb){input.value='';return setMsg('대표이미지 변경을 위해 GN24 관리자 인증이 필요합니다.');}
+  const old={sourceImageUrl:pkg.sourceImageUrl,finalImageUrl:pkg.finalImageUrl,imageUrl:pkg.imageUrl,imageStatus:pkg.imageStatus,imageReady:pkg.imageReady,watermarkApplied:pkg.watermarkApplied,watermarkText:pkg.watermarkText,imageWidth:pkg.imageWidth,imageHeight:pkg.imageHeight,imageCheckedAt:pkg.imageCheckedAt,preparedForSource:pkg.preparedForSource,imageError:pkg.imageError};
+  button.disabled=true;button.textContent='대표이미지 업로드 중…';
+  try{
+    await validateSourceFile(file);
+    const ext=file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg',d=seoulYmd().split('-'),safe=ensureId().replace(/[^a-zA-Z0-9_-]/g,'-'),path=`ai-office/manual/${d[0]}/${d[1]}/${safe}-${Date.now()}-source.${ext}`;
+    const {error}=await sb.storage.from(cfg.bucket||'news-images').upload(path,file,{upsert:false,contentType:file.type,cacheControl:'31536000'});
+    if(error)throw error;
+    const {data}=sb.storage.from(cfg.bucket||'news-images').getPublicUrl(path),url=data?.publicUrl||'';
+    if(!/^https:\/\//i.test(url))throw new Error('공개 원본 이미지 URL을 만들지 못했습니다.');
+    Object.assign(pkg,{sourceImageUrl:url,finalImageUrl:'',imageUrl:'',imageStatus:STATUS.REVIEW,imageReady:false,watermarkApplied:false,watermarkText:'',imageWidth:null,imageHeight:null,imageCheckedAt:null,preparedForSource:'',imageError:''});
+    savePackage();render();setMsg('새 대표이미지 업로드 완료 · 발행용 이미지를 준비합니다.',true);
+    await prepareImage(false);
+  }catch(e){
+    console.error(e);Object.assign(pkg,old);savePackage();render();setMsg('대표이미지 변경 실패 · 기존 이미지와 기사 내용은 그대로 보존되었습니다.');
+  }finally{input.value='';button.disabled=false;button.textContent='대표이미지 변경';}
 }
 function renderImageBoard(){
   ensureImageBoard();
