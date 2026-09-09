@@ -7,8 +7,8 @@ const WATERMARK_TEXT='GLOBAL NEWS24';
 const BRAND_SPEC_VERSION='GN24-SMART-IMAGE-v1';
 const WIDTH=1600;
 const HEIGHT=900;
-const STATUS={PENDING:'IMAGE_PENDING',READY:'IMAGE_READY',REVIEW:'IMAGE_REVIEW',ERROR:'IMAGE_ERROR',PUBLISHED:'IMAGE_PUBLISHED'};
-const STATUS_LABEL={[STATUS.PENDING]:'대표이미지 준비 중',[STATUS.READY]:'대표이미지 정상',[STATUS.REVIEW]:'대표이미지 확인 필요',[STATUS.ERROR]:'대표이미지 처리 실패',[STATUS.PUBLISHED]:'발행 이미지 확정'};
+const STATUS={PENDING_MANUAL:'IMAGE_PENDING_MANUAL',PENDING:'IMAGE_PENDING',READY:'IMAGE_READY',FALLBACK:'IMAGE_FALLBACK',REVIEW:'IMAGE_REVIEW',ERROR:'IMAGE_ERROR',PUBLISHED:'IMAGE_PUBLISHED'};
+const STATUS_LABEL={[STATUS.PENDING_MANUAL]:'대표이미지 첨부 대기',[STATUS.PENDING]:'대표이미지 처리 중',[STATUS.READY]:'대표이미지 정상',[STATUS.FALLBACK]:'기본 이미지 미리보기',[STATUS.REVIEW]:'대표이미지 확인 필요',[STATUS.ERROR]:'대표이미지 처리 실패',[STATUS.PUBLISHED]:'발행 이미지 확정'};
 const AI_OFFICE='https://ipma1822-png.github.io/ai-office/';
 const cfg=window.GN24_SUPABASE||{};
 const auth=window.GN24_REPORTER_AUTH;
@@ -21,7 +21,7 @@ function savePackage(){if(pkg)localStorage.setItem(PACKAGE_KEY,JSON.stringify(pk
 function readPackage(){const p=new URLSearchParams(location.hash.slice(1)),raw=p.get('package');if(raw){try{const x=decodeB64url(raw);localStorage.setItem(PACKAGE_KEY,JSON.stringify(x));history.replaceState(null,'',location.pathname+location.search);return x}catch(e){console.error(e)}}try{return JSON.parse(localStorage.getItem(PACKAGE_KEY)||'null')}catch(_){return null}}
 function valid(x){return !!(x&&x.origin==='AI OFFICE'&&x.bridgeVersion==='3.5.0'&&x.articleId&&x.title&&x.summary&&['ready','handoff'].includes(String(x.status||'ready')))}
 function brandContractValid(){return !!(pkg&&pkg.brandSpecVersion===BRAND_SPEC_VERSION&&pkg.imageWorkflow==='generate-clean-image-then-compose-code-watermark'&&pkg.imageTextPolicy==='ai-image-no-text'&&pkg.brandLogoPosition==='bottom-right')}
-function metadataReady(x=pkg){return !!(x&&/^https:\/\//i.test(String(x.finalImageUrl||''))&&x.imageStatus===STATUS.READY&&x.watermarkApplied===true&&x.watermarkText===WATERMARK_TEXT&&Number(x.imageWidth)===WIDTH&&Number(x.imageHeight)===HEIGHT)}
+function metadataReady(x=pkg){return !!(x&&/^https:\/\//i.test(String(x.sourceImageUrl||''))&&/^https:\/\//i.test(String(x.finalImageUrl||''))&&x.imageStatus===STATUS.READY&&x.watermarkApplied===true&&x.watermarkText===WATERMARK_TEXT&&Number(x.imageWidth)===WIDTH&&Number(x.imageHeight)===HEIGHT)}
 function seoulYmd(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
 function category(v){const s=String(v||'').trim();if(/국제|세계/.test(s))return'국제뉴스';if(/안전|구조|재난/.test(s))return'안전·구조';if(/무도|스포츠|태권/.test(s))return'무도·스포츠';return'국내소식'}
 function tags(v){return Array.isArray(v)?v:String(v||'').split(',').map(x=>x.trim()).filter(Boolean)}
@@ -108,8 +108,8 @@ async function prepareImage(force){
     if(error)throw error;
     const {data}=sb.storage.from(cfg.bucket||'news-images').getPublicUrl(path),url=data?.publicUrl||'';
     const checked=await verifyFinalUrl(url);
-    Object.assign(pkg,{sourceImageUrl:source,preparedForSource:source,finalImageUrl:url,imageUrl:url,imageStatus:STATUS.READY,imageReady:true,watermarkApplied:true,watermarkText:WATERMARK_TEXT,imageWidth:checked.width,imageHeight:checked.height,imageBytes:checked.size,imageContentType:checked.type,imageCheckedAt:new Date().toISOString(),imageError:'',brandSpecVersion:BRAND_SPEC_VERSION});
-    savePackage();render();setMsg('대표이미지 준비 완료 · 워터마크와 공개 URL 검증을 통과했습니다.',true);
+    Object.assign(pkg,{sourceImageUrl:source,preparedForSource:source,finalImageUrl:url,imageUrl:url,imageStatus:source?STATUS.READY:STATUS.FALLBACK,imageReady:!!source,watermarkApplied:true,watermarkText:WATERMARK_TEXT,imageWidth:checked.width,imageHeight:checked.height,imageBytes:checked.size,imageContentType:checked.type,imageCheckedAt:new Date().toISOString(),imageError:source?'':'대표이미지를 첨부하면 발행할 수 있습니다.',brandSpecVersion:BRAND_SPEC_VERSION});
+    savePackage();render();setMsg(source?'대표이미지 준비 완료 · 워터마크와 공개 URL 검증을 통과했습니다.':'기본 이미지 미리보기만 준비했습니다. 대표이미지를 첨부해야 발행할 수 있습니다.',!!source);
   }catch(e){
     console.error(e);
     Object.assign(pkg,old);
@@ -160,7 +160,7 @@ async function publish(){
   $('actions').innerHTML=`<a href="${articleUrl}" target="_blank" rel="noopener">발행 기사 확인</a><a href="${returnUrl}">AI OFFICE로 발행 결과 보내기</a><a href="/" target="_blank" rel="noopener">Global News24 홈</a>`;
   setMsg('Global News24 최종 발행 완료 · AI OFFICE 회신 준비됨',true);
 }
-async function boot(){pkg=readPackage();if(pkg&&!pkg.imageStatus)pkg.imageStatus=metadataReady()?STATUS.READY:(pkg.sourceImageUrl?STATUS.REVIEW:STATUS.PENDING);render();ensureSafetyBoard();if(!valid(pkg))return;$('kakaoLogin').addEventListener('click',kakao);$('dryRun')?.addEventListener('click',dryRun);$('publish').addEventListener('click',publish);await setupAuth()}
+async function boot(){pkg=readPackage();if(pkg&&!pkg.imageStatus)pkg.imageStatus=metadataReady()?STATUS.READY:(pkg.sourceImageUrl?STATUS.REVIEW:STATUS.PENDING_MANUAL);render();ensureSafetyBoard();if(!valid(pkg))return;$('kakaoLogin').addEventListener('click',kakao);$('dryRun')?.addEventListener('click',dryRun);$('publish').addEventListener('click',publish);await setupAuth()}
 window.GN24SmartImageGate={STATUS,metadataReady,brandContractValid};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
