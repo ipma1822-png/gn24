@@ -75,6 +75,20 @@
               </select>
             </label>
           </div>
+          <div id="opinionSubcategoryRow" class="form-grid two" hidden>
+            <label>오피니언 세부 분류
+              <select id="fOpinionSubcategory">
+                <option value="">세부 분류 선택</option>
+                <option value="칼럼">칼럼</option>
+                <option value="전문가 기고">전문가 기고</option>
+                <option value="인터뷰">인터뷰</option>
+                <option value="저자와의 만남">저자와의 만남</option>
+                <option value="인물·리더">인물·리더</option>
+                <option value="독자기고">독자기고</option>
+              </select>
+            </label>
+            <div class="reporter-link-guide"><b>오피니언 분류</b><span>오피니언 기사에만 적용됩니다. 기존 태그 저장 구조를 재사용하여 DB 변경 없이 홈페이지 하위 메뉴와 연결합니다.</span></div>
+          </div>
           <div class="form-grid two">
             <label>기사 표시 작성자<input id="fAuthor" value="Global News24 편집부"></label>
             <div class="reporter-link-guide"><b>기자 연결</b><span>등록 기자를 선택하면 작성자명이 자동 입력되고 기사 하단 기자 프로필과 연결됩니다.</span></div>
@@ -225,5 +239,35 @@
   <script src="/assets/js/news-image-light.js?v=1.0.0"></script>
   <script src="/assets/js/news-admin.js?v=3.5.2"></script>
   <script src="/assets/js/news-cms.js?v=3.5.0"></script>
+  <script>
+  (()=>{
+    const SUBS=['칼럼','전문가 기고','인터뷰','저자와의 만남','인물·리더','독자기고'];
+    const cat=document.querySelector('#fCategory'), sub=document.querySelector('#fOpinionSubcategory'), row=document.querySelector('#opinionSubcategoryRow'), tags=document.querySelector('#fTags');
+    if(!cat||!sub||!row||!tags)return;
+    const readTags=()=>tags.value.split(',').map(x=>x.trim()).filter(Boolean);
+    const syncFromArticle=()=>{
+      const isOpinion=cat.value==='오피니언';
+      row.hidden=!isOpinion;
+      if(!isOpinion){sub.value='';return;}
+      const found=SUBS.find(x=>readTags().includes(x))||'';
+      sub.value=found;
+    };
+    const writeSubcategory=()=>{
+      const base=readTags().filter(x=>!SUBS.includes(x));
+      if(cat.value==='오피니언'&&sub.value)base.push(sub.value);
+      tags.value=base.join(', ');
+      tags.dispatchEvent(new Event('input',{bubbles:true}));
+    };
+    cat.addEventListener('change',()=>{syncFromArticle();writeSubcategory();});
+    sub.addEventListener('change',writeSubcategory);
+    document.querySelector('#articleList')?.addEventListener('click',()=>setTimeout(syncFromArticle,0));
+    document.querySelector('#newBtn')?.addEventListener('click',()=>setTimeout(syncFromArticle,0));
+    document.querySelector('#cmsLoadBtn')?.addEventListener('click',()=>setTimeout(syncFromArticle,500));
+    tags.addEventListener('change',syncFromArticle);
+    const observer=new MutationObserver(()=>setTimeout(syncFromArticle,0));
+    observer.observe(document.querySelector('#editorTitle'),{childList:true,subtree:true,characterData:true});
+    syncFromArticle();
+  })();
+  </script>
 </body>
 </html>
