@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
 const $=(s,p=document)=>p.querySelector(s);
-const esc=(s='')=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=(s='')=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
 const region=(document.body.dataset.region||'').toLowerCase();
 const regionName=document.body.dataset.regionName||region;
 const hqCode=(document.body.dataset.hqCode||region).toUpperCase();
@@ -11,26 +11,24 @@ async function rest(path){const c=cfg();if(!c.url||!c.anonKey)throw new Error('R
 function articleURL(id){return '/pages/article/?id='+encodeURIComponent(id)}
 function fmt(d){return d?String(d).replaceAll('-','.') : ''}
 function bg(src){return `style="background-image:url('${esc(src||DEFAULT_IMAGE)}'),url('${DEFAULT_IMAGE}')"`}
-function row(a){return `<a class="regional-card" href="${articleURL(a.id)}"><div class="regional-thumb" ${bg(a.image)}></div><div class="regional-card-body"><span>${esc(a.category||'울산뉴스')}</span><h3>${esc(a.title||'')}</h3><p>${esc(a.summary||'')}</p><small>${esc(fmt(a.date))} · ${esc(a.author||'Global News24')}</small></div></a>`}
-async function loadEditor(){
-  const box=$('#regionalEditor');if(!box)return;
-  try{
-    const rs=await rest(`gn24_reporters?select=id,name,role,status,regional_hq_code&status=eq.active&regional_hq_code=eq.${encodeURIComponent(hqCode)}&order=display_order.asc&limit=1`);
-    const r=rs?.[0];box.textContent=r?`${r.name} ${r.role||'기자'}`:'본사 관리';
-  }catch(e){box.textContent='본사 관리';console.warn('GN24 regional editor',e)}
-}
+function card(a){return `<a class="regional-card" href="${articleURL(a.id)}"><div class="regional-thumb" ${bg(a.image)}></div><div class="regional-card-body"><span>${esc(a.category||'뉴스')}</span><h3>${esc(a.title||'')}</h3><p>${esc(a.summary||'')}</p><small>${esc(fmt(a.date))} · ${esc(a.author||'Global News24')}</small></div></a>`}
+function compact(a){return `<a class="regional-compact" href="${articleURL(a.id)}"><div class="regional-compact-thumb" ${bg(a.image)}></div><div><span>${esc(a.category||'뉴스')}</span><b>${esc(a.title||'')}</b><small>${esc(fmt(a.date))}</small></div></a>`}
+async function loadEditor(){const box=$('#regionalEditor');if(!box)return;try{const rs=await rest(`gn24_reporters?select=id,name,role,status,regional_hq_code&status=eq.active&regional_hq_code=eq.${encodeURIComponent(hqCode)}&order=display_order.asc&limit=1`);const r=rs?.[0];box.textContent=r?`${r.name} ${r.role||'기자'}`:'본사 관리'}catch(e){box.textContent='본사 관리'}}
 async function loadNews(){
-  const list=$('#regionalNews');if(!list)return;
-  try{
-    let data=await rest(`gn24_articles?select=id,date,title,subtitle,category,author,summary,image,region_code,is_published&is_published=eq.true&region_code=eq.${encodeURIComponent(region)}&order=date.desc,created_at.desc`);
-    const q=new URLSearchParams(location.search);const cat=q.get('cat');if(cat)data=data.filter(a=>a.category===cat);
-    $('#regionalCount')&&($('#regionalCount').textContent=`${data.length}건`);
-    if(!data.length){list.innerHTML=`<div class="regional-empty"><b>${esc(regionName)} 뉴스룸 준비 완료</b><p>지역 담당자가 승인 요청한 기사가 발행되면 이곳에 자동으로 모입니다. 같은 기사 ID를 사용하므로 본사 노출을 위해 기사를 복제하지 않습니다.</p></div>`;return;}
-    const lead=data[0];
-    const hero=$('#regionalLead');if(hero){hero.href=articleURL(lead.id);hero.innerHTML=`<div class="regional-lead-image" ${bg(lead.image)}></div><div><span>${esc(lead.category||regionName+'뉴스')}</span><h2>${esc(lead.title)}</h2><p>${esc(lead.summary||'')}</p><small>${esc(fmt(lead.date))} · ${esc(lead.author||'Global News24')}</small></div>`;}
-    list.innerHTML=data.slice(1).map(row).join('');
-  }catch(e){list.innerHTML='<div class="regional-empty"><b>지역뉴스를 불러오지 못했습니다.</b><p>잠시 후 다시 확인해 주세요.</p></div>';console.warn('GN24 regional newsroom',e)}
+ try{
+  const all=await rest('gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published&is_published=eq.true&order=date.desc,created_at.desc&limit=80');
+  const local=all.filter(a=>(a.region_code||'').toLowerCase()===region);
+  const q=new URLSearchParams(location.search),cat=q.get('cat');const localView=cat?local.filter(a=>a.category===cat):local;
+  $('#regionalCount')&&($('#regionalCount').textContent=`${localView.length}건`);
+  const lead=localView[0]||all[0];
+  const hero=$('#regionalLead');if(hero&&lead){hero.href=articleURL(lead.id);hero.innerHTML=`<div class="regional-lead-image" ${bg(lead.image)}></div><div><span>${esc(lead.category||regionName+'뉴스')}</span><h2>${esc(lead.title)}</h2><p>${esc(lead.summary||'')}</p><small>${esc(fmt(lead.date))} · ${esc(lead.author||'Global News24')}</small></div>`}
+  const localList=$('#regionalNews');if(localList){const rows=localView.filter(a=>!lead||a.id!==lead.id).slice(0,8);localList.innerHTML=rows.length?rows.map(card).join(''):`<div class="regional-empty"><b>${esc(regionName)} 지역기사를 준비하고 있습니다.</b><p>새 지역기사가 발행되는 즉시 이곳에 추가됩니다.</p></div>`}
+  const latest=$('#regionalLatest');if(latest){const rows=all.filter(a=>!lead||a.id!==lead.id).slice(0,12);latest.innerHTML=rows.map(compact).join('')}
+  const martial=$('#regionalMartial');if(martial){martial.innerHTML=all.filter(a=>(a.category||'').includes('무도')||JSON.stringify(a).includes('태권')).slice(0,6).map(compact).join('')}
+  const safety=$('#regionalSafety');if(safety){safety.innerHTML=all.filter(a=>JSON.stringify(a).includes('안전')||JSON.stringify(a).includes('드론')).slice(0,6).map(compact).join('')}
+  const publicBox=$('#regionalPublic');if(publicBox){publicBox.innerHTML=all.filter(a=>(a.category||'')==='공익'||JSON.stringify(a).includes('교육')||JSON.stringify(a).includes('문화')).slice(0,6).map(compact).join('')}
+ }catch(e){const list=$('#regionalNews');if(list)list.innerHTML='<div class="regional-empty"><b>뉴스를 불러오지 못했습니다.</b><p>잠시 후 다시 확인해 주세요.</p></div>';console.warn('GN24 regional newsroom',e)}
 }
-function nav(){document.querySelectorAll('[data-regional-cat]').forEach(a=>{const cat=a.dataset.regionalCat||'';a.href=cat?`${location.pathname}?cat=${encodeURIComponent(cat)}`:location.pathname;});}
+function nav(){document.querySelectorAll('[data-regional-cat]').forEach(a=>{const cat=a.dataset.regionalCat||'';a.href=cat?`${location.pathname}?cat=${encodeURIComponent(cat)}`:location.pathname})}
 nav();loadEditor();loadNews();
 })();
