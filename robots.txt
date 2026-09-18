@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /canada/
+
+# Canada remains private pre-launch via page-level noindex/nofollow/noarchive.
+# Do not block /canada/ here: social preview crawlers need to fetch its OG metadata.
 
 Sitemap: https://YOUR_GITHUB_PAGES_DOMAIN/gn24/sitemap.xml
