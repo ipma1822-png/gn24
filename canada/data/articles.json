@@ -1,5 +1,34 @@
 [
   {
+    "id": "ca-gn24-20260918-275968",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-18",
+    "category": "MARTIAL ARTS & SPORTS",
+    "title": "World Martial Arts Championship Goes Global Online on Dec. 12",
+    "subtitle": "The 10th championship will connect local arenas, AI-assisted analysis and digital certification",
+    "summary": "The 10th World Martial Arts Championship will be held online on Dec. 12, linking competitors across countries through local arenas and a shared international platform.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-18/gn24-20260918-275968/1789703539966-20260918-news-4308.webp",
+    "imageCaption": "Image used with the original Global News24 report. World Martial Arts Championship Goes Global Online on Dec. 12.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "The 10th World Martial Arts Championship is scheduled for Dec. 12, 2026, in a global online format designed to allow athletes to participate from their own regions.",
+      "Organizers plan to connect the event with the 77 Days Global SPARK Challenge, officially recognized local participating schools, AI-assisted video analysis and ICA digital certification. AI is intended to support judges and record management rather than replace human decisions.",
+      "The championship is open to a range of martial arts, including Taekwondo, sword arts, Hapkido and special martial arts. Its central message, “One World · Many Arenas · One Championship,” emphasizes access, growth and international exchange."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260918-275968",
+    "sourceArticleId": "gn24-20260918-275968",
+    "tags": [
+      "World Martial Arts Championship",
+      "WMA 2026",
+      "Global SPARK",
+      "Martial Arts"
+    ],
+    "featured": true,
+    "pinned": true
+  },
+  {
     "id": "ca-2026-welcome",
     "edition": "canada",
     "language": "en",
@@ -11,10 +40,20 @@
     "image": "/assets/images/news/gn24-20260819-reopen-homepage.jpg",
     "imageCaption": "Global News24 Canada Edition is being prepared as the publication’s first overseas edition platform.",
     "author": "Global News24 Editorial Desk",
-    "content": ["Global News24 is preparing a Canada Edition as the first international extension of its digital newsroom.", "The edition will retain the identity and editorial structure of the Korea headquarters while publishing English-language reporting selected for Canadian and international readers.", "During the private pre-launch period, the newsroom will build its article archive, strengthen local cooperation and complete operational checks before any official opening."],
-    "tags": ["Global News24", "Canada", "Korea–Canada"],
+    "content": [
+      "Global News24 is preparing a Canada Edition as the first international extension of its digital newsroom.",
+      "The edition will retain the identity and editorial structure of the Korea headquarters while publishing English-language reporting selected for Canadian and international readers.",
+      "During the private pre-launch period, the newsroom will build its article archive, strengthen local cooperation and complete operational checks before any official opening."
+    ],
+    "tags": [
+      "Global News24",
+      "Canada",
+      "Korea–Canada"
+    ],
     "featured": true,
-    "pinned": true
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
   },
   {
     "id": "ca-2026-martial-arts-exchange",
@@ -28,9 +67,20 @@
     "image": "/assets/images/news/taekwonkumdo-homepage-update.jpg",
     "imageCaption": "Digital platforms are expanding opportunities for international martial arts education and exchange.",
     "author": "Global News24 Editorial Desk",
-    "content": ["Martial arts communities in Korea and Canada have long shared interests in Taekwondo, self-defence education and instructor development.", "New digital training platforms can now support seminars, educational resources and international events without being limited by distance.", "Global News24 Canada Edition will document people and organizations building responsible, educational and sustainable exchange."],
-    "tags": ["Martial Arts", "Korea–Canada", "Education"],
-    "featured": true
+    "content": [
+      "Martial arts communities in Korea and Canada have long shared interests in Taekwondo, self-defence education and instructor development.",
+      "New digital training platforms can now support seminars, educational resources and international events without being limited by distance.",
+      "Global News24 Canada Edition will document people and organizations building responsible, educational and sustainable exchange."
+    ],
+    "tags": [
+      "Martial Arts",
+      "Korea–Canada",
+      "Education"
+    ],
+    "featured": true,
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
   },
   {
     "id": "ca-2026-taekwonkumdo",
@@ -44,9 +94,20 @@
     "image": "/assets/images/news/taekwonkumdo-homepage-update.jpg",
     "imageCaption": "Taekwonkumdo is being developed for structured education and international exchange.",
     "author": "Global News24 Martial Arts Desk",
-    "content": ["Taekwonkumdo was created in Korea as a martial arts system that combines dynamic kicking techniques with disciplined sword practice.", "Its educational approach emphasizes physical coordination, confidence, courtesy and safe, progressive training.", "International cooperation with instructors and schools will be developed carefully through verified educational programs and exchange activities."],
-    "tags": ["Taekwonkumdo", "Taekwondo", "Training"],
-    "featured": true
+    "content": [
+      "Taekwonkumdo was created in Korea as a martial arts system that combines dynamic kicking techniques with disciplined sword practice.",
+      "Its educational approach emphasizes physical coordination, confidence, courtesy and safe, progressive training.",
+      "International cooperation with instructors and schools will be developed carefully through verified educational programs and exchange activities."
+    ],
+    "tags": [
+      "Taekwonkumdo",
+      "Taekwondo",
+      "Training"
+    ],
+    "featured": true,
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
   },
   {
     "id": "ca-2026-police-martial-arts",
@@ -60,9 +121,20 @@
     "image": "/assets/images/news/ipma-homepage-update.jpg",
     "imageCaption": "International police martial arts education emphasizes safe practice and public responsibility.",
     "author": "Global News24 Public Safety Desk",
-    "content": ["Police martial arts programs combine practical self-defence with professional ethics, restraint and public responsibility.", "An international network can help instructors share training standards, seminar methods and safety-centered teaching resources.", "The Canada Edition will report on verified educational activity without implying government or law-enforcement endorsement where none exists."],
-    "tags": ["Police Martial Arts", "Self-Defence", "Public Safety"],
-    "featured": true
+    "content": [
+      "Police martial arts programs combine practical self-defence with professional ethics, restraint and public responsibility.",
+      "An international network can help instructors share training standards, seminar methods and safety-centered teaching resources.",
+      "The Canada Edition will report on verified educational activity without implying government or law-enforcement endorsement where none exists."
+    ],
+    "tags": [
+      "Police Martial Arts",
+      "Self-Defence",
+      "Public Safety"
+    ],
+    "featured": true,
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
   },
   {
     "id": "ca-2026-drone-patrol",
@@ -76,8 +148,19 @@
     "image": "/assets/images/news/dronepatrol-homepage-update.jpg",
     "imageCaption": "Responsible drone education can support community awareness and safety initiatives.",
     "author": "Global News24 Technology Desk",
-    "content": ["Drones can offer wide-area visibility during training, community awareness campaigns and selected safety activities.", "Responsible programs must put aviation rules, privacy, qualified operation and cooperation with public authorities first.", "Global News24 will follow technology, education and public-interest initiatives that demonstrate clear safeguards."],
-    "tags": ["Drone", "Community Safety", "Technology"]
+    "content": [
+      "Drones can offer wide-area visibility during training, community awareness campaigns and selected safety activities.",
+      "Responsible programs must put aviation rules, privacy, qualified operation and cooperation with public authorities first.",
+      "Global News24 will follow technology, education and public-interest initiatives that demonstrate clear safeguards."
+    ],
+    "tags": [
+      "Drone",
+      "Community Safety",
+      "Technology"
+    ],
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
   },
   {
     "id": "ca-2026-ai-future",
@@ -91,8 +174,19 @@
     "image": "/assets/images/news/gn24-cat-tech.svg",
     "imageCaption": "AI can assist multilingual publishing when human editorial review remains in control.",
     "author": "Global News24 Technology Desk",
-    "content": ["AI tools are lowering language barriers for international organizations, educators and newsrooms.", "Translation, research assistance and content organization can improve speed, but none of these tools replaces source checking or editorial accountability.", "The Canada Edition will use a human-reviewed workflow for English content and clearly separate confirmed reporting from commentary."],
-    "tags": ["AI", "Media", "Technology"]
+    "content": [
+      "AI tools are lowering language barriers for international organizations, educators and newsrooms.",
+      "Translation, research assistance and content organization can improve speed, but none of these tools replaces source checking or editorial accountability.",
+      "The Canada Edition will use a human-reviewed workflow for English content and clearly separate confirmed reporting from commentary."
+    ],
+    "tags": [
+      "AI",
+      "Media",
+      "Technology"
+    ],
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
   },
   {
     "id": "ca-2026-youth-education",
@@ -106,8 +200,48 @@
     "image": "/assets/images/news/gn24-cat-culture.svg",
     "imageCaption": "Youth programs can connect personal growth with service and international awareness.",
     "author": "Global News24 Education Desk",
-    "content": ["Youth education is most effective when personal achievement is connected with respect, service and responsibility.", "Martial arts schools, community organizations and educational networks can give young people practical opportunities to lead and contribute.", "Future Canada Edition coverage will highlight credible programs and the voices of participating communities."],
-    "tags": ["Youth", "Education", "Community"]
+    "content": [
+      "Youth education is most effective when personal achievement is connected with respect, service and responsibility.",
+      "Martial arts schools, community organizations and educational networks can give young people practical opportunities to lead and contribute.",
+      "Future Canada Edition coverage will highlight credible programs and the voices of participating communities."
+    ],
+    "tags": [
+      "Youth",
+      "Education",
+      "Community"
+    ],
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
+  },
+  {
+    "id": "ca-gn24-20260912-218341",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-12",
+    "category": "CULTURE & EDUCATION",
+    "title": "Taekwondo Camp Builds Confidence Through Training and Teamwork",
+    "subtitle": "Nineteen students joined an overnight program combining martial arts, character education and digital recognition",
+    "summary": "Keimyung Taekwondo held a two-day confidence camp where 19 students trained, shared responsibilities and recorded positive actions through its STAR CLASS system.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-12/gn24-20260912-218341/1789162670163-20260912-news-4573.webp",
+    "imageCaption": "Image used with the original Global News24 report. Taekwondo Camp Builds Confidence Through Training and Teamwork.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Keimyung Taekwondo held its September Confidence Camp from Sept. 11 to 12, bringing 19 students together for an overnight program at the school.",
+      "Participants trained, stayed in tents, watched a film and joined character education focused on gratitude, cooperation and personal responsibility. For some children, spending a night away from their parents was itself an important challenge.",
+      "Positive actions were recognized in real time through the school’s STAR CLASS system. The records can connect with Global SPARK, an initiative designed to recognize steady growth, service and constructive everyday choices."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260912-218341",
+    "sourceArticleId": "gn24-20260912-218341",
+    "tags": [
+      "Taekwondo",
+      "Youth Education",
+      "STAR CLASS",
+      "Global SPARK"
+    ],
+    "featured": true,
+    "pinned": false
   },
   {
     "id": "ca-2026-global-network",
@@ -121,7 +255,656 @@
     "image": "/assets/images/news/gn24-cat-world.svg",
     "imageCaption": "Global News24 is preparing verified channels for international reporting and cooperation.",
     "author": "Global News24 Editorial Desk",
-    "content": ["A reliable international edition depends on clear roles, verified identities and consistent editorial standards.", "The Canada Edition has not hard-coded any individual as its representative, bureau chief or correspondent.", "Appointments may be made later according to operational needs, and each role will remain independently manageable within the Global News24 network."],
-    "tags": ["Global Network", "Correspondents", "International Exchange"]
+    "content": [
+      "A reliable international edition depends on clear roles, verified identities and consistent editorial standards.",
+      "The Canada Edition has not hard-coded any individual as its representative, bureau chief or correspondent.",
+      "Appointments may be made later according to operational needs, and each role will remain independently manageable within the Global News24 network."
+    ],
+    "tags": [
+      "Global Network",
+      "Correspondents",
+      "International Exchange"
+    ],
+    "pinned": false,
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/canada/"
+  },
+  {
+    "id": "ca-gn24-20260909-438287",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-09",
+    "category": "NEWS",
+    "title": "South Korea Nears $40,000 Per-Capita Income Milestone",
+    "subtitle": "Semiconductor exports and AI demand are supporting growth, while wider gains remain a challenge",
+    "summary": "South Korea’s per-capita gross national income could exceed $40,000 for the first time, supported by semiconductor demand, exports and exchange-rate conditions.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-09/gn24-20260909-438287/1788922565816-20260909-news-4080.webp",
+    "imageCaption": "Image used with the original Global News24 report. South Korea Nears $40,000 Per-Capita Income Milestone.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "South Korea’s per-capita gross national income is expected to approach or exceed $40,000 for the first time, according to the Korean report adapted for this edition.",
+      "Growth in artificial intelligence industries, stronger semiconductor exports and currency conditions have contributed to the rise. The result could again place Korea ahead of Japan on this measure.",
+      "National averages do not automatically translate into improved household living standards. Extending the benefits of export-led growth to households, small businesses, self-employed workers and regions outside the capital remains a central policy challenge."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260909-438287",
+    "sourceArticleId": "gn24-20260909-438287",
+    "tags": [
+      "South Korea",
+      "Economy",
+      "Semiconductors",
+      "GNI"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260909-707122",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-09",
+    "category": "WORLD",
+    "title": "IAEA Assesses New Uranium Enrichment Capacity at Yongbyon",
+    "subtitle": "Agency says the new building could accommodate up to 28 centrifuge cascades",
+    "summary": "The IAEA has assessed that North Korea’s newly built enrichment facility at Yongbyon could accommodate as many as 28 centrifuge cascades.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-09/gn24-20260909-707122/1788922841132-20260909-news-9594.webp",
+    "imageCaption": "Image used with the original Global News24 report. IAEA Assesses New Uranium Enrichment Capacity at Yongbyon.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "The International Atomic Energy Agency has assessed that a newly built uranium enrichment facility at North Korea’s Yongbyon nuclear complex could accommodate up to 28 centrifuge cascades.",
+      "The agency compared images released by North Korea in June with commercial satellite imagery to identify the building. Activity suggesting expanded capacity has also been observed at the Kangson enrichment site near Pyongyang.",
+      "The IAEA said it could not verify the exact number, performance or operating rate of the centrifuges. It therefore did not estimate highly enriched uranium output or the number of weapons the facilities might support."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260909-707122",
+    "sourceArticleId": "gn24-20260909-707122",
+    "tags": [
+      "IAEA",
+      "North Korea",
+      "Yongbyon",
+      "Nuclear Security"
+    ],
+    "featured": true,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260908-844486",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-08",
+    "category": "PUBLIC SAFETY",
+    "title": "Missing-Person Cases Strain Police Resources in Chungbuk",
+    "subtitle": "Eight of 12 police stations lack dedicated missing-person investigation teams",
+    "summary": "Only four of 12 police stations in Chungbuk operate dedicated missing-person teams, raising concerns about staffing and rapid response.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-08/gn24-20260908-844486/1788825067864-20260908-news-8410.webp",
+    "imageCaption": "Image used with the original Global News24 report. Missing-Person Cases Strain Police Resources in Chungbuk.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Eight of the 12 police stations in South Korea’s Chungbuk Province do not operate separate investigation teams dedicated to missing-person cases.",
+      "At those stations, detectives handling violent crime, theft and unattended deaths must also respond to missing-person and runaway reports. More than 2,000 such reports are filed in the province each year.",
+      "The figures have prompted calls for more dedicated personnel to support faster initial response and consistent case management."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260908-844486",
+    "sourceArticleId": "gn24-20260908-844486",
+    "tags": [
+      "Missing Persons",
+      "Police",
+      "Public Safety",
+      "Chungbuk"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260908-937593",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-08",
+    "category": "WORLD",
+    "title": "Arctic Quake Triggered Landslide and Glacier Collapse, Study Finds",
+    "subtitle": "Researchers say warming may amplify cascading disaster risks without causing the earthquake itself",
+    "summary": "Researchers identified a sequence of rock and glacier collapses after a magnitude-6.5 earthquake on a remote Arctic volcanic island.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-08/gn24-20260908-937593/1788824327655-20260908-news-7499.webp",
+    "imageCaption": "Image used with the original Global News24 report. Arctic Quake Triggered Landslide and Glacier Collapse, Study Finds.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "An international research team has documented a major rock collapse followed by glacier failure after a magnitude-6.5 earthquake on a remote volcanic island in the Arctic.",
+      "The earthquake was the immediate trigger, but researchers are examining whether long-term warming weakened permafrost and mountain slopes, increasing the scale of the damage.",
+      "The findings do not suggest that climate change causes earthquakes. They show how warming can amplify existing hazards and increase the risk of several disasters unfolding in sequence."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260908-937593",
+    "sourceArticleId": "gn24-20260908-937593",
+    "tags": [
+      "Arctic",
+      "Climate Change",
+      "Earthquake",
+      "Glacier"
+    ],
+    "featured": true,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260908-ai-455295ruzn",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-08",
+    "category": "PUBLIC SAFETY",
+    "title": "Korea Expands Mental-Health Protection for High-Risk Public Workers",
+    "subtitle": "New measures include emergency relief from duty when warning signs become urgent",
+    "summary": "The Korean government has announced stronger suicide-prevention and psychological support measures for police, firefighters, military personnel, civil servants and other high-risk groups.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-08/gn24-20260908-ai-455295ruzn/1788923229936-20260908-news-0186.webp",
+    "imageCaption": "Image used with the original Global News24 report. Korea Expands Mental-Health Protection for High-Risk Public Workers.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "The Korean government has prepared a cross-government suicide-prevention plan for people in psychologically high-risk roles, including police officers, firefighters, military personnel, civil complaint workers and emotional laborers.",
+      "A new emergency relief-from-duty measure is intended to give public employees immediate rest when warning signs become urgent. Mental-health assistance for public workers and occupation-specific support will also be strengthened.",
+      "The policy reflects growing attention to the cumulative stress faced by workers who regularly handle emergencies, trauma, conflict and public complaints."
+    ],
+    "sourceName": "AI OFFICE · GEN",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260908-ai-455295ruzn",
+    "sourceArticleId": "gn24-20260908-ai-455295ruzn",
+    "tags": [
+      "Mental Health",
+      "Police",
+      "Firefighters",
+      "Public Service"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260907-011898",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-07",
+    "category": "CULTURE & EDUCATION",
+    "title": "Viking-Era Silver Hoard Unearthed in Danish Garden",
+    "subtitle": "The 18.5-kilogram find includes about 700 objects and fragments",
+    "summary": "A large Viking-era silver hoard weighing about 18.5 kilograms has been discovered in a residential garden in Denmark.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-07/gn24-20260907-011898/1788734227879-20260907-news-4155.webp",
+    "imageCaption": "Image used with the original Global News24 report. Viking-Era Silver Hoard Unearthed in Danish Garden.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "A hoard of Viking-era silver believed to have been buried around 1,000 years ago has been found in the garden of a home in Denmark.",
+      "The discovery weighs about 18.5 kilograms and includes roughly 700 objects and fragments, among them silver ingots, jewelry and coins.",
+      "Coins made in England and dirhams from the Arab world were found together, offering evidence of the extensive trade networks that linked Viking society with regions far beyond northern Europe."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260907-011898",
+    "sourceArticleId": "gn24-20260907-011898",
+    "tags": [
+      "Vikings",
+      "Denmark",
+      "Archaeology",
+      "Cultural Heritage"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260907-431213",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-07",
+    "category": "WORLD",
+    "title": "U.S. Pressure Broadens Debate Over South Korea’s Alliance Role",
+    "subtitle": "Hormuz, Ukraine and industrial commitments add complexity to Seoul’s strategic choices",
+    "summary": "U.S. President Donald Trump’s calls for a greater Korean role in international security have widened debate over alliance contributions and national interests.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-07/gn24-20260907-431213/1788732626982-20260907-news-1825.webp",
+    "imageCaption": "Image used with the original Global News24 report. U.S. Pressure Broadens Debate Over South Korea’s Alliance Role.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "U.S. President Donald Trump has repeatedly raised South Korea’s role in international security issues, including the Strait of Hormuz and the war in Ukraine.",
+      "Discussions of maritime support and the Cheongung-II air-defence system are unfolding alongside investment and industrial issues between the two allies.",
+      "The developments require Seoul to weigh alliance management, military readiness on the Korean Peninsula and its wider national interests at the same time."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260907-431213",
+    "sourceArticleId": "gn24-20260907-431213",
+    "tags": [
+      "South Korea",
+      "United States",
+      "Alliance",
+      "Security"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260907-554653",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-07",
+    "category": "AI & FUTURE TECHNOLOGY",
+    "title": "Engineered Enzyme Targets Age-Related Glycation Damage",
+    "subtitle": "Laboratory findings are promising, but they do not show human age reversal",
+    "summary": "Researchers developed an engineered enzyme that removed substantial amounts of a common advanced glycation end product from donated human tissues.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-07/gn24-20260907-554653/1788737743923-20260907-news-3602.webp",
+    "imageCaption": "Image used with the original Global News24 report. Engineered Enzyme Targets Age-Related Glycation Damage.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Researchers have developed an engineered enzyme designed to break down advanced glycation end products, or AGEs, that accumulate in human tissues during aging.",
+      "The team reported removing substantial amounts of CML, a common AGE, from skin, eye-lens and aortic tissue donated by older adults. Separate research improved muscle regeneration in aged mice by adjusting stem-cell metabolism.",
+      "Neither study demonstrated that human age had been reversed. Further work is needed to establish safety, delivery methods and meaningful clinical effects."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260907-554653",
+    "sourceArticleId": "gn24-20260907-554653",
+    "tags": [
+      "Aging Research",
+      "Biotechnology",
+      "AGEs",
+      "Health Science"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260907-677074",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-07",
+    "category": "AI & FUTURE TECHNOLOGY",
+    "title": "Personalized mRNA Cancer Therapy Advances in Phase 3 Trial",
+    "subtitle": "The treatment is being studied with Keytruda for patients with melanoma",
+    "summary": "An individualized mRNA-based cancer therapy developed by Moderna and MSD has reported positive Phase 3 results in combination with Keytruda for melanoma.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-07/gn24-20260907-677074/1788733809843-20260907-news-0182.webp",
+    "imageCaption": "Image used with the original Global News24 report. Personalized mRNA Cancer Therapy Advances in Phase 3 Trial.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Messenger RNA technology, widely recognized through COVID-19 vaccines, is moving further into individualized cancer treatment.",
+      "A personalized neoantigen therapy jointly developed by Moderna and MSD reported positive results in a Phase 3 melanoma study when used with the immunotherapy Keytruda.",
+      "The approach analyzes mutations in a patient’s tumor and teaches immune cells which targets to attack. Researchers are also studying how mRNA platforms might be applied to other cancers and rare diseases."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260907-677074",
+    "sourceArticleId": "gn24-20260907-677074",
+    "tags": [
+      "mRNA",
+      "Cancer",
+      "Melanoma",
+      "Clinical Trial"
+    ],
+    "featured": true,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260905-198436",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-05",
+    "category": "WORLD",
+    "title": "Signs of New Russian Nuclear-Powered Missile Test Draw Attention",
+    "subtitle": "Activity near Novaya Zemlya renews environmental and security concerns",
+    "summary": "Reported preparations near Novaya Zemlya have renewed international focus on Russia’s nuclear-powered Burevestnik cruise missile program.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-05/gn24-20260905-198436/1788585364821-20260905-news-3707.webp",
+    "imageCaption": "Image used with the original Global News24 report. Signs of New Russian Nuclear-Powered Missile Test Draw Attention.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Signs of possible testing activity near Novaya Zemlya in the Arctic Ocean have renewed attention on Russia’s Burevestnik nuclear-powered cruise missile program.",
+      "Unlike conventional missiles, the system is being developed around a small nuclear propulsion unit intended to support extremely long-range flight.",
+      "Potential radioactive releases during testing and operation remain a major environmental and public-safety concern, alongside the missile’s strategic implications."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260905-198436",
+    "sourceArticleId": "gn24-20260905-198436",
+    "tags": [
+      "Russia",
+      "Burevestnik",
+      "Missile",
+      "Arctic Security"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260905-480887",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-05",
+    "category": "AI & FUTURE TECHNOLOGY",
+    "title": "Tesla Cybercab Faces U.S. Safety Review After Unveiling",
+    "subtitle": "Regulatory uncertainty contributed to a 5.92 percent fall in Tesla shares",
+    "summary": "U.S. transport authorities began reviewing whether Tesla’s steering-wheel-free Cybercab complies with federal vehicle safety standards.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-05/gn24-20260905-480887/1788584076554-20260905-news-7424.webp",
+    "imageCaption": "Image used with the original Global News24 report. Tesla Cybercab Faces U.S. Safety Review After Unveiling.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "U.S. transport authorities began reviewing Tesla’s Cybercab shortly after the company unveiled the autonomous robotaxi without a steering wheel or brake pedal.",
+      "The review concerns compliance with federal motor-vehicle safety standards and highlights the regulatory questions surrounding vehicles designed without conventional controls.",
+      "As uncertainty grew around the robotaxi business, which Tesla presents as a future growth engine, the company’s shares fell 5.92 percent."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260905-480887",
+    "sourceArticleId": "gn24-20260905-480887",
+    "tags": [
+      "Tesla",
+      "Cybercab",
+      "Autonomous Vehicles",
+      "Safety"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260904-276731",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-04",
+    "category": "WORLD",
+    "title": "Seoul Reviews Possible Contribution to Strait of Hormuz Security",
+    "subtitle": "Officials say no deployment decision has been made",
+    "summary": "South Korea is reviewing possible contributions to freedom of navigation in the Strait of Hormuz without undermining readiness on the Korean Peninsula.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-04/gn24-20260904-276731/1788495450711-20260904-news-9851.webp",
+    "imageCaption": "Image used with the original Global News24 report. Seoul Reviews Possible Contribution to Strait of Hormuz Security.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "The South Korean government is reviewing possible international contributions to support freedom of navigation in the Strait of Hormuz.",
+      "Officials said options could be considered within limits that do not materially weaken military readiness on the Korean Peninsula.",
+      "No specific deployment or method has been decided. Any actual troop deployment would require consultation and procedures under Korean law, including engagement with the National Assembly."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260904-276731",
+    "sourceArticleId": "gn24-20260904-276731",
+    "tags": [
+      "Strait of Hormuz",
+      "South Korea",
+      "Maritime Security",
+      "National Assembly"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260902-390528",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-02",
+    "category": "WORLD",
+    "title": "Tankers Attacked in Strait of Hormuz Amid Rising Tensions",
+    "subtitle": "One vessel was linked to South Korean shipping company Sinokor",
+    "summary": "Two tankers, including one linked to South Korean shipping company Sinokor, were reportedly attacked while passing through the Strait of Hormuz.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-02/gn24-20260902-390528/1788303543290-20260902-news-3716.webp",
+    "imageCaption": "Image used with the original Global News24 report. Tankers Attacked in Strait of Hormuz Amid Rising Tensions.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Two tankers were reportedly attacked by unidentified projectiles while transiting the Strait of Hormuz, one of the world’s most important oil-shipping routes.",
+      "The vessels were identified in reports as Senegal Prosperity, linked to South Korean shipping company Sinokor, and the Saudi-linked Sidr.",
+      "The incidents added to concerns over maritime safety and energy transport as military tensions between the United States and Iran intensified."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260902-390528",
+    "sourceArticleId": "gn24-20260902-390528",
+    "tags": [
+      "Strait of Hormuz",
+      "Shipping",
+      "Energy Security",
+      "Sinokor"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260902-709922",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-09-02",
+    "category": "NEWS",
+    "title": "Google Maps Push Intensifies Competition in South Korea",
+    "subtitle": "Naver and Kakao respond with services built around daily life and local relationships",
+    "summary": "Conditional approval for overseas transfer of high-precision map data is increasing competition among Google, Naver and Kakao in Korea.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-09-02/gn24-20260902-709922/1788302823288-20260902-news-9548.webp",
+    "imageCaption": "Image used with the original Global News24 report. Google Maps Push Intensifies Competition in South Korea.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Competition in South Korea’s digital-map market is intensifying after the conditional approval of overseas transfer for high-precision map data.",
+      "Naver has begun testing global map functions, while Kakao is strengthening services that connect KakaoMap with KakaoTalk and users’ everyday relationships.",
+      "Against Google’s global technology and capital, Korean platforms are emphasizing locally integrated reservations, payments, gatherings and place recommendations."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260902-709922",
+    "sourceArticleId": "gn24-20260902-709922",
+    "tags": [
+      "Google Maps",
+      "Naver",
+      "Kakao",
+      "South Korea"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260831-923005",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-31",
+    "category": "WORLD",
+    "title": "Prospect of Renewed U.S.–North Korea Talks Divides Experts",
+    "subtitle": "Analysts warn dialogue must deliver substantive progress and protect alliance stability",
+    "summary": "Possible renewed talks between Donald Trump and Kim Jong Un have brought the Korean Peninsula back into international focus.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-31/gn24-20260831-923005/1788140092564-20260831-news-1003.webp",
+    "imageCaption": "Image used with the original Global News24 report. Prospect of Renewed U.S.–North Korea Talks Divides Experts.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Discussion of possible renewed talks between U.S. President Donald Trump and North Korean leader Kim Jong Un has returned the Korean Peninsula to international attention.",
+      "Former U.S. officials Daniel Russel and Evans Revere told the Hankook Ilbo that a summit without substantive denuclearization progress could strengthen North Korea’s claim to nuclear-power status or weaken the U.S.–South Korea alliance.",
+      "If dialogue resumes, Seoul’s diplomatic response and careful management of the alliance will remain central considerations."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260831-923005",
+    "sourceArticleId": "gn24-20260831-923005",
+    "tags": [
+      "United States",
+      "North Korea",
+      "Diplomacy",
+      "Korean Peninsula"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260828-418039",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-28",
+    "category": "WORLD",
+    "title": "Deadly Himalayan Flood Leaves Hundreds Missing",
+    "subtitle": "At least 359 people were reported dead across the Nepal–Tibet border region",
+    "summary": "A major flood across the Nepal–Tibet border region reportedly killed at least 359 people and left more than 900 missing in Nepal.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-28/gn24-20260828-418039/1787876553218-20260828-news-3891.webp",
+    "imageCaption": "Image used with the original Global News24 report. Deadly Himalayan Flood Leaves Hundreds Missing.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "A major flood across the border region between Nepal and Tibet reportedly killed at least 359 people, with more than 900 people missing in Nepal.",
+      "Nine South Korean nationals working at a local hydropower construction site were also out of contact when the Korean report was published.",
+      "Governments and rescue authorities from multiple countries began search operations as damaged infrastructure and difficult Himalayan terrain complicated access."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260828-418039",
+    "sourceArticleId": "gn24-20260828-418039",
+    "tags": [
+      "Nepal",
+      "Tibet",
+      "Flood",
+      "Disaster Response"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260828-772614",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-28",
+    "category": "NEWS",
+    "title": "SK Hynix Breaks Ground on First U.S. HBM Production Base",
+    "subtitle": "The Indiana investment will connect Korean wafer production with U.S. packaging and testing",
+    "summary": "SK Hynix is investing more than $4 billion in an advanced HBM packaging base in Indiana, its first such production site in the United States.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-28/gn24-20260828-772614/1787876969514-20260828-news-9981.webp",
+    "imageCaption": "Image used with the original Global News24 report. SK Hynix Breaks Ground on First U.S. HBM Production Base.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "SK Hynix has broken ground on an advanced high-bandwidth memory packaging facility in Indiana, marking its first HBM production base in the United States.",
+      "The company plans to invest more than $4 billion. Semiconductor wafers produced in Korea will be packaged and tested in the United States before delivery to local customers.",
+      "The project is expected to strengthen an integrated Korea–U.S. supply chain for artificial intelligence semiconductors."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260828-772614",
+    "sourceArticleId": "gn24-20260828-772614",
+    "tags": [
+      "SK Hynix",
+      "HBM",
+      "Indiana",
+      "AI Semiconductors"
+    ],
+    "featured": true,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260826-135855",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-26",
+    "category": "MARTIAL ARTS & SPORTS",
+    "title": "Martial Arts Educator Jeon Seong Kweon Receives PALA+",
+    "subtitle": "The U.S. program recognizes sustained physical activity and healthy lifestyle practices",
+    "summary": "Taekwonkumdo founder Jeon Seong Kweon received the Presidential Active Lifestyle Award after more than 35 years in martial arts education.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-26/gn24-20260826-135855/1787710356433-20260826-news-6044.webp",
+    "imageCaption": "Image used with the original Global News24 report. Martial Arts Educator Jeon Seong Kweon Receives PALA+.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Jeon Seong Kweon, founder of Taekwonkumdo, received the Presidential Active Lifestyle Award, known as PALA+, a U.S. program promoting regular physical activity and healthy eating.",
+      "Jeon has worked in martial arts education for more than 35 years and has developed programs in Taekwonkumdo, police martial arts, practical self-defence, safety education and instructor training.",
+      "He is also building a digital education and certification network connecting martial arts organizations across 51 countries and more than 150 branches."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://ipma.kr/",
+    "sourceArticleId": "gn24-20260826-135855",
+    "tags": [
+      "PALA+",
+      "Jeon Seong Kweon",
+      "Taekwonkumdo",
+      "Martial Arts Education"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260826-194892",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-26",
+    "category": "MARTIAL ARTS & SPORTS",
+    "title": "Digital Martial Arts and Safety Network Connects 51 Countries",
+    "subtitle": "The integrated platform reported 2,473 network participants and more than 150 branches",
+    "summary": "A digital network linking Taekwonkumdo, police martial arts and the International Drone Patrol reported connections across 51 countries.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-26/gn24-20260826-194892/1787709530019-20260826-news-0486.webp",
+    "imageCaption": "Image used with the original Global News24 report. Digital Martial Arts and Safety Network Connects 51 Countries.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "An integrated martial arts and safety network led by Jeon Seong Kweon reported connections across 51 countries, 2,473 network participants and more than 150 domestic and international branches as of Aug. 26, 2026.",
+      "The system displayed 1,751 Taekwonkumdo participants, 2,045 police martial arts members, 1,052 IPMA-certified black belts and 1,326 people connected to the International Drone Patrol. The organizational totals can overlap because one person may participate in more than one program.",
+      "The project connects educational materials, videos, online testing, certification, membership management and drone-simulator development within a shared digital ecosystem."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://ipma.kr/",
+    "sourceArticleId": "gn24-20260826-194892",
+    "tags": [
+      "Global Network",
+      "Taekwonkumdo",
+      "Police Martial Arts",
+      "Drone Patrol"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260825-490077",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-25",
+    "category": "SAFETY & DRONE",
+    "title": "International Drone Patrol Begins Nationwide Network Expansion",
+    "subtitle": "The organization is recruiting inaugural leaders and members across Korea’s 17 regions",
+    "summary": "The International Drone Patrol is expanding across Korea with a public-safety model combining drones, martial arts values and safety education.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-25/gn24-20260825-490077/1787620667639-20260825-news-9416.webp",
+    "imageCaption": "Image used with the original Global News24 report. International Drone Patrol Begins Nationwide Network Expansion.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "The International Drone Patrol, or IDP, has begun organizing branches across South Korea’s 17 provinces and metropolitan regions and is recruiting inaugural branch leaders and members.",
+      "Its planned public-interest activities include community safety patrols, disaster prevention, support for missing-person searches and environmental monitoring. The group is also developing combined education in drone operation, safety and martial arts responsibility.",
+      "As of Aug. 25, 2026, the wider global network included 2,471 people, with 1,325 connected directly or indirectly to IDP. A 10-stage drone-simulator development plan is intended to support online mission training."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://idp.ai.kr",
+    "sourceArticleId": "gn24-20260825-490077",
+    "tags": [
+      "International Drone Patrol",
+      "IDP",
+      "Public Safety",
+      "Drone Education"
+    ],
+    "featured": true,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260819-645672",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-19",
+    "category": "SAFETY & DRONE",
+    "title": "IDP Starts Building Mission-Based Drone Training Simulator",
+    "subtitle": "The project will move beyond basic flight practice toward patrol, search and hazard assessment",
+    "summary": "The International Drone Patrol has started developing a simulator for patrol, search, risk assessment and field decision-making.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-19/gn24-20260819-645672/1787116888203-20260819-news-8097.webp",
+    "imageCaption": "Global News24 image for: IDP Starts Building Mission-Based Drone Training Simulator.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "The International Drone Patrol has begun developing its own drone simulator to support practical training for community-safety missions.",
+      "The project is intended to go beyond basic virtual flight. Planned training areas include patrol routes, search tasks, hazard-zone observation, obstacle response and situational judgment.",
+      "IDP aims to let new members practice mission procedures repeatedly before operating real aircraft and eventually provide a shared online training environment for domestic and international branches."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260819-645672",
+    "sourceArticleId": "gn24-20260819-645672",
+    "tags": [
+      "IDP",
+      "Drone Simulator",
+      "Search and Rescue",
+      "Training"
+    ],
+    "featured": false,
+    "pinned": false
+  },
+  {
+    "id": "ca-gn24-20260819-741350",
+    "edition": "canada",
+    "language": "en",
+    "date": "2026-08-19",
+    "category": "MARTIAL ARTS & SPORTS",
+    "title": "How Taekwonkumdo Brought Taekwondo and Sword Training Together",
+    "subtitle": "The Korean martial art has developed a structured curriculum since its launch in 2009",
+    "summary": "Taekwonkumdo combines the dynamic movement of Taekwondo with controlled sword training in an education-focused system.",
+    "image": "https://plqqowwdbgixtczzyanr.supabase.co/storage/v1/object/public/news-images/2026-08-19/gn24-20260819-741350/1787106069211-20260819-news-0988.webp",
+    "imageCaption": "Global News24 image for: How Taekwonkumdo Brought Taekwondo and Sword Training Together.",
+    "author": "Global News24 Editorial Desk",
+    "content": [
+      "Taekwonkumdo was introduced by founder Jeon Seong Kweon in 2009 after years of martial arts practice and Taekwondo teaching experience.",
+      "The system connects Taekwondo kicking, movement and etiquette with sword-based hand techniques, distance awareness and directional control. Safety, restraint and correct handling are treated as essential parts of training.",
+      "Its curriculum has expanded from fundamental techniques to eight structured forms, demonstrations and instructor resources. The World Taekwonkumdo Federation is now developing digital materials to support broader international education."
+    ],
+    "sourceName": "Global News24",
+    "sourceUrl": "https://news24.ai.kr/pages/article/?id=gn24-20260819-741350",
+    "sourceArticleId": "gn24-20260819-741350",
+    "tags": [
+      "Taekwonkumdo",
+      "Taekwondo",
+      "Sword Training",
+      "World Taekwonkumdo Federation"
+    ],
+    "featured": false,
+    "pinned": false
   }
 ]
