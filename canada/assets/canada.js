@@ -3,13 +3,7 @@ const DATA='/canada/data/articles.json';
 const $=(s,p=document)=>p.querySelector(s);
 const esc=(s='')=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=d=>d?new Date(`${d}T00:00:00`).toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'}):'';
-const CANADA_VISUALS={
-'/assets/images/news/gn24-20260819-reopen-homepage.jpg':'/assets/images/news/gn24-cat-world.svg',
-'/assets/images/news/taekwonkumdo-homepage-update.jpg':'/assets/images/news/gn24-cat-sports.svg',
-'/assets/images/news/ipma-homepage-update.jpg':'/assets/images/news/gn24-cat-public.svg',
-'/assets/images/news/dronepatrol-homepage-update.jpg':'/assets/images/news/gn24-cat-safety.svg'
-};
-const image=a=>CANADA_VISUALS[a.image]||a.image||'/assets/images/news/gn24-default-news.svg';
+const image=a=>a.image||'/assets/images/news/gn24-default-news.svg';
 const url=a=>`/canada/article/?id=${encodeURIComponent(a.id)}`;
 let promise;
 async function data(){if(!promise)promise=fetch(DATA,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Canada content unavailable');return r.json()}).then(rows=>rows.filter(a=>a.edition==='canada'&&a.language==='en').sort((a,b)=>String(b.date).localeCompare(String(a.date))));return promise}
