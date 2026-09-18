@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /canada/
 
 Sitemap: https://YOUR_GITHUB_PAGES_DOMAIN/gn24/sitemap.xml
