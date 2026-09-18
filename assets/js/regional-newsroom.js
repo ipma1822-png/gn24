@@ -15,10 +15,7 @@ function row(a){return `<a class="regional-card" href="${articleURL(a.id)}"><div
 async function loadEditor(){
   const box=$('#regionalEditor');if(!box)return;
   try{
-    const hqs=await rest(`gn24_regional_headquarters?select=code,name,region_name,head_reporter_id,status&code=eq.${encodeURIComponent(hqCode)}&limit=1`);
-    const hq=hqs?.[0];
-    if(!hq?.head_reporter_id){box.textContent='본사 관리';return;}
-    const rs=await rest(`gn24_reporters?select=id,name,role,status&status=eq.active&id=eq.${encodeURIComponent(hq.head_reporter_id)}&limit=1`);
+    const rs=await rest(`gn24_reporters?select=id,name,role,status,regional_hq_code&status=eq.active&regional_hq_code=eq.${encodeURIComponent(hqCode)}&order=display_order.asc&limit=1`);
     const r=rs?.[0];box.textContent=r?`${r.name} ${r.role||'기자'}`:'본사 관리';
   }catch(e){box.textContent='본사 관리';console.warn('GN24 regional editor',e)}
 }
