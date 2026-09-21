@@ -51,6 +51,30 @@ def page(a):
     image = abs_url(a.get("image"))
     date = str(a.get("date") or "")
     category = str(a.get("category") or "뉴스")
+    author_name = str(a.get("author") or "Global News24 편집부").strip()
+    author_type = "Organization" if author_name in ("Global News24", "Global News24 편집부", "글로벌뉴스24", "글로벌뉴스24 편집부") else "Person"
+    modified = str(a.get("updated_at") or "").strip()
+    structured = {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": title,
+        "description": description,
+        "image": [image],
+        "url": share_url,
+        "mainEntityOfPage": {"@type": "WebPage", "@id": share_url},
+        "datePublished": date,
+        "author": {"@type": author_type, "name": author_name},
+        "publisher": {
+            "@type": "Organization",
+            "name": "Global News24",
+            "url": SITE + "/"
+        },
+        "articleSection": category,
+        "isAccessibleForFree": True
+    }
+    if modified:
+        structured["dateModified"] = modified
+    structured_json = json.dumps(structured, ensure_ascii=False).replace("</", "<\\/")
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -73,6 +97,7 @@ def page(a):
 <meta name="twitter:title" content="{esc(title)}">
 <meta name="twitter:description" content="{esc(description)}">
 <meta name="twitter:image" content="{esc(image)}">
+<script type="application/ld+json">{structured_json}</script>
 <style>
 body{{font-family:Arial,"Malgun Gothic",sans-serif;margin:0;background:#f5f7fa;color:#152033}}
 main{{max-width:720px;margin:12vh auto;padding:32px;background:white;border:1px solid #e2e7ee}}
@@ -108,7 +133,7 @@ def load_config():
 def load_remote():
     url, key = load_config()
     q = urllib.parse.urlencode({
-        "select":"id,title,subtitle,summary,image,date,category,is_published,updated_at",
+        "select":"id,title,subtitle,summary,image,date,category,author,is_published,updated_at",
         "is_published":"eq.true",
         "order":"date.desc,id.desc"
     })
