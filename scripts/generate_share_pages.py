@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import json, re, html, urllib.request, urllib.parse, sys
+from datetime import datetime, timedelta, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 SHARE = ROOT / "share"
@@ -228,7 +229,51 @@ def main():
     sitemap.append("</urlset>")
     (ROOT/"sitemap.xml").write_text("\n".join(sitemap)+"\n", encoding="utf-8")
 
-    print(f"generated {len(wanted)} share pages and sitemap")
+    # Google News sitemap: only fresh articles from today and yesterday in Korea.
+    # Keep the regular sitemap unchanged; this is an additional discovery feed.
+    kst = timezone(timedelta(hours=9))
+    cutoff_date = datetime.now(kst).date() - timedelta(days=1)
+    news_rows = []
+    for a in rows:
+        if a.get("is_published") is False or a.get("isPublished") is False:
+            continue
+        raw_date = str(a.get("date") or "").strip()
+        match = re.match(r"^(\\d{4}-\\d{2}-\\d{2})", raw_date)
+        if not match:
+            continue
+        try:
+            published_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if published_date >= cutoff_date:
+            news_rows.append(a)
+
+    news_sitemap = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+        '        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">'
+    ]
+    for a in news_rows[:1000]:
+        s = slug(a.get("id"))
+        title = str(a.get("title") or "Global News24")
+        publication_date = str(a.get("date") or "").strip()
+        news_sitemap.extend([
+            "  <url>",
+            f"    <loc>{esc(SITE + '/share/' + s + '/')}</loc>",
+            "    <news:news>",
+            "      <news:publication>",
+            "        <news:name>Global News24</news:name>",
+            "        <news:language>ko</news:language>",
+            "      </news:publication>",
+            f"      <news:publication_date>{esc(publication_date)}</news:publication_date>",
+            f"      <news:title>{esc(title)}</news:title>",
+            "    </news:news>",
+            "  </url>"
+        ])
+    news_sitemap.append("</urlset>")
+    (ROOT/"news-sitemap.xml").write_text("\n".join(news_sitemap)+"\n", encoding="utf-8")
+
+    print(f"generated {len(wanted)} share pages, sitemap, and {len(news_rows[:1000])} news sitemap entries")
 
 if __name__=="__main__":
     main()
