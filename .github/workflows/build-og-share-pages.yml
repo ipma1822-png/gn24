@@ -41,3 +41,5 @@ jobs:
           fi
           git commit -m "Auto update article share OG pages and sitemap"
           git push
+
+# 2026-09-22: retrigger scheduled share-page generation after scheduler gap
