@@ -20,6 +20,7 @@ async function loadNews(){try{
  $('#regionalCount')&&($('#regionalCount').textContent='주요뉴스');
  const lead=blended[0];const hero=$('#regionalLead');if(hero&&lead){hero.href=articleURL(lead.id);hero.innerHTML=`<div class="regional-lead-image" ${bg(lead.image)}></div><div><span>${esc(lead.category||regionName+'뉴스')}</span><h2>${esc(lead.title)}</h2><p>${esc(lead.summary||'')}</p><small>${esc(fmt(lead.date))} · ${esc(lead.author||'Global News24')}</small></div>`}
  const list=$('#regionalNews');if(list)list.innerHTML=blended.filter(a=>!lead||a.id!==lead.id).slice(0,11).map(card).join('');
+ const national=$('#regionalNational');if(national)national.innerHTML=hq.slice(0,6).map(card).join('');
  const used=new Set(blended.slice(0,12).map(a=>a.id));const latest=$('#regionalLatest');if(latest)latest.innerHTML=all.filter(a=>!used.has(a.id)).slice(0,16).map(compact).join('');
  const martial=$('#regionalMartial');if(martial)martial.innerHTML=all.filter(a=>(a.category||'').includes('무도')||JSON.stringify(a).includes('태권')).slice(0,6).map(compact).join('');
  const safety=$('#regionalSafety');if(safety)safety.innerHTML=all.filter(a=>JSON.stringify(a).includes('안전')||JSON.stringify(a).includes('드론')).slice(0,6).map(compact).join('');
