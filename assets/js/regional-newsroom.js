@@ -15,6 +15,7 @@ async function loadEditor(){const box=$('#regionalEditor');if(!box)return;try{co
 async function loadNews(){try{
  const all=await rest('gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published&is_published=eq.true&order=date.desc,created_at.desc&limit=100');
  const local=all.filter(a=>(a.region_code||'').toLowerCase()===region),hq=all.filter(a=>(a.region_code||'').toLowerCase()!==region);
+ window.GN24_REGIONAL_LOCAL=local;renderCategoryMega();
  const q=new URLSearchParams(location.search),cat=q.get('cat');const localView=cat?local.filter(a=>a.category===cat):local,hqView=cat?hq.filter(a=>a.category===cat):hq;
  const blended=[...localView,...hqView.filter(a=>!localView.some(l=>l.id===a.id))].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
  $('#regionalCount')&&($('#regionalCount').textContent='주요뉴스');
@@ -26,6 +27,10 @@ async function loadNews(){try{
  const safety=$('#regionalSafety');if(safety)safety.innerHTML=all.filter(a=>JSON.stringify(a).includes('안전')||JSON.stringify(a).includes('드론')).slice(0,6).map(compact).join('');
  const pub=$('#regionalPublic');if(pub)pub.innerHTML=all.filter(a=>(a.category||'')==='공익'||JSON.stringify(a).includes('교육')||JSON.stringify(a).includes('문화')).slice(0,6).map(compact).join('');
 }catch(e){const list=$('#regionalNews');if(list)list.innerHTML='<div class="regional-empty"><b>뉴스를 불러오지 못했습니다.</b><p>잠시 후 다시 확인해 주세요.</p></div>';console.warn('GN24 regional newsroom',e)}}
-function nav(){document.querySelectorAll('[data-regional-cat]').forEach(a=>{const cat=a.dataset.regionalCat||'';a.href=cat?`${location.pathname}?cat=${encodeURIComponent(cat)}`:location.pathname})}
-nav();loadEditor();loadNews();
+const catLabels={'국내소식':'행정·정책','사회':'사회·안전','경제':'경제·산업','청소년·문화':'교육·문화','무도·스포츠':'스포츠·무도','공익':'지역소식'};
+let activeMegaCat='';
+function renderCategoryMega(cat=activeMegaCat){const mega=$('#regionalCategoryMega'),items=$('#regionalCategoryItems'),title=$('#regionalCategoryTitle'),allLink=$('#regionalCategoryAll');if(!mega||!items||!cat)return;activeMegaCat=cat;const local=window.GN24_REGIONAL_LOCAL||[];const rows=local.filter(a=>a.category===cat).slice(0,4);title.textContent=(catLabels[cat]||cat)+' · 울산';allLink.href=location.pathname+'?cat='+encodeURIComponent(cat);items.innerHTML=rows.length?rows.map(compact).join(''):'<div class="regional-category-empty">등록된 울산 기사를 준비 중입니다.</div>';}
+function categoryNav(){const mega=$('#regionalCategoryMega'),buttons=[...document.querySelectorAll('[data-regional-menu-cat]')];if(!mega||!buttons.length)return;const open=(btn)=>{buttons.forEach(b=>b.classList.toggle('active',b===btn));activeMegaCat=btn.dataset.regionalMenuCat;renderCategoryMega();mega.hidden=false;btn.setAttribute('aria-expanded','true');buttons.filter(b=>b!==btn).forEach(b=>b.setAttribute('aria-expanded','false'))};const close=()=>{mega.hidden=true;buttons.forEach(b=>{b.classList.remove('active');b.setAttribute('aria-expanded','false')})};buttons.forEach(btn=>{btn.setAttribute('aria-expanded','false');btn.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches)open(btn)});btn.addEventListener('focus',()=>open(btn));btn.addEventListener('click',e=>{e.preventDefault();if(!mega.hidden&&activeMegaCat===btn.dataset.regionalMenuCat)close();else open(btn)})});mega.addEventListener('mouseleave',()=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches)close()});document.addEventListener('click',e=>{if(!mega.hidden&&!e.target.closest('.regional-tabs'))close()})}
+function nav(){document.querySelectorAll('[data-regional-cat]').forEach(a=>{const cat=a.dataset.regionalCat||'';a.href=cat?location.pathname+'?cat='+encodeURIComponent(cat):location.pathname})}
+nav();categoryNav();loadEditor();loadNews();
 })();
