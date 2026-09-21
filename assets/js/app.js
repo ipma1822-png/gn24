@@ -29,6 +29,16 @@ async function loadNewsData(){if(__gn24NewsPromise)return __gn24NewsPromise;__gn
   return getJSON('/data/news.json');
 })();return __gn24NewsPromise}
 function articleURL(id){return `/pages/article/?id=${encodeURIComponent(id)}`}
+function seoArticleURL(article){
+  if(!article?.id) return '/pages/newsroom/';
+  const stamp=article.createdAt||article.created_at||article.updatedAt||article.updated_at||'';
+  const age=stamp?Date.now()-new Date(stamp).getTime():Infinity;
+  // Newly published articles keep the direct reader URL until the scheduled
+  // static /share/ page has had time to be generated. Existing articles use
+  // the stable self-canonical /share/ URL for internal-link SEO consistency.
+  if(Number.isFinite(age) && age>=0 && age<10*60*1000) return articleURL(article.id);
+  return `/share/${shareArticleSlug(article.id)}/`;
+}
 function shareArticleSlug(id){return String(id||'article').replace(/[^A-Za-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'')||'article'}
 function shareArticleVersion(article){
   const raw=article?.updatedAt||article?.updated_at||article?.image||'';
@@ -58,9 +68,9 @@ function setToday(){const el=$('#todayLabel');if(!el)return;const d=new Date(),d
 function closeMegas(except=null){$$('.nav-item.open').filter(x=>x!==except).forEach(x=>x.classList.remove('open'))}
 function setupNav(){const util=$('#utilityBtn'),panel=$('#utilityPanel');if(util&&panel)util.onclick=e=>{e.stopPropagation();closeMegas();panel.classList.toggle('open');util.setAttribute('aria-expanded',panel.classList.contains('open'))};$$('.nav-btn').forEach(btn=>btn.onclick=e=>{if(innerWidth<=900){e.preventDefault();e.stopPropagation();panel?.classList.remove('open');const item=btn.closest('.nav-item'),open=!item.classList.contains('open');closeMegas(item);item.classList.toggle('open',open)}});document.addEventListener('click',e=>{if(innerWidth<=900&&!e.target.closest('.mega'))closeMegas();if(!e.target.closest('#utilityPanel')&&!e.target.closest('#utilityBtn'))panel?.classList.remove('open')});addEventListener('resize',()=>{if(innerWidth>900){closeMegas();panel?.classList.remove('open')}})}
 function visualClass(a,i=0){const s=a.visualStyle||((i===0)?'spotlight':'normal');return s==='breaking'?'breaking-card':(s==='top'?'glow':(s==='spotlight'?'spotlight':''))}
-function card(a,i=0){return `<a class="news-card ${visualClass(a,i)}" href="${articleURL(a.id)}"><div class="thumb" ${bgStyle(a.image)}></div><div class="body"><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="news-date">${esc(fmt(a.date))}</div></div></a>`}
-function latestRow(a){return `<a class="latest-row" href="${articleURL(a.id)}"><div class="thumb" ${bgStyle(a.image)}></div><div><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="news-date">${esc(fmt(a.date))}</div></div></a>`}
-function mini(a){return `<a class="mini-story" href="${articleURL(a.id)}"><div class="thumb" ${bgStyle(a.image)}></div><div><b>${esc(a.title)}</b><small>${esc(fmt(a.date))}</small></div></a>`}
+function card(a,i=0){return `<a class="news-card ${visualClass(a,i)}" href="${seoArticleURL(a)}"><div class="thumb" ${bgStyle(a.image)}></div><div class="body"><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="news-date">${esc(fmt(a.date))}</div></div></a>`}
+function latestRow(a){return `<a class="latest-row" href="${seoArticleURL(a)}"><div class="thumb" ${bgStyle(a.image)}></div><div><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="news-date">${esc(fmt(a.date))}</div></div></a>`}
+function mini(a){return `<a class="mini-story" href="${seoArticleURL(a)}"><div class="thumb" ${bgStyle(a.image)}></div><div><b>${esc(a.title)}</b><small>${esc(fmt(a.date))}</small></div></a>`}
 async function loadHome(){
   const target=$('#homeNews');if(!target)return;
   const raw=await loadNewsData(), data=sortNews(raw);
@@ -68,11 +78,11 @@ async function loadHome(){
   const featured=data.filter(x=>x.featured&&(!lead||x.id!==lead.id));
   const editorPicks=[...featured,...data.filter(x=>(!lead||x.id!==lead.id)&&!x.featured)].slice(0,8);
   target.innerHTML=editorPicks.map(card).join('');
-  if(lead){$('#leadTitle').textContent=lead.title;$('#leadSummary').textContent=lead.summary||'';$('#leadMeta').textContent=`TOP NEWS · ${lead.category||'뉴스'} · ${fmt(lead.date)}`;$('#leadLink').href=articleURL(lead.id);applyBg($('#leadMedia'),lead.image)}
+  if(lead){$('#leadTitle').textContent=lead.title;$('#leadSummary').textContent=lead.summary||'';$('#leadMeta').textContent=`TOP NEWS · ${lead.category||'뉴스'} · ${fmt(lead.date)}`;$('#leadLink').href=seoArticleURL(lead);applyBg($('#leadMedia'),lead.image)}
   const breaking=data.find(x=>x.visualStyle==='breaking')||data[0];if(breaking)$('#breakingText').textContent=breaking.title;
   $('#latestNews')&&($('#latestNews').innerHTML=data.slice(0,10).map(latestRow).join(''));
   const attention=[...featured,...data.filter(x=>(!lead||x.id!==lead.id)&&!x.featured)].slice(0,6);
-  $('#attentionList')&&($('#attentionList').innerHTML=attention.map(a=>`<li><a href="${articleURL(a.id)}">${esc(a.title)}</a></li>`).join(''));
+  $('#attentionList')&&($('#attentionList').innerHTML=attention.map(a=>`<li><a href="${seoArticleURL(a)}">${esc(a.title)}</a></li>`).join(''));
   const by=(test)=>data.filter(test).slice(0,4).map(mini).join('');
   $('#beatMartial')&&($('#beatMartial').innerHTML=by(a=>(a.category||'').includes('무도')||JSON.stringify(a).includes('태권')));
   $('#beatSafety')&&($('#beatSafety').innerHTML=by(a=>JSON.stringify(a).includes('드론')||JSON.stringify(a).includes('안전')));
@@ -85,11 +95,11 @@ async function renderHomePopular(data){
     const rows=await gn24DbFetch('gn24_article_views?select=article_id,view_count&order=view_count.desc&limit=10')||[];
     const map=new Map(data.map(a=>[String(a.id),a]));
     const ranked=rows.map(r=>({a:map.get(String(r.article_id)),views:Number(r.view_count||0)})).filter(x=>x.a).slice(0,10);
-    if(ranked.length){box.innerHTML=ranked.map(x=>`<li><a href="${articleURL(x.a.id)}">${esc(x.a.title)}</a><small class="home-view-count">${x.views.toLocaleString('ko-KR')}회</small></li>`).join('');return;}
+    if(ranked.length){box.innerHTML=ranked.map(x=>`<li><a href="${seoArticleURL(x.a)}">${esc(x.a.title)}</a><small class="home-view-count">${x.views.toLocaleString('ko-KR')}회</small></li>`).join('');return;}
   }catch(e){console.warn('GN24 home popular fallback',e)}
-  box.innerHTML=data.slice(0,10).map(a=>`<li><a href="${articleURL(a.id)}">${esc(a.title)}</a></li>`).join('');
+  box.innerHTML=data.slice(0,10).map(a=>`<li><a href="${seoArticleURL(a)}">${esc(a.title)}</a></li>`).join('');
 }
-async function loadNewsroom(){const list=$('#articleList');if(!list)return;let data=sortNews(await loadNewsData());const q=new URLSearchParams(location.search),cat=q.get('cat'),term=(q.get('q')||'').trim().toLowerCase();if(cat)data=data.filter(x=>x.category===cat);if(term)data=data.filter(x=>JSON.stringify(x).toLowerCase().includes(term));list.innerHTML=data.map(a=>`<a class="article-row" href="${articleURL(a.id)}"><div class="thumb" ${bgStyle(a.image)}></div><div class="body"><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="muted">${esc(fmt(a.date))} · ${esc(a.author||'편집부')}</div><p>${esc(a.summary||'')}</p></div></a>`).join('')||'<p>해당 조건의 기사가 없습니다.</p>'}
+async function loadNewsroom(){const list=$('#articleList');if(!list)return;let data=sortNews(await loadNewsData());const q=new URLSearchParams(location.search),cat=q.get('cat'),term=(q.get('q')||'').trim().toLowerCase();if(cat)data=data.filter(x=>x.category===cat);if(term)data=data.filter(x=>JSON.stringify(x).toLowerCase().includes(term));list.innerHTML=data.map(a=>`<a class="article-row" href="${seoArticleURL(a)}"><div class="thumb" ${bgStyle(a.image)}></div><div class="body"><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="muted">${esc(fmt(a.date))} · ${esc(a.author||'편집부')}</div><p>${esc(a.summary||'')}</p></div></a>`).join('')||'<p>해당 조건의 기사가 없습니다.</p>'}
 async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id'),data=sortNews(await loadNewsData()),a=data.find(x=>x.id===id)||data[0];if(!a)return;document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(a.author||'Global News24 편집부')}</span><span>Global News24</span>`;applyBg($('#aHero'),a.image);const caption=$('#aCaption');if(caption)caption.textContent=a.imageCaption||`▲ ${a.title} 관련 이미지`;const body=Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[a.summary||'']);const rawBody=body.flatMap(p=>String(p||'').split(/\n\s*\n|\r?\n(?=\S)/)).map(p=>p.trim()).filter(Boolean);const isSubheadText=p=>p.length<=48&&!/[.!?。！？]$/.test(p)&&!/(다|요)[.!?]?$/.test(p);const sentenceSplit=p=>{if(isSubheadText(p))return [p];const parts=(p.match(/[^.!?。！？]+[.!?。！？]+(?:[\"'”’)]*)|[^.!?。！？]+$/g)||[p]).map(x=>x.trim()).filter(Boolean);if(parts.length<=1)return [p];const groups=[];let buf='';let count=0;for(const sent of parts){const next=(buf?buf+' ':'')+sent;if(buf&&(count>=2||next.length>190)){groups.push(buf);buf=sent;count=1}else{buf=next;count++}}if(buf)groups.push(buf);return groups};const cleanBody=rawBody.flatMap(sentenceSplit);let paraIndex=0;$('#aBody').innerHTML=cleanBody.map((p)=>{if(isSubheadText(p))return `<h2 class="article-subhead">${esc(p)}</h2>`;const cls=paraIndex++===0?' class="article-lead"':'';return `<p${cls}>${esc(p)}</p>`}).join('');$('#aSource')&&($('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`);const tags=a.tags||[];
 const oldViewline=document.querySelector('.article-shell>.article-viewline');
 if(oldViewline)oldViewline.remove();
@@ -99,12 +109,12 @@ const related=$('#aRelated');
 if(related){related.innerHTML=(rel.length?rel:data.filter(x=>x.id!==a.id).slice(0,4)).map((x,i)=>card(x,i)).join('')}
 const sideLatest=$('#sideLatest');
 if(sideLatest){
-  sideLatest.innerHTML=data.filter(x=>x.id!==a.id).slice(0,8).map((x,i)=>`<li><span class="side-rank">${String(i+1).padStart(2,'0')}</span><a href="${articleURL(x.id)}">${esc(x.title)}</a></li>`).join('');
+  sideLatest.innerHTML=data.filter(x=>x.id!==a.id).slice(0,8).map((x,i)=>`<li><span class="side-rank">${String(i+1).padStart(2,'0')}</span><a href="${seoArticleURL(x)}">${esc(x.title)}</a></li>`).join('');
 }
 const sideRelated=$('#sideRelated');
 if(sideRelated){
   const sideRel=(rel.length?rel:data.filter(x=>x.id!==a.id).slice(0,4)).slice(0,4);
-  sideRelated.innerHTML=sideRel.map(x=>`<a class="side-related-item" href="${articleURL(x.id)}"><div class="side-related-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
+  sideRelated.innerHTML=sideRel.map(x=>`<a class="side-related-item" href="${seoArticleURL(x)}"><div class="side-related-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
 }
 
 const authorName=$('#articleAuthorName');
@@ -114,11 +124,11 @@ const bottomHeadline=$('#bottomHeadline');
 if(bottomHeadline){
   const featured=data.filter(x=>x.id!==a.id && (x.featured||x.pinned)).slice(0,4);
   const rows=(featured.length?featured:data.filter(x=>x.id!==a.id).slice(0,4));
-  bottomHeadline.innerHTML=rows.map(x=>`<a class="bottom-news-item" href="${articleURL(x.id)}"><div class="bottom-news-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
+  bottomHeadline.innerHTML=rows.map(x=>`<a class="bottom-news-item" href="${seoArticleURL(x)}"><div class="bottom-news-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
 }
 const bottomLatest=$('#bottomLatest');
 if(bottomLatest){
-  bottomLatest.innerHTML=data.filter(x=>x.id!==a.id).slice(0,6).map(x=>`<a class="bottom-latest-item" href="${articleURL(x.id)}">${esc(x.title)}</a>`).join('');
+  bottomLatest.innerHTML=data.filter(x=>x.id!==a.id).slice(0,6).map(x=>`<a class="bottom-latest-item" href="${seoArticleURL(x)}">${esc(x.title)}</a>`).join('');
 }
 
 setArticleSocialMeta(a);
@@ -530,7 +540,7 @@ async function setupArticleViewsAndPopular(article, allArticles){
       popular.innerHTML=rows.map((r,i)=>{
         const a=titleMap[String(r.article_id)];
         if(!a) return '';
-        return `<li><span class="side-rank">${String(i+1).padStart(2,'0')}</span><a href="${articleURL(a.id)}">${esc(a.title)}</a><small class="popular-views">${Number(r.view_count||0).toLocaleString('ko-KR')}</small></li>`;
+        return `<li><span class="side-rank">${String(i+1).padStart(2,'0')}</span><a href="${seoArticleURL(a)}">${esc(a.title)}</a><small class="popular-views">${Number(r.view_count||0).toLocaleString('ko-KR')}</small></li>`;
       }).join('') || '<li class="popular-empty">조회 데이터가 쌓이는 중입니다.</li>';
     }
   }catch(e){ console.warn('GN24 popular load failed',e); }
