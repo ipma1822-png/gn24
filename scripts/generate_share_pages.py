@@ -43,7 +43,7 @@ def page(a):
     aid = str(a.get("id") or "")
     s = slug(aid)
     version = share_version(a)
-    share_url = f"{SITE}/share/{s}/?v={urllib.parse.quote(version)}"
+    share_url = f"{SITE}/share/{s}/"\n    versioned_share_url = f"{share_url}?v={urllib.parse.quote(version)}"
     article_url = f"{SITE}/pages/article/?id={urllib.parse.quote(aid)}"
     title = str(a.get("title") or "Global News24")
     description = desc(a)
@@ -57,7 +57,7 @@ def page(a):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)} | Global News24</title>
 <meta name="description" content="{esc(description)}">
-<link rel="canonical" href="{esc(article_url)}">
+<link rel="canonical" href="{esc(share_url)}">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Global News24">
 <meta property="og:title" content="{esc(title)}">
@@ -65,7 +65,7 @@ def page(a):
 <meta property="og:image" content="{esc(image)}">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="900">
-<meta property="og:url" content="{esc(share_url)}">
+<meta property="og:url" content="{esc(versioned_share_url)}">
 <meta property="article:section" content="{esc(category)}">
 <meta property="article:published_time" content="{esc(date)}">
 <meta name="twitter:card" content="summary_large_image">
@@ -147,7 +147,18 @@ def main():
 <title>Global News24 공유</title><meta name="robots" content="noindex">
 <script>location.replace('/');</script></head><body><a href="/">Global News24</a></body></html>"""
     (SHARE/"index.html").write_text(index,encoding="utf-8")
-    print(f"generated {len(wanted)} share pages")
+    # Search-engine sitemap: stable canonical pages plus one unique article URL.
+    static_urls = ["/", "/pages/newsroom/", "/pages/press/", "/pages/archive/",
+                   "/pages/policy/", "/pages/contact/", "/pages/manual/", "/region/", "/ulsan/"]
+    urls = [SITE + path for path in static_urls]
+    urls.extend(f"{SITE}/share/{name}/" for name in sorted(wanted))
+    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    sitemap.extend(f"  <url><loc>{esc(url)}</loc></url>" for url in urls)
+    sitemap.append("</urlset>")
+    (ROOT/"sitemap.xml").write_text("\\n".join(sitemap)+"\\n", encoding="utf-8")
+
+    print(f"generated {len(wanted)} share pages and sitemap")
 
 if __name__=="__main__":
     main()
