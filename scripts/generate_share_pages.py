@@ -43,7 +43,8 @@ def page(a):
     aid = str(a.get("id") or "")
     s = slug(aid)
     version = share_version(a)
-    share_url = f"{SITE}/share/{s}/"\n    versioned_share_url = f"{share_url}?v={urllib.parse.quote(version)}"
+    share_url = f"{SITE}/share/{s}/"
+    versioned_share_url = f"{share_url}?v={urllib.parse.quote(version)}"
     article_url = f"{SITE}/pages/article/?id={urllib.parse.quote(aid)}"
     title = str(a.get("title") or "Global News24")
     description = desc(a)
@@ -156,7 +157,7 @@ def main():
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     sitemap.extend(f"  <url><loc>{esc(url)}</loc></url>" for url in urls)
     sitemap.append("</urlset>")
-    (ROOT/"sitemap.xml").write_text("\\n".join(sitemap)+"\\n", encoding="utf-8")
+    (ROOT/"sitemap.xml").write_text("\n".join(sitemap)+"\n", encoding="utf-8")
 
     print(f"generated {len(wanted)} share pages and sitemap")
 
