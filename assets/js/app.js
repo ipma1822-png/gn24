@@ -574,6 +574,9 @@ function setArticleSocialMeta(article){
   const desc=gn24ArticleDescription(article);
   const image=gn24AbsoluteUrl(article.image);
   const url=shareArticleURL(article.id,article);
+  // SEO canonical must stay on the stable, unversioned /share/<article-id>/ URL.
+  // The versioned URL remains available for OG/social cache refresh only.
+  const canonicalUrl=new URL(`/share/${shareArticleSlug(article.id)}/`,location.origin).href;
 
   document.title=title+' | Global News24';
   const description=document.head.querySelector('meta[name="description"]');
@@ -592,7 +595,7 @@ function setArticleSocialMeta(article){
 
   let canonicalEl=document.head.querySelector('link[rel="canonical"]');
   if(!canonicalEl){canonicalEl=document.createElement('link');canonicalEl.rel='canonical';document.head.appendChild(canonicalEl);}
-  canonicalEl.href=url;
+  canonicalEl.href=canonicalUrl;
 }
 // ===== GN24 v3.4.2 · robust Kakao SDK loader =====
 const GN24_KAKAO_JS_KEY_FALLBACK='8622bbffea31804f3bd4f03c89f5d0c1';
