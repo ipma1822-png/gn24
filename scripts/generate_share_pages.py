@@ -251,7 +251,7 @@ def main():
     (SHARE/"index.html").write_text(index,encoding="utf-8")
     # Search-engine sitemap: stable canonical pages plus one unique article URL.
     static_urls = ["/", "/pages/newsroom/", "/pages/press/", "/pages/archive/",
-                   "/pages/policy/", "/pages/contact/", "/pages/manual/", "/region/", "/ulsan/"]
+                   "/pages/policy/", "/pages/contact/", "/pages/manual/", "/region/", "/ulsan/", "/chungbuk/"]
     urls = [SITE + path for path in static_urls]
     urls.extend(f"{SITE}/share/{name}/" for name in sorted(wanted))
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
