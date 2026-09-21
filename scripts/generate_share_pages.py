@@ -238,7 +238,7 @@ def main():
         if a.get("is_published") is False or a.get("isPublished") is False:
             continue
         raw_date = str(a.get("date") or "").strip()
-        match = re.match(r"^(\\d{4}-\\d{2}-\\d{2})", raw_date)
+        match = re.match(r"^(\d{4}-\d{2}-\d{2})", raw_date)
         if not match:
             continue
         try:
