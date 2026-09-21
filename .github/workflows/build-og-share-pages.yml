@@ -34,7 +34,7 @@ jobs:
         run: |
           git config user.name "Global News24 Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add share/ sitemap.xml
+          git add share/ sitemap.xml news-sitemap.xml
           if git diff --cached --quiet; then
             echo "No OG share page or sitemap changes."
             exit 0
