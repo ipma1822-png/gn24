@@ -24,6 +24,26 @@ def desc(a):
     s = a.get("summary") or a.get("subtitle") or a.get("title") or "Global News24"
     return re.sub(r"\s+", " ", str(s)).strip()[:220]
 
+def article_paragraphs(a):
+    raw = a.get("content")
+    if isinstance(raw, list):
+        items = raw
+    elif isinstance(raw, str):
+        try:
+            parsed = json.loads(raw)
+            items = parsed if isinstance(parsed, list) else [raw]
+        except Exception:
+            items = re.split(r"\n\s*\n|\r?\n(?=\S)", raw)
+    else:
+        items = []
+    cleaned = [re.sub(r"\s+", " ", str(x or "")).strip() for x in items]
+    cleaned = [x for x in cleaned if x]
+    if not cleaned:
+        fallback = str(a.get("summary") or a.get("subtitle") or "").strip()
+        if fallback:
+            cleaned = [fallback]
+    return cleaned
+
 def share_version(a):
     raw = str(a.get("updated_at") or a.get("image") or "")
     value = 2166136261
@@ -75,6 +95,14 @@ def page(a):
     if modified:
         structured["dateModified"] = modified
     structured_json = json.dumps(structured, ensure_ascii=False).replace("</", "<\\/")
+    paragraphs = article_paragraphs(a)
+    body_html = "\n".join(f"<p>{esc(p)}</p>" for p in paragraphs)
+    caption = str(a.get("image_caption") or "").strip()
+    source_name = str(a.get("source_name") or "Global News24").strip()
+    source_url = str(a.get("source_url") or "").strip()
+    source_html = esc(source_name)
+    if source_url:
+        source_html += f' · <a class="source-link" href="{esc(source_url)}" target="_blank" rel="noopener">원문/관련자료</a>'
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -99,26 +127,42 @@ def page(a):
 <meta name="twitter:image" content="{esc(image)}">
 <script type="application/ld+json">{structured_json}</script>
 <style>
+*{{box-sizing:border-box}}
 body{{font-family:Arial,"Malgun Gothic",sans-serif;margin:0;background:#f5f7fa;color:#152033}}
-main{{max-width:720px;margin:12vh auto;padding:32px;background:white;border:1px solid #e2e7ee}}
-small{{color:#9a7b26;font-weight:700}} h1{{font-size:26px;line-height:1.35}} p{{line-height:1.7;color:#596574}}
-a{{display:inline-block;margin-top:15px;padding:11px 16px;background:#102746;color:#fff;text-decoration:none}}
+header{{background:#0d203b;color:#fff;border-bottom:3px solid #c8a44d}}
+.header-inner{{max-width:860px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}}
+.brand{{font-weight:800;letter-spacing:.04em;color:#fff;text-decoration:none}}
+.brand span{{display:block;font-size:12px;font-weight:500;opacity:.8;margin-top:3px}}
+.home-link{{color:#fff;text-decoration:none;font-size:14px}}
+main{{max-width:860px;margin:34px auto;padding:42px 48px;background:white;border:1px solid #e2e7ee}}
+.kicker{{color:#9a7b26;font-weight:700}}
+h1{{font-size:34px;line-height:1.35;margin:14px 0 12px}}
+.subtitle{{font-size:19px;line-height:1.6;color:#596574;margin:0 0 16px}}
+.meta{{font-size:14px;color:#7b8491;border-bottom:1px solid #e5e9ef;padding-bottom:20px;margin-bottom:26px}}
+.hero{{width:100%;height:auto;display:block;margin:0 0 8px}}
+.caption{{font-size:13px;color:#7b8491;margin:0 0 28px}}
+.article-body p{{font-size:17px;line-height:1.95;color:#283445;margin:0 0 22px;word-break:keep-all}}
+.source{{margin-top:34px;padding-top:18px;border-top:1px solid #e5e9ef;color:#596574;font-size:14px}}
+.source-link{{color:#234f83}}
+.reader-link{{display:inline-block;margin-top:28px;padding:11px 16px;background:#102746;color:#fff;text-decoration:none}}
+@media(max-width:700px){{.header-inner{{padding:15px 18px}}main{{margin:0;padding:28px 20px;border:0}}h1{{font-size:28px}}.subtitle{{font-size:17px}}.article-body p{{font-size:16px}}}}
 </style>
-<script>
-(function(){{
-  var target={json.dumps(article_url, ensure_ascii=False)};
-  setTimeout(function(){{ location.replace(target); }},120);
-}})();
-</script>
 </head>
 <body>
+<header><div class="header-inner"><a class="brand" href="/">GLOBAL NEWS24<span>글로벌뉴스24</span></a><a class="home-link" href="/">홈으로</a></div></header>
 <main>
-<small>{esc(category)} · Global News24</small>
+<div class="kicker">{esc(category)} · Global News24</div>
 <h1>{esc(title)}</h1>
-<p>{esc(description)}</p>
-<a href="{esc(article_url)}">기사 바로가기</a>
+<div class="subtitle">{esc(str(a.get("subtitle") or a.get("summary") or ""))}</div>
+<div class="meta">{esc(date)} · {esc(author_name)} · Global News24</div>
+<img class="hero" src="{esc(image)}" alt="{esc(title)}">
+{f'<div class="caption">{esc(caption)}</div>' if caption else ''}
+<article class="article-body">
+{body_html}
+</article>
+<div class="source"><strong>자료·출처</strong><br>{source_html}</div>
+<a class="reader-link" href="{esc(article_url)}">기존 기사 화면에서 보기</a>
 </main>
-<noscript><p><a href="{esc(article_url)}">기사 바로가기</a></p></noscript>
 </body>
 </html>"""
 
@@ -133,7 +177,7 @@ def load_config():
 def load_remote():
     url, key = load_config()
     q = urllib.parse.urlencode({
-        "select":"id,title,subtitle,summary,image,date,category,author,is_published,updated_at",
+        "select":"id,title,subtitle,summary,image,image_caption,date,category,author,content,source_name,source_url,is_published,updated_at",
         "is_published":"eq.true",
         "order":"date.desc,id.desc"
     })
