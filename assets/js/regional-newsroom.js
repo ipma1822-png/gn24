@@ -16,7 +16,7 @@ async function loadNews(){try{
  const all=await rest('gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published&is_published=eq.true&order=date.desc,created_at.desc&limit=100');
  const local=all.filter(a=>(a.region_code||'').toLowerCase()===region),hq=all.filter(a=>(a.region_code||'').toLowerCase()!==region);
  const q=new URLSearchParams(location.search),cat=q.get('cat');const localView=cat?local.filter(a=>a.category===cat):local,hqView=cat?hq.filter(a=>a.category===cat):hq;
- const blended=[...localView,...hqView.filter(a=>!localView.some(l=>l.id===a.id))];
+ const blended=[...localView,...hqView.filter(a=>!localView.some(l=>l.id===a.id))].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
  $('#regionalCount')&&($('#regionalCount').textContent='주요뉴스');
  const lead=blended[0];const hero=$('#regionalLead');if(hero&&lead){hero.href=articleURL(lead.id);hero.innerHTML=`<div class="regional-lead-image" ${bg(lead.image)}></div><div><span>${esc(lead.category||regionName+'뉴스')}</span><h2>${esc(lead.title)}</h2><p>${esc(lead.summary||'')}</p><small>${esc(fmt(lead.date))} · ${esc(lead.author||'Global News24')}</small></div>`}
  const list=$('#regionalNews');if(list)list.innerHTML=blended.filter(a=>!lead||a.id!==lead.id).slice(0,11).map(card).join('');
