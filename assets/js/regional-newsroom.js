@@ -19,10 +19,10 @@ async function loadNews(){try{
  const q=new URLSearchParams(location.search),cat=q.get('cat');const localView=cat?local.filter(a=>a.category===cat):local,hqView=cat?hq.filter(a=>a.category===cat):hq;
  const localSorted=[...localView].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
  const hqSorted=[...hqView].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
- const blended=localSorted.length?[...localSorted,...hqSorted.filter(a=>!localSorted.some(l=>l.id===a.id))]:hqSorted;
- $('#regionalCount')&&($('#regionalCount').textContent=localSorted.length?regionName+' 기사 '+localSorted.length+'건':'주요뉴스');
- const lead=(localSorted[0]||blended[0]);const hero=$('#regionalLead');if(hero&&lead){hero.href=articleURL(lead.id);hero.innerHTML=`<div class="regional-lead-image" ${bg(lead.image)}></div><div><span>${esc(lead.category||regionName+'뉴스')}</span><h2>${esc(lead.title)}</h2><p>${esc(lead.summary||'')}</p><small>${esc(fmt(lead.date))} · ${esc(lead.author||'Global News24')}</small></div>`}
- const list=$('#regionalNews');if(list){const rows=localSorted.length?localSorted.filter(a=>!lead||a.id!==lead.id):blended.filter(a=>!lead||a.id!==lead.id);list.innerHTML=rows.slice(0,11).map(card).join('')}
+ const blended=[...localSorted,...hqSorted.filter(a=>!localSorted.some(l=>l.id===a.id))];
+ $('#regionalCount')&&($('#regionalCount').textContent=localSorted.length?regionName+' 기사 '+localSorted.length+'건':regionName+' 기사 준비 중');
+ const lead=localSorted[0];const hero=$('#regionalLead');if(hero){if(lead){hero.href=articleURL(lead.id);hero.innerHTML=`<div class="regional-lead-image" ${bg(lead.image)}></div><div><span>${esc(lead.category||regionName+'뉴스')}</span><h2>${esc(lead.title)}</h2><p>${esc(lead.summary||'')}</p><small>${esc(fmt(lead.date))} · ${esc(lead.author||'Global News24')}</small></div>`}else{hero.removeAttribute('href');hero.innerHTML=''}}
+ const list=$('#regionalNews');if(list){const rows=localSorted.filter(a=>!lead||a.id!==lead.id);list.innerHTML=rows.length?rows.slice(0,11).map(card).join(''):`<div class="regional-empty"><b>${esc(regionName)} 지역기사를 준비 중입니다.</b><p>전국 주요뉴스는 아래 GLOBAL NEWS24 섹션에서 확인할 수 있습니다.</p></div>`}
  const national=$('#regionalNational');if(national)national.innerHTML=hq.slice(0,6).map(card).join('');
  const used=new Set(blended.slice(0,12).map(a=>a.id));const latest=$('#regionalLatest');if(latest)latest.innerHTML=all.filter(a=>!used.has(a.id)).slice(0,16).map(compact).join('');
  const martial=$('#regionalMartial');if(martial)martial.innerHTML=all.filter(a=>(a.category||'').includes('무도')||JSON.stringify(a).includes('태권')).slice(0,6).map(compact).join('');
