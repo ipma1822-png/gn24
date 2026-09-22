@@ -20,3 +20,43 @@
 
 /* v2.2.1 regional image ratio guard — prevent oversized news imagery */
 .regional-lead-image,.regional-thumb,.regional-compact-thumb{overflow:hidden;background-repeat:no-repeat;background-position:center;background-size:cover}.regional-lead-image{width:100%;aspect-ratio:16/9;max-height:520px}.regional-thumb{width:100%;aspect-ratio:16/9}.regional-compact-thumb{aspect-ratio:16/10}@media(max-width:800px){.regional-lead-image{width:100%;aspect-ratio:4/3;max-height:none}.regional-thumb,.regional-compact-thumb{width:100%;aspect-ratio:16/9}}
+
+
+/* v2.2.2 DESKTOP LEAD PRECISION FIX
+   Keep the regional lead story compact regardless of source image dimensions. */
+@media (min-width:801px){
+  .regional-main>.regional-lead{
+    display:grid!important;
+    grid-template-columns:minmax(0,520px) minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:28px!important;
+    width:100%!important;
+  }
+  .regional-main>.regional-lead>.regional-lead-image{
+    display:block!important;
+    width:100%!important;
+    height:292px!important;
+    min-height:0!important;
+    max-height:292px!important;
+    aspect-ratio:auto!important;
+    background-size:cover!important;
+    background-position:center!important;
+    border-radius:12px!important;
+  }
+  .regional-main>.regional-lead>div:last-child{
+    min-width:0!important;
+    align-self:center!important;
+  }
+  .regional-main>.regional-lead h2{
+    margin:7px 0 9px!important;
+    font-size:26px!important;
+    line-height:1.32!important;
+  }
+  .regional-main>.regional-lead p{
+    margin:0 0 9px!important;
+    display:-webkit-box!important;
+    -webkit-line-clamp:3!important;
+    -webkit-box-orient:vertical!important;
+    overflow:hidden!important;
+  }
+}
