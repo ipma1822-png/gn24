@@ -209,7 +209,7 @@ def load_config():
 def load_remote():
     url, key = load_config()
     q = urllib.parse.urlencode({
-        "select":"id,title,subtitle,summary,image,image_caption,date,category,author,content,source_name,source_url,is_published,updated_at",
+        "select":"id,title,subtitle,summary,image,image_caption,date,category,author,content,source_name,source_url,is_published,updated_at,search_priority",
         "is_published":"eq.true",
         "order":"date.desc,id.desc"
     })
@@ -304,7 +304,30 @@ def main():
     news_sitemap.append("</urlset>")
     (ROOT/"news-sitemap.xml").write_text("\n".join(news_sitemap)+"\n", encoding="utf-8")
 
-    print(f"generated {len(wanted)} share pages, sitemap, and {len(news_rows[:1000])} news sitemap entries")
+    # Search-priority change queue for IndexNow. Only newly selected or updated
+    # priority articles are queued, preventing repeated submissions every 5 minutes.
+    state_path = ROOT / ".indexnow-state.json"
+    try:
+        previous = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+    except Exception:
+        previous = {}
+    current = {}
+    pending = []
+    for a in rows:
+        if a.get("is_published") is False or not a.get("search_priority"):
+            continue
+        aid = str(a.get("id") or "")
+        if not aid:
+            continue
+        version = str(a.get("updated_at") or a.get("date") or "")
+        current[aid] = version
+        if previous.get(aid) != version:
+            pending.append(f"{SITE}/share/{slug(aid)}/")
+    state_path.write_text(json.dumps(current, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    pending_path = Path("/tmp/gn24-indexnow-urls.txt")
+    pending_path.write_text("\n".join(pending) + ("\n" if pending else ""), encoding="utf-8")
+
+    print(f"generated {len(wanted)} share pages, sitemap, {len(news_rows[:1000])} news sitemap entries, and queued {len(pending)} IndexNow URL(s)")
 
 if __name__=="__main__":
     main()
