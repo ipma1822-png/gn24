@@ -13,7 +13,7 @@ window.GN24_SUPABASE = {
 // 기사 작성 화면에서 전국 공통 또는 17개 시·도 지역판을 선택합니다.
 (() => {
   if (!/^\/admin-news\.html$/.test(location.pathname)) return;
-  const regions=[['','전국 공통 · 지역판 지정 안 함'],['seoul','서울'],['busan','부산'],['daegu','대구'],['incheon','인천'],['gwangju','광주'],['daejeon','대전'],['ulsan','울산'],['sejong','세종'],['gyeonggi','경기'],['gangwon','강원'],['chungbuk','충북'],['chungnam','충남'],['jeonbuk','전북'],['jeonnam','전남'],['gyeongbuk','경북'],['gyeongnam','경남'],['jeju','제주']];
+  const regions=[['','전국 공통 · 지역판 지정 안 함'],['seoul','서울'],['busan','부산'],['daegu','대구'],['incheon','인천'],['gwangju','광주'],['daejeon','대전'],['ulsan','울산'],['sejong','세종'],['gyeonggi','경기'],['gangwon','강원'],['chungbuk','충북'],['chungnam','충남'],['jeonbuk','전북'],['jeonnam','전남'],['gyeongbuk','경북'],['gyeongnam','경남'],['jeju','제주'],['morocco','🌍 GLOBAL · Morocco / Maroc']];
   let lastId='',loadingId='';
   function select(){return document.querySelector('#fRegionCode')}
   function id(){return (document.querySelector('#fId')?.value||'').trim()}
@@ -21,7 +21,7 @@ window.GN24_SUPABASE = {
     if(select())return true;
     const category=document.querySelector('#fCategory');if(!category)return false;
     const row=document.createElement('div');row.className='form-grid two gn24-region-select-row';
-    row.innerHTML=`<label>지역판 선택<select id="fRegionCode">${regions.map(([v,n])=>`<option value="${v}">${n}</option>`).join('')}</select><small style="display:block;margin-top:6px;color:#6c7a8c">예: 청주 기사 → 충북 선택 · 본사 메인과 충북 지역판에 함께 연결</small></label><div class="reporter-link-guide"><b>17개 지역판</b><span>기사 제목에는 지역판 이름을 억지로 붙이지 않습니다. 실제 취재 지역에 맞는 시·도만 선택하세요.</span></div>`;
+    row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${regions.map(([v,n])=>`<option value="${v}">${n}</option>`).join('')}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
     category.closest('.form-grid.two')?.insertAdjacentElement('afterend',row);
     document.querySelectorAll('.admin-brand small').forEach(x=>x.textContent='기사 편집실 · v3.19.0');
     const notice=document.querySelector('.notice strong');if(notice)notice.textContent='온라인 편집국 CMS · v3.19.0';
