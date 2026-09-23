@@ -28,3 +28,10 @@
 @media(max-width:1100px){.global-editions-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.global-network-intro{grid-template-columns:1fr}.global-network-visual{justify-self:start}}
 @media(max-width:760px){.global-editions-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.global-network{padding:22px}}
 @media(max-width:560px){.global-network{padding:20px 16px;scroll-margin-top:76px}.global-editions-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.global-edition-card{padding:10px;gap:8px;min-height:73px}.global-edition-flag{font-size:21px}.global-edition-name b{font-size:11px}.global-edition-status{font-size:8px}.global-network-visual{flex-wrap:wrap;white-space:normal;font-size:9px}.global-network-identity{font-size:11px!important}}
+
+/* The world map belongs only to the network hub hero. */
+.world-map-frame{position:relative;width:100%;max-width:560px;min-width:0;border:1px solid rgba(98,196,255,.22);border-radius:24px;overflow:hidden;background:#06162c;box-shadow:0 0 70px rgba(23,114,187,.18)}
+.world-map-frame img{display:block;width:100%;height:auto}
+.world-map-frame .network-label{bottom:14px;max-width:calc(100% - 24px);text-align:center;white-space:normal;line-height:1.35}
+.regions{scroll-margin-top:96px}
+@media(max-width:560px){.network-stage{min-height:0;margin:20px 0 6px}.world-map-frame .network-label{font-size:9px;letter-spacing:.04em;bottom:8px}.regions{scroll-margin-top:76px}}
