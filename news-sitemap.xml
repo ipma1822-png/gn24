@@ -2,6 +2,72 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20260923-728802/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-23</news:publication_date>
+      <news:title>Le Maroc remporte 26 médailles au Championnat d’Afrique de karaté 2026 et termine troisième</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260923-410614/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-23</news:publication_date>
+      <news:title>España y Corea del Sur abren una nueva convocatoria KSSP para impulsar la cooperación tecnológica</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260923-363271/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-23</news:publication_date>
+      <news:title>Hyundai et la KOICA fourniront 15 bus électriques à Marrakech pour soutenir la mobilité durable</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260923-361730/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-23</news:publication_date>
+      <news:title>Le Maroc et la Corée du Sud renforcent leur coopération économique à l’ère de l’Industrie 4.0</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260923-358512/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-23</news:publication_date>
+      <news:title>Le Maroc accélère « Maroc IA 2030 »… objectif de 100 milliards de dirhams de valeur ajoutée d’ici 2030</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260923-147189/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-23</news:publication_date>
+      <news:title>Le Maroc et la BAD signent deux accords de 405 millions d’euros pour les compétences et les infrastructures ferroviaires</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260922-954005/</loc>
     <news:news>
       <news:publication>
