@@ -13,7 +13,7 @@ window.GN24_SUPABASE = {
 // 기사 작성 화면에서 전국 공통 또는 17개 시·도 지역판을 선택합니다.
 (() => {
   if (!/^\/admin-news\.html$/.test(location.pathname)) return;
-  const regions=[['','전국 공통 · 지역판 지정 안 함'],['seoul','서울'],['busan','부산'],['daegu','대구'],['incheon','인천'],['gwangju','광주'],['daejeon','대전'],['ulsan','울산'],['sejong','세종'],['gyeonggi','경기'],['gangwon','강원'],['chungbuk','충북'],['chungnam','충남'],['jeonbuk','전북'],['jeonnam','전남'],['gyeongbuk','경북'],['gyeongnam','경남'],['jeju','제주'],['morocco','🌍 GLOBAL · Morocco / Maroc']];
+  const regions=[['','전국 공통 · 지역판 지정 안 함'],['seoul','서울'],['busan','부산'],['daegu','대구'],['incheon','인천'],['gwangju','광주'],['daejeon','대전'],['ulsan','울산'],['sejong','세종'],['gyeonggi','경기'],['gangwon','강원'],['chungbuk','충북'],['chungnam','충남'],['jeonbuk','전북'],['jeonnam','전남'],['gyeongbuk','경북'],['gyeongnam','경남'],['jeju','제주'],['morocco','🌍 GLOBAL · Morocco / Maroc'],['spain','🌍 GLOBAL · Spain / España'],['iran','🌍 GLOBAL · Iran / ایران'],['nepal','🌍 GLOBAL · Nepal / नेपाल']];
   let lastId='',loadingId='';
   function select(){return document.querySelector('#fRegionCode')}
   function id(){return (document.querySelector('#fId')?.value||'').trim()}
