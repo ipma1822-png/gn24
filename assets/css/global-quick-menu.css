@@ -1,0 +1,14 @@
+/* GLOBAL NEWS24 shared quick navigation. This stylesheet owns only .gn24-quick-* nodes. */
+.gn24-quick-menu,.gn24-quick-menu *{box-sizing:border-box}
+.gn24-quick-menu{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(94px + env(safe-area-inset-bottom));z-index:170;font-family:Arial,'Noto Sans KR',sans-serif;font-size:13px;line-height:1.4;color:#f5f9ff}
+.gn24-quick-toggle{display:flex;align-items:center;justify-content:center;gap:7px;min-width:48px;min-height:46px;padding:9px 13px;margin-left:auto;border:1px solid #4f85ad;border-radius:24px;background:#0a2745;color:#f5f9ff;font:700 12px/1.3 Arial,'Noto Sans KR',sans-serif;letter-spacing:.03em;box-shadow:0 3px 12px #06142340;cursor:pointer}
+.gn24-quick-toggle:hover,.gn24-quick-toggle:focus-visible{background:#12436c}
+.gn24-quick-panel[hidden]{display:none!important}
+.gn24-quick-panel{position:absolute;bottom:calc(100% + 10px);right:0;width:min(270px,calc(100vw - 32px));max-height:min(370px,calc(100dvh - 160px));overflow-y:auto;border:1px solid #527393;border-radius:14px;background:#071b32;box-shadow:0 8px 22px #06142355}
+.gn24-quick-heading{padding:13px 15px;border-bottom:1px solid #ffffff26;color:#d8b15a;font-size:11px;font-weight:800;letter-spacing:.06em}
+.gn24-quick-link,.gn24-quick-current{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:11px 15px;border:0;border-bottom:1px solid #ffffff15;background:none;color:#f5f9ff;text-align:left;text-decoration:none;font:600 13px/1.35 Arial,'Noto Sans KR',sans-serif;cursor:pointer}
+.gn24-quick-current{color:#b9d5ea;cursor:default}
+.gn24-quick-link:last-child{border-bottom:0}.gn24-quick-link:hover,.gn24-quick-link:focus-visible{background:#17466c;color:#fff}
+.gn24-quick-menu :focus-visible{outline:2px solid #e7c16b;outline-offset:2px}
+@media(max-width:700px){.gn24-quick-menu{right:max(14px,env(safe-area-inset-right));bottom:calc(94px + env(safe-area-inset-bottom))}.gn24-quick-toggle{width:48px;height:48px;padding:0;font-size:20px;border-radius:50%}.gn24-quick-toggle-label{display:none}.gn24-quick-panel{max-height:calc(100dvh - 185px)}}
+@media(prefers-reduced-motion:reduce){.gn24-quick-menu *{scroll-behavior:auto!important}}
