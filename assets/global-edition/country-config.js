@@ -1,0 +1,43 @@
+/* Development profiles only. Real country configuration is a later phase. */
+window.GN24_GLOBAL_CONFIG = Object.freeze({
+  ltr: Object.freeze({
+    countryCode: 'ZZ', slug: 'master-ltr', countryName: 'Global Edition',
+    editionName: 'GLOBAL EDITION MASTER', language: 'en', secondaryLanguage: '',
+    direction: 'ltr', locale: 'en-GB', status: 'FOUNDING',
+    countryLabel: 'MASTER LTR', localNetworkStatus: 'Local Editorial Network · Building',
+    ui: {
+      development: 'TEST / DEVELOPMENT', home: 'Home', newsroom: 'Newsroom',
+      top: 'TOP NEWS', main: 'MAIN NEWS', latest: 'LATEST NEWS', local: 'LOCAL NEWS',
+      global: 'GLOBAL NEWS', martial: 'MARTIAL ARTS & SPORTS', safety: 'PUBLIC SAFETY',
+      technology: 'TECHNOLOGY / FUTURE', cooperation: 'INTERNATIONAL COOPERATION',
+      search: 'Search stories', searchButton: 'Search', all: 'All stories',
+      noResults: 'No stories match this search.', back: 'Back to newsroom',
+      source: 'Source', country: 'COUNTRY LOCAL', feed: 'GLOBAL FEED',
+      status: 'Edition status', network: 'WORLD NETWORK',
+      intro: 'A reusable news layout for country editions. All stories here are sample development content.',
+      notice: 'Development preview · No country edition is being operated from this page.',
+      imageMissing: 'Image unavailable', articleMissing: 'Article not found',
+      more: 'See all stories', published: 'Published',
+    },
+  }),
+  rtl: Object.freeze({
+    countryCode: 'ZZ', slug: 'master-rtl', countryName: 'نسخة عالمية',
+    editionName: 'النموذج العالمي للأخبار', language: 'ar', secondaryLanguage: 'en',
+    direction: 'rtl', locale: 'ar', status: 'FOUNDING',
+    countryLabel: 'MASTER RTL', localNetworkStatus: 'الشبكة التحريرية المحلية · قيد البناء',
+    ui: {
+      development: 'اختبار / تطوير', home: 'الرئيسية', newsroom: 'غرفة الأخبار',
+      top: 'أهم الأخبار', main: 'الأخبار الرئيسية', latest: 'آخر الأخبار', local: 'أخبار محلية',
+      global: 'أخبار عالمية', martial: 'الرياضات القتالية', safety: 'السلامة العامة',
+      technology: 'التكنولوجيا والمستقبل', cooperation: 'التعاون الدولي',
+      search: 'ابحث في الأخبار', searchButton: 'بحث', all: 'جميع الأخبار',
+      noResults: 'لا توجد أخبار مطابقة.', back: 'العودة إلى غرفة الأخبار',
+      source: 'المصدر', country: 'أخبار محلية', feed: 'شبكة الأخبار العالمية',
+      status: 'حالة النسخة', network: 'الشبكة العالمية',
+      intro: 'نموذج إخباري قابل لإعادة الاستخدام. جميع الأخبار هنا أمثلة للاختبار والتطوير.',
+      notice: 'معاينة تطوير · لا تعمل نسخة دولة فعلية عبر هذه الصفحة.',
+      imageMissing: 'الصورة غير متاحة', articleMissing: 'الخبر غير موجود',
+      more: 'عرض جميع الأخبار', published: 'نُشر',
+    },
+  }),
+});
