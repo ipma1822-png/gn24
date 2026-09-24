@@ -2,6 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20260924-586550/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-24</news:publication_date>
+      <news:title>ایران؛ سرزمین تمدن کهن، فرهنگ غنی و جاذبه‌های شگفت‌انگیز گردشگری</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260924-393394/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-24</news:publication_date>
+      <news:title>فعالیت رسمی خود را آغاز کرد؛ پلی خبری میان ایران، کره جنوبی و جهان</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260924-006336/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-24</news:publication_date>
+      <news:title>استاد مهدی نمازی؛ گسترش همکاری‌های بین‌المللی هنرهای رزمی میان ایران و کره جنوبی</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260923-728802/</loc>
     <news:news>
       <news:publication>
