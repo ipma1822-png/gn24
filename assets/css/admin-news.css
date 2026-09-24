@@ -33,3 +33,18 @@
 
 /* GN24 v3.5.0 · 기사 추가 사진 최대 10장 */
 .gallery-admin-box legend small{color:var(--muted);font-weight:500}.gallery-admin-guide{margin:0 0 13px;color:var(--muted);font-size:12px;line-height:1.6}.gallery-admin-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.gallery-admin-item{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:7px;background:#f8fafc}.gallery-admin-item img{width:110px;aspect-ratio:16/10;object-fit:cover;border-radius:5px;background:#e8edf3}.gallery-admin-item b{display:block;font-size:12px}.gallery-admin-item input{margin-top:5px!important;padding:8px!important;font-size:12px}.gallery-remove-btn{border:1px solid #d8a5a0;background:#fff;color:#a3261d;border-radius:5px;padding:7px;cursor:pointer;font-size:11px;font-weight:700}.gallery-admin-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}.gallery-admin-actions span{font-size:12px;color:var(--muted);font-weight:700}@media(max-width:760px){.gallery-admin-list{grid-template-columns:1fr}.gallery-admin-item{grid-template-columns:86px 1fr auto}.gallery-admin-item img{width:86px}}
+
+/* GN24 v3.21.0 · 47 EDITION VISUAL GRID SELECTOR */
+.gn24-select-compat-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.gn24-edition-grid-selector{margin:0 0 14px;border:1px solid #d7dee7;border-radius:9px;background:#f8fafc;overflow:hidden}
+.gn24-edition-grid-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;background:var(--navy);color:#fff;border-bottom:2px solid var(--gold)}
+.gn24-edition-grid-head b{font-size:14px}.gn24-edition-grid-head small{display:block;margin-top:2px;color:#cbd5e1;font-size:10px}
+.gn24-edition-current{text-align:right}.gn24-edition-current span{display:block;color:#cbd5e1;font-size:10px}.gn24-edition-current strong{display:block;margin-top:2px;color:#f5d477;font-size:12px}
+.gn24-edition-national{padding:8px 10px 5px}.gn24-edition-national .gn24-edition-grid-btn{width:auto;min-width:250px}
+.gn24-edition-grid-section{padding:7px 10px 9px;border-top:1px solid #e2e8f0}.gn24-edition-grid-section h3{margin:0 0 6px;color:#173b66;font-size:11px;letter-spacing:.01em}
+.gn24-edition-grid-buttons{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
+.gn24-edition-grid-btn{appearance:none;min-width:0;min-height:38px;padding:6px 7px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;color:#26364b;font-size:11px;font-weight:700;line-height:1.2;overflow-wrap:anywhere;word-break:keep-all;cursor:pointer}
+.gn24-edition-grid-btn:hover{border-color:#8aa2be;background:#f3f7fb}.gn24-edition-grid-btn:focus-visible{outline:3px solid #9dc3ef;outline-offset:1px}
+.gn24-edition-grid-btn.active{border-color:#b17d13;background:#fff5d8;color:#604100;box-shadow:inset 0 0 0 1px #d6a83b}
+@media(max-width:1100px){.gn24-edition-grid-buttons{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:640px){.gn24-edition-grid-head{display:block}.gn24-edition-current{text-align:left;margin-top:7px}.gn24-edition-grid-buttons{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.gn24-edition-national .gn24-edition-grid-btn{width:100%;min-width:0}.gn24-edition-grid-btn{min-height:40px;font-size:11px}}
