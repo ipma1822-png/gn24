@@ -48,3 +48,6 @@
 .gn24-edition-grid-btn.active{border-color:#b17d13;background:#fff5d8;color:#604100;box-shadow:inset 0 0 0 1px #d6a83b}
 @media(max-width:1100px){.gn24-edition-grid-buttons{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:640px){.gn24-edition-grid-head{display:block}.gn24-edition-current{text-align:left;margin-top:7px}.gn24-edition-grid-buttons{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.gn24-edition-national .gn24-edition-grid-btn{width:100%;min-width:0}.gn24-edition-grid-btn{min-height:40px;font-size:11px}}
+
+/* v3.21.0 micro repair · legacy edition SELECT row remains in DOM as fail-safe */
+.gn24-region-select-row.gn24-region-legacy-hidden{display:none!important}
