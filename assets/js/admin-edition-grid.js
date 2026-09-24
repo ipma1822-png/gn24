@@ -84,6 +84,7 @@
     if (select) {
       select.classList.remove('gn24-select-compat-hidden');
       select.removeAttribute('aria-hidden');
+      select.closest('.gn24-region-select-row')?.classList.remove('gn24-region-legacy-hidden');
     }
   }
 
@@ -124,6 +125,7 @@
     row.insertAdjacentElement('beforebegin', root);
     select.classList.add('gn24-select-compat-hidden');
     select.setAttribute('aria-hidden', 'true');
+    row.classList.add('gn24-region-legacy-hidden');
     sync();
     return true;
   }
