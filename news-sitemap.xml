@@ -2,6 +2,512 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-998001/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대구, ‘글로벌 문화관광도시’로…팔공산·근대골목·미술관·미식 잇는다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-988919/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경남, 대한민국 ‘우주항공 수도’로 뜬다…사천 중심 글로벌 산업거점 도약</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-986853/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대전, ‘대한민국 K-방산 기술수도’로…803만㎡ 방산 소부장 특화단지 뜬다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-958633/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>제주, 관광섬 넘어 ‘우주산업 섬’으로…민간위성 생산기지 본격 가동</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-916100/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대구, ‘비메모리 반도체 도시’ 도전…AI·전력반도체·첨단센서 생태계 키운다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-889272/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전남 신안, ‘해상풍력 메카’로 도약…8.2GW 에너지 대전환 속도</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-862043/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>부산, 바다와 하늘 잇는 ‘글로벌 물류 허브’로…가덕도신공항·부산신항 연결</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-830402/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전남 ‘K-김’ 세계로 간다…김 수출 역대 최고, 글로벌 식품산업으로 도약</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-789139/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대구, ‘글로벌 첨단의료 허브’로 간다…AI·바이오·의료기기 산업 대전환</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-775349/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>부산, ‘글로벌 AI 허브도시’ 도전…3,730억원 디지털 대전환 로드맵 가동</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-745378/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>제주 광어, ‘스마트양식’으로 진화한다…청정바다 넘어 미래 수산업 도전</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-685778/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>부산 수산식품, ‘K-푸드’로 세계시장 간다…글로벌 수출 전진기지 도약</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-672524/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전남 해남 솔라시도, ‘국가 AI컴퓨팅센터’ 품었다…대한민국 AI산업 핵심거점 도약</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-668936/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>부산, 외국인 관광객 300만 시대 열었다…‘글로벌 관광도시’ 도약 가속</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-636987/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대전, ‘대한민국 AI 과학수도’로…대덕특구 기술이 산업과 세계시장으로 간다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-623414/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대구, ‘미래모빌리티 도시’로 달린다…전기차·자율주행·UAM 산업 생태계 확장</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-555240/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경북, ‘세계가 찾는 K-문화관광 중심지’로…경주·안동 넘어 글로벌 관광벨트 확장</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-533785/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대구, 대한민국 ‘AX 혁신도시’로 뜬다…수성알파시티 중심 AI 산업 대전환</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-502629/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전북, ‘K-푸드테크’ 산업 키운다…국가식품클러스터 중심 미래 먹거리 혁신</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-447797/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경북, ‘AI 농업 수도’로 간다…로봇·드론·자율주행 농기계가 들녘 바꾼다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-432260/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경남, ‘대한민국 남해안 관광 중심’으로…섬·바다·문화 잇는 글로벌 관광벨트 도약</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-426835/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>충남, ‘세계가 찾는 K-문화관광 중심지’로…백제·서해·축제 잇는 글로벌 관광벨트 뜬다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-398590/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전북, 새만금 신항 ‘국제 크루즈’ 유치 본격화…글로벌 해양관광 거점 꿈꾼다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-360720/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경북 경주, ‘글로벌 SMR 중심도시’로…차세대 원자력 산업생태계 구축 가속</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-353116/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>제주 감귤, AI를 입는다…‘스마트농업’으로 기후변화·인력난 넘는다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-350678/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>충남 논산, ‘대한민국 AI 국방로봇 메카’로…K-방산 미래산업벨트 뜬다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-338276/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전북, ‘피지컬 AI’ 미래산업 거점으로 도약… 로봇·제조혁신 생태계 구축 속도</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-324013/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경남, ‘SMR 제조혁신 허브’로 도약…원전산업 글로벌 공급망 선점 나선다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-287009/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>새만금에 5.8조원 ‘AI 데이터센터’ 추진…미래산업 중심지 전환 가속</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-280461/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>충남, ‘대한민국 청정에너지 허브’로…보령·당진·서산 수소산업벨트 키운다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-231165/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경남, 대한민국 ‘K-방산 심장’으로…창원 중심 글로벌 방산산업 생태계 확장</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-223125/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>제주, ‘글로벌 관광섬’ 다시 뛴다…2030 외국인 관광 허브 도전</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-215167/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>충남, ‘대한민국 미래 모빌리티 허브’로…자동차·반도체·AI가 하나로 연결된다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-176483/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대전, ‘글로벌 바이오 혁신허브’로…AI 신약·정밀의료·바이오벤처 생태계 키운다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-172137/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경북 포항, ‘글로벌 배터리 소재 허브’로…양극재·LFP·리사이클링 전주기 생태계 확장</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-153724/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전남, ‘세계의 섬’으로 간다…여수세계섬박람회 타고 글로벌 해양관광 도약</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-140856/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>충남, ‘세계 디스플레이 초격차 중심지’로…천안·아산 첨단산업벨트 키운다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-140595/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>부산, ‘글로벌 관광도시’로 뜬다…외국인 관광객 300만 시대 눈앞</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-118686/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>제주, ‘에너지 대전환’ 속도…재생에너지·분산전력으로 미래 에너지섬 만든다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-111177/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전북, ‘반도체 소재·케미컬 특화단지’ 선정…K-반도체 공급망 핵심 거점 도약</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-110546/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경남 조선업, ‘친환경·스마트 선박’으로 세계시장 선도…3년치 일감 확보</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-085904/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>경북, ‘대한민국 반도체 소부장 심장’으로…구미 특화단지 글로벌 공급망 키운다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-070289/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대전, ‘대한민국 과학관광 수도’로…대덕특구·0시축제·빵의 도시를 하나로 잇는다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-044210/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>대전, ‘대한민국 우주산업 수도’로…지역기업이 만든 ‘대전샛’ 우주로 간다</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-039877/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>전남 광양 철강산업, ‘AI 제조혁신’ 본격화…익신산단에 AX 실증센터 구축</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-000716/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>부산, ‘글로벌 해양수도’로 간다…스마트양식·빅데이터로 미래 바다산업 선점</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260924-977851/</loc>
     <news:news>
       <news:publication>
