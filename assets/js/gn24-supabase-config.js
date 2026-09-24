@@ -69,8 +69,8 @@ window.GN24_SUPABASE = {
     const row=document.createElement('div');row.className='form-grid two gn24-region-select-row';
     row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${optionHTML()}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION 30</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
     category.closest('.form-grid.two')?.insertAdjacentElement('afterend',row);
-    document.querySelectorAll('.admin-brand small').forEach(x=>x.textContent='기사 편집실 · v3.20.0');
-    const notice=document.querySelector('.notice strong');if(notice)notice.textContent='온라인 편집국 CMS · v3.20.0';
+    document.querySelectorAll('.admin-brand small').forEach(x=>x.textContent='기사 편집실 · v3.21.0');
+    const notice=document.querySelector('.notice strong');if(notice)notice.textContent='온라인 편집국 CMS · v3.21.0';
     return true;
   }
   function loadRegistry(){
