@@ -128,7 +128,16 @@ def page(a):
 <meta name="twitter:image" content="{esc(image)}">
 <script type="application/ld+json">{structured_json}</script>
 <link rel="icon" href="/assets/images/logos/gn24-icon.svg">
-<link rel="stylesheet" href="/assets/css/style.css?v=3.4.10">
+<link rel="stylesheet" href="/assets/css/style.css?v=3.5.3">
+<script>
+(function(){{
+  var target={json.dumps(article_url, ensure_ascii=False)};
+  if(location.pathname.indexOf('/share/')===0){{
+    try{{ sessionStorage.setItem('gn24_share_entry', location.href); }}catch(e){{}}
+    location.replace(target);
+  }}
+}})();
+</script>
 <style>
 .share-static-header{{background:#fff;border-bottom:1px solid #dfe5ec}}
 .share-static-header .mast{{width:min(1180px,calc(100% - 32px));margin:auto}}
