@@ -13,8 +13,12 @@ function card(a){return `<a class="regional-card" href="${articleURL(a.id)}"><di
 function compact(a){return `<a class="regional-compact" href="${articleURL(a.id)}"><div class="regional-compact-thumb" ${bg(a.image)}></div><div><span>${esc(a.category||'뉴스')}</span><b>${esc(a.title||'')}</b><small>${esc(fmt(a.date))}</small></div></a>`}
 async function loadEditor(){const box=$('#regionalEditor');if(!box)return;try{const rs=await rest(`gn24_reporters?select=id,name,role,status,regional_hq_code,organization_position&status=eq.active&regional_hq_code=eq.${encodeURIComponent(hqCode)}&order=display_order.asc&limit=10`);const head=(rs||[]).find(r=>(r.organization_position||'').includes('지사장'));const reporters=(rs||[]).filter(r=>r.id!==head?.id);const parts=[];if(head)parts.push(`${head.name} ${head.organization_position||head.role||'지사장'}`);if(reporters.length)parts.push(reporters.map(r=>`${r.name} ${r.role||'지역기자'}`).join(' · '));box.textContent=parts.length?parts.join(' / '):'본사 관리'}catch(e){box.textContent='본사 관리'}}
 async function loadNews(){try{
- const all=await rest('gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published&is_published=eq.true&order=date.desc,created_at.desc&limit=100');
- const local=all.filter(a=>(a.region_code||'').toLowerCase()===region),hq=all.filter(a=>(a.region_code||'').toLowerCase()!==region);
+ const articles='gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published&is_published=eq.true&order=date.desc,created_at.desc';
+ const [local,all]=await Promise.all([
+  rest(articles+'&region_code=eq.'+encodeURIComponent(region)+'&limit=100'),
+  rest(articles+'&limit=100')
+ ]);
+ const hq=all.filter(a=>(a.region_code||'').toLowerCase()!==region);
  window.GN24_REGIONAL_LOCAL=local;renderCategoryMega();
  const q=new URLSearchParams(location.search),cat=q.get('cat');const localView=cat?local.filter(a=>a.category===cat):local,hqView=cat?hq.filter(a=>a.category===cat):hq;
  const localSorted=[...localView].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
