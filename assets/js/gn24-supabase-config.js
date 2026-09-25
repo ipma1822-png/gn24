@@ -27,7 +27,7 @@ window.GN24_SUPABASE = {
     CN:'중국',JP:'일본',PH:'필리핀',ID:'인도네시아',MY:'말레이시아',TH:'태국',VN:'베트남',NP:'네팔',IN:'인도',PK:'파키스탄',
     IR:'이란',AE:'UAE',SA:'사우디아라비아',TR:'튀르키예',MA:'모로코',EG:'이집트',ZA:'남아프리카공화국',ES:'스페인',
     GB:'영국',FR:'프랑스',DE:'독일',IT:'이탈리아',CA:'캐나다',US:'미국',MX:'멕시코',BR:'브라질',AR:'아르헨티나',
-    CO:'콜롬비아',AU:'호주',NZ:'뉴질랜드',KE:'케냐',NG:'나이지리아'
+    CO:'콜롬비아',AU:'호주',NZ:'뉴질랜드',KE:'케냐',NG:'나이지리아',MN:'몽골'
   });
 
   let regions=[...domesticRegions,...legacyGlobal];
@@ -44,7 +44,7 @@ window.GN24_SUPABASE = {
     const countries=Object.values(registry);
     const slugs=countries.map(x=>x?.slug).filter(Boolean);
     const codes=countries.map(x=>x?.countryCode).filter(Boolean);
-    if(countries.length!==32||slugs.length!==32||new Set(slugs).size!==32||codes.length!==32||new Set(codes).size!==32){
+    if(countries.length!==33||slugs.length!==33||new Set(slugs).size!==33||codes.length!==33||new Set(codes).size!==33){
       console.warn('GN24 country registry validation failed; keeping domestic + legacy GLOBAL selector.');
       return false;
     }
@@ -67,7 +67,7 @@ window.GN24_SUPABASE = {
     if(select())return true;
     const category=document.querySelector('#fCategory');if(!category)return false;
     const row=document.createElement('div');row.className='form-grid two gn24-region-select-row';
-    row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${optionHTML()}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION 32</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
+    row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${optionHTML()}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION 33</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
     category.closest('.form-grid.two')?.insertAdjacentElement('afterend',row);
     document.querySelectorAll('.admin-brand small').forEach(x=>x.textContent='기사 편집실 · v3.21.0');
     const notice=document.querySelector('.notice strong');if(notice)notice.textContent='온라인 편집국 CMS · v3.21.0';
