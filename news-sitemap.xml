@@ -2,6 +2,941 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-990672/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Rocket Lab Launches 96th Electron Mission from New Zealand</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-984367/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Energia, l’Italia accelera il confronto su rinnovabili e nucleare mentre aumentano le pressioni sui costi</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-965699/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Nigeria Faces Renewed Cost-of-Living Pressure as Fuel Prices Rise</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-943691/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>La industria automotriz mexicana mantiene su peso estratégico en las cadenas de producción de Norteamérica</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-929938/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>United States Records Its Warmest Summer on Record as Drought Expands Across Much of the Country</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-929061/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>New Zealand Economy Shows Modest Growth as Central Bank Raises Interest Rate</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-928983/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>L’Italia celebra le Giornate Europee del Patrimonio: musei e luoghi della cultura protagonisti il 26 e 27 settembre</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-924926/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Kenya’s Agnes Ngetich Sets Women-Only Half Marathon World Record in Copenhagen</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-924675/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>South Africa Celebrates Living Heritage as Cultural Diversity Takes Centre Stage</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-887475/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>UK Economy Grows 0.4% in July as Services and Technology Support Expansion</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-884269/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>South Africa Records Rhino Population Growth, but Poaching Remains a Major Threat</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-883212/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Eldoret Hosts Kenya’s 2026 UN World Tourism Week</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-880752/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Nairobi Wins Historic Bid to Host 2029 World Athletics Championships</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-876700/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Il turismo italiano cresce nelle presenze: quasi 148 milioni di pernottamenti nel secondo trimestre 2026</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-873234/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Banco de México mantiene la tasa de interés en 6.50% mientras la inflación anual se sitúa en 3.26%</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-843118/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Kenya Steps Up El Niño Preparedness Ahead of Expected Heavy Rains</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-838231/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Australia’s Cultural and Creative Economy Reaches $70.3 Billion</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-837020/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>« Septembre Bouge » veut inscrire l’activité physique dans le quotidien des Français</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-827308/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Italia e Francia rafforzano la cooperazione spaziale: nuovi accordi su intelligenza artificiale e comunicazioni satellitari</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-803749/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Kenya Pushes Digital Infrastructure, Data Centres and AI in Bid for Bigger African Technology Role</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-799242/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Great Barrier Reef Shows Early Signs of Recovery After Recent Bleaching</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-777448/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Le patrimoine français maintient son attractivité auprès du public</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-767645/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Kenya’s Inflation Rises to 6.59% as Cost Pressures Remain in Focus</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-754518/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>New Zealand Government Moves to Disestablish Broadcasting Standards Authority</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-750262/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Australian Quantum Research Pushes From the Laboratory Towards Space and Industry</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-723373/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>La France renforce son adaptation face à l’accélération des impacts climatiques</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-713418/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Australia Backs New Solar Innovation Project as Renewable Energy Build-Out Accelerates</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-703941/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Brasil conquista títulos masculino e feminino na Copa das Nações de beach soccer</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-703244/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>U.S. Expands Semiconductor Ambitions with Up to $1 Billion Award for Quantum Chip Research</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-694797/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>South Africa’s MeerKAT Telescope Passes 700 Research Publications</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-671387/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Australia Watches Inflation Closely as Reserve Bank Keeps Cash Rate at 4.35%</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-663773/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Tela Brasil amplia acesso digital ao cinema e ao audiovisual brasileiro</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-659249/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>La France accélère l’adoption de l’intelligence artificielle dans les entreprises</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-656708/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>South Africa’s Power System Shows Sustained Improvement as Load Shedding Recedes</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-634441/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>U.S. Economy Shows Moderate Growth as Inflation Remains Above Federal Reserve’s Long-Term Goal</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-608903/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>L’économie française avance au ralenti, entre inflation persistante et reprise attendue</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-603748/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Brasil supera 4 milhões de chegadas internacionais por via aérea em 2026</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-548154/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>U.S. Foreign Policy Takes Center Stage as Trump Addresses 81st UN General Assembly</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-545604/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Alertas de desmatamento recuam no Cerrado e monitoramento por satélite ganha importância no Brasil</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-526799/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>South Africa’s Economy Faces Renewed Pressure After GDP Contracts in Second Quarter</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-517663/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Монгол Улс НҮБ-ын Ерөнхий Ассамблейн 81 дүгээр чуулганд оролцож байна</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-499175/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Brasil cria novo regime para data centers em meio à expansão da inteligência artificial</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-480087/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Nigeria Begins AFCON 2027 Qualification Campaign with New Faces in Super Eagles Squad</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-444323/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Nigeria’s Learning Passport Expands Digital Education Access to More Than 2.3 Million Young People</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-438097/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>La France face au défi de ses finances publiques à l’approche du budget 2027</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-422410/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>حسام حسن يواصل قيادة منتخب مصر حتى</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-414246/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>L’economia italiana cresce dello 0,2% nel secondo trimestre: segnali di resilienza tra nuove pressioni sui prezzi</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-399406/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Nigeria Seeks New Investment as Nollywood and Digital Economy Expand Global Reach</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-393765/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Bundesliga startet mit neuer Dynamik in die Saison 2026/27</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-367466/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>С.Жамбалжамц Азийн XX наадмаас Монголын анхны медалийг хүртэв</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-359241/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>تقنيات إعادة التدوير تفتح نقاشاً جديداً حول مستقبل إدارة النفايات في القاهرة</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-358430/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Nigeria Strengthens Its Position in Africa’s Responsible AI Landscape</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-343064/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Oktoberfest 2026 bringt München erneut internationale Aufmerksamkeit</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-319929/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Монголын аялал жуулчлал өсөлтөө үргэлжлүүлж, орон нутгийн тогтвортой аялалд анхаарч байна</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-312411/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Dangote Refinery IPO Opens New Chapter for Nigeria’s Energy Industry</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-303744/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>پاکستان ویمنز کرکٹ ٹیم نے ایشین گیمز میں کانسی کا تمغہ جیت لیا</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-296669/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>مصر تطور المنطقة المحيطة بأهرامات الجيزة لربطها بالمتحف المصري الكبير</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-274030/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Deutschlands Energiewende geht in die nächste Phase</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-272349/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Монгол, Японы археологийн хамтарсан судалгаа буддын түүхийн шинэ эх сурвалжуудыг илрүүлэв</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-235084/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>پاکستان کے تاریخی قلعے اور آثار عالمی ثقافتی ورثے کی نئی توجہ حاصل کر رہے ہیں</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-227917/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Brasil reduz projeção de crescimento para 2026 em cenário de juros ainda restritivos</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-227713/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>México avanza hacia la jornada laboral de 40 horas con una transición gradual hasta 2030</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-225389/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Улаанбаатар COP17-оор дэлхийн газрын доройтол, цөлжилтийн асуудлыг хэлэлцэх төв болов</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-219267/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Deutschland treibt europäischen Software-Stack für Quantencomputer voran</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-217216/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>مصر تسرّع مشروعات الطاقة المتجددة وتستهدف رفع حصتها إلى 45% من مزيج الطاقة بحلول 202</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-196587/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Australia Moves to Strengthen AI Safeguards as Digital Regulation Enters New Phase</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-182097/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Deutsche Industrie zwischen Erholungssignalen und neuen Belastungen</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-177822/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Монголын шатахууны хангамжид Оросын зах зээлийн нөхцөл байдал нөлөөлөв</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-174265/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>مون سون 2026: پاکستان میں موسمیاتی خطرات کے درمیان آفات سے نمٹنے کی تیاری پھر توجہ کا مرکز</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-149573/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>All Blacks Regroup Ahead of Bledisloe Cup After Demanding South Africa Series</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-136290/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>2026 World Cup Leaves Major Sporting Legacy Across the United States After Historic 48-Team Tournament</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-133395/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>قناة السويس تسجل تحسناً في حركة الملاحة خلال 2026 وسط تعافي تدريجي للتجارة البحرية</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-127320/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>México sube al podio en la Final de la Copa del Mundo de Tiro con Arco en Saltillo</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-116561/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>پاکستان ڈیجیٹل معیشت کی توسیع پر توجہ مرکوز، مقامی ٹیکنالوجی صلاحیت بڑھانے کی کوشش</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-087022/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>New Zealand Tourism Recovery Strengthens as International Visitor Market Rebuilds</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-078130/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>México apuesta por un turismo que conecte patrimonio, comunidades y conocimiento</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-074812/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>UK Commits More Than £160 Million to Life Sciences and Advanced Materials Research</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-066104/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Deutschland stellt Reformen, Sicherheit und wirtschaftliche Erneuerung in den Mittelpunkt</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-058824/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>الاقتصاد المصري يُظهر مرونة أمام الصدمات الإقليمية وسط استمرار تحديات الدين والإصلاح</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-053018/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>پاکستان معیشت کو مستحکم کرنے کے ساتھ برآمدات اور بیرونی مالی وسائل میں تنوع کی کوشش تیز کر رہا ہے</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-048024/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Rare Orange-Fronted Parakeet Count Brings Encouraging News for New Zealand Conservation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-026122/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Ciclismo, l’Italia conquista l’oro mondiale nel Team Relay</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-020233/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Smithsonian Marks America’s 250th Anniversary with Nationwide History and Culture Initiative</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-018006/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>Springboks Prepare for Australia Test as South Africa’s 2026 Rugby Campaign Continues</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260926-013601/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-26</news:publication_date>
+      <news:title>México busca ampliar su presencia en inteligencia artificial y tecnologías estratégicas</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260925-998603/</loc>
     <news:news>
       <news:publication>
@@ -175,6 +1110,17 @@
       </news:publication>
       <news:publication_date>2026-09-25</news:publication_date>
       <news:title>부산, 바다와 하늘 잇는 ‘글로벌 물류 허브’로…가덕도신공항·부산신항 연결</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260925-844071/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-25</news:publication_date>
+      <news:title>پاکستان اقوام متحدہ میں کثیرالجہتی سفارت کاری اور علاقائی استحکام پر زور دے رہا ہے</news:title>
     </news:news>
   </url>
   <url>
