@@ -1,4 +1,4 @@
-/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.0 */
+/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.1 */
 (function(){
 'use strict';
 var regions=[['서울','/seoul/'],['부산','/busan/'],['대구','/daegu/'],['인천','/incheon/'],['광주','/gwangju/'],['대전','/daejeon/'],['울산','/ulsan/'],['세종','/sejong/'],['경기','/gyeonggi/'],['강원','/gangwon/'],['충북','/chungbuk/'],['충남','/chungnam/'],['전북','/jeonbuk/'],['전남','/jeonnam/'],['경북','/gyeongbuk/'],['경남','/gyeongnam/'],['제주','/jeju/']];
@@ -15,7 +15,7 @@ function installBar(){
  if(document.querySelector('.gn24-universal-bar'))return;
  var header=document.querySelector('.global-edition-header,.regional-site-header');if(!header)return;
  var bar=document.createElement('nav');bar.className='gn24-universal-bar';bar.setAttribute('aria-label','GLOBAL NEWS24 network editions');
- bar.innerHTML='<div class="gn24-universal-inner"><button class="gn24-universal-btn" data-kind="korea">대한민국 17개 ▼</button><button class="gn24-universal-btn" data-kind="world">GLOBAL 30 ▼</button></div><div class="gn24-universal-panel" hidden></div>';
+ bar.innerHTML='<div class="gn24-universal-kicker">GLOBAL NEWS24 NETWORK</div><div class="gn24-universal-inner"><button class="gn24-universal-btn" data-kind="korea">🇰🇷 대한민국 17개 ▼</button><button class="gn24-universal-btn" data-kind="world"><span class="gn24-world-pc">🌐 GLOBAL 30 ▼</span><span class="gn24-world-mobile">🌐 세계 30개 ▼</span></button></div><div class="gn24-universal-panel" hidden></div>';
  header.appendChild(bar);var panel=bar.querySelector('.gn24-universal-panel');
  bar.addEventListener('click',function(e){var b=e.target.closest('[data-kind]');if(!b)return;var same=panel.dataset.kind===b.dataset.kind&&!panel.hidden;panel.dataset.kind=b.dataset.kind;panel.innerHTML=b.dataset.kind==='korea'?'<h2>대한민국 17개 지역판</h2>'+regionMarkup()+'<a class="gn24-mega-all" href="/region/#korea-regions">지역판 전체보기 →</a>':'<h2>GLOBAL 30 EDITIONS</h2><div class="gn24-mega-countries">'+countryMarkup()+'</div><a class="gn24-mega-all" href="/region/#global-editions">WORLD NETWORK 전체보기 →</a>';panel.hidden=same});
  document.addEventListener('click',function(e){if(!bar.contains(e.target))panel.hidden=true});

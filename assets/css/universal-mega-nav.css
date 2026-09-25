@@ -1,4 +1,4 @@
-/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.0 */
+/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.1 */
 .gn24-network-mega{max-width:1180px!important}
 .gn24-mega-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;padding:18px}
 .gn24-mega-grid a,.gn24-country-link{display:flex;align-items:center;min-height:44px;padding:10px 12px;border:1px solid #dfe5ec;border-radius:8px;text-decoration:none;font-weight:700}
@@ -13,3 +13,15 @@
 .gn24-universal-panel h2{margin:4px 4px 12px;font-size:18px}.gn24-universal-panel .gn24-mega-grid,.gn24-universal-panel .gn24-mega-countries{padding:4px}
 @media(max-width:900px){.gn24-mega-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.gn24-mega-countries{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.gn24-network-nav>.nav-btn{white-space:nowrap}.gn24-mega-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gn24-mega-countries{grid-template-columns:1fr}.gn24-universal-inner{justify-content:stretch}.gn24-universal-btn{flex:1;padding:10px 8px;font-size:13px}.gn24-universal-panel{max-height:68vh}.gn24-country-link{min-height:42px}}
+
+/* Mobile network switcher: visible labels first, hamburger remains secondary. */
+.gn24-universal-kicker{display:none}
+@media(max-width:700px){
+  .gn24-universal-bar{background:#07111f;border-top:2px solid #b98b2f;border-bottom:1px solid #31445a}
+  .gn24-universal-kicker{display:block;padding:7px 16px 0;text-align:center;color:#d7ad55;font-size:10px;font-weight:900;letter-spacing:.11em}
+  .gn24-universal-inner{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;padding:7px 12px 10px;box-sizing:border-box}
+  .gn24-universal-btn{width:100%;min-width:0;min-height:44px;padding:9px 5px;font-size:13px;line-height:1.2;white-space:nowrap}
+  .gn24-universal-panel{top:100%;width:calc(100vw - 16px);padding:12px;max-height:70vh}
+  .gn24-universal-panel h2{font-size:20px}
+}
+.gn24-world-mobile{display:none}@media(max-width:700px){.gn24-world-pc{display:none}.gn24-world-mobile{display:inline}}
