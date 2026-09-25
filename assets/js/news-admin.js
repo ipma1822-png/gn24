@@ -177,7 +177,8 @@
       b.querySelector('b').textContent=a.title||'(제목 없음)';
       b.querySelectorAll('small span')[0].textContent=a.date||'';
       b.querySelectorAll('small span')[1].textContent=a.category||'뉴스';
-      const exactDup=state.duplicateContentIds.has(String(a.id));\n      const warnings=[];if(dup)warnings.push('⚠ 같은 경로');if(exactDup)warnings.push('⚠ 실제 사진 중복');if(noTags)warnings.push('⚠ 태그 없음');
+      const exactDup=state.duplicateContentIds.has(String(a.id));
+      const warnings=[];if(dup)warnings.push('⚠ 같은 경로');if(exactDup)warnings.push('⚠ 실제 사진 중복');if(noTags)warnings.push('⚠ 태그 없음');
       b.querySelector('.article-warnings').textContent=warnings.join(' · ');
       b.onclick=()=>{select(a.id);scheduleDraft()};els.list.append(b);
     }
