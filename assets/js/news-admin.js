@@ -161,7 +161,8 @@
     let data=[...state.articles];
     if(region)data=data.filter(a=>(a.regionCode||'')===region);
     if(q)data=data.filter(a=>(JSON.stringify(a)+' '+regionLabel(a)).toLowerCase().includes(q));
-    if(issue==='duplicate_image')data=data.filter(a=>imageCounts.get(clean(a.image))>1);\n    if(issue==='duplicate_content')data=data.filter(a=>state.duplicateContentIds.has(String(a.id)));
+    if(issue==='duplicate_image')data=data.filter(a=>imageCounts.get(clean(a.image))>1);
+    if(issue==='duplicate_content')data=data.filter(a=>state.duplicateContentIds.has(String(a.id)));
     if(issue==='no_tags')data=data.filter(a=>!Array.isArray(a.tags)||!a.tags.length);
     if(issue==='no_image')data=data.filter(a=>!clean(a.image)||a.image===DEFAULT_IMAGE);
     const sort=els.sortFilter?.value||'created_desc';
