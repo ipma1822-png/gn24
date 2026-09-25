@@ -1,0 +1,15 @@
+/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.0 */
+.gn24-network-mega{max-width:1180px!important}
+.gn24-mega-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;padding:18px}
+.gn24-mega-grid a,.gn24-country-link{display:flex;align-items:center;min-height:44px;padding:10px 12px;border:1px solid #dfe5ec;border-radius:8px;text-decoration:none;font-weight:700}
+.gn24-mega-countries{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:18px}
+.gn24-country-group{min-width:0}.gn24-country-group h3{margin:0 0 8px;font-size:12px;letter-spacing:.05em;color:#9a6a12}
+.gn24-country-link{margin:6px 0}.gn24-country-link small{margin-left:auto;font-size:9px;opacity:.65}.gn24-country-link.is-founding{opacity:.58}
+.gn24-mega-all{display:block;margin:0 18px 18px;padding:12px;border-top:1px solid #dfe5ec;font-weight:800;text-decoration:none}
+.gn24-universal-bar{position:relative;z-index:80;border-top:1px solid #ffffff18;border-bottom:1px solid #ffffff18;background:#081a2d;color:#fff}
+.gn24-universal-inner{display:flex;justify-content:center;gap:8px;max-width:1180px;margin:auto;padding:7px 16px}
+.gn24-universal-btn{border:1px solid #ffffff2b;border-radius:7px;background:#102d4b;color:#fff;padding:9px 14px;font-weight:800;cursor:pointer}.gn24-universal-btn:hover{background:#17466c}
+.gn24-universal-panel{position:absolute;left:50%;transform:translateX(-50%);top:100%;width:min(1120px,calc(100vw - 24px));max-height:70vh;overflow:auto;background:#fff;color:#17263a;border:1px solid #ccd6e0;border-radius:0 0 12px 12px;box-shadow:0 14px 28px #0004;padding:14px}.gn24-universal-panel[hidden]{display:none!important}
+.gn24-universal-panel h2{margin:4px 4px 12px;font-size:18px}.gn24-universal-panel .gn24-mega-grid,.gn24-universal-panel .gn24-mega-countries{padding:4px}
+@media(max-width:900px){.gn24-mega-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.gn24-mega-countries{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.gn24-network-nav>.nav-btn{white-space:nowrap}.gn24-mega-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gn24-mega-countries{grid-template-columns:1fr}.gn24-universal-inner{justify-content:stretch}.gn24-universal-btn{flex:1;padding:10px 8px;font-size:13px}.gn24-universal-panel{max-height:68vh}.gn24-country-link{min-height:42px}}
