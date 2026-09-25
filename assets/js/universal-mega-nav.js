@@ -1,4 +1,4 @@
-/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.1 */
+/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.2 */
 (function(){
 'use strict';
 var regions=[['서울','/seoul/'],['부산','/busan/'],['대구','/daegu/'],['인천','/incheon/'],['광주','/gwangju/'],['대전','/daejeon/'],['울산','/ulsan/'],['세종','/sejong/'],['경기','/gyeonggi/'],['강원','/gangwon/'],['충북','/chungbuk/'],['충남','/chungnam/'],['전북','/jeonbuk/'],['전남','/jeonnam/'],['경북','/gyeongbuk/'],['경남','/gyeongnam/'],['제주','/jeju/']];
@@ -13,7 +13,12 @@ function regionMarkup(){return '<div class="gn24-mega-grid">'+regions.map(functi
 function fillHome(){var box=document.getElementById('gn24MegaCountries');if(box)box.innerHTML=countryMarkup()}
 function installBar(){
  if(document.querySelector('.gn24-universal-bar'))return;
- var header=document.querySelector('.global-edition-header,.regional-site-header');if(!header)return;
+ var header=document.querySelector('.global-edition-header,.regional-site-header');
+ if(!header&&document.getElementById('gn24MegaCountries')){
+   header=document.querySelector('header')||document.querySelector('.site-header')||document.querySelector('.header');
+   if(header)document.body.classList.add('gn24-hq-mega-ready');
+ }
+ if(!header)return;
  var bar=document.createElement('nav');bar.className='gn24-universal-bar';bar.setAttribute('aria-label','GLOBAL NEWS24 network editions');
  bar.innerHTML='<div class="gn24-universal-kicker">GLOBAL NEWS24 NETWORK</div><div class="gn24-universal-inner"><button class="gn24-universal-btn" data-kind="korea">🇰🇷 대한민국 17개 ▼</button><button class="gn24-universal-btn" data-kind="world"><span class="gn24-world-pc">🌐 GLOBAL 30 ▼</span><span class="gn24-world-mobile">🌐 세계 30개 ▼</span></button></div><div class="gn24-universal-panel" hidden></div>';
  header.appendChild(bar);var panel=bar.querySelector('.gn24-universal-panel');

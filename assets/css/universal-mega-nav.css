@@ -1,4 +1,4 @@
-/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.1 */
+/* GLOBAL NEWS24 UNIVERSAL MEGA NAV v1.2 */
 .gn24-network-mega{max-width:1180px!important}
 .gn24-mega-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;padding:18px}
 .gn24-mega-grid a,.gn24-country-link{display:flex;align-items:center;min-height:44px;padding:10px 12px;border:1px solid #dfe5ec;border-radius:8px;text-decoration:none;font-weight:700}
@@ -25,3 +25,9 @@
   .gn24-universal-panel h2{font-size:20px}
 }
 .gn24-world-mobile{display:none}@media(max-width:700px){.gn24-world-pc{display:none}.gn24-world-mobile{display:inline}}
+
+/* HQ mobile: article categories stay in their rail; network editions get their own visible row. */
+@media(max-width:700px){
+  body.gn24-hq-mega-ready .gn24-home-network-nav{display:none!important}
+  body.gn24-hq-mega-ready .gn24-universal-bar{display:block!important}
+}
