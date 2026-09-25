@@ -1343,6 +1343,48 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
       "more": "See all stories",
       "published": "Published"
     }
+  },
+  "mongolia": {
+    "countryCode": "MN",
+    "slug": "mongolia",
+    "countryName": "Mongolia",
+    "editionName": "MONGOLIA EDITION",
+    "language": "en",
+    "secondaryLanguage": "",
+    "direction": "ltr",
+    "locale": "mn-MN",
+    "status": "OPEN",
+    "countryLabel": "Nigeria",
+    "localNetworkStatus": "Country Edition · Open",
+    "ui": {
+      "edition": "COUNTRY EDITION · OPEN",
+      "home": "Home",
+      "newsroom": "Newsroom",
+      "top": "TOP NEWS",
+      "main": "MAIN NEWS",
+      "latest": "LATEST NEWS",
+      "local": "LOCAL NEWS",
+      "global": "GLOBAL NEWS",
+      "martial": "MARTIAL ARTS & SPORTS",
+      "safety": "PUBLIC SAFETY",
+      "technology": "TECHNOLOGY / FUTURE",
+      "cooperation": "INTERNATIONAL COOPERATION",
+      "search": "Search stories",
+      "searchButton": "Search",
+      "all": "All stories",
+      "noResults": "No stories match this search.",
+      "back": "Back to newsroom",
+      "source": "Source",
+      "country": "COUNTRY LOCAL",
+      "feed": "GLOBAL FEED",
+      "status": "Edition status",
+      "network": "WORLD NETWORK",
+      "intro": "GLOBAL NEWS24 Nigeria edition. Published local articles are connected to this newsroom.",
+      "notice": "GLOBAL NEWS24 Nigeria edition · Published articles are live.",
+      "articleMissing": "Article not found",
+      "more": "See all stories",
+      "published": "Published"
+    }
   }
 });
 (()=>{const slug=location.pathname.split('/').filter(Boolean)[0]||'';const c=window.GN24_COUNTRY_REGISTRY[slug];if(c)window.GN24_COUNTRY_CONFIG=c;})();
