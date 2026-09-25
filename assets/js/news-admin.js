@@ -65,9 +65,29 @@
   function imageBg(src){els.preview.style.backgroundImage=`url("${src||DEFAULT_IMAGE}"),url("${DEFAULT_IMAGE}")`;els.preview.textContent=''}
   function resetImageFile(){if(state.imageObjectUrl)URL.revokeObjectURL(state.imageObjectUrl);state.imageObjectUrl=null;state.imageFile=null;els.imageInput.value='';els.downloadImage.disabled=true;els.clearDraftImage.disabled=true;const w=$('#imageRefreshWarning');if(w){w.classList.remove('show');w.textContent='새 이미지를 선택하면 브라우저에 임시저장되어 새로고침 후에도 복원됩니다.'}}
 
+  const AUTO_CATEGORY='__auto__';
+  const DOMESTIC_REGIONS=new Set(['seoul','busan','daegu','incheon','gwangju','daejeon','ulsan','sejong','gyeonggi','gangwon','chungbuk','chungnam','jeonbuk','jeonnam','gyeongbuk','gyeongnam','jeju']);
+  function autoCategory(){
+    const text=[els.title.value,els.subtitle.value,els.summary.value,els.content.value,els.tags.value].join(' ').toLowerCase();
+    const rules=[
+      ['무도·스포츠',['태권','무술','합기도','karate','taekwondo','martial art','championship','tournament','선수','스포츠','sports']],
+      ['안전·드론',['드론','drone','uav','재난','소방','구조','rescue','안전','safety']],
+      ['AI·혁신기술',['인공지능',' ai ','ai·','반도체','로봇','디지털','데이터센터','technology','artificial intelligence','semiconductor','robot','digital']],
+      ['경제',['경제','투자','수출','수입','무역','통상','금융','시장','산업','기업','관세','investment','export','import','trade','finance','market','industry','business','tariff']],
+      ['국제뉴스',['국제협력','국제 협력','외교','정상회담','양국','협약','파트너십','교류','mou','cooperation','partnership','bilateral','diplomatic','diplomacy','summit','international']],
+      ['청소년·문화',['청소년','교육','문화','관광','축제','예술','학교','youth','education','culture','tourism','festival','art']],
+      ['공익',['공익','봉사','기부','복지','취약계층','volunteer','donation','welfare','public interest']],
+      ['사회',['사회','지역사회','주거','고용','노동','보건','community','housing','employment','labor','health']]
+    ];
+    let best='',score=0;
+    for(const [cat,words] of rules){const n=words.reduce((sum,w)=>sum+(text.includes(w)?1:0),0);if(n>score){best=cat;score=n}}
+    if(best)return best;
+    const region=(document.querySelector('#fRegionCode')?.value||'').toLowerCase();
+    return region&&!DOMESTIC_REGIONS.has(region)?'국제뉴스':'국내소식';
+  }
   function formData(){
     const paragraphs=els.content.value.split(/\n\s*\n/).map(clean).filter(Boolean);
-    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value||'뉴스',summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,galleryImages:window.GN24GalleryAdmin?.value?.()||[],reporterId:clean(els.reporter?.value),author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,featured:els.featured.checked,searchPriority:!!els.searchPriority?.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,visibilityScope:els.visibility?.value||'public',isPublished:els.visibility?els.visibility.value==='public':true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
+    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value===AUTO_CATEGORY?autoCategory():(els.category.value||'국내소식'),summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,galleryImages:window.GN24GalleryAdmin?.value?.()||[],reporterId:clean(els.reporter?.value),author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,featured:els.featured.checked,searchPriority:!!els.searchPriority?.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,visibilityScope:els.visibility?.value||'public',isPublished:els.visibility?els.visibility.value==='public':true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
   }
 
   function pendingForm(){
@@ -138,7 +158,7 @@
     }
   }
 
-  function newArticle(){const d=today(),id=makeId(d);state.articles.unshift({id,title:'',subtitle:'',date:d,category:'국내소식',summary:'',image:DEFAULT_IMAGE,reporterId:'',author:'Global News24 편집부',sourceName:'Global News24',sourceUrl:'',tags:[],content:[],featured:false,searchPriority:false,pinned:false,visualStyle:'normal',visibilityScope:'public',isPublished:true,relatedOrgs:[]});state.selectedId=id;setDirty(true);select(id);els.title.focus();els.saveMessage.textContent='새 기사를 작성하세요. 입력 내용은 자동 임시저장됩니다.';saveDraft('manual')}
+  function newArticle(){const d=today(),id=makeId(d);state.articles.unshift({id,title:'',subtitle:'',date:d,category:AUTO_CATEGORY,summary:'',image:DEFAULT_IMAGE,reporterId:'',author:'Global News24 편집부',sourceName:'Global News24',sourceUrl:'',tags:[],content:[],featured:false,searchPriority:false,pinned:false,visualStyle:'normal',visibilityScope:'public',isPublished:true,relatedOrgs:[]});state.selectedId=id;setDirty(true);select(id);els.title.focus();els.saveMessage.textContent='새 기사를 작성하세요. 입력 내용은 자동 임시저장됩니다.';saveDraft('manual')}
 
   function saveCurrent(e){e?.preventDefault();const a=formData();if(!a.title){alert('기사 제목을 입력해 주세요.');els.title.focus();return false}const oldId=state.selectedId;const idx=state.articles.findIndex(x=>x.id===oldId);if(idx<0)state.articles.push(a);else state.articles[idx]=a;state.selectedId=a.id;setDirty(true);renderList();saveDraft('manual');els.saveMessage.textContent='현재 기사가 편집본에 저장되었습니다. 새로고침해도 유지됩니다.';setStatus('편집본 저장됨 · GitHub 반영 필요','dirty');return true}
 
@@ -258,7 +278,8 @@
     getSelectedId: ()=>state.selectedId,
     getPendingImage,
     markImageUploaded,
-    syncSavedArticle
+    syncSavedArticle,
+    autoCategory
   };
 
   loadSite().catch(err=>{els.list.innerHTML=`<div class="empty">${err.message}<br>상단의 news.json 불러오기를 이용해 주세요.</div>`;newArticle()});
