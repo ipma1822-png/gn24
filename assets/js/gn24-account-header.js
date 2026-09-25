@@ -1,0 +1,2 @@
+/* GN24 header account state v3.21.6 */
+(()=>{'use strict';const K='gn24-reader-session';function hasSession(){try{return !!JSON.parse(localStorage.getItem(K)||'{}').access_token}catch{return false}}function init(){const b=document.getElementById('gn24AccountBtn');if(!b)return;if(hasSession()){b.textContent='MY GN24';b.href='/pages/today/write/'}else{b.textContent='로그인';b.href='/pages/account/'}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();
