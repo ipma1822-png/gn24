@@ -1,4 +1,4 @@
-/* GN24 v3.21.0 · 47 EDITION VISUAL GRID SELECTOR
+/* GN24 v3.21.0 · 49 EDITION VISUAL GRID SELECTOR
  * UI-only adapter. The existing #fRegionCode SELECT remains the data/form compatibility layer.
  */
 (() => {
@@ -6,7 +6,7 @@
 
   const DOMESTIC = new Set(['seoul','busan','daegu','incheon','gwangju','daejeon','ulsan','sejong','gyeonggi','gangwon','chungbuk','chungnam','jeonbuk','jeonnam','gyeongbuk','gyeongnam','jeju']);
   const EXPECTED_DOMESTIC = 17;
-  const EXPECTED_GLOBAL = 30;
+  const EXPECTED_GLOBAL = 32;
   let root = null;
   let select = null;
   let lastValue = Symbol('init');
@@ -111,7 +111,7 @@
     root.className = 'gn24-edition-grid-selector';
     root.innerHTML = `
       <div class="gn24-edition-grid-head">
-        <div><b>배포판 선택</b><small>전국 공통 + 대한민국 지역판 17 + GLOBAL EDITION 30</small></div>
+        <div><b>배포판 선택</b><small>전국 공통 + 대한민국 지역판 17 + GLOBAL EDITION 32</small></div>
         <div class="gn24-edition-current"><span>현재 배포판</span><strong data-gn24-current-edition></strong></div>
       </div>
     `;
@@ -120,7 +120,7 @@
     nationalWrap.appendChild(button(national, 'national'));
     root.appendChild(nationalWrap);
     root.appendChild(section('🇰🇷 대한민국 지역판 · 17', domestic, 'domestic'));
-    root.appendChild(section('🌐 GLOBAL EDITION · 30', global, 'global'));
+    root.appendChild(section('🌐 GLOBAL EDITION · 32', global, 'global'));
 
     row.insertAdjacentElement('beforebegin', root);
     select.classList.add('gn24-select-compat-hidden');
@@ -150,7 +150,7 @@
       }
       if (tries >= 80) {
         clearInterval(timer);
-        fail('30-country SELECT was not ready; fallback SELECT remains visible');
+        fail('32-country SELECT was not ready; fallback SELECT remains visible');
       }
     }, 100);
   }
