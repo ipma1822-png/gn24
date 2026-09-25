@@ -12,3 +12,5 @@
 .gn24-quick-menu :focus-visible{outline:2px solid #e7c16b;outline-offset:2px}
 @media(max-width:700px){.gn24-quick-menu{right:max(14px,env(safe-area-inset-right));bottom:calc(94px + env(safe-area-inset-bottom))}.gn24-quick-toggle{width:48px;height:48px;padding:0;font-size:20px;border-radius:50%}.gn24-quick-toggle-label{display:none}.gn24-quick-panel{max-height:calc(100dvh - 185px)}}
 @media(prefers-reduced-motion:reduce){.gn24-quick-menu *{scroll-behavior:auto!important}}
+
+.gn24-quick-subheading{padding:10px 15px 7px;border-bottom:1px solid #ffffff15;color:#d8b15a;font-size:10px;font-weight:800;letter-spacing:.08em}
