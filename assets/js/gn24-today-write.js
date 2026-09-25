@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const cfg=window.GN24_SUPABASE||{},base=String(cfg.url||'').replace(/\/$/,''),key=String(cfg.anonKey||''),$=id=>document.getElementById(id);
 let optimized=null;
-function session(){for(const k of ['gn24-editorial-session','gn24-reporter-session']){try{const s=JSON.parse(localStorage.getItem(k)||'{}');if(s.access_token)return s}catch{}}return null}
+function session(){for(const k of ['gn24-reader-session','gn24-editorial-session','gn24-reporter-session']){try{const s=JSON.parse(localStorage.getItem(k)||'{}');if(s.access_token)return s}catch{}}return null}
 function msg(t){$('guard').textContent=t;$('guard').hidden=false}
 async function user(token){const r=await fetch(base+'/auth/v1/user',{headers:{apikey:key,Authorization:'Bearer '+token}});if(!r.ok)return null;return r.json()}
 function uuid(){return crypto.randomUUID?crypto.randomUUID():('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16)}))}
@@ -23,7 +23,7 @@ async function upload(token,uid,item){
  return base+'/storage/v1/object/public/today-images/'+path;
 }
 document.addEventListener('DOMContentLoaded',async()=>{
- const s=session();if(!s){msg('GN24 로그인이 필요합니다. 로그인 후 다시 이용해 주세요.');return}
+ const s=session();if(!s){location.href='/pages/account/?next=%2Fpages%2Ftoday%2Fwrite%2F';return}
  const u=await user(s.access_token);if(!u?.id){msg('로그인 세션이 만료되었습니다. 다시 로그인해 주세요.');return}
  $('guard').hidden=true;$('form').hidden=false;
  $('image').addEventListener('change',async()=>{optimized=null;$('preview').hidden=true;const f=$('image').files?.[0];if(!f)return;$('imageInfo').textContent='사진을 자동 최적화하고 있습니다…';try{optimized=await optimize(f);$('imageInfo').textContent=`${(f.size/1048576).toFixed(1)}MB 원본 → ${optimized.width}×${optimized.height} · ${Math.round(optimized.blob.size/1024)}KB WebP`;const url=URL.createObjectURL(optimized.blob);$('preview').src=url;$('preview').hidden=false}catch(e){console.error(e);$('image').value='';$('imageInfo').textContent=e.message==='OPTIMIZED_TOO_LARGE'?'최적화 후에도 2MB를 초과합니다. 다른 사진을 선택해 주세요.':'이 사진은 브라우저에서 처리할 수 없습니다. 다른 사진을 선택해 주세요.'}});
