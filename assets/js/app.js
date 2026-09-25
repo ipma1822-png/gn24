@@ -31,13 +31,10 @@ async function loadNewsData(){if(__gn24NewsPromise)return __gn24NewsPromise;__gn
 function articleURL(id){return `/pages/article/?id=${encodeURIComponent(id)}`}
 function seoArticleURL(article){
   if(!article?.id) return '/pages/newsroom/';
-  const stamp=article.createdAt||article.created_at||article.updatedAt||article.updated_at||'';
-  const age=stamp?Date.now()-new Date(stamp).getTime():Infinity;
-  // Newly published articles keep the direct reader URL until the scheduled
-  // static /share/ page has had time to be generated. Existing articles use
-  // the stable self-canonical /share/ URL for internal-link SEO consistency.
-  if(Number.isFinite(age) && age>=0 && age<10*60*1000) return articleURL(article.id);
-  return `/share/${shareArticleSlug(article.id)}/`;
+  // v3.4.11: Internal navigation must always use the live dynamic reader.
+  // /share/<id>/ is generated asynchronously for social/OG previews and may
+  // not exist yet, so using it for Latest/Top/Related links can cause 404s.
+  return articleURL(article.id);
 }
 function shareArticleSlug(id){return String(id||'article').replace(/[^A-Za-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'')||'article'}
 function shareArticleVersion(article){
