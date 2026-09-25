@@ -110,8 +110,40 @@ function articleEditionInfo(a){
   const g=GN24_GLOBAL_EDITIONS[code];if(g){const cc={uk:'gb',usa:'us'}[code]||({china:'cn',japan:'jp',philippines:'ph',indonesia:'id',malaysia:'my',thailand:'th',vietnam:'vn',nepal:'np',india:'in',pakistan:'pk',iran:'ir',uae:'ae','saudi-arabia':'sa',turkiye:'tr',morocco:'ma',egypt:'eg','south-africa':'za',spain:'es',france:'fr',germany:'de',italy:'it',canada:'ca',mexico:'mx',brazil:'br',argentina:'ar',colombia:'co',australia:'au','new-zealand':'nz',kenya:'ke',nigeria:'ng',mongolia:'mn'}[code]||'');const tr=GN24_EDITION_I18N[code]||{};return {code,type:'global',flagHTML:gn24FlagImg(cc,g[2]),title:g[1]+' · GLOBAL NEWS24',label:g[2],href:'/'+code+'/',back:tr.back||('Back to '+g[2]),home:tr.home||(g[2]+' Home')};}
   return null;
 }
+const GN24_ARTICLE_UI=Object.freeze({
+  es:{latest:'Últimas noticias',more:'Ver más',popular:'Más leídas',related:'Noticias relacionadas',recommended:'Recomendado',headline:'Titulares',latestArticles:'Últimos artículos',relatedArticles:'Artículos relacionados',source:'Fuente',reaction:'¿Qué te pareció este artículo?',like:'Me gusta',heart:'Me encanta',support:'Apoyar',useful:'Útil',comments:'Comentarios',commentGuide:'Deja tu opinión. Los comentarios se publican tras la revisión del administrador.',nickname:'Nombre',approved:'Publicación tras aprobación',commentPlaceholder:'Escribe un comentario. (máx. 1.000 caracteres)',submit:'Enviar comentario',empty:'No hay comentarios publicados.',share:'Compartir',copy:'Copiar enlace',print:'Imprimir',bigger:'Aumentar texto',smaller:'Reducir texto'},
+  en:{latest:'Latest News',more:'More',popular:'Most Read',related:'Related News',recommended:'Recommended',headline:'Headlines',latestArticles:'Latest Articles',relatedArticles:'Related Articles',source:'Source',reaction:'What did you think of this article?',like:'Like',heart:'Love',support:'Support',useful:'Useful',comments:'Comments',commentGuide:'Share your view. Comments are published after administrator review.',nickname:'Nickname',approved:'Published after approval',commentPlaceholder:'Write a comment. (max. 1,000 characters)',submit:'Post comment',empty:'No public comments yet.',share:'Share',copy:'Copy link',print:'Print',bigger:'Larger text',smaller:'Smaller text'}
+});
+function articleUiLang(code){if(['argentina','spain','mexico','colombia'].includes(code))return 'es';if(['uk','usa','canada','australia','new-zealand','india','philippines','kenya','nigeria','south-africa','uae'].includes(code))return 'en';return null}
+function setText(sel,value){const el=document.querySelector(sel);if(el&&value)el.textContent=value}
+function localizeArticleUi(info){
+  if(!info||info.type!=='global')return;
+  const lang=articleUiLang(info.code);const t=GN24_ARTICLE_UI[lang];if(!t)return;
+  document.documentElement.lang=lang;
+  setText('.article-sidebar .side-news-block:nth-of-type(1) .side-news-head h2',t.latest);
+  setText('.article-sidebar .side-news-block:nth-of-type(1) .side-news-head a',t.more);
+  setText('.article-sidebar .side-popular-block .side-news-head h2',t.popular);
+  setText('.article-sidebar .side-news-block:nth-of-type(3) .side-news-head h2',t.related);
+  setText('.article-sidebar .side-news-block:nth-of-type(3) .side-news-head span',t.recommended);
+  setText('.article-engagement .reaction-title',t.reaction);
+  const rb=document.querySelectorAll('.reaction-btn');[t.like,t.heart,t.support,t.useful].forEach((v,i)=>{const s=rb[i]?.querySelector('span:nth-child(2)');if(s)s.textContent=v});
+  setText('.article-bottom-news .bottom-news-column:nth-child(1) h2',t.headline);
+  setText('.article-bottom-news .bottom-news-column:nth-child(2) h2',t.latestArticles);
+  setText('.article-related .section-head h2',t.relatedArticles);
+  const source=document.querySelector('#aSource strong');if(source)source.textContent=t.source;
+  setText('.comments-title',t.comments+' ');
+  const count=document.querySelector('#approvedCommentCount');if(count)document.querySelector('.comments-title')?.appendChild(count);
+  setText('.comments-guide',t.commentGuide);setText('.comment-form-top label span',t.nickname);setText('.comment-status-note',t.approved);
+  const nick=document.querySelector('#commentNickname');if(nick)nick.placeholder=t.nickname;
+  const area=document.querySelector('#commentContent');if(area)area.placeholder=t.commentPlaceholder;
+  setText('#commentSubmitBtn',t.submit);setText('.comment-empty',t.empty);
+  const native=document.querySelector('.article-native-share');if(native)native.textContent=t.share;
+  const list=document.querySelector('.article-action-group .article-tool-wide');if(list)list.title=info.home;
+  const copy=document.querySelector('#copyArticleLink');if(copy)copy.title=t.copy;const pr=document.querySelector('#printArticle');if(pr)pr.title=t.print;
+  const plus=document.querySelector('#fontPlus');if(plus)plus.title=t.bigger;const minus=document.querySelector('#fontMinus');if(minus)minus.title=t.smaller;
+}
 function applyArticleEditionContext(a,data){
-  const info=articleEditionInfo(a);if(!info)return data.filter(x=>x.id!==a.id);
+  const info=articleEditionInfo(a);if(!info)return data.filter(x=>x.id!==a.id);localizeArticleUi(info);
   const peers=data.filter(x=>x.id!==a.id&&String(x.regionCode||x.region_code||'')===info.code);
   const banner=document.createElement('div');banner.className='article-edition-banner '+info.type;
   banner.innerHTML=`<a href="${info.href}" class="article-edition-home"><span class="article-edition-flag">${info.flagHTML}</span><span><small>${info.type==='global'?'GLOBAL NEWS24 COUNTRY EDITION':'GLOBAL NEWS24 LOCAL EDITION'}</small><b>${esc(info.title)}</b></span></a><a href="${info.href}" class="article-edition-back">← ${esc(info.back)}</a>`;
