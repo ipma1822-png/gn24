@@ -10,7 +10,7 @@ window.GN24_SUPABASE = {
 };
 
 // GN24 ARTICLE REGION SELECTOR v3.20.0
-// 국내 17개는 기존 구조를 보존하고 GLOBAL EDITION은 32-country Registry를 읽습니다.
+// 국내 17개는 기존 구조를 보존하고 GLOBAL EDITION은 33-country Registry를 읽습니다.
 (() => {
   if (!/^\/admin-news\.html$/.test(location.pathname)) return;
 
@@ -77,7 +77,7 @@ window.GN24_SUPABASE = {
     if(buildGlobalRegions()){refreshOptions();return;}
     if(document.querySelector('script[data-gn24-country-registry]'))return;
     const script=document.createElement('script');
-    script.src='/assets/global-edition/country-registry.js?v=1.0.0';
+    script.src='/assets/global-edition/country-registry.js?v=1.3.0';
     script.dataset.gn24CountryRegistry='1';
     script.onload=()=>{if(buildGlobalRegions())refreshOptions()};
     script.onerror=()=>console.warn('GN24 country registry load failed; legacy GLOBAL selector remains available.');
