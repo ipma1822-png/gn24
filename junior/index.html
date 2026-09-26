@@ -75,6 +75,20 @@
     </div></div></section>
   </main>
   <footer class="footer"><div class="wrap footer-inner"><div><strong>GLOBAL NEWS24 · GN24 JUNIOR PRESS</strong><p>내가 발견한 오늘이 뉴스가 됩니다.</p></div><p class="rule">어린이 보호 원칙을 지키는 안전한 기자단</p></div></footer>
+  <script src="/assets/js/gn24-supabase-config.js?v=3.22.1"></script>
+  <script>
+  (async()=>{
+    const box=document.getElementById('juniorNewsList'),cfg=window.GN24_SUPABASE;if(!box||!cfg)return;
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    try{
+      const url=cfg.url+'/rest/v1/gn24_articles?select=id,date,title,summary,image,author,reporter_id&region_code=eq.junior&is_published=eq.true&workflow_status=eq.published&visibility_scope=eq.public&order=date.desc,created_at.desc&limit=12';
+      const r=await fetch(url,{headers:{apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey}});
+      if(!r.ok)throw new Error('load failed');
+      const rows=await r.json();
+      box.innerHTML=rows.length?rows.map(a=>`<a class="card news-card" href="/pages/article/?id=${encodeURIComponent(a.id)}" style="text-decoration:none;color:inherit">${a.image?`<div style="aspect-ratio:16/9;border-radius:12px;background:url('${esc(a.image)}') center/cover no-repeat;margin-bottom:14px"></div>`:''}<span class="kicker">GN24 JUNIOR PRESS</span><h3>${esc(a.title)}</h3><p>${esc(a.summary||'')}</p><small>${esc(a.author||'GN24 주니어 기자')}</small></a>`).join(''):'<article class="card news-card"><h3>첫 뉴스를 기다리고 있어요.</h3><p>GN24 편집부가 발행한 주니어 기사가 이곳에 표시됩니다.</p></article>';
+    }catch(e){console.warn('GN24 Junior news',e);}
+  })();
+  </script>
   <script>
     const functionBase='https://plqqowwdbgixtczzyanr.supabase.co/functions/v1/';function showStatus(form,message){const status=form.querySelector('.status');status.textContent=message;status.classList.add('show');}document.getElementById('apply').addEventListener('submit',async function(event){event.preventDefault();const form=event.currentTarget;const pin=form.elements.pin.value;if(pin!==form.elements['pin-check'].value){showStatus(form,'PIN이 서로 일치하지 않습니다.');return;}const button=form.querySelector('button');button.disabled=true;try{const response=await fetch(functionBase+'gn24-junior-apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:form.elements.name.value,nickname:form.elements.nickname.value,pin,guardianConfirmed:document.getElementById('guardian').checked})});const data=await response.json();if(response.ok&&data.ok===true){form.innerHTML='<div role="status" aria-live="polite"><h3>🎉 신청이 완료되었습니다!</h3><p>현재 상태</p><p><strong>⏳ 승인 기다리는 중</strong></p><p>GLOBAL NEWS24 대표 승인 후<br>기자 활동번호가 발급됩니다.</p></div>';return;}showStatus(form,data.message||data.error||'신청 정보를 확인해 주세요.');}catch(error){showStatus(form,'잠시 후 다시 시도해 주세요.');}finally{button.disabled=false;}});document.getElementById('entry').addEventListener('submit',async function(event){event.preventDefault();const form=event.currentTarget;const button=form.querySelector('button');button.disabled=true;try{const response=await fetch(functionBase+'gn24-junior-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reporterId:form.elements['reporter-id'].value,pin:form.elements.pin.value})});const data=await response.json();if(response.ok&&data.ok===true&&data.sessionToken){localStorage.setItem('gn24-junior-session',data.sessionToken);form.reset();location.href='/junior/my/';return;}showStatus(form,data.error||'기자 활동번호 또는 PIN을 확인해 주세요.');}catch(error){showStatus(form,'잠시 후 다시 시도해 주세요.');}finally{button.disabled=false;}});
   </script>
