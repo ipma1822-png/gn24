@@ -63,7 +63,7 @@ function formArticle(){
     source_name:value('#fSourceName').trim(), source_url:value('#fSourceUrl').trim(), tags,
     featured:!!$('#fFeatured')?.checked, search_priority:!!$('#fSearchPriority')?.checked, pinned:!!$('#fPinned')?.checked,
     visual_style:value('#fVisualStyle')||'normal', visibility_scope:value('#fVisibility')||'public', is_published:value('#fVisibility')==='public',
-    region_code:(/^GN24-JR-[0-9]{4}$/.test(value('#fReporterId').trim())?(value('#fJuniorRegion')||''):value('#fRegionCode')||'')||null,
+    region_code:value('#fRegionCode')||null,
     updated_at:new Date().toISOString()
   };
 }
