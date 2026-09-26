@@ -304,11 +304,12 @@
         set('fTitle',draft.title);
         set('fSubtitle','GN24 JUNIOR PRESS · '+(draft.nickname||'꿈나무 기자'));
         set('fAuthor',(draft.nickname||'꿈나무')+' 주니어 기자');
+        set('fReporterId',draft.reporterId||'');
         set('fSummary',draft.whatHappened);
         set('fContent',[draft.whatHappened,draft.interviewNote?'[질문·인터뷰]\n'+draft.interviewNote:'',draft.feeling?'[느낀 점]\n'+draft.feeling:''].filter(Boolean).join('\n\n'));
         set('fTags','GN24 JUNIOR PRESS, 꿈나무 기자단, '+(draft.nickname||'주니어 기자'));
         const cat=document.getElementById('fCategory');if(cat){cat.value='청소년·문화';cat.dispatchEvent(new Event('change',{bubbles:true}))}
-        localStorage.removeItem(KEY);
+        localStorage.setItem('gn24-junior-publish-link',JSON.stringify({submissionId:draft.submissionId,reporterId:draft.reporterId||''}));localStorage.removeItem(KEY);
         const msg=document.getElementById('saveMessage');if(msg)msg.textContent='주니어 뉴스 원고를 불러왔습니다. 대표님이 다듬은 뒤 저장·발행해 주세요.';
         document.querySelector('.editor-panel')?.scrollIntoView({behavior:'smooth'});
       },250);
