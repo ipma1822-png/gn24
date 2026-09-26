@@ -132,6 +132,31 @@ function articleUiLang(code){
   const map={china:'zh',japan:'ja',philippines:'en',indonesia:'id',malaysia:'ms',thailand:'th',vietnam:'vi',nepal:'en',india:'en',pakistan:'en',iran:'fa',uae:'ar','saudi-arabia':'ar',turkiye:'tr',morocco:'ar',egypt:'ar','south-africa':'en',spain:'es',uk:'en',france:'fr',germany:'de',italy:'it',canada:'en',usa:'en',mexico:'es',brazil:'pt',argentina:'es',colombia:'es',australia:'en','new-zealand':'en',kenya:'en',nigeria:'en',mongolia:'mn'};
   return map[code]||null;
 }
+const GN24_DYNAMIC_KEYS=['copied','copiedShort','copyPrompt','reactionLoadError','reactionAlready','reactionSaving','reactionSaved','reactionError','commentsLoadError','reader','nicknameError','commentError','commentSaving','commentSaved','commentSaveError','popularEmpty','reporterBio','kakaoError'];
+const GN24_DYNAMIC_UI=Object.freeze({
+ en:['Article link copied. Paste it into KakaoTalk or a message.','Article link copied for sharing.','Copy the address below.','Could not load reactions.','You already reacted.','Saving your reaction…','Thank you for your reaction.','Could not save your reaction. Please try again.','Could not load comments.','Reader','Enter a nickname of 1–30 characters.','Enter a comment of 2–1,000 characters.','Posting your comment…','Comment submitted. It will appear after review.','Could not post your comment. Please try again.','View data is being collected.','Read more articles by {name} on Global News24.','KakaoTalk sharing failed. Refresh the page and try again.'],
+ zh:['文章链接已复制，可粘贴到 KakaoTalk 或消息中。','分享链接已复制。','请复制下方地址。','无法加载互动数据。','您已留下此互动。','正在保存互动…','感谢您的互动。','互动保存失败，请稍后重试。','无法加载评论。','读者','请输入 1–30 个字符的昵称。','请输入 2–1,000 个字符的评论。','正在提交评论…','评论已提交，审核后公开。','评论提交失败，请稍后重试。','浏览数据正在积累中。','在 Global News24 阅读{name}的更多文章。','KakaoTalk 分享失败，请刷新页面后重试。'],
+ ja:['記事のリンクをコピーしました。KakaoTalkやメッセージに貼り付けられます。','共有用リンクをコピーしました。','以下のアドレスをコピーしてください。','リアクションを読み込めませんでした。','すでにリアクション済みです。','リアクションを保存しています…','リアクションを受け付けました。','リアクションを保存できませんでした。後でもう一度お試しください。','コメントを読み込めませんでした。','読者','ニックネームは1～30文字で入力してください。','コメントは2～1,000文字で入力してください。','コメントを投稿しています…','コメントを受け付けました。確認後に公開されます。','コメントを投稿できませんでした。後でもう一度お試しください。','閲覧データを集計中です。','Global News24で{name}の記事をもっと読む。','KakaoTalkで共有できませんでした。ページを更新して再度お試しください。'],
+ mn:['Нийтлэлийн холбоосыг хууллаа. KakaoTalk эсвэл зурваст буулгана уу.','Хуваалцах холбоосыг хууллаа.','Доорх хаягийг хуулна уу.','Хариу үйлдлийг ачаалж чадсангүй.','Та аль хэдийн хариу үйлдэл үлдээсэн байна.','Хариу үйлдлийг хадгалж байна…','Хариу үйлдэл бүртгэгдлээ.','Хариу үйлдлийг хадгалж чадсангүй. Дараа дахин оролдоно уу.','Сэтгэгдлийг ачаалж чадсангүй.','Уншигч','Нэрээ 1–30 тэмдэгтээр оруулна уу.','Сэтгэгдлээ 2–1,000 тэмдэгтээр оруулна уу.','Сэтгэгдлийг илгээж байна…','Сэтгэгдэл илгээгдлээ. Хянасны дараа нийтлэгдэнэ.','Сэтгэгдлийг илгээж чадсангүй. Дараа дахин оролдоно уу.','Үзэлтийн мэдээлэл цугларч байна.','Global News24 дээр {name}-ийн бусад нийтлэлийг уншина уу.','KakaoTalk-оор хуваалцаж чадсангүй. Хуудсыг шинэчлээд дахин оролдоно уу.'],
+ it:['Link copiato. Incollalo su KakaoTalk o in un messaggio.','Link di condivisione copiato.','Copia l’indirizzo qui sotto.','Impossibile caricare le reazioni.','Hai già lasciato questa reazione.','Salvataggio della reazione…','Grazie per la tua reazione.','Impossibile salvare la reazione. Riprova più tardi.','Impossibile caricare i commenti.','Lettore','Inserisci un nome di 1–30 caratteri.','Inserisci un commento di 2–1.000 caratteri.','Invio del commento…','Commento inviato. Sarà pubblicato dopo la revisione.','Impossibile inviare il commento. Riprova più tardi.','I dati sulle visualizzazioni sono in raccolta.','Leggi altri articoli di {name} su Global News24.','Condivisione KakaoTalk non riuscita. Aggiorna la pagina e riprova.'],
+ ar:['تم نسخ رابط المقال. الصقه في KakaoTalk أو في رسالة.','تم نسخ رابط المشاركة.','انسخ العنوان أدناه.','تعذر تحميل التفاعلات.','لقد سجلت هذا التفاعل من قبل.','جارٍ حفظ التفاعل…','شكرًا على تفاعلك.','تعذر حفظ التفاعل. حاول مرة أخرى لاحقًا.','تعذر تحميل التعليقات.','قارئ','أدخل اسمًا من 1 إلى 30 حرفًا.','أدخل تعليقًا من 2 إلى 1000 حرف.','جارٍ إرسال التعليق…','تم إرسال التعليق وسيُنشر بعد المراجعة.','تعذر إرسال التعليق. حاول مرة أخرى لاحقًا.','يجري جمع بيانات المشاهدات.','اقرأ المزيد من مقالات {name} على Global News24.','تعذرت المشاركة عبر KakaoTalk. حدّث الصفحة وحاول مرة أخرى.'],
+ es:['Enlace copiado. Pégalo en KakaoTalk o en un mensaje.','Enlace para compartir copiado.','Copia la dirección de abajo.','No se pudieron cargar las reacciones.','Ya has dejado esta reacción.','Guardando tu reacción…','Gracias por tu reacción.','No se pudo guardar la reacción. Inténtalo de nuevo.','No se pudieron cargar los comentarios.','Lector','Escribe un nombre de 1 a 30 caracteres.','Escribe un comentario de 2 a 1.000 caracteres.','Enviando comentario…','Comentario enviado. Se publicará tras su revisión.','No se pudo enviar el comentario. Inténtalo de nuevo.','Se están recopilando datos de visitas.','Lee más artículos de {name} en Global News24.','No se pudo compartir por KakaoTalk. Actualiza la página e inténtalo de nuevo.'],
+ fr:['Lien copié. Collez-le dans KakaoTalk ou dans un message.','Lien de partage copié.','Copiez l’adresse ci-dessous.','Impossible de charger les réactions.','Vous avez déjà réagi.','Enregistrement de votre réaction…','Merci pour votre réaction.','Impossible d’enregistrer la réaction. Réessayez plus tard.','Impossible de charger les commentaires.','Lecteur','Saisissez un nom de 1 à 30 caractères.','Saisissez un commentaire de 2 à 1 000 caractères.','Envoi du commentaire…','Commentaire envoyé. Il sera publié après vérification.','Impossible d’envoyer le commentaire. Réessayez plus tard.','Les données de consultation sont en cours de collecte.','Lisez d’autres articles de {name} sur Global News24.','Échec du partage KakaoTalk. Actualisez la page et réessayez.'],
+ de:['Artikellink kopiert. In KakaoTalk oder eine Nachricht einfügen.','Link zum Teilen kopiert.','Kopieren Sie die Adresse unten.','Reaktionen konnten nicht geladen werden.','Sie haben bereits reagiert.','Reaktion wird gespeichert…','Vielen Dank für Ihre Reaktion.','Reaktion konnte nicht gespeichert werden. Bitte erneut versuchen.','Kommentare konnten nicht geladen werden.','Leser','Geben Sie einen Namen mit 1–30 Zeichen ein.','Geben Sie einen Kommentar mit 2–1.000 Zeichen ein.','Kommentar wird gesendet…','Kommentar eingereicht. Er erscheint nach Prüfung.','Kommentar konnte nicht gesendet werden. Bitte erneut versuchen.','Aufrufdaten werden gesammelt.','Weitere Artikel von {name} auf Global News24 lesen.','KakaoTalk-Teilen fehlgeschlagen. Seite neu laden und erneut versuchen.'],
+ pt:['Link copiado. Cole no KakaoTalk ou em uma mensagem.','Link de compartilhamento copiado.','Copie o endereço abaixo.','Não foi possível carregar as reações.','Você já registrou esta reação.','Salvando reação…','Obrigado pela reação.','Não foi possível salvar a reação. Tente novamente.','Não foi possível carregar os comentários.','Leitor','Digite um nome com 1 a 30 caracteres.','Digite um comentário com 2 a 1.000 caracteres.','Enviando comentário…','Comentário enviado. Será publicado após revisão.','Não foi possível enviar o comentário. Tente novamente.','Os dados de visualização estão sendo coletados.','Leia mais artigos de {name} no Global News24.','Falha ao compartilhar no KakaoTalk. Atualize a página e tente novamente.'],
+ tr:['Makale bağlantısı kopyalandı. KakaoTalk veya bir mesaja yapıştırın.','Paylaşım bağlantısı kopyalandı.','Aşağıdaki adresi kopyalayın.','Tepkiler yüklenemedi.','Bu tepkiyi zaten verdiniz.','Tepkiniz kaydediliyor…','Tepkiniz için teşekkürler.','Tepki kaydedilemedi. Tekrar deneyin.','Yorumlar yüklenemedi.','Okur','1–30 karakterlik bir ad girin.','2–1.000 karakterlik bir yorum girin.','Yorum gönderiliyor…','Yorum gönderildi. İncelemeden sonra yayımlanacak.','Yorum gönderilemedi. Tekrar deneyin.','Görüntülenme verileri toplanıyor.','Global News24 üzerinde {name} adlı yazarın diğer yazılarını okuyun.','KakaoTalk paylaşımı başarısız oldu. Sayfayı yenileyip tekrar deneyin.'],
+ vi:['Đã sao chép liên kết. Dán vào KakaoTalk hoặc tin nhắn.','Đã sao chép liên kết chia sẻ.','Sao chép địa chỉ bên dưới.','Không thể tải lượt tương tác.','Bạn đã tương tác rồi.','Đang lưu tương tác…','Cảm ơn bạn đã tương tác.','Không thể lưu tương tác. Vui lòng thử lại.','Không thể tải bình luận.','Độc giả','Nhập tên dài 1–30 ký tự.','Nhập bình luận dài 2–1.000 ký tự.','Đang gửi bình luận…','Đã gửi bình luận. Bình luận sẽ hiển thị sau khi duyệt.','Không thể gửi bình luận. Vui lòng thử lại.','Dữ liệu lượt xem đang được thu thập.','Đọc thêm bài của {name} trên Global News24.','Không thể chia sẻ qua KakaoTalk. Hãy tải lại trang và thử lại.'],
+ th:['คัดลอกลิงก์บทความแล้ว วางใน KakaoTalk หรือข้อความได้เลย','คัดลอกลิงก์สำหรับแชร์แล้ว','คัดลอกที่อยู่ด้านล่าง','โหลดข้อมูลปฏิกิริยาไม่ได้','คุณแสดงปฏิกิริยานี้แล้ว','กำลังบันทึกปฏิกิริยา…','ขอบคุณสำหรับปฏิกิริยาของคุณ','บันทึกปฏิกิริยาไม่ได้ โปรดลองอีกครั้ง','โหลดความคิดเห็นไม่ได้','ผู้อ่าน','กรอกชื่อ 1–30 อักขระ','กรอกความคิดเห็น 2–1,000 อักขระ','กำลังส่งความคิดเห็น…','ส่งความคิดเห็นแล้ว จะแสดงหลังตรวจสอบ','ส่งความคิดเห็นไม่ได้ โปรดลองอีกครั้ง','กำลังรวบรวมข้อมูลยอดเข้าชม','อ่านบทความอื่นของ {name} บน Global News24','แชร์ผ่าน KakaoTalk ไม่สำเร็จ รีเฟรชหน้าแล้วลองอีกครั้ง'],
+ id:['Tautan artikel disalin. Tempel di KakaoTalk atau pesan.','Tautan berbagi disalin.','Salin alamat di bawah ini.','Gagal memuat reaksi.','Anda sudah memberikan reaksi ini.','Menyimpan reaksi…','Terima kasih atas reaksi Anda.','Gagal menyimpan reaksi. Coba lagi.','Gagal memuat komentar.','Pembaca','Masukkan nama sepanjang 1–30 karakter.','Masukkan komentar sepanjang 2–1.000 karakter.','Mengirim komentar…','Komentar terkirim dan akan tampil setelah ditinjau.','Gagal mengirim komentar. Coba lagi.','Data tayangan sedang dikumpulkan.','Baca artikel lain oleh {name} di Global News24.','Gagal berbagi lewat KakaoTalk. Muat ulang halaman dan coba lagi.'],
+ ms:['Pautan artikel disalin. Tampal dalam KakaoTalk atau mesej.','Pautan perkongsian disalin.','Salin alamat di bawah.','Gagal memuatkan reaksi.','Anda sudah memberikan reaksi ini.','Menyimpan reaksi…','Terima kasih atas reaksi anda.','Gagal menyimpan reaksi. Cuba lagi.','Gagal memuatkan komen.','Pembaca','Masukkan nama sepanjang 1–30 aksara.','Masukkan komen sepanjang 2–1,000 aksara.','Menghantar komen…','Komen dihantar dan akan dipaparkan selepas semakan.','Gagal menghantar komen. Cuba lagi.','Data tontonan sedang dikumpulkan.','Baca lagi artikel oleh {name} di Global News24.','Gagal berkongsi melalui KakaoTalk. Muat semula halaman dan cuba lagi.'],
+ fa:['پیوند مقاله کپی شد. آن را در KakaoTalk یا پیام بچسبانید.','پیوند اشتراک‌گذاری کپی شد.','نشانی زیر را کپی کنید.','بارگذاری واکنش‌ها ممکن نشد.','شما قبلاً این واکنش را ثبت کرده‌اید.','در حال ذخیره واکنش…','از واکنش شما سپاسگزاریم.','ذخیره واکنش ممکن نشد. دوباره تلاش کنید.','بارگذاری دیدگاه‌ها ممکن نشد.','خواننده','نامی با ۱ تا ۳۰ نویسه وارد کنید.','دیدگاهی با ۲ تا ۱۰۰۰ نویسه وارد کنید.','در حال ارسال دیدگاه…','دیدگاه ارسال شد و پس از بررسی منتشر می‌شود.','ارسال دیدگاه ممکن نشد. دوباره تلاش کنید.','داده‌های بازدید در حال جمع‌آوری است.','مقاله‌های بیشتر {name} را در Global News24 بخوانید.','اشتراک‌گذاری از طریق KakaoTalk ممکن نشد. صفحه را تازه کنید و دوباره تلاش کنید.']
+});
+function articleDynamicText(article,key){
+ const info=articleEditionInfo(article),lang=info?.type==='global'?articleUiLang(info.code):'ko';
+ if(lang==='ko')return null;
+ const index=GN24_DYNAMIC_KEYS.indexOf(key);
+ return (GN24_DYNAMIC_UI[lang]||GN24_DYNAMIC_UI.en)[index]||GN24_DYNAMIC_UI.en[index];
+}
 function setText(sel,value){const el=document.querySelector(sel);if(el&&value)el.textContent=value}
 const GN24_ARTICLE_CHROME=Object.freeze({
  en:{nav:['Home','Breaking','General News','Martial Arts · Sports','Safety · Drone','Public Interest','Opinion','Press Releases'],search:'Search articles',breaking:'Global News24 Breaking News',views:'Views',editor:'Global News24 Editorial Desk',reporter:'Global News24 Reporter',profile:'Reporter profile · More articles ›',shareTitle:'Share this article',shareDesc:'Share Global News24 articles via KakaoTalk and social media.',comments:'Comments',headline:'Headlines',latest:'Latest Articles',related:'Related Articles',all:'All Articles'},
@@ -169,14 +194,18 @@ const GN24_ARTICLE_TAIL=Object.freeze({
 });
 function localizeArticleTail(lang){
  const t=GN24_ARTICLE_TAIL[lang]||GN24_ARTICLE_TAIL.en;
- setText('#articleAuthorName',t.desk);setText('.author-info span',t.reporter);setText('.author-info p',t.bio);setText('.author-more',t.profile);
+ setText('.author-info span',t.reporter);setText('.author-info p',t.bio);setText('.author-more',t.profile);
  setText('.share-hub-copy h2',t.share);const kb=document.querySelector('.share-main-kakao b');if(kb)kb.textContent=t.kakao;
+ setText('.share-main-kakao small',t.shareDesc||GN24_ARTICLE_CHROME[lang]?.shareDesc||GN24_ARTICLE_CHROME.en.shareDesc);
+ setText('.share-hub-copy > span',t.share);
  const acts=document.querySelectorAll('.share-action-btn b');[t.copy,t.band,t.facebook,'X',t.telegram,t.more].forEach((v,i)=>{if(acts[i])acts[i].textContent=v});
+ const mobile=document.querySelectorAll('.mobile-share-dock button');[t.kakao,t.copy,(GN24_ARTICLE_CHROME[lang]||GN24_ARTICLE_CHROME.en).shareTitle].forEach((v,i)=>{if(mobile[i]?.lastChild?.nodeType===3)mobile[i].lastChild.textContent=v});
  const empty=document.querySelector('.comment-empty');if(empty)empty.textContent=t.noComments;
  setText('.gn24-footer-brand p',t.footerDesc);setText('.gn24-footer-info h2',t.reg);
  const dts=document.querySelectorAll('.gn24-footer-register dt');[t.regNo,t.regDate,t.publisher,t.phone,t.address].forEach((v,i)=>{if(dts[i])dts[i].textContent=v});
  const links=document.querySelectorAll('.gn24-footer-links nav a');[t.all,t.reporters,t.tip,t.ads,t.privacy,t.terms].forEach((v,i)=>{if(links[i])links[i].textContent=v});
 }
+function articleDisplayCategory(article,category){const info=articleEditionInfo(article);if(info?.type!=='global')return category||'뉴스';const map=GN24_CATEGORY_I18N[articleUiLang(info.code)]||GN24_CATEGORY_I18N.en;return map[category||'뉴스']||category||'뉴스'}
 function localizeArticleCategory(lang){
  const el=document.querySelector('#aCat');if(!el)return;
  const map=GN24_CATEGORY_I18N[lang]||GN24_CATEGORY_I18N.en;
@@ -189,7 +218,7 @@ function localizeArticleChrome(lang){
  const nav=document.querySelectorAll('.primary-nav .nav-scroll > .nav-item');t.nav.forEach((v,i)=>{const e=nav[i]?.querySelector(':scope > a,:scope > button');if(e)e.textContent=v});
  const q=document.querySelector('.searchbox input');if(q)q.placeholder=t.search;setText('#breakingText',t.breaking);
  const vl=document.querySelector('.article-viewline');if(vl){const b=vl.querySelector('b');vl.childNodes[0].nodeValue=t.views+' ';if(b&&!b.id)b.id='articleViewCount'}
- setText('#articleAuthorName',t.editor);setText('.author-info span',t.reporter);setText('.author-more',t.profile);
+ setText('.author-info span',t.reporter);setText('.author-more',t.profile);
  setText('.share-hub-copy h2',t.shareTitle);setText('.share-hub-copy p',t.shareDesc);
  setText('.article-bottom-news .bottom-news-column:nth-child(1) h2',t.headline);setText('.article-bottom-news .bottom-news-column:nth-child(2) h2',t.latest);
  setText('.article-related .section-head h2',t.related);const al=document.querySelector('.article-related .section-head a');if(al)al.textContent=t.all+' →';
@@ -232,7 +261,7 @@ function localizeArticleUi(info){
   const plus=document.querySelector('#fontPlus');if(plus)plus.title=t.bigger;const minus=document.querySelector('#fontMinus');if(minus)minus.title=t.smaller;
 }
 function applyArticleEditionContext(a,data){
-  const info=articleEditionInfo(a);if(!info)return data.filter(x=>x.id!==a.id);localizeArticleUi(info);
+  const info=articleEditionInfo(a);if(!info)return data.filter(x=>x.id!==a.id);
   const peers=data.filter(x=>x.id!==a.id&&String(x.regionCode||x.region_code||'')===info.code);
   const banner=document.createElement('div');banner.className='article-edition-banner '+info.type;
   banner.innerHTML=`<a href="${info.href}" class="article-edition-home"><span class="article-edition-flag">${info.flagHTML}</span><span><small>${info.type==='global'?'GLOBAL NEWS24 COUNTRY EDITION':'GLOBAL NEWS24 LOCAL EDITION'}</small><b>${esc(info.title)}</b></span></a><a href="${info.href}" class="article-edition-back">← ${esc(info.back)}</a>`;
@@ -242,7 +271,7 @@ function applyArticleEditionContext(a,data){
   const relatedLink=document.querySelector('.article-related .section-head a');if(relatedLink){relatedLink.href=info.href;relatedLink.textContent=info.home+' →';}
   return peers.length?peers:data.filter(x=>x.id!==a.id);
 }
-async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id'),data=sortNews(await loadNewsData()),a=data.find(x=>x.id===id)||data[0];if(!a)return;document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(a.author||'Global News24 편집부')}</span><span>Global News24</span>`;applyBg($('#aHero'),a.image);const caption=$('#aCaption');if(caption)caption.textContent=a.imageCaption||`▲ ${a.title} 관련 이미지`;const body=Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[a.summary||'']);const rawBody=body.flatMap(p=>String(p||'').split(/\n\s*\n|\r?\n(?=\S)/)).map(p=>p.trim()).filter(Boolean);const isSubheadText=p=>p.length<=48&&!/[.!?。！？]$/.test(p)&&!/(다|요)[.!?]?$/.test(p);const sentenceSplit=p=>{if(isSubheadText(p))return [p];const parts=(p.match(/[^.!?。！？]+[.!?。！？]+(?:[\"'”’)]*)|[^.!?。！？]+$/g)||[p]).map(x=>x.trim()).filter(Boolean);if(parts.length<=1)return [p];const groups=[];let buf='';let count=0;for(const sent of parts){const next=(buf?buf+' ':'')+sent;if(buf&&(count>=2||next.length>190)){groups.push(buf);buf=sent;count=1}else{buf=next;count++}}if(buf)groups.push(buf);return groups};const cleanBody=rawBody.flatMap(sentenceSplit);let paraIndex=0;$('#aBody').innerHTML=cleanBody.map((p)=>{if(isSubheadText(p))return `<h2 class="article-subhead">${esc(p)}</h2>`;const cls=paraIndex++===0?' class="article-lead"':'';return `<p${cls}>${esc(p)}</p>`}).join('');$('#aSource')&&($('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`);const tags=a.tags||[];
+async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id'),data=sortNews(await loadNewsData()),a=data.find(x=>x.id===id)||data[0];if(!a)return;document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';const edition=articleEditionInfo(a),articleLang=edition?.type==='global'?articleUiLang(edition.code):'ko';const metaAuthor=a.author&&a.author!=='Global News24 편집부'?a.author:articleLang==='ko'?'Global News24 편집부':(GN24_ARTICLE_TAIL[articleLang]||GN24_ARTICLE_TAIL.en).desk;$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(metaAuthor)}</span><span>Global News24</span>`;applyBg($('#aHero'),a.image);const caption=$('#aCaption');if(caption)caption.textContent=a.imageCaption||`▲ ${a.title} 관련 이미지`;const body=Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[a.summary||'']);const rawBody=body.flatMap(p=>String(p||'').split(/\n\s*\n|\r?\n(?=\S)/)).map(p=>p.trim()).filter(Boolean);const isSubheadText=p=>p.length<=48&&!/[.!?。！？]$/.test(p)&&!/(다|요)[.!?]?$/.test(p);const sentenceSplit=p=>{if(isSubheadText(p))return [p];const parts=(p.match(/[^.!?。！？]+[.!?。！？]+(?:[\"'”’)]*)|[^.!?。！？]+$/g)||[p]).map(x=>x.trim()).filter(Boolean);if(parts.length<=1)return [p];const groups=[];let buf='';let count=0;for(const sent of parts){const next=(buf?buf+' ':'')+sent;if(buf&&(count>=2||next.length>190)){groups.push(buf);buf=sent;count=1}else{buf=next;count++}}if(buf)groups.push(buf);return groups};const cleanBody=rawBody.flatMap(sentenceSplit);let paraIndex=0;$('#aBody').innerHTML=cleanBody.map((p)=>{if(isSubheadText(p))return `<h2 class="article-subhead">${esc(p)}</h2>`;const cls=paraIndex++===0?' class="article-lead"':'';return `<p${cls}>${esc(p)}</p>`}).join('');$('#aSource')&&($('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`);const tags=a.tags||[];
 const oldViewline=document.querySelector('.article-shell>.article-viewline');
 if(oldViewline)oldViewline.remove();
 $('#aMeta').insertAdjacentHTML('beforeend','<span class="article-viewline">조회수 <b id="articleViewCount">0</b></span>');
@@ -256,7 +285,7 @@ if(sideLatest){
 const sideRelated=$('#sideRelated');
 if(sideRelated){
   const sideRel=(rel.length?rel:editionData.slice(0,4)).slice(0,4);
-  sideRelated.innerHTML=sideRel.map(x=>`<a class="side-related-item" href="${seoArticleURL(x)}"><div class="side-related-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
+  sideRelated.innerHTML=sideRel.map(x=>`<a class="side-related-item" href="${seoArticleURL(x)}"><div class="side-related-thumb" ${bgStyle(x.image)}></div><div><span>${esc(articleDisplayCategory(a,x.category))}</span><b>${esc(x.title)}</b></div></a>`).join('');
 }
 
 const authorName=$('#articleAuthorName');
@@ -266,7 +295,7 @@ const bottomHeadline=$('#bottomHeadline');
 if(bottomHeadline){
   const featured=editionData.filter(x=>x.featured||x.pinned).slice(0,4);
   const rows=(featured.length?featured:editionData.slice(0,4));
-  bottomHeadline.innerHTML=rows.map(x=>`<a class="bottom-news-item" href="${seoArticleURL(x)}"><div class="bottom-news-thumb" ${bgStyle(x.image)}></div><div><span>${esc(x.category||'뉴스')}</span><b>${esc(x.title)}</b></div></a>`).join('');
+  bottomHeadline.innerHTML=rows.map(x=>`<a class="bottom-news-item" href="${seoArticleURL(x)}"><div class="bottom-news-thumb" ${bgStyle(x.image)}></div><div><span>${esc(articleDisplayCategory(a,x.category))}</span><b>${esc(x.title)}</b></div></a>`).join('');
 }
 const bottomLatest=$('#bottomLatest');
 if(bottomLatest){
@@ -279,6 +308,8 @@ setupArticleTools(a);
 setupArticleCommunity(a);
 setupArticleViewsAndPopular(a,data);
 setupArticleReporter(a);
+const articleEdition=articleEditionInfo(a);
+if(articleEdition?.type==='global')localizeArticleUi(articleEdition);
 }
 document.addEventListener('DOMContentLoaded',()=>{setToday();setupNav();loadHome().catch(console.error);loadNewsroom().catch(console.error);loadArticle().catch(console.error)})
 
@@ -356,6 +387,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 function setupArticleTools(article){
+  const ui=(key,korean)=>articleDynamicText(article,key)||korean;
   const realArticleUrl=new URL(articleURL(article?.id),location.origin).href;
   const verifiedShareUrl=()=>location.pathname.startsWith('/share/')
     ? new URL(location.pathname,location.origin).href
@@ -381,7 +413,7 @@ function setupArticleTools(article){
     };
     if(kind==='native'){
       if(navigator.share) navigator.share({title,text:title,url}).catch(()=>{});
-      else navigator.clipboard?.writeText(url).then(()=>alert('기사 링크를 복사했습니다.'));
+      else navigator.clipboard?.writeText(url).then(()=>alert(ui('copiedShort','기사 링크를 복사했습니다.')));
       return;
     }
     if(urls[kind]) window.open(urls[kind],'gn24share','width=720,height=620,noopener,noreferrer');
@@ -403,11 +435,11 @@ function setupArticleTools(article){
     try{
       await navigator.clipboard.writeText(url);
       if(shareHubMessage){
-        shareHubMessage.textContent='기사 링크를 복사했습니다. 카카오톡이나 문자에 바로 붙여넣을 수 있습니다.';
+        shareHubMessage.textContent=ui('copied','기사 링크를 복사했습니다. 카카오톡이나 문자에 바로 붙여넣을 수 있습니다.');
         setTimeout(()=>{shareHubMessage.textContent='';},3200);
-      }else alert('카카오·SNS용 기사 링크를 복사했습니다.');
+      }else alert(ui('copiedShort','카카오·SNS용 기사 링크를 복사했습니다.'));
     }catch(e){
-      prompt('아래 주소를 복사하세요.',url);
+      prompt(ui('copyPrompt','아래 주소를 복사하세요.'),url);
     }
   }
 
@@ -481,6 +513,7 @@ async function gn24DbFetch(path, options={}){
 
 async function setupArticleCommunity(article){
   if(!article?.id) return;
+  const ui=(key,korean)=>articleDynamicText(article,key)||korean;
 
   const articleId=String(article.id);
   const visitorId=gn24GetVisitorId();
@@ -515,7 +548,7 @@ async function setupArticleCommunity(article){
       });
     }catch(e){
       console.warn('GN24 reaction load failed:',e);
-      if(reactionMessage) reactionMessage.textContent='반응 수를 불러오지 못했습니다.';
+      if(reactionMessage) reactionMessage.textContent=ui('reactionLoadError','반응 수를 불러오지 못했습니다.');
     }
   }
 
@@ -525,11 +558,11 @@ async function setupArticleCommunity(article){
         const type=btn.dataset.reaction;
         const localKey=`gn24-reacted:${articleId}:${type}`;
         if(localStorage.getItem(localKey)==='1'){
-          if(reactionMessage) reactionMessage.textContent='이미 이 반응을 남기셨습니다.';
+          if(reactionMessage) reactionMessage.textContent=ui('reactionAlready','이미 이 반응을 남기셨습니다.');
           return;
         }
         btn.disabled=true;
-        if(reactionMessage) reactionMessage.textContent='반응을 저장하는 중입니다…';
+        if(reactionMessage) reactionMessage.textContent=ui('reactionSaving','반응을 저장하는 중입니다…');
         try{
           await gn24DbFetch('gn24_article_reactions',{
             method:'POST',
@@ -543,16 +576,16 @@ async function setupArticleCommunity(article){
           localStorage.setItem(localKey,'1');
           btn.classList.add('active');
           btn.setAttribute('aria-pressed','true');
-          if(reactionMessage) reactionMessage.textContent='소중한 반응이 반영되었습니다.';
+          if(reactionMessage) reactionMessage.textContent=ui('reactionSaved','소중한 반응이 반영되었습니다.');
           await loadReactions();
         }catch(e){
           if(e.status===409){
             localStorage.setItem(localKey,'1');
-            if(reactionMessage) reactionMessage.textContent='이미 이 반응을 남기셨습니다.';
+            if(reactionMessage) reactionMessage.textContent=ui('reactionAlready','이미 이 반응을 남기셨습니다.');
             await loadReactions();
           }else{
             console.error(e);
-            if(reactionMessage) reactionMessage.textContent='반응 저장에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+            if(reactionMessage) reactionMessage.textContent=ui('reactionError','반응 저장에 실패했습니다. 잠시 후 다시 시도해 주세요.');
           }
         }finally{
           btn.disabled=false;
@@ -588,7 +621,8 @@ async function setupArticleCommunity(article){
       ) || [];
       if(countEl) countEl.textContent=String(rows.length);
       if(!rows.length){
-        list.innerHTML='<div class="comment-empty">등록된 공개 댓글이 없습니다. 첫 의견을 남겨보세요.</div>';
+        const info=articleEditionInfo(article);const empty=info?.type==='global'?(GN24_ARTICLE_TAIL[articleUiLang(info.code)]||GN24_ARTICLE_TAIL.en).noComments:null;
+        list.innerHTML='<div class="comment-empty">'+esc(empty||'등록된 공개 댓글이 없습니다. 첫 의견을 남겨보세요.')+'</div>';
         return;
       }
       list.innerHTML=rows.map(row=>{
@@ -596,13 +630,13 @@ async function setupArticleCommunity(article){
           year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'
         }) : '';
         return `<article class="comment-item">
-          <div class="comment-item-head"><b>${esc(row.nickname||'독자')}</b><span>${esc(date)}</span></div>
+          <div class="comment-item-head"><b>${esc(row.nickname||ui('reader','독자'))}</b><span>${esc(date)}</span></div>
           <p>${esc(row.content||'').replace(/\n/g,'<br>')}</p>
         </article>`;
       }).join('');
     }catch(e){
       console.warn('GN24 comments load failed:',e);
-      list.innerHTML='<div class="comment-empty">댓글을 불러오지 못했습니다.</div>';
+      list.innerHTML='<div class="comment-empty">'+esc(ui('commentsLoadError','댓글을 불러오지 못했습니다.'))+'</div>';
     }
   }
 
@@ -612,15 +646,15 @@ async function setupArticleCommunity(article){
       const nick=(nickname?.value||'').trim();
       const text=(content?.value||'').trim();
       if(nick.length<1||nick.length>30){
-        if(message) message.textContent='닉네임은 1~30자로 입력해 주세요.';
+        if(message) message.textContent=ui('nicknameError','닉네임은 1~30자로 입력해 주세요.');
         return;
       }
       if(text.length<2||text.length>1000){
-        if(message) message.textContent='댓글은 2~1,000자로 입력해 주세요.';
+        if(message) message.textContent=ui('commentError','댓글은 2~1,000자로 입력해 주세요.');
         return;
       }
       if(submitBtn) submitBtn.disabled=true;
-      if(message) message.textContent='댓글을 등록하는 중입니다…';
+      if(message) message.textContent=ui('commentSaving','댓글을 등록하는 중입니다…');
       try{
         await gn24DbFetch('gn24_article_comments',{
           method:'POST',
@@ -636,10 +670,10 @@ async function setupArticleCommunity(article){
         localStorage.setItem('gn24-comment-nickname',nick);
         if(content) content.value='';
         if(charCount) charCount.textContent='0 / 1000';
-        if(message) message.textContent='댓글이 등록되었습니다. 관리자 확인 후 공개됩니다.';
+        if(message) message.textContent=ui('commentSaved','댓글이 등록되었습니다. 관리자 확인 후 공개됩니다.');
       }catch(e){
         console.error(e);
-        if(message) message.textContent='댓글 등록에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+        if(message) message.textContent=ui('commentSaveError','댓글 등록에 실패했습니다. 잠시 후 다시 시도해 주세요.');
       }finally{
         if(submitBtn) submitBtn.disabled=false;
       }
@@ -683,7 +717,7 @@ async function setupArticleViewsAndPopular(article, allArticles){
         const a=titleMap[String(r.article_id)];
         if(!a) return '';
         return `<li><span class="side-rank">${String(i+1).padStart(2,'0')}</span><a href="${seoArticleURL(a)}">${esc(a.title)}</a><small class="popular-views">${Number(r.view_count||0).toLocaleString('ko-KR')}</small></li>`;
-      }).join('') || '<li class="popular-empty">조회 데이터가 쌓이는 중입니다.</li>';
+      }).join('') || '<li class="popular-empty">'+esc(articleDynamicText(article,'popularEmpty')||'조회 데이터가 쌓이는 중입니다.')+'</li>';
     }
   }catch(e){ console.warn('GN24 popular load failed',e); }
 }
@@ -793,7 +827,7 @@ async function gn24ShareKakao(article){
     });
   }catch(e){
     console.error('GN24 Kakao share error:',e);
-    alert('카카오톡 공유 연결에 실패했습니다. 페이지를 새로고침한 뒤 다시 눌러주세요.');
+    alert(articleDynamicText(article,'kakaoError')||'카카오톡 공유 연결에 실패했습니다. 페이지를 새로고침한 뒤 다시 눌러주세요.');
   }
 }
 
@@ -861,7 +895,10 @@ async function setupArticleReporter(article){
   const more=document.querySelector('.article-author-card .author-more');
   if(!authorName)return;
 
-  authorName.textContent=article?.author||'Global News24 편집부';
+  const edition=articleEditionInfo(article);
+  const lang=edition?.type==='global'?articleUiLang(edition.code):'ko';
+  const tail=GN24_ARTICLE_TAIL[lang]||GN24_ARTICLE_TAIL.en;
+  authorName.textContent=article?.author&&article.author!=='Global News24 편집부'?article.author:lang==='ko'?'Global News24 편집부':tail.desk;
   if(!article?.reporterId){
     if(more) more.href='/pages/reporters/';
     return;
@@ -869,7 +906,7 @@ async function setupArticleReporter(article){
   try{
     const rows=await gn24DbFetch(`gn24_reporters?id=eq.${encodeURIComponent(article.reporterId)}&status=eq.active&select=id,name,role,affiliation,photo_url,bio,specialties,region,public_email&limit=1`)||[];
     const r=rows[0]; if(!r)return;
-    authorName.textContent=r.name||article.author||'Global News24 편집부';
+    authorName.textContent=r.name||article.author|| (lang==='ko'?'Global News24 편집부':tail.desk);
     if(avatar){
       if(r.photo_url){
         avatar.textContent='';
@@ -880,7 +917,7 @@ async function setupArticleReporter(article){
     const span=info?.querySelector('span');
     const p=info?.querySelector('p');
     if(span)span.textContent=[r.role,r.affiliation,r.region].filter(Boolean).join(' · ');
-    if(p)p.textContent=r.bio||`${r.name} 기자의 Global News24 기사입니다.`;
-    if(more){more.href=`/pages/reporters/?id=${encodeURIComponent(r.id)}`;more.textContent='기자 프로필·다른 기사 보기 ›';}
+    if(p)p.textContent=r.bio||(articleDynamicText(article,'reporterBio')||'{name} 기자의 Global News24 기사입니다.').replace('{name}',r.name||'');
+    if(more){more.href=`/pages/reporters/?id=${encodeURIComponent(r.id)}`;more.textContent=lang==='ko'?'기자 프로필·다른 기사 보기 ›':tail.profile;}
   }catch(e){console.warn('GN24 reporter profile load failed',e)}
 }
