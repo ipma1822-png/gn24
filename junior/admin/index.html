@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>꿈나무 기자단 승인센터 | GN24 JUNIOR PRESS</title>
+  <style>
+    :root{--navy:#07182f;--blue:#1269c7;--sky:#eaf6ff;--gold:#e8b742;--ink:#132238;--muted:#607087;--line:#dce6f0;--white:#fff}*{box-sizing:border-box}body{margin:0;background:#f4f7fa;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}.wrap{width:min(920px,calc(100% - 28px));margin:auto}.top{background:var(--navy);color:#fff;padding:28px 0}.top small{color:#a9d8ff;font-weight:900;letter-spacing:.1em}.top h1{margin:5px 0 0;font-size:clamp(1.7rem,5vw,2.5rem)}main{padding:32px 0 60px}.panel,.card{background:var(--white);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(7,24,47,.08)}.panel{padding:22px}.head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px}.head h2{margin:0}.count{background:var(--sky);color:#154675;border-radius:999px;padding:5px 10px;font-weight:900}.list{display:grid;gap:14px}.card{padding:20px}.rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;margin:14px 0}.row span{display:block;color:var(--muted);font-size:.85rem}.row b{display:block;margin-top:2px}.status{color:#8a6200}.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{min-height:46px;border:0;border-radius:11px;padding:11px 15px;background:var(--blue);color:#fff;font:inherit;font-weight:900;cursor:pointer}.btn:disabled{opacity:.55;cursor:wait}.btn.verify{background:#7a5600}.message{margin-top:12px;font-weight:800}.guard{padding:24px;text-align:center}.guard a{color:var(--blue);font-weight:900}.success{background:#effaf2;border:1px solid #b8dfc2;border-radius:14px;padding:18px}.success h3{margin:0 0 12px;color:#176335}.empty{padding:24px;text-align:center;color:var(--muted)}button:focus-visible,a:focus-visible{outline:3px solid #78bfff;outline-offset:2px}@media(max-width:580px){.rows{grid-template-columns:1fr}.head{align-items:flex-start}.actions,.btn{width:100%}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap"><small>GN24 JUNIOR PRESS</small><h1>꿈나무 기자단 승인센터</h1></div></header>
+  <main class="wrap">
+    <section id="guard" class="panel guard">관리자 권한을 확인하는 중입니다.</section>
+    <section id="center" class="panel" hidden>
+      <div class="head"><h2>승인 대기</h2><span id="count" class="count">0명</span></div>
+      <div id="list" class="list"></div>
+    </section>
+  </main>
+  <script src="/assets/js/gn24-supabase-config.js"></script>
+  <script>
+    (()=>{'use strict';
+      const cfg=window.GN24_SUPABASE||{},base=String(cfg.url||'').replace(/\/$/,''),key=String(cfg.anonKey||''),guard=document.getElementById('guard'),center=document.getElementById('center'),list=document.getElementById('list'),count=document.getElementById('count');let token='';
+      try{token=JSON.parse(localStorage.getItem('gn24-editorial-session')||'{}').access_token||''}catch{}
+      const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const date=v=>v?new Date(v).toLocaleDateString('ko-KR'):'-';
+      async function request(path,options={}){const response=await fetch(base+path,{...options,headers:{apikey:key,Authorization:'Bearer '+token,'Content-Type':'application/json',...(options.headers||{})}});if(!response.ok)throw new Error(await response.text()||'요청 실패');return response.status===204?null:response.json()}
+      const rpc=(name,body={})=>request('/rest/v1/rpc/'+name,{method:'POST',body:JSON.stringify(body)});
+      function deny(message){center.hidden=true;guard.hidden=false;guard.innerHTML=message}
+      function card(row){return `<article class="card" data-id="${row.internal_id}"><h3>${esc(row.nickname)}</h3><div class="rows"><div class="row"><span>실명</span><b>${esc(row.real_name)}</b></div><div class="row"><span>공개 닉네임</span><b>${esc(row.nickname)}</b></div><div class="row"><span>신청일</span><b>${esc(date(row.applied_at))}</b></div><div class="row"><span>보호자 동의 상태</span><b class="status">${esc(row.guardian_consent_status)}</b></div></div><div class="actions">${row.guardian_consent_status==='VERIFIED'?`<button class="btn approve" type="button">기자 승인</button>`:`<button class="btn verify" type="button">보호자 동의 확인</button>`}</div><div class="message" role="status" aria-live="polite"></div></article>`}
+      async function load(){const rows=await request('/rest/v1/gn24_junior_reporters?select=internal_id,real_name,nickname,applied_at,guardian_consent_status,reporter_id,status&status=eq.PENDING&order=applied_at.asc');count.textContent=`${rows.length}명`;list.innerHTML=rows.map(card).join('')||'<div class="empty">현재 승인 대기 신청자가 없습니다.</div>';list.querySelectorAll('.verify').forEach(button=>button.onclick=()=>verify(button));list.querySelectorAll('.approve').forEach(button=>button.onclick=()=>approve(button))}
+      async function verify(button){const card=button.closest('.card'),message=card.querySelector('.message');button.disabled=true;message.textContent='처리 중…';try{await rpc('gn24_admin_verify_junior_consent',{p_internal_id:Number(card.dataset.id),p_consent_version:'GN24-JUNIOR-V1',p_identifiable_photo_consent:false});await load()}catch(error){message.textContent='처리하지 못했습니다.';button.disabled=false}}
+      async function approve(button){const card=button.closest('.card'),message=card.querySelector('.message'),nickname=card.querySelector('h3').textContent;button.disabled=true;message.textContent='처리 중…';try{const reporterId=await rpc('gn24_admin_approve_junior_reporter',{p_internal_id:Number(card.dataset.id)});card.innerHTML=`<div class="success"><h3>🎉 승인 완료</h3><div class="rows"><div class="row"><span>닉네임</span><b>${esc(nickname)}</b></div><div class="row"><span>발급된 기자 활동번호</span><b>${esc(reporterId)}</b></div><div class="row"><span>상태</span><b>ACTIVE</b></div></div></div>`;count.textContent=`${Math.max(0,Number.parseInt(count.textContent,10)-1)}명`}catch(error){message.textContent='승인하지 못했습니다.';button.disabled=false}}
+      document.addEventListener('DOMContentLoaded',async()=>{if(!token){deny('본사 관리자 로그인이 필요합니다.<br><a href="/admin-news.html">관리자 화면으로 이동</a>');return}try{const admin=await rpc('is_gn24_admin');if(admin!==true){deny('GN24 대표·관리자 권한이 필요합니다.');return}guard.hidden=true;center.hidden=false;await load()}catch(error){deny('관리자 권한을 확인할 수 없습니다.')} });
+    })();
+  </script>
+</body>
+</html>
