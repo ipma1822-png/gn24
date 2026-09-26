@@ -133,10 +133,34 @@ function articleUiLang(code){
   return map[code]||null;
 }
 function setText(sel,value){const el=document.querySelector(sel);if(el&&value)el.textContent=value}
+const GN24_ARTICLE_CHROME=Object.freeze({
+ en:{nav:['Home','Breaking','General News','Martial Arts · Sports','Safety · Drone','Public Interest','Opinion','Press Releases'],search:'Search articles',breaking:'Global News24 Breaking News',views:'Views',editor:'Global News24 Editorial Desk',reporter:'Global News24 Reporter',profile:'Reporter profile · More articles ›',shareTitle:'Share this article',shareDesc:'Share Global News24 articles via KakaoTalk and social media.',comments:'Comments',headline:'Headlines',latest:'Latest Articles',related:'Related Articles',all:'All Articles'},
+ es:{nav:['Inicio','Última hora','Noticias','Artes marciales · Deportes','Seguridad · Drones','Interés público','Opinión','Comunicados'],search:'Buscar artículos',breaking:'Noticias de última hora de Global News24',views:'Vistas',editor:'Redacción Global News24',reporter:'Periodista de Global News24',profile:'Perfil del periodista · Más artículos ›',shareTitle:'Comparte este artículo',shareDesc:'Comparte artículos de Global News24 en redes sociales.',comments:'Comentarios',headline:'Titulares',latest:'Últimos artículos',related:'Artículos relacionados',all:'Todos los artículos'},
+ ar:{nav:['الرئيسية','عاجل','الأخبار','الفنون القتالية · الرياضة','السلامة · الدرون','المصلحة العامة','الرأي','بيانات صحفية'],search:'البحث في الأخبار',breaking:'آخر أخبار Global News24',views:'المشاهدات',editor:'هيئة تحرير Global News24',reporter:'صحفي Global News24',profile:'ملف الصحفي · مقالات أخرى ›',shareTitle:'شارك هذا الخبر',shareDesc:'شارك أخبار Global News24 عبر وسائل التواصل الاجتماعي.',comments:'التعليقات',headline:'العناوين الرئيسية',latest:'أحدث المقالات',related:'مقالات ذات صلة',all:'كل المقالات'},
+ mn:{nav:['Нүүр','Шуурхай','Мэдээ','Тулааны урлаг · Спорт','Аюулгүй байдал · Дрон','Нийтийн эрх ашиг','Үзэл бодол','Хэвлэлийн мэдээ'],search:'Нийтлэл хайх',breaking:'Global News24 шуурхай мэдээ',views:'Үзсэн',editor:'Global News24 редакц',reporter:'Global News24 сэтгүүлч',profile:'Сэтгүүлчийн танилцуулга · Бусад нийтлэл ›',shareTitle:'Энэ мэдээг хуваалцаарай',shareDesc:'Global News24 мэдээг сошиал сувгаар хуваалцаарай.',comments:'Сэтгэгдэл',headline:'Онцлох мэдээ',latest:'Сүүлийн нийтлэл',related:'Холбоотой нийтлэл',all:'Бүх нийтлэл'},
+ zh:{nav:['首页','快讯','综合新闻','武道·体育','安全·无人机','公益','观点','新闻稿'],search:'搜索新闻',breaking:'Global News24 实时要闻',views:'浏览',editor:'Global News24 编辑部',reporter:'Global News24 记者',profile:'记者资料·更多文章 ›',shareTitle:'分享这篇新闻',shareDesc:'将 Global News24 新闻分享到社交媒体。',comments:'评论',headline:'头条新闻',latest:'最新文章',related:'相关文章',all:'全部文章'},
+ ja:{nav:['ホーム','速報','総合ニュース','武道・スポーツ','安全・ドローン','公益','オピニオン','プレスリリース'],search:'記事検索',breaking:'Global News24 最新速報',views:'閲覧',editor:'Global News24 編集部',reporter:'Global News24 記者',profile:'記者プロフィール・他の記事 ›',shareTitle:'この記事をシェア',shareDesc:'Global News24の記事をSNSで共有できます。',comments:'コメント',headline:'ヘッドライン',latest:'最新記事',related:'関連記事',all:'全記事'},
+ fr:{nav:['Accueil','Dernière minute','Actualités','Arts martiaux · Sports','Sécurité · Drones','Intérêt public','Opinion','Communiqués'],search:'Rechercher',breaking:'Dernières nouvelles Global News24',views:'Vues',editor:'Rédaction Global News24',reporter:'Journaliste Global News24',profile:'Profil · Autres articles ›',shareTitle:'Partagez cet article',shareDesc:'Partagez les articles Global News24 sur les réseaux sociaux.',comments:'Commentaires',headline:'À la une',latest:'Derniers articles',related:'Articles liés',all:'Tous les articles'},
+ de:{nav:['Start','Eilmeldung','Nachrichten','Kampfsport · Sport','Sicherheit · Drohnen','Gemeinwohl','Meinung','Presse'],search:'Artikel suchen',breaking:'Global News24 Eilmeldungen',views:'Aufrufe',editor:'Global News24 Redaktion',reporter:'Global News24 Reporter',profile:'Reporterprofil · Weitere Artikel ›',shareTitle:'Diesen Artikel teilen',shareDesc:'Global News24 Artikel in sozialen Medien teilen.',comments:'Kommentare',headline:'Schlagzeilen',latest:'Neueste Artikel',related:'Verwandte Artikel',all:'Alle Artikel'},
+ it:{nav:['Home','Ultim’ora','Notizie','Arti marziali · Sport','Sicurezza · Droni','Interesse pubblico','Opinioni','Comunicati'],search:'Cerca articoli',breaking:'Ultime notizie Global News24',views:'Visualizzazioni',editor:'Redazione Global News24',reporter:'Giornalista Global News24',profile:'Profilo · Altri articoli ›',shareTitle:'Condividi questo articolo',shareDesc:'Condividi gli articoli Global News24 sui social.',comments:'Commenti',headline:'Titoli principali',latest:'Ultimi articoli',related:'Articoli correlati',all:'Tutti gli articoli'},
+ pt:{nav:['Início','Últimas','Notícias','Artes marciais · Esportes','Segurança · Drones','Interesse público','Opinião','Comunicados'],search:'Buscar artigos',breaking:'Últimas notícias Global News24',views:'Visualizações',editor:'Redação Global News24',reporter:'Jornalista Global News24',profile:'Perfil · Mais artigos ›',shareTitle:'Compartilhe este artigo',shareDesc:'Compartilhe artigos Global News24 nas redes sociais.',comments:'Comentários',headline:'Destaques',latest:'Últimos artigos',related:'Artigos relacionados',all:'Todos os artigos'}
+});
+function localizeArticleChrome(lang){
+ const t=GN24_ARTICLE_CHROME[lang]||GN24_ARTICLE_CHROME.en;
+ const nav=document.querySelectorAll('.primary-nav .nav-scroll > .nav-item');t.nav.forEach((v,i)=>{const e=nav[i]?.querySelector(':scope > a,:scope > button');if(e)e.textContent=v});
+ const q=document.querySelector('.searchbox input');if(q)q.placeholder=t.search;setText('#breakingText',t.breaking);
+ const vl=document.querySelector('.article-viewline');if(vl){const b=vl.querySelector('b');vl.childNodes[0].nodeValue=t.views+' ';if(b&&!b.id)b.id='articleViewCount'}
+ setText('#articleAuthorName',t.editor);setText('.author-info span',t.reporter);setText('.author-more',t.profile);
+ setText('.share-hub-copy h2',t.shareTitle);setText('.share-hub-copy p',t.shareDesc);
+ setText('.article-bottom-news .bottom-news-column:nth-child(1) h2',t.headline);setText('.article-bottom-news .bottom-news-column:nth-child(2) h2',t.latest);
+ setText('.article-related .section-head h2',t.related);const al=document.querySelector('.article-related .section-head a');if(al)al.textContent=t.all+' →';
+ if(lang==='ar'||lang==='fa'){document.documentElement.dir='rtl';document.body.classList.add('article-rtl')}else{document.documentElement.dir='ltr';document.body.classList.remove('article-rtl')}
+}
+
 function localizeArticleUi(info){
   if(!info||info.type!=='global')return;
   const lang=articleUiLang(info.code);const t=GN24_ARTICLE_UI[lang];if(!t)return;
-  document.documentElement.lang=lang;
+  document.documentElement.lang=lang;localizeArticleChrome(lang);
   setText('.article-sidebar .side-news-block:nth-of-type(1) .side-news-head h2',t.latest);
   setText('.article-sidebar .side-news-block:nth-of-type(1) .side-news-head a',t.more);
   setText('.article-sidebar .side-popular-block .side-news-head h2',t.popular);
