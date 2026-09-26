@@ -74,7 +74,7 @@ async function loadHome(){
   const lead=data.find(x=>x.pinned)||data.find(x=>x.featured)||data[0];
   const featured=data.filter(x=>x.featured&&(!lead||x.id!==lead.id));
   const editorPicks=[...featured,...data.filter(x=>(!lead||x.id!==lead.id)&&!x.featured)].slice(0,8);
-  target.innerHTML=editorPicks.map(card).join('');
+  target.innerHTML=editorPicks.map((a,i)=>card(a,i)).join('');
   if(lead){$('#leadTitle').textContent=lead.title;$('#leadSummary').textContent=lead.summary||'';$('#leadMeta').textContent=`TOP NEWS · ${lead.category||'뉴스'} · ${fmt(lead.date)}`;$('#leadLink').href=seoArticleURL(lead);applyBg($('#leadMedia'),lead.image)}
   const breaking=data.find(x=>x.visualStyle==='breaking')||data[0];if(breaking)$('#breakingText').textContent=breaking.title;
   $('#latestNews')&&($('#latestNews').innerHTML=data.slice(0,10).map(latestRow).join(''));
