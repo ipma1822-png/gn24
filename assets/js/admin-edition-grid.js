@@ -19,9 +19,10 @@
   function classifyOptions() {
     const options = [...select.options];
     const national = options.find(o => o.value === '');
+    const junior = options.find(o => o.value === 'junior');
     const domestic = options.filter(o => DOMESTIC.has(o.value));
-    const global = options.filter(o => o.value && !DOMESTIC.has(o.value));
-    return { national, domestic, global };
+    const global = options.filter(o => o.value && o.value !== 'junior' && !DOMESTIC.has(o.value));
+    return { national, junior, domestic, global };
   }
 
   function button(option, type) {
@@ -59,6 +60,7 @@
     if (!value) return '🇰🇷 전국 공통';
     const option = [...select.options].find(o => o.value === value);
     const label = cleanLabel(option);
+    if(value==='junior') return '📰 GN24 JUNIOR PRESS';
     return DOMESTIC.has(value) ? `🇰🇷 ${label} 지역판` : `🌐 ${label} · GLOBAL EDITION`;
   }
 
@@ -92,8 +94,8 @@
     select = document.querySelector('#fRegionCode');
     if (!select || root) return false;
 
-    const { national, domestic, global } = classifyOptions();
-    if (!national || domestic.length !== EXPECTED_DOMESTIC || global.length !== EXPECTED_GLOBAL) return false;
+    const { national, junior, domestic, global } = classifyOptions();
+    if (!national || !junior || domestic.length !== EXPECTED_DOMESTIC || global.length !== EXPECTED_GLOBAL) return false;
     const allValues = [...domestic, ...global].map(o => o.value);
     if (new Set(allValues).size !== EXPECTED_DOMESTIC + EXPECTED_GLOBAL) {
       fail('duplicate or missing edition values');
@@ -119,6 +121,7 @@
     nationalWrap.className = 'gn24-edition-national';
     nationalWrap.appendChild(button(national, 'national'));
     root.appendChild(nationalWrap);
+    root.appendChild(section('📰 GN24 JUNIOR PRESS', [junior], 'junior'));
     root.appendChild(section('🇰🇷 대한민국 지역판 · 17', domestic, 'domestic'));
     root.appendChild(section('🌐 GLOBAL EDITION · 33', global, 'global'));
 
@@ -138,7 +141,7 @@
       if (s) {
         select = s;
         const counts = classifyOptions();
-        if (counts.domestic.length === EXPECTED_DOMESTIC && counts.global.length === EXPECTED_GLOBAL) {
+        if (counts.junior && counts.domestic.length === EXPECTED_DOMESTIC && counts.global.length === EXPECTED_GLOBAL) {
           clearInterval(timer);
           try {
             if (!build()) fail('initialization did not complete');
