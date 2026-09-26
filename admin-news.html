@@ -288,5 +288,32 @@
     syncFromArticle();
   })();
   </script>
+  <script>
+  (()=>{
+    const KEY='gn24-junior-editor-bridge';
+    const raw=localStorage.getItem(KEY);if(!raw)return;
+    let draft;try{draft=JSON.parse(raw)}catch{return}
+    let tries=0;
+    const timer=setInterval(()=>{
+      if(++tries>30){clearInterval(timer);return}
+      const newBtn=document.getElementById('newBtn'),title=document.getElementById('fTitle'),content=document.getElementById('fContent');
+      if(!newBtn||!title||!content)return;
+      clearInterval(timer);newBtn.click();
+      setTimeout(()=>{
+        const set=(id,v)=>{const el=document.getElementById(id);if(!el)return;el.value=v||'';el.dispatchEvent(new Event('input',{bubbles:true}))};
+        set('fTitle',draft.title);
+        set('fSubtitle','GN24 JUNIOR PRESS · '+(draft.nickname||'꿈나무 기자'));
+        set('fAuthor',(draft.nickname||'꿈나무')+' 주니어 기자');
+        set('fSummary',draft.whatHappened);
+        set('fContent',[draft.whatHappened,draft.interviewNote?'[질문·인터뷰]\n'+draft.interviewNote:'',draft.feeling?'[느낀 점]\n'+draft.feeling:''].filter(Boolean).join('\n\n'));
+        set('fTags','GN24 JUNIOR PRESS, 꿈나무 기자단, '+(draft.nickname||'주니어 기자'));
+        const cat=document.getElementById('fCategory');if(cat){cat.value='청소년·문화';cat.dispatchEvent(new Event('change',{bubbles:true}))}
+        localStorage.removeItem(KEY);
+        const msg=document.getElementById('saveMessage');if(msg)msg.textContent='주니어 뉴스 원고를 불러왔습니다. 대표님이 다듬은 뒤 저장·발행해 주세요.';
+        document.querySelector('.editor-panel')?.scrollIntoView({behavior:'smooth'});
+      },250);
+    },200);
+  })();
+  </script>
 </body>
 </html>
