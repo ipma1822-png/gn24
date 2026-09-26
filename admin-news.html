@@ -112,16 +112,6 @@
             <div class="reporter-link-guide"><b>기자 연결</b><span>등록 기자를 선택하면 작성자명이 자동 입력되고 기사 하단 기자 프로필과 연결됩니다.</span></div>
           </div>
           <label>기사 요약<textarea id="fSummary" rows="3" placeholder="목록과 메인에 표시될 요약"></textarea></label>
-          <fieldset id="juniorDistribution" class="image-box" hidden>
-            <legend>GN24 JUNIOR PRESS 배포</legend>
-            <p class="reporter-link-guide"><b>주니어 기사 배포</b><span>전체 공개 시 GLOBAL NEWS24 본사와 GN24 JUNIOR PRESS에 함께 노출됩니다. 지역판을 선택하면 해당 지역판에도 같은 기사 1건이 노출됩니다.</span></p>
-            <div class="form-grid two">
-              <label>본사·주니어판<input value="GLOBAL NEWS24 본사 + GN24 JUNIOR PRESS" readonly></label>
-              <label>지역판 선택
-                <select id="fJuniorRegion"><option value="">지역판 선택 안 함</option><option value="seoul">서울</option><option value="busan">부산</option><option value="daegu">대구</option><option value="incheon">인천</option><option value="gwangju">광주</option><option value="daejeon">대전</option><option value="ulsan">울산</option><option value="sejong">세종</option><option value="gyeonggi">경기</option><option value="gangwon">강원</option><option value="chungbuk">충북</option><option value="chungnam">충남</option><option value="jeonbuk">전북</option><option value="jeonnam">전남</option><option value="gyeongbuk">경북</option><option value="gyeongnam">경남</option><option value="jeju">제주</option></select>
-              </label>
-            </div>
-          </fieldset>
 
 
           <fieldset class="image-box">
@@ -316,7 +306,6 @@
         set('fSubtitle','GN24 JUNIOR PRESS · '+(draft.nickname||'꿈나무 기자'));
         set('fAuthor',(draft.nickname||'꿈나무')+' 주니어 기자');
         set('fReporterId',draft.reporterId||'');
-        const jd=document.getElementById('juniorDistribution');if(jd)jd.hidden=false;
         set('fSummary',draft.whatHappened);
         set('fContent',[draft.whatHappened,draft.interviewNote?'[질문·인터뷰]\n'+draft.interviewNote:'',draft.feeling?'[느낀 점]\n'+draft.feeling:''].filter(Boolean).join('\n\n'));
         set('fTags','GN24 JUNIOR PRESS, 꿈나무 기자단, '+(draft.nickname||'주니어 기자'));
