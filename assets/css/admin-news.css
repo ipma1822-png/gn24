@@ -62,3 +62,13 @@
 .article-item.active .article-edition{background:#fff1c8;color:#795300}
 .article-item .article-warnings{display:block;min-height:0;margin-top:4px;color:#b54708;font-size:9px;font-weight:800}
 @media(max-width:760px){.article-find-tools{grid-template-columns:1fr}.article-find-tools #articleIssueFilter{grid-column:auto}}
+
+/* Admin article finder v2.1 */
+.toolbar{grid-template-columns:1fr auto}
+.article-panel{display:flex;flex-direction:column}
+.article-panel .article-list{min-height:0;max-height:none}
+.article-title-search{display:block;padding:10px 10px 5px;background:#f8fafc;color:#173b66;font-size:12px;font-weight:800}
+.article-title-search input{display:block;width:100%;margin-top:6px;padding:10px 11px;border:1px solid #cfd7e1;border-radius:6px;background:#fff;color:#111827;font-size:14px}
+.article-title-search input:focus{outline:2px solid #b8d4fa;border-color:#5b8dcc}
+.article-item small span:last-child{margin-left:auto;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px;opacity:.7}
+@media(max-width:980px){.toolbar{grid-template-columns:1fr}.article-panel .article-list{max-height:330px;flex:none}}

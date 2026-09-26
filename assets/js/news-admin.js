@@ -155,8 +155,14 @@
     state.articles.forEach(a=>{const img=clean(a.image);if(img&&img!==DEFAULT_IMAGE)imageCounts.set(img,(imageCounts.get(img)||0)+1)});
     if(els.regionFilter){
       const old=els.regionFilter.value;
-      const codes=[...new Set(state.articles.map(a=>a.regionCode||a.region_code||'').filter(Boolean))].sort((a,b)=>regionLabel({regionCode:a}).localeCompare(regionLabel({regionCode:b}),'ko'));
-      els.regionFilter.innerHTML='<option value="">전체 국가·지역판</option>'+codes.map(c=>`<option value="${c}">${regionLabel({regionCode:c})}</option>`).join('');
+      const registry=[...document.querySelectorAll('#fRegionCode option')].filter(o=>o.value);
+      const labels=new Map(registry.map(o=>[o.value,clean(o.textContent).replace(/^🌍\s*GLOBAL\s*·\s*/i,'')]));
+      const order=new Map(registry.map((o,i)=>[o.value,i]));
+      const codes=[...new Set(state.articles.map(a=>a.regionCode||a.region_code||'').filter(Boolean))];
+      const domestic=codes.filter(c=>DOMESTIC_REGIONS.has(c)).sort((a,b)=>(order.get(a)??999)-(order.get(b)??999));
+      const global=codes.filter(c=>!DOMESTIC_REGIONS.has(c)).sort((a,b)=>a.localeCompare(b,'en'));
+      const group=(title,values)=>{const g=document.createElement('optgroup');g.label=title;values.forEach(c=>g.append(new Option(labels.get(c)||regionLabel({regionCode:c}),c)));return g};
+      els.regionFilter.replaceChildren(new Option('전체 국가·지역판',''),group('🇰🇷 국내 지역판',domestic),group('🌐 GLOBAL EDITION',global));
       if(codes.includes(old))els.regionFilter.value=old;
     }
     if(els.categoryFilter){
