@@ -305,7 +305,7 @@
         set('fTitle',draft.title);
         set('fSubtitle','GN24 JUNIOR PRESS · '+(draft.nickname||'꿈나무 기자'));
         set('fAuthor',(draft.nickname||'꿈나무')+' 주니어 기자');
-        set('fReporterId',draft.reporterId||'');
+        const reporter=document.getElementById('fReporterId');if(reporter&&draft.reporterId){let opt=[...reporter.options].find(o=>o.value===draft.reporterId);if(!opt){opt=new Option((draft.nickname||'주니어 기자')+' · '+draft.reporterId,draft.reporterId);reporter.add(opt)}reporter.value=draft.reporterId;reporter.dispatchEvent(new Event('change',{bubbles:true}))}
         set('fRegionCode','junior');
         set('fImage','/assets/images/news/gn24-default-news.svg');set('fImageCaption','');
         set('fSummary',draft.whatHappened);
