@@ -50,17 +50,22 @@
     const more=document.querySelector('.article-author-card .author-more');
     let reporterId=safe(article?.reporterId);
     let fallback=safe(article?.author)||'Global News24 편집부';
+    const displayFallback=value=>{
+      const name=safe(value)||'Global News24 편집부';
+      if(name!=='Global News24 편집부')return name;
+      return articleDynamicText(article,'editorDesk')||name;
+    };
     try{
       if(!reporterId&&article?.id){
         const rows=await api(`gn24_articles?id=eq.${encodeURIComponent(article.id)}&select=reporter_id,author&limit=1`);
         reporterId=safe(rows?.[0]?.reporter_id);
         fallback=safe(rows?.[0]?.author)||fallback;
       }
-      if(!reporterId){if(authorName)authorName.textContent=fallback;if(more)more.href='/pages/reporters/';return;}
+      if(!reporterId){if(authorName)authorName.textContent=displayFallback(fallback);if(more)more.href='/pages/reporters/';return;}
       const reporters=await api('rpc/gn24_public_reporters',{method:'POST',body:'{}'});
       const r=(Array.isArray(reporters)?reporters:[]).find(x=>String(x.id)===reporterId);
-      if(!r){if(authorName)authorName.textContent=fallback;return;}
-      const label=byline(r,fallback);
+      if(!r){if(authorName)authorName.textContent=displayFallback(fallback);return;}
+      const label=byline(r,displayFallback(fallback));
       if(authorName)authorName.textContent=label;
       const meta=document.getElementById('aMeta');
       const metaSpans=meta?.querySelectorAll(':scope > span');
@@ -72,6 +77,6 @@
       if(span)span.textContent=details.join(' · ')||'Global News24 기자';
       if(p)p.textContent=safe(r.bio)||`${safe(r.name)} ${safe(r.reporter_rank)||'기자'}의 Global News24 기사입니다.`;
       if(more){more.href=`/pages/reporters/?id=${encodeURIComponent(r.id)}`;more.textContent='기자 프로필·다른 기사 보기 ›'}
-    }catch(e){console.warn('GN24 reporter identity load failed',e);if(authorName&&!authorName.textContent)authorName.textContent=fallback}
+    }catch(e){console.warn('GN24 reporter identity load failed',e);if(authorName&&!authorName.textContent)authorName.textContent=displayFallback(fallback)}
   };
 })();
