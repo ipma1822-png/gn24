@@ -39,7 +39,7 @@
     <section class="toolbar cardbox">
       <div>
         <label for="searchInput">기사 검색</label>
-        <input id="searchInput" type="search" placeholder="제목·카테고리·태그 검색">
+        <input id="searchInput" type="search" placeholder="제목 또는 기사 ID 검색">
       </div>
       <div class="toolbar-actions">
         <label class="file-btn">news.json 불러오기<input id="importInput" type="file" accept="application/json,.json"></label>
@@ -53,6 +53,7 @@
         <div class="panel-title"><h2>기사 찾기·수정</h2><span id="listCount"></span></div>
         <div class="article-find-tools">
           <select id="articleRegionFilter" aria-label="국가·지역판 필터"><option value="">전체 국가·지역판</option></select>
+          <select id="articleCategoryFilter" aria-label="카테고리 필터"><option value="">전체 카테고리</option></select>
           <select id="articleSortFilter" aria-label="기사 정렬">
             <option value="created_desc">최근 등록순</option>
             <option value="created_asc">오래된 등록순</option>
@@ -60,12 +61,14 @@
           </select>
           <select id="articleIssueFilter" aria-label="점검 필터">
             <option value="">전체 기사</option>
-            <option value="duplicate_image">⚠ 같은 이미지 경로</option>\n            <option value="duplicate_content">⚠ 실제 이미지 중복</option>
+            <option value="duplicate_image">⚠ 같은 이미지 경로</option>
+            <option value="duplicate_content">⚠ 실제 이미지 중복</option>
             <option value="no_tags">⚠ 태그 없음</option>
             <option value="no_image">⚠ 대표이미지 없음</option>
           </select>
         </div>
-        <div class="article-find-hint">국가판 선택 · 제목/태그 검색 · 등록순 정렬 · 이미지 중복/태그 누락 점검</div>\n        <div class="article-find-hint"><button id="scanDuplicateImagesBtn" class="btn small" type="button">🔍 실제 이미지 중복검사</button> <span id="duplicateImageScanStatus">서로 다른 URL에 같은 사진이 업로드된 경우까지 검사합니다.</span></div>
+        <div class="article-find-hint">국가·지역판과 카테고리 선택 · 제목/기사 ID 검색 · 등록순 정렬</div>
+        <div class="article-find-hint"><button id="scanDuplicateImagesBtn" class="btn small" type="button">🔍 실제 이미지 중복검사</button> <span id="duplicateImageScanStatus">서로 다른 URL에 같은 사진이 업로드된 경우까지 검사합니다.</span></div>
         <div id="articleList" class="article-list"></div>
       </aside>
 
@@ -252,7 +255,7 @@
   <script src="/assets/js/gn24-supabase-config.js?v=3.22.0"></script>
   <script src="/assets/js/gallery-admin.js?v=3.5.2"></script>
   <script src="/assets/js/news-image-light.js?v=1.0.0"></script>
-  <script src="/assets/js/news-admin.js?v=3.23.2"></script>
+  <script src="/assets/js/news-admin.js?v=3.23.3"></script>
   <script src="/assets/js/news-cms.js?v=3.5.5"></script>
   <script src="/assets/js/admin-edition-grid.js?v=3.22.0"></script>
   <script>
