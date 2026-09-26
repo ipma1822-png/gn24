@@ -306,6 +306,7 @@
         set('fSubtitle','GN24 JUNIOR PRESS · '+(draft.nickname||'꿈나무 기자'));
         set('fAuthor',(draft.nickname||'꿈나무')+' 주니어 기자');
         set('fReporterId',draft.reporterId||'');
+        set('fImage','/assets/images/news/gn24-default-news.svg');set('fImageCaption','');
         set('fSummary',draft.whatHappened);
         set('fContent',[draft.whatHappened,draft.interviewNote?'[질문·인터뷰]\n'+draft.interviewNote:'',draft.feeling?'[느낀 점]\n'+draft.feeling:''].filter(Boolean).join('\n\n'));
         set('fTags','GN24 JUNIOR PRESS, 꿈나무 기자단, '+(draft.nickname||'주니어 기자'));
