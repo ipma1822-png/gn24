@@ -276,6 +276,42 @@
     await clearDraft();state.dirty=false;state.restored=false;resetImageFile();await loadSite({ignoreDraft:true});els.saveMessage.textContent='임시편집본을 초기화하고 사이트 원본을 다시 불러왔습니다.';
   }
 
+  // Direct ID lookup uses the same selection path as clicking an article card.
+  const idSearchAnchor=document.querySelector('.article-title-search');
+  if(idSearchAnchor){
+    const row=document.createElement('div');
+    row.className='article-id-search';
+    row.style.cssText='display:flex;gap:6px;padding:7px 10px 10px;background:#f8fafc;border-bottom:1px solid #e5e9ee';
+    const input=document.createElement('input');
+    input.id='articleIdDirectInput';
+    input.type='text';
+    input.placeholder='gn24-20260925-552487';
+    input.setAttribute('aria-label','기사 ID 입력');
+    input.style.cssText='min-width:0;flex:1;padding:8px 9px;border:1px solid #cfd7e1;border-radius:5px;background:#fff;font-size:12px';
+    const button=document.createElement('button');
+    button.id='articleIdDirectLoad';
+    button.type='button';
+    button.textContent='기사 ID로 불러오기';
+    button.style.cssText='flex:none;padding:8px 10px;border:1px solid #143968;border-radius:5px;background:#143968;color:#fff;font-size:11px;font-weight:700;cursor:pointer';
+    const status=document.createElement('div');
+    status.id='articleIdDirectStatus';
+    status.setAttribute('role','status');
+    status.style.cssText='padding:0 10px 7px;background:#f8fafc;color:#b42318;font-size:11px';
+    row.append(input,button);
+    idSearchAnchor.after(row,status);
+    function loadById(){
+      const id=input.value.trim();
+      const article=state.articles.find(a=>String(a.id)===id);
+      if(!article){status.textContent='해당 기사 ID를 찾을 수 없습니다.';return}
+      status.textContent='';
+      select(article.id);
+      scheduleDraft();
+      document.querySelector('.editor-panel')?.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    button.addEventListener('click',loadById);
+    input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();loadById()}});
+  }
+
   $('#scanDuplicateImagesBtn')?.addEventListener('click',()=>scanDuplicateImageContent().catch(e=>{const s=$('#duplicateImageScanStatus');if(s)s.textContent='검사 실패: '+e.message;const b=$('#scanDuplicateImagesBtn');if(b)b.disabled=false;}));$('#newBtn').onclick=newArticle;$('#exportBtn').onclick=exportJSON;$('#deleteBtn').onclick=deleteCurrent;$('#duplicateBtn').onclick=duplicate;$('#restoreBtn').onclick=()=>resetToSite().catch(e=>alert(e.message));els.search.oninput=renderList;[els.regionFilter,els.categoryFilter,els.sortFilter,els.issueFilter].forEach(x=>x&&x.addEventListener('change',renderList));els.form.onsubmit=saveCurrent;els.importInput=$('#importInput');els.importInput.onchange=async e=>{try{if(e.target.files[0])await importJSON(e.target.files[0])}catch(err){alert('불러오기 실패: '+err.message)}finally{e.target.value=''}};els.imageInput.onchange=e=>chooseImage(e.target.files[0]);els.downloadImage.onclick=downloadImage;els.clearDraftImage.onclick=()=>clearDraftImage();
   els.form.addEventListener('input',e=>{if(e.target.id==='imageInput')return;setDirty(true);els.saveMessage.textContent='입력 내용이 자동 임시저장됩니다.';if(!state.imageFile&&e.target.id==='fImage')imageBg(clean(els.image.value));scheduleDraft()});
   els.form.addEventListener('change',e=>{if(e.target.id==='imageInput')return;setDirty(true);scheduleDraft()});
