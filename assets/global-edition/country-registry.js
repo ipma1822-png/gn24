@@ -1354,7 +1354,7 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
     "direction": "ltr",
     "locale": "mn-MN",
     "status": "OPEN",
-    "countryLabel": "Nigeria",
+    "countryLabel": "Mongolia",
     "localNetworkStatus": "Country Edition · Open",
     "ui": {
       "edition": "COUNTRY EDITION · OPEN",
@@ -1379,8 +1379,8 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
       "feed": "GLOBAL FEED",
       "status": "Edition status",
       "network": "WORLD NETWORK",
-      "intro": "GLOBAL NEWS24 Nigeria edition. Published local articles are connected to this newsroom.",
-      "notice": "GLOBAL NEWS24 Nigeria edition · Published articles are live.",
+      "intro": "GLOBAL NEWS24 Mongolia edition. Published local articles are connected to this newsroom.",
+      "notice": "GLOBAL NEWS24 Mongolia edition · Published articles are live.",
       "articleMissing": "Article not found",
       "more": "See all stories",
       "published": "Published"
