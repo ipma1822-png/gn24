@@ -77,7 +77,24 @@ async function loadHome(){
   target.innerHTML=editorPicks.map((a,i)=>card(a,i)).join('');
   if(lead){$('#leadTitle').textContent=lead.title;$('#leadSummary').textContent=lead.summary||'';$('#leadMeta').textContent=`TOP NEWS · ${lead.category||'뉴스'} · ${fmt(lead.date)}`;$('#leadLink').href=seoArticleURL(lead);applyBg($('#leadMedia'),lead.image)}
   const breaking=data.find(x=>x.visualStyle==='breaking')||data[0];if(breaking)$('#breakingText').textContent=breaking.title;
-  $('#latestNews')&&($('#latestNews').innerHTML=data.slice(0,10).map(latestRow).join(''));
+  if($('#latestNews')){
+    const domestic=[], global=[], seenGlobal=new Set();
+    for(const a of data){
+      const code=a.regionCode||a.region_code||'';
+      if(!code||Object.hasOwn(GN24_DOMESTIC_EDITIONS,code)){
+        if(domestic.length<5)domestic.push(a);
+      }else if((Object.hasOwn(GN24_GLOBAL_EDITIONS,code)||code==='russia')&&!seenGlobal.has(code)){
+        seenGlobal.add(code);global.push(a);
+      }
+      if(domestic.length===5&&global.length===5)break;
+    }
+    const latest=[];
+    for(let i=0;i<5;i++){
+      if(domestic[i])latest.push(domestic[i]);
+      if(global[i])latest.push(global[i]);
+    }
+    $('#latestNews').innerHTML=latest.map(latestRow).join('');
+  }
   const attention=[...featured,...data.filter(x=>(!lead||x.id!==lead.id)&&!x.featured)].slice(0,6);
   $('#attentionList')&&($('#attentionList').innerHTML=attention.map(a=>`<li><a href="${seoArticleURL(a)}">${esc(a.title)}</a></li>`).join(''));
   const by=(test)=>data.filter(test).slice(0,4).map(mini).join('');
