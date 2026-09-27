@@ -387,7 +387,7 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
     "secondaryLanguage": "",
     "direction": "ltr",
     "locale": "en-PK",
-    "status": "FOUNDING",
+    "status": "OPEN",
     "countryLabel": "Pakistan",
     "localNetworkStatus": "Local Editorial Network · Building",
     "ui": {
@@ -639,7 +639,7 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
     "secondaryLanguage": "en",
     "direction": "rtl",
     "locale": "ar-EG",
-    "status": "FOUNDING",
+    "status": "OPEN",
     "countryLabel": "مصر",
     "localNetworkStatus": "الشبكة التحريرية المحلية · قيد البناء",
     "ui": {
@@ -681,7 +681,7 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
     "secondaryLanguage": "",
     "direction": "ltr",
     "locale": "en-ZA",
-    "status": "FOUNDING",
+    "status": "OPEN",
     "countryLabel": "South Africa",
     "localNetworkStatus": "Local Editorial Network · Building",
     "ui": {
@@ -1059,7 +1059,7 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
     "secondaryLanguage": "",
     "direction": "ltr",
     "locale": "pt-BR",
-    "status": "FOUNDING",
+    "status": "OPEN",
     "countryLabel": "Brasil",
     "localNetworkStatus": "Local Editorial Network · Building",
     "ui": {
@@ -1101,7 +1101,7 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
     "secondaryLanguage": "",
     "direction": "ltr",
     "locale": "es-AR",
-    "status": "FOUNDING",
+    "status": "OPEN",
     "countryLabel": "Argentina",
     "localNetworkStatus": "Red editorial local · En formación",
     "ui": {
