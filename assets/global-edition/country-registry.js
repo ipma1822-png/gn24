@@ -1385,6 +1385,48 @@ window.GN24_COUNTRY_REGISTRY=Object.freeze({
       "more": "See all stories",
       "published": "Published"
     }
+  },
+  "russia": {
+    "countryCode": "RU",
+    "slug": "russia",
+    "countryName": "РОССИЯ",
+    "editionName": "GLOBAL NEWS24 RUSSIA",
+    "language": "ru",
+    "secondaryLanguage": "",
+    "direction": "ltr",
+    "locale": "ru-RU",
+    "status": "FOUNDING",
+    "countryLabel": "РОССИЯ",
+    "localNetworkStatus": "Национальная редакция · Основание",
+    "ui": {
+      "edition": "РЕДАКЦИЯ · ОСНОВАНИЕ",
+      "home": "Главная",
+      "newsroom": "Новости",
+      "top": "ГЛАВНЫЕ НОВОСТИ",
+      "main": "ГЛАВНОЕ",
+      "latest": "ПОСЛЕДНИЕ НОВОСТИ",
+      "local": "НОВОСТИ РОССИИ",
+      "global": "МИР",
+      "martial": "БОЕВЫЕ ИСКУССТВА И СПОРТ",
+      "safety": "ОБЩЕСТВЕННАЯ БЕЗОПАСНОСТЬ",
+      "technology": "ТЕХНОЛОГИИ И БУДУЩЕЕ",
+      "cooperation": "МЕЖДУНАРОДНОЕ СОТРУДНИЧЕСТВО",
+      "search": "Поиск новостей",
+      "searchButton": "Найти",
+      "all": "Все новости",
+      "noResults": "По вашему запросу новостей не найдено.",
+      "back": "Вернуться к новостям",
+      "source": "Источник",
+      "country": "РОССИЯ",
+      "feed": "МИРОВЫЕ НОВОСТИ",
+      "status": "Статус редакции",
+      "network": "МИРОВАЯ СЕТЬ",
+      "intro": "Российская редакция GLOBAL NEWS24 готовится к запуску.",
+      "notice": "GLOBAL NEWS24 Россия · Редакция готовится к запуску.",
+      "articleMissing": "Статья не найдена",
+      "more": "Все новости",
+      "published": "Опубликовано"
+    }
   }
 });
 (()=>{const slug=location.pathname.split('/').filter(Boolean)[0]||'';const c=window.GN24_COUNTRY_REGISTRY[slug];if(c)window.GN24_COUNTRY_CONFIG=c;})();
