@@ -2,6 +2,281 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-930169/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Российский пляжный футбол завершил один из главных турниров сезона в Москве</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-881238/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Молодые учёные России собрались на новой всероссийской научной площадке</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-847397/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>الإمارات تعتمد سياسة وطنية للسياحة البيئية وتوسع منظومة المحميات الطبيعية</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-836312/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Россия расширяет цифровые сервисы для науки и высшего образования</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-807110/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>أبوظبي تستخدم منصة الذكاء الاصطناعي الوكيلي لأول مرة في اجتماع المجلس التنفيذي</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-793425/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Банк России сохранил ключевую ставку на уровне 14%</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-754136/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>الإمارات توسع استخدام الذكاء الاصطناعي الوكيلي في العمل الحكومي وصناعة القرار</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-711898/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>الإمارات تطلق الهوية السياحية الوطنية الموحدة «حيّاكم في الإمارات – Visit UAE»</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-550579/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>El café colombiano fortalece su valor de origen en los mercados internacionales</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-538688/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>السياحة الإماراتية تواصل نموها المستدام وتعزز مكانة الدولة كوجهة عالمية</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-504732/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Colombia refuerza la protección de más de 4.000 kilómetros de costas frente a la erosión</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-498236/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>رؤية السعودية 2030 تدفع اقتصاد المملكة نحو التنوع والابتكار</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-462086/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Colombia supera los 4.626 MW de capacidad solar y eólica y acelera su transición energética</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-427057/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>الملاعب السعودية تتوسع استعدادًا لعصر جديد من الرياضة العالمية</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-421583/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Colombia fortalece su posición como uno de los grandes destinos turísticos de América Latina</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-362784/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>موسم الرياض 2026 ينطلق في 21 أكتوبر ببرنامج عالمي</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-295186/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>السياحة السعودية تدخل مرحلة جديدة من التحول الرقمي</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-274268/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Colombia acelera su apuesta por la inteligencia artificial y los datos abiertos</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-219338/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>İstanbul Havalimanı Küresel Havacılık Merkezi Konumunu Güçlendiriyor</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-162551/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Türkiye, 2029 İçin 2,2 Trilyon Dolarlık Ekonomi Hedefliyor</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-108683/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Türkiye’de “Yapay Zekâ Vatanı” Vizyonu Gündemde</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-089951/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Экономика России вернулась к росту во втором квартале 2026 года</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-056869/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Türkiye, 2026 Yazında Turizmde Güçlü Konumunu Korudu</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-009406/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>İstanbul, Küresel Ticaretin Buluşma Noktası Oldu</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-005781/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>السعودية تعزز مكانتها مركزًا عالميًا للتقنية والذكاء الاصطناعي</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260927-662107/</loc>
     <news:news>
       <news:publication>
