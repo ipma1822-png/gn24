@@ -83,7 +83,7 @@ async function loadHome(){
       const code=a.regionCode||a.region_code||'';
       if(!code||Object.hasOwn(GN24_DOMESTIC_EDITIONS,code)){
         if(domestic.length<5)domestic.push(a);
-      }else if((Object.hasOwn(GN24_GLOBAL_EDITIONS,code)||code==='russia')&&!seenGlobal.has(code)){
+      }else if(global.length<5&&(Object.hasOwn(GN24_GLOBAL_EDITIONS,code)||code==='russia')&&!seenGlobal.has(code)){
         seenGlobal.add(code);global.push(a);
       }
       if(domestic.length===5&&global.length===5)break;
