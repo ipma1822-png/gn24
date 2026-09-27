@@ -27,13 +27,13 @@ function navLanguage(){
  return navI18n[lang]||navI18n.en;
 }
 var groups=[
-['ASIA',[['🇨🇳','CHINA','china',1],['🇯🇵','JAPAN','japan',1],['🇵🇭','PHILIPPINES','philippines',1],['🇮🇩','INDONESIA','indonesia',1],['🇲🇾','MALAYSIA','malaysia',1],['🇹🇭','THAILAND','thailand',1],['🇻🇳','VIETNAM','vietnam',1],['🇳🇵','NEPAL','nepal',1],['🇮🇳','INDIA','india',1],['🇵🇰','PAKISTAN','pakistan',0],['🇲🇳','MONGOLIA','mongolia',1]]],
-['MIDDLE EAST',[['🇮🇷','IRAN','iran',1],['🇦🇪','UAE','uae',0],['🇸🇦','SAUDI ARABIA','saudi-arabia',0],['🇹🇷','TÜRKİYE','turkiye',0]]],
-['AFRICA',[['🇲🇦','MOROCCO','morocco',1],['🇪🇬','EGYPT','egypt',0],['🇿🇦','SOUTH AFRICA','south-africa',0],['🇰🇪','KENYA','kenya',1],['🇳🇬','NIGERIA','nigeria',1]]],
-['EUROPE',[['🇪🇸','SPAIN','spain',1],['🇬🇧','UNITED KINGDOM','uk',0],['🇫🇷','FRANCE','france',0],['🇩🇪','GERMANY','germany',0],['🇮🇹','ITALY','italy',0],['🇷🇺','RUSSIA','russia',0]]],
-['NORTH AMERICA',[['🇨🇦','CANADA','canada',1],['🇺🇸','USA','usa',0],['🇲🇽','MEXICO','mexico',0]]],
-['SOUTH AMERICA',[['🇧🇷','BRAZIL','brazil',0],['🇦🇷','ARGENTINA','argentina',0],['🇨🇴','COLOMBIA','colombia',0]]],
-['OCEANIA',[['🇦🇺','AUSTRALIA','australia',0],['🇳🇿','NEW ZEALAND','new-zealand',0]]]
+['ASIA',[['🇨🇳','CHINA','china',1],['🇯🇵','JAPAN','japan',1],['🇵🇭','PHILIPPINES','philippines',1],['🇮🇩','INDONESIA','indonesia',1],['🇲🇾','MALAYSIA','malaysia',1],['🇹🇭','THAILAND','thailand',1],['🇻🇳','VIETNAM','vietnam',1],['🇳🇵','NEPAL','nepal',1],['🇮🇳','INDIA','india',1],['🇵🇰','PAKISTAN','pakistan',1],['🇲🇳','MONGOLIA','mongolia',1]]],
+['MIDDLE EAST',[['🇮🇷','IRAN','iran',1],['🇦🇪','UAE','uae',1],['🇸🇦','SAUDI ARABIA','saudi-arabia',1],['🇹🇷','TÜRKİYE','turkiye',1]]],
+['AFRICA',[['🇲🇦','MOROCCO','morocco',1],['🇪🇬','EGYPT','egypt',1],['🇿🇦','SOUTH AFRICA','south-africa',1],['🇰🇪','KENYA','kenya',1],['🇳🇬','NIGERIA','nigeria',1]]],
+['EUROPE',[['🇪🇸','SPAIN','spain',1],['🇬🇧','UNITED KINGDOM','uk',1],['🇫🇷','FRANCE','france',1],['🇩🇪','GERMANY','germany',1],['🇮🇹','ITALY','italy',1],['🇷🇺','RUSSIA','russia',1]]],
+['NORTH AMERICA',[['🇨🇦','CANADA','canada',1],['🇺🇸','USA','usa',1],['🇲🇽','MEXICO','mexico',1]]],
+['SOUTH AMERICA',[['🇧🇷','BRAZIL','brazil',1],['🇦🇷','ARGENTINA','argentina',1],['🇨🇴','COLOMBIA','colombia',1]]],
+['OCEANIA',[['🇦🇺','AUSTRALIA','australia',1],['🇳🇿','NEW ZEALAND','new-zealand',1]]]
 ];
 var regionNames={
 en:['Seoul','Busan','Daegu','Incheon','Gwangju','Daejeon','Ulsan','Sejong','Gyeonggi','Gangwon','Chungbuk','Chungnam','Jeonbuk','Jeonnam','Gyeongbuk','Gyeongnam','Jeju'],
@@ -44,13 +44,22 @@ zh:['首尔','釜山','大邱','仁川','光州','大田','蔚山','世宗','京
 ja:['ソウル','釜山','大邱','仁川','光州','大田','蔚山','世宗','京畿','江原','忠北','忠南','全北','全南','慶北','慶南','済州'],
 ru:['Сеул','Пусан','Тэгу','Инчхон','Кванджу','Тэджон','Ульсан','Седжон','Кёнгидо','Канвондо','Чхунчхон-Пукто','Чхунчхон-Намдо','Чолла-Пукто','Чолла-Намдо','Кёнсан-Пукто','Кёнсан-Намдо','Чеджу']
 };
+var groupNames={
+ar:{ASIA:'آسيا','MIDDLE EAST':'الشرق الأوسط',AFRICA:'أفريقيا',EUROPE:'أوروبا','NORTH AMERICA':'أمريكا الشمالية','SOUTH AMERICA':'أمريكا الجنوبية',OCEANIA:'أوقيانوسيا'},
+fr:{ASIA:'ASIE','MIDDLE EAST':'MOYEN-ORIENT',AFRICA:'AFRIQUE',EUROPE:'EUROPE','NORTH AMERICA':'AMÉRIQUE DU NORD','SOUTH AMERICA':'AMÉRIQUE DU SUD',OCEANIA:'OCÉANIE'},
+es:{ASIA:'ASIA','MIDDLE EAST':'ORIENTE MEDIO',AFRICA:'ÁFRICA',EUROPE:'EUROPA','NORTH AMERICA':'AMÉRICA DEL NORTE','SOUTH AMERICA':'AMÉRICA DEL SUR',OCEANIA:'OCEANÍA'},
+zh:{ASIA:'亚洲','MIDDLE EAST':'中东',AFRICA:'非洲',EUROPE:'欧洲','NORTH AMERICA':'北美洲','SOUTH AMERICA':'南美洲',OCEANIA:'大洋洲'},
+ja:{ASIA:'アジア','MIDDLE EAST':'中東',AFRICA:'アフリカ',EUROPE:'ヨーロッパ','NORTH AMERICA':'北米','SOUTH AMERICA':'南米',OCEANIA:'オセアニア'},
+ru:{ASIA:'АЗИЯ','MIDDLE EAST':'БЛИЖНИЙ ВОСТОК',AFRICA:'АФРИКА',EUROPE:'ЕВРОПА','NORTH AMERICA':'СЕВЕРНАЯ АМЕРИКА','SOUTH AMERICA':'ЮЖНАЯ АМЕРИКА',OCEANIA:'ОКЕАНИЯ'}
+};
+var statusNames={ar:{open:'النسخة متاحة'},fr:{open:'ÉDITION'},es:{open:'EDICIÓN'},zh:{open:'国家版'},ja:{open:'国別版'},ru:{open:'ВЕРСИЯ'},ko:{open:'국가판'},en:{open:'EDITION'}};
 var countryNames={
 ar:{china:'الصين',japan:'اليابان',philippines:'الفلبين',indonesia:'إندونيسيا',malaysia:'ماليزيا',thailand:'تايلاند',vietnam:'فيتنام',nepal:'نيبال',india:'الهند',pakistan:'باكستان',iran:'إيران',uae:'الإمارات العربية المتحدة','saudi-arabia':'المملكة العربية السعودية',turkiye:'تركيا',morocco:'المغرب',egypt:'مصر','south-africa':'جنوب أفريقيا',spain:'إسبانيا',uk:'المملكة المتحدة',france:'فرنسا',germany:'ألمانيا',italy:'إيطاليا',canada:'كندا',usa:'الولايات المتحدة',mexico:'المكسيك',brazil:'البرازيل',argentina:'الأرجنتين',colombia:'كولومبيا',australia:'أستراليا','new-zealand':'نيوزيلندا',mongolia:'منغوليا',russia:'روسيا',kenya:'كينيا',nigeria:'نيجيريا'},
 fr:{china:'CHINE',japan:'JAPON',philippines:'PHILIPPINES',indonesia:'INDONÉSIE',malaysia:'MALAISIE',thailand:'THAÏLANDE',vietnam:'VIETNAM',nepal:'NÉPAL',india:'INDE',pakistan:'PAKISTAN',iran:'IRAN',uae:'ÉMIRATS ARABES UNIS','saudi-arabia':'ARABIE SAOUDITE',turkiye:'TURQUIE',morocco:'MAROC',egypt:'ÉGYPTE','south-africa':'AFRIQUE DU SUD',spain:'ESPAGNE',uk:'ROYAUME-UNI',france:'FRANCE',germany:'ALLEMAGNE',italy:'ITALIE',canada:'CANADA',usa:'ÉTATS-UNIS',mexico:'MEXIQUE',brazil:'BRÉSIL',argentina:'ARGENTINE',colombia:'COLOMBIE',australia:'AUSTRALIE','new-zealand':'NOUVELLE-ZÉLANDE',mongolia:'MONGOLIE',russia:'RUSSIE',kenya:'KENYA',nigeria:'NIGERIA'},
 es:{china:'CHINA',japan:'JAPÓN',philippines:'FILIPINAS',indonesia:'INDONESIA',malaysia:'MALASIA',thailand:'TAILANDIA',vietnam:'VIETNAM',nepal:'NEPAL',india:'INDIA',pakistan:'PAKISTÁN',iran:'IRÁN',uae:'EMIRATOS ÁRABES UNIDOS','saudi-arabia':'ARABIA SAUDITA',turkiye:'TURQUÍA',morocco:'MARRUECOS',egypt:'EGIPTO','south-africa':'SUDÁFRICA',spain:'ESPAÑA',uk:'REINO UNIDO',france:'FRANCIA',germany:'ALEMANIA',italy:'ITALIA',canada:'CANADÁ',usa:'ESTADOS UNIDOS',mexico:'MÉXICO',brazil:'BRASIL',argentina:'ARGENTINA',colombia:'COLOMBIA',australia:'AUSTRALIA','new-zealand':'NUEVA ZELANDA',mongolia:'MONGOLIA',russia:'RUSIA',kenya:'KENIA',nigeria:'NIGERIA'}
 };
 function currentLang(){var parts=location.pathname.toLowerCase().split('/').filter(Boolean),registry=window.GN24_COUNTRY_REGISTRY||{},cfg=registry[parts[0]],raw=(cfg&&cfg.language)||document.documentElement.lang||'ko';return String(raw).toLowerCase().split('-')[0]}
-function countryMarkup(){var lang=currentLang(),dict=countryNames[lang]||{};return groups.map(function(g){return '<section class="gn24-country-group"><h3>'+g[0]+'</h3>'+g[1].map(function(x){var name=dict[x[2]]||x[1];return '<a class="gn24-country-link '+(x[3]?'is-open':'is-founding')+'" href="/'+x[2]+'/"><span>'+x[0]+' '+name+'</span><small>'+(x[3]?'OPEN':'FOUNDING')+'</small></a>'}).join('')+'</section>'}).join('')}
+function countryMarkup(){var lang=currentLang(),dict=countryNames[lang]||{},gd=groupNames[lang]||{},sd=statusNames[lang]||statusNames.en;return groups.map(function(g){return '<section class="gn24-country-group"><h3>'+(gd[g[0]]||g[0])+'</h3>'+g[1].map(function(x){var name=dict[x[2]]||x[1];return '<a class="gn24-country-link is-open" href="/'+x[2]+'/"><span>'+x[0]+' '+name+'</span><small>'+sd.open+' ↗</small></a>'}).join('')+'</section>'}).join('')}
 function regionMarkup(){var lang=currentLang(),names=regionNames[lang]||regionNames.en;return '<div class="gn24-mega-grid">'+regions.map(function(r,i){return '<a href="'+r[1]+'">'+(names[i]||r[0])+'</a>'}).join('')+'</div>'}
 function fillHome(){var box=document.getElementById('gn24MegaCountries');if(box)box.innerHTML=countryMarkup()}
 function installBar(){
