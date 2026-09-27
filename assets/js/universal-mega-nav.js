@@ -32,8 +32,23 @@ var groups=[
 ['EUROPE',[['🇪🇸','SPAIN','spain',1],['🇬🇧','UK','uk',0],['🇫🇷','FRANCE','france',0],['🇩🇪','GERMANY','germany',0],['🇮🇹','ITALY','italy',0]]],
 ['AMERICAS · OCEANIA',[['🇨🇦','CANADA','canada',1],['🇺🇸','USA','usa',0],['🇲🇽','MEXICO','mexico',0],['🇧🇷','BRAZIL','brazil',0],['🇦🇷','ARGENTINA','argentina',0],['🇨🇴','COLOMBIA','colombia',0],['🇦🇺','AUSTRALIA','australia',0],['🇳🇿','NEW ZEALAND','new-zealand',0]]]
 ];
-function countryMarkup(){return groups.map(function(g){return '<section class="gn24-country-group"><h3>'+g[0]+'</h3>'+g[1].map(function(c){return '<a class="gn24-country-link '+(c[3]?'is-open':'is-founding')+'" href="/'+c[2]+'/"><span>'+c[0]+' '+c[1]+'</span><small>'+(c[3]?'OPEN':'FOUNDING')+'</small></a>'}).join('')+'</section>'}).join('')}
-function regionMarkup(){return '<div class="gn24-mega-grid">'+regions.map(function(r){return '<a href="'+r[1]+'">'+r[0]+'</a>'}).join('')+'</div>'}
+var regionNames={
+en:['Seoul','Busan','Daegu','Incheon','Gwangju','Daejeon','Ulsan','Sejong','Gyeonggi','Gangwon','Chungbuk','Chungnam','Jeonbuk','Jeonnam','Gyeongbuk','Gyeongnam','Jeju'],
+ar:['سول','بوسان','دايغو','إنتشون','غوانغجو','دايجون','أولسان','سيجونغ','غيونغي','غانغوون','تشونغبوك','تشونغنام','جيونبوك','جيوننام','غيونغبوك','غيونغنام','جيجو'],
+fr:['Séoul','Busan','Daegu','Incheon','Gwangju','Daejeon','Ulsan','Sejong','Gyeonggi','Gangwon','Chungcheong du Nord','Chungcheong du Sud','Jeolla du Nord','Jeolla du Sud','Gyeongsang du Nord','Gyeongsang du Sud','Jeju'],
+es:['Seúl','Busan','Daegu','Incheon','Gwangju','Daejeon','Ulsan','Sejong','Gyeonggi','Gangwon','Chungcheong del Norte','Chungcheong del Sur','Jeolla del Norte','Jeolla del Sur','Gyeongsang del Norte','Gyeongsang del Sur','Jeju'],
+zh:['首尔','釜山','大邱','仁川','光州','大田','蔚山','世宗','京畿','江原','忠北','忠南','全北','全南','庆北','庆南','济州'],
+ja:['ソウル','釜山','大邱','仁川','光州','大田','蔚山','世宗','京畿','江原','忠北','忠南','全北','全南','慶北','慶南','済州'],
+ru:['Сеул','Пусан','Тэгу','Инчхон','Кванджу','Тэджон','Ульсан','Седжон','Кёнгидо','Канвондо','Чхунчхон-Пукто','Чхунчхон-Намдо','Чолла-Пукто','Чолла-Намдо','Кёнсан-Пукто','Кёнсан-Намдо','Чеджу']
+};
+var countryNames={
+ar:{china:'الصين',japan:'اليابان',philippines:'الفلبين',indonesia:'إندونيسيا',malaysia:'ماليزيا',thailand:'تايلاند',vietnam:'فيتنام',nepal:'نيبال',india:'الهند',pakistan:'باكستان',iran:'إيران',uae:'الإمارات العربية المتحدة','saudi-arabia':'المملكة العربية السعودية',turkiye:'تركيا',morocco:'المغرب',egypt:'مصر','south-africa':'جنوب أفريقيا',spain:'إسبانيا',uk:'المملكة المتحدة',france:'فرنسا',germany:'ألمانيا',italy:'إيطاليا',canada:'كندا',usa:'الولايات المتحدة',mexico:'المكسيك',brazil:'البرازيل',argentina:'الأرجنتين',colombia:'كولومبيا',australia:'أستراليا','new-zealand':'نيوزيلندا'},
+fr:{china:'CHINE',japan:'JAPON',philippines:'PHILIPPINES',indonesia:'INDONÉSIE',malaysia:'MALAISIE',thailand:'THAÏLANDE',vietnam:'VIETNAM',nepal:'NÉPAL',india:'INDE',pakistan:'PAKISTAN',iran:'IRAN',uae:'ÉMIRATS ARABES UNIS','saudi-arabia':'ARABIE SAOUDITE',turkiye:'TURQUIE',morocco:'MAROC',egypt:'ÉGYPTE','south-africa':'AFRIQUE DU SUD',spain:'ESPAGNE',uk:'ROYAUME-UNI',france:'FRANCE',germany:'ALLEMAGNE',italy:'ITALIE',canada:'CANADA',usa:'ÉTATS-UNIS',mexico:'MEXIQUE',brazil:'BRÉSIL',argentina:'ARGENTINE',colombia:'COLOMBIE',australia:'AUSTRALIE','new-zealand':'NOUVELLE-ZÉLANDE'},
+es:{china:'CHINA',japan:'JAPÓN',philippines:'FILIPINAS',indonesia:'INDONESIA',malaysia:'MALASIA',thailand:'TAILANDIA',vietnam:'VIETNAM',nepal:'NEPAL',india:'INDIA',pakistan:'PAKISTÁN',iran:'IRÁN',uae:'EMIRATOS ÁRABES UNIDOS','saudi-arabia':'ARABIA SAUDITA',turkiye:'TURQUÍA',morocco:'MARRUECOS',egypt:'EGIPTO','south-africa':'SUDÁFRICA',spain:'ESPAÑA',uk:'REINO UNIDO',france:'FRANCIA',germany:'ALEMANIA',italy:'ITALIA',canada:'CANADÁ',usa:'ESTADOS UNIDOS',mexico:'MÉXICO',brazil:'BRASIL',argentina:'ARGENTINA',colombia:'COLOMBIA',australia:'AUSTRALIA','new-zealand':'NUEVA ZELANDA'}
+};
+function currentLang(){var parts=location.pathname.toLowerCase().split('/').filter(Boolean),registry=window.GN24_COUNTRY_REGISTRY||{},cfg=registry[parts[0]],raw=(cfg&&cfg.language)||document.documentElement.lang||'ko';return String(raw).toLowerCase().split('-')[0]}
+function countryMarkup(){var lang=currentLang(),dict=countryNames[lang]||{};return groups.map(function(g){return '<section class="gn24-country-group"><h3>'+g[0]+'</h3>'+g[1].map(function(x){var name=dict[x[2]]||x[1];return '<a class="gn24-country-link '+(x[3]?'is-open':'is-founding')+'" href="/'+x[2]+'/"><span>'+x[0]+' '+name+'</span><small>'+(x[3]?'OPEN':'FOUNDING')+'</small></a>'}).join('')+'</section>'}).join('')}
+function regionMarkup(){var lang=currentLang(),names=regionNames[lang]||regionNames.en;return '<div class="gn24-mega-grid">'+regions.map(function(r,i){return '<a href="'+r[1]+'">'+(names[i]||r[0])+'</a>'}).join('')+'</div>'}
 function fillHome(){var box=document.getElementById('gn24MegaCountries');if(box)box.innerHTML=countryMarkup()}
 function installBar(){
  var t=navLanguage();
