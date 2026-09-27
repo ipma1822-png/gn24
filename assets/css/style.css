@@ -1530,3 +1530,10 @@
 
 /* GN24 v3.5.3 · reliable country flags */
 .article-edition-flag{display:inline-flex;align-items:center;justify-content:center;width:34px;min-width:34px}.article-edition-flag-img{display:block;width:30px;height:20px;object-fit:cover;border:1px solid #d2d8df;box-shadow:0 1px 2px #0002}.article-edition-mini-flag{display:inline-flex;vertical-align:middle;margin-right:4px}.article-edition-mini-flag .article-edition-flag-img{width:22px;height:15px}.article-edition-pin{display:inline-block;width:12px;height:12px;border-radius:50%;background:#d7a928;box-shadow:0 0 0 4px #fff3c4}@media(max-width:700px){.article-edition-flag{width:30px;min-width:30px}.article-edition-flag-img{width:27px;height:18px}}
+
+.gn24-attention-quicklinks{border-top:1px solid var(--line);margin-top:12px;padding-top:13px}
+.gn24-attention-quicklinks h3{margin:0 0 5px;font-size:13px;font-weight:800;color:var(--ink)}
+.gn24-attention-quicklinks nav{display:flex;flex-direction:column}
+.attention-panel .gn24-attention-quicklinks a{display:block;padding:7px 2px;font-size:13px;font-weight:600;line-height:1.35;color:var(--ink)}
+.attention-panel .gn24-attention-quicklinks a:before{content:none}
+.attention-panel .gn24-attention-quicklinks a:hover{text-decoration:underline}
