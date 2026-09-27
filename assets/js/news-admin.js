@@ -148,7 +148,6 @@
 
   function renderList(){
     const q=clean(els.search.value).toLowerCase();
-    const region=els.regionFilter?.value||'';
     const category=els.categoryFilter?.value||'';
     const issue=els.issueFilter?.value||'';
     const imageCounts=new Map();
@@ -171,6 +170,7 @@
       els.categoryFilter.replaceChildren(new Option('전체 카테고리',''),...categories.map(c=>new Option(c,c)));
       if(categories.includes(old))els.categoryFilter.value=old;
     }
+    const region=els.regionFilter?.value||'';
     let data=[...state.articles];
     if(region)data=data.filter(a=>(a.regionCode||a.region_code||'')===region);
     if(category)data=data.filter(a=>clean(a.category)===category);
