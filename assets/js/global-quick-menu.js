@@ -17,7 +17,7 @@
     add('🏠 GLOBAL NEWS24 HOME','/');
     var current=element('div','gn24-quick-current','📍 '+editionLabel());panel.appendChild(current);
     add('🇰🇷 KOREA · 17 REGIONS','/region/#korea-regions');
-    add('🌐 WORLD NETWORK · ALL 32','/region/#global-editions');
+    add('🌐 WORLD NETWORK · ALL 34','/region/#global-editions');
     panel.appendChild(element('div','gn24-quick-subheading','OPEN EDITIONS'));
     open.forEach(function(item){add(flag(item[1])+' '+item[2],'/'+item[0]+'/')});
     add('🔎 NEWSROOM / SEARCH','/pages/newsroom/');
