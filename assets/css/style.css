@@ -1537,3 +1537,9 @@
 .attention-panel .gn24-attention-quicklinks a{display:block;padding:7px 2px;font-size:13px;font-weight:600;line-height:1.35;color:var(--ink)}
 .attention-panel .gn24-attention-quicklinks a:before{content:none}
 .attention-panel .gn24-attention-quicklinks a:hover{text-decoration:underline}
+
+@media(min-width:901px){
+  .news-columns{align-items:stretch}
+  .news-columns .attention-panel{align-self:stretch;display:flex;flex-direction:column}
+  .news-columns .gn24-attention-quicklinks{margin-top:auto}
+}
