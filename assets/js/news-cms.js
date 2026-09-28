@@ -326,16 +326,14 @@ async function loadReporters(){
   const {data,error}=await sb.from('gn24_reporters').select('*').order('display_order',{ascending:true}).order('name',{ascending:true});
   if(error){$('#reporterManagerStatus').textContent='기자 불러오기 실패: '+error.message;return;}
   reporterRows=data||[];
-  const {data:juniors,error:juniorError}=await sb.from('gn24_junior_reporters').select('real_name,reporter_id').eq('status','ACTIVE').order('real_name',{ascending:true});
-  juniorReporterRows=juniorError?[]:(juniors||[]);
-  if(juniorError)console.warn('GN24 Junior reporters:',juniorError);
   reporterRender();
   refreshReporterSelect();
 }
 function refreshReporterSelect(){
   const sel=$('#fReporterId'); if(!sel)return;
-  const old=sel.value;
-  sel.innerHTML='<option value="">직접 입력 / 편집부</option>'+reporterRows.filter(r=>r.status==='active').map(r=>`<option value="${reporterEsc(r.id)}">${reporterEsc(r.name)} · ${reporterEsc(r.role||'기자')}</option>`).join('')+juniorReporterRows.filter(r=>r.reporter_id).map(r=>`<option value="${reporterEsc(r.reporter_id)}">${reporterEsc(r.real_name)} [꿈나무 기자]</option>`).join('');
+  const old=sel.value,selectedJunior=[...sel.options].find(o=>o.value===old&&/^GN24-JR-[0-9]{4}$/.test(old));
+  sel.innerHTML='<option value="">직접 입력 / 편집부</option>'+reporterRows.filter(r=>r.status==='active').map(r=>`<option value="${reporterEsc(r.id)}">${reporterEsc(r.name)} · ${reporterEsc(r.role||'기자')}</option>`).join('');
+  if(selectedJunior)sel.add(new Option(selectedJunior.textContent,old));
   if([...sel.options].some(o=>o.value===old))sel.value=old;
 }
 async function saveReporter(e){
@@ -381,6 +379,41 @@ reporterForm?.addEventListener('submit',saveReporter);
 $('#reporterDeleteBtn')?.addEventListener('click',deleteReporter);
 document.querySelectorAll('[data-reporter-filter]').forEach(b=>b.addEventListener('click',()=>{reporterFilter=b.dataset.reporterFilter;reporterRender()}));
 reporterList?.addEventListener('click',e=>{const b=e.target.closest('[data-reporter-id]');if(!b)return;reporterFill(reporterRows.find(r=>r.id===b.dataset.reporterId));reporterRender()});
+let juniorSearchTimer=0,juniorSearchSeq=0;
+$('#fJuniorReporterSearch')?.addEventListener('input',e=>{
+  clearTimeout(juniorSearchTimer);
+  const results=$('#juniorReporterResults'),term=e.target.value.trim().replace(/[%(),]/g,'');
+  const seq=++juniorSearchSeq;
+  results.replaceChildren();
+  if(term.length<2)return;
+  juniorSearchTimer=setTimeout(async()=>{
+    const {data,error}=await sb.from('gn24_junior_reporters').select('real_name,nickname,reporter_id').eq('status','ACTIVE').or('real_name.ilike.%'+term+'%,nickname.ilike.%'+term+'%').order('real_name',{ascending:true}).limit(10);
+    if(seq!==juniorSearchSeq)return;
+    if(error){results.textContent='검색할 수 없습니다.';return}
+    juniorReporterRows=data||[];
+    if(!juniorReporterRows.length){results.textContent='검색 결과가 없습니다.';return}
+    juniorReporterRows.forEach(r=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.textContent=(r.real_name||'')+' | '+(r.nickname||'')+' | 꿈나무 기자';
+      button.style.cssText='display:block;width:100%;margin-top:4px;padding:8px;text-align:left;border:1px solid #dce6f0;border-radius:8px;background:#fff;cursor:pointer';
+      button.onclick=()=>{
+        const sel=$('#fReporterId');
+        if(!sel)return;
+        const old=sel.querySelector('option[data-junior-search]');
+        if(old)old.remove();
+        const option=new Option((r.real_name||'')+' [꿈나무 기자]',r.reporter_id);
+        option.dataset.juniorSearch='1';
+        sel.add(option);
+        sel.value=r.reporter_id;
+        sel.dispatchEvent(new Event('change',{bubbles:true}));
+        results.replaceChildren();
+        e.target.value='';
+      };
+      results.appendChild(button);
+    });
+  },250);
+});
 $('#fReporterId')?.addEventListener('change',e=>{
   const r=reporterRows.find(x=>x.id===e.target.value);
   const junior=juniorReporterRows.find(x=>x.reporter_id===e.target.value);
