@@ -36,6 +36,7 @@ var groups=[
 ['OCEANIA',[['🇦🇺','AUSTRALIA','australia',1],['🇳🇿','NEW ZEALAND','new-zealand',1]]]
 ];
 var regionNames={
+ko:['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'],
 en:['Seoul','Busan','Daegu','Incheon','Gwangju','Daejeon','Ulsan','Sejong','Gyeonggi','Gangwon','Chungbuk','Chungnam','Jeonbuk','Jeonnam','Gyeongbuk','Gyeongnam','Jeju'],
 ar:['سول','بوسان','دايغو','إنتشون','غوانغجو','دايجون','أولسان','سيجونغ','غيونغي','غانغوون','تشونغبوك','تشونغنام','جيونبوك','جيوننام','غيونغبوك','غيونغنام','جيجو'],
 fr:['Séoul','Busan','Daegu','Incheon','Gwangju','Daejeon','Ulsan','Sejong','Gyeonggi','Gangwon','Chungcheong du Nord','Chungcheong du Sud','Jeolla du Nord','Jeolla du Sud','Gyeongsang du Nord','Gyeongsang du Sud','Jeju'],
@@ -66,7 +67,7 @@ function installBar(){
  var t=navLanguage();
  if(document.querySelector('.gn24-universal-bar'))return;
  var isHQ=!!document.getElementById('gn24MegaCountries');
- var header=isHQ?document.getElementById('siteHeader'):document.querySelector('.global-edition-header,.regional-site-header');
+ var header=isHQ?document.getElementById('siteHeader'):document.querySelector('.global-edition-header,.regional-site-header,.site-header');
  if(!header)return;
  if(isHQ)document.body.classList.add('gn24-hq-mega-ready');
  var bar=document.createElement('nav');bar.className='gn24-universal-bar';bar.setAttribute('aria-label','GLOBAL NEWS24 network editions');
