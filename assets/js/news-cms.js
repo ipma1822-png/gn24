@@ -288,7 +288,7 @@ commentList?.addEventListener('click',e=>{
 /* ===== GN24 v3.3.1 · 기자 관리자 ===== */
 const reporterManageBtn=$('#reporterManageBtn'), reporterManager=$('#reporterManager'),
       reporterList=$('#adminReporterList'), reporterForm=$('#reporterForm');
-let reporterRows=[], reporterFilter='active', selectedReporterId='';
+let reporterRows=[], juniorReporterRows=[], reporterFilter='active', selectedReporterId='';
 
 function reporterEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 function reporterValue(id){return ($(id)?.value||'').trim()}
@@ -326,13 +326,16 @@ async function loadReporters(){
   const {data,error}=await sb.from('gn24_reporters').select('*').order('display_order',{ascending:true}).order('name',{ascending:true});
   if(error){$('#reporterManagerStatus').textContent='기자 불러오기 실패: '+error.message;return;}
   reporterRows=data||[];
+  const {data:juniors,error:juniorError}=await sb.from('gn24_junior_reporters').select('real_name,reporter_id').eq('status','ACTIVE').order('real_name',{ascending:true});
+  juniorReporterRows=juniorError?[]:(juniors||[]);
+  if(juniorError)console.warn('GN24 Junior reporters:',juniorError);
   reporterRender();
   refreshReporterSelect();
 }
 function refreshReporterSelect(){
   const sel=$('#fReporterId'); if(!sel)return;
   const old=sel.value;
-  sel.innerHTML='<option value="">직접 입력 / 편집부</option>'+reporterRows.filter(r=>r.status==='active').map(r=>`<option value="${reporterEsc(r.id)}">${reporterEsc(r.name)} · ${reporterEsc(r.role||'기자')}</option>`).join('');
+  sel.innerHTML='<option value="">직접 입력 / 편집부</option>'+reporterRows.filter(r=>r.status==='active').map(r=>`<option value="${reporterEsc(r.id)}">${reporterEsc(r.name)} · ${reporterEsc(r.role||'기자')}</option>`).join('')+juniorReporterRows.filter(r=>r.reporter_id).map(r=>`<option value="${reporterEsc(r.reporter_id)}">${reporterEsc(r.real_name)} [꿈나무 기자]</option>`).join('');
   if([...sel.options].some(o=>o.value===old))sel.value=old;
 }
 async function saveReporter(e){
@@ -380,7 +383,8 @@ document.querySelectorAll('[data-reporter-filter]').forEach(b=>b.addEventListene
 reporterList?.addEventListener('click',e=>{const b=e.target.closest('[data-reporter-id]');if(!b)return;reporterFill(reporterRows.find(r=>r.id===b.dataset.reporterId));reporterRender()});
 $('#fReporterId')?.addEventListener('change',e=>{
   const r=reporterRows.find(x=>x.id===e.target.value);
-  if(r&&$('#fAuthor'))$('#fAuthor').value=r.name;
+  const junior=juniorReporterRows.find(x=>x.reporter_id===e.target.value);
+  if($('#fAuthor')&&(r||junior))$('#fAuthor').value=r?.name||junior.real_name;
 });
 
 loginBtn?.addEventListener('click',login);loadBtn?.addEventListener('click',loadDbArticles);pubBtn?.addEventListener('click',publish);migrateBtn?.addEventListener('click',migrate);onlineDeleteBtn?.addEventListener('click',deleteOnline);
