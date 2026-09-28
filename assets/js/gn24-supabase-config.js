@@ -10,7 +10,7 @@ window.GN24_SUPABASE = {
 };
 
 // GN24 ARTICLE REGION SELECTOR v3.20.0
-// 국내 17개는 기존 구조를 보존하고 GLOBAL EDITION은 34-country Registry를 읽습니다.
+// 국내 17개는 기존 구조를 보존하고 GLOBAL EDITION은 35-country Registry를 읽습니다.
 (() => {
   if (!/^\/admin-news\.html$/.test(location.pathname)) return;
 
@@ -28,7 +28,7 @@ window.GN24_SUPABASE = {
     CN:'중국',JP:'일본',PH:'필리핀',ID:'인도네시아',MY:'말레이시아',TH:'태국',VN:'베트남',NP:'네팔',IN:'인도',PK:'파키스탄',
     IR:'이란',AE:'UAE',SA:'사우디아라비아',TR:'튀르키예',MA:'모로코',EG:'이집트',ZA:'남아프리카공화국',ES:'스페인',
     GB:'영국',FR:'프랑스',DE:'독일',IT:'이탈리아',CA:'캐나다',US:'미국',MX:'멕시코',BR:'브라질',AR:'아르헨티나',
-    CO:'콜롬비아',AU:'호주',NZ:'뉴질랜드',KE:'케냐',NG:'나이지리아',MN:'몽골',RU:'러시아'
+    CO:'콜롬비아',PA:'파나마',AU:'호주',NZ:'뉴질랜드',KE:'케냐',NG:'나이지리아',MN:'몽골',RU:'러시아'
   });
 
   let regions=[...domesticRegions,...legacyGlobal];
@@ -45,7 +45,7 @@ window.GN24_SUPABASE = {
     const countries=Object.values(registry);
     const slugs=countries.map(x=>x?.slug).filter(Boolean);
     const codes=countries.map(x=>x?.countryCode).filter(Boolean);
-    if(countries.length!==34||slugs.length!==34||new Set(slugs).size!==34||codes.length!==34||new Set(codes).size!==34){
+    if(countries.length!==35||slugs.length!==35||new Set(slugs).size!==35||codes.length!==35||new Set(codes).size!==35){
       console.warn('GN24 country registry validation failed; keeping domestic + legacy GLOBAL selector.');
       return false;
     }
@@ -68,7 +68,7 @@ window.GN24_SUPABASE = {
     if(select())return true;
     const category=document.querySelector('#fCategory');if(!category)return false;
     const row=document.createElement('div');row.className='form-grid two gn24-region-select-row';
-    row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${optionHTML()}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION 34</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
+    row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${optionHTML()}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION 35</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
     category.closest('.form-grid.two')?.insertAdjacentElement('afterend',row);
     document.querySelectorAll('.admin-brand small').forEach(x=>x.textContent='기사 편집실 · v3.21.0');
     const notice=document.querySelector('.notice strong');if(notice)notice.textContent='온라인 편집국 CMS · v3.21.0';
@@ -78,7 +78,7 @@ window.GN24_SUPABASE = {
     if(buildGlobalRegions()){refreshOptions();return;}
     if(document.querySelector('script[data-gn24-country-registry]'))return;
     const script=document.createElement('script');
-    script.src='/assets/global-edition/country-registry.js?v=1.3.0';
+    script.src='/assets/global-edition/country-registry.js?v=1.4.0';
     script.dataset.gn24CountryRegistry='1';
     script.onload=()=>{if(buildGlobalRegions())refreshOptions()};
     script.onerror=()=>console.warn('GN24 country registry load failed; legacy GLOBAL selector remains available.');
