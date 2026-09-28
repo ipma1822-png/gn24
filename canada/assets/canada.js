@@ -6,7 +6,14 @@ const fmt=d=>d?new Date(`${d}T00:00:00`).toLocaleDateString('en-CA',{year:'numer
 const image=a=>a.image||'/assets/images/news/gn24-default-news.svg';
 const url=a=>`/canada/article/?id=${encodeURIComponent(a.id)}`;
 let promise;
-async function data(){if(!promise)promise=fetch(DATA,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Canada content unavailable');return r.json()}).then(rows=>rows.filter(a=>a.edition==='canada'&&a.language==='en').sort((a,b)=>String(b.date).localeCompare(String(a.date))));return promise}
+async function data(){if(!promise)promise=(async()=>{try{
+  const cfg=window.GN24_SUPABASE;if(!cfg?.url||!cfg?.anonKey)throw Error('Canada live feed config unavailable');
+  const params=new URLSearchParams({select:'id,date,category,title,subtitle,summary,image,content,author,image_caption,source_name,source_url,featured,pinned',region_code:'eq.canada',is_published:'eq.true',visibility_scope:'eq.public',order:'date.desc,id.desc'});
+  const r=await fetch(cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_articles?'+params,{cache:'no-store',headers:{apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey}});
+  if(!r.ok)throw Error('Canada live feed HTTP '+r.status);
+  const rows=await r.json();if(!Array.isArray(rows))throw Error('Canada live feed invalid response');
+  return rows.map(a=>({id:String(a.id),date:String(a.date||'').slice(0,10),category:String(a.category||''),title:String(a.title||''),subtitle:String(a.subtitle||''),summary:String(a.summary||''),image:a.image||'',content:Array.isArray(a.content)?a.content.map(String):String(a.content||'').split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean),author:String(a.author||''),imageCaption:String(a.image_caption||''),sourceName:String(a.source_name||''),sourceUrl:String(a.source_url||''),featured:!!a.featured,pinned:!!a.pinned}));
+}catch(error){console.warn('Canada live feed fallback',error);const r=await fetch(DATA,{cache:'no-store'});if(!r.ok)throw Error('Canada content unavailable');const rows=await r.json();return rows.filter(a=>a.edition==='canada'&&a.language==='en').sort((a,b)=>String(b.date).localeCompare(String(a.date)))}})();return promise}
 function bg(a){return `style="background-image:url('${esc(image(a))}'),url('/assets/images/news/gn24-default-news.svg')"`}
 function card(a,i=0){return `<a class="news-card ${i===0?'glow':''}" href="${url(a)}"><div class="thumb" ${bg(a)}></div><div class="body"><span class="badge">${esc(a.category)}</span><h3>${esc(a.title)}</h3><div class="canada-card-meta">${esc(fmt(a.date))}</div></div></a>`}
 function row(a){return `<a class="latest-row" href="${url(a)}"><div class="thumb" ${bg(a)}></div><div><span class="badge">${esc(a.category)}</span><h3>${esc(a.title)}</h3><div class="canada-card-meta">${esc(fmt(a.date))}</div></div></a>`}
