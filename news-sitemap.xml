@@ -342,26 +342,4 @@
       <news:title>السعودية تعزز مكانتها مركزًا عالميًا للتقنية والذكاء الاصطناعي</news:title>
     </news:news>
   </url>
-  <url>
-    <loc>https://news24.ai.kr/share/gn24-20260927-662107/</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Global News24</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-09-27</news:publication_date>
-      <news:title>سه ورزشکار ایرانی در نهمین دوره مسابقات بین‌المللی هنرهای رزمی ۲۰۲۵ موفق به کسب مدال طلا شدند</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://news24.ai.kr/share/gn24-20260927-655979/</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Global News24</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-09-27</news:publication_date>
-      <news:title>이란 태권검도 선수 3명, 제9회 국제무도대회 금메달…ICA 국제대회 기록 공식 등재</news:title>
-    </news:news>
-  </url>
 </urlset>
