@@ -25,7 +25,7 @@ const cfg=window.GN24_SUPABASE||{},root=String(cfg.url||'').replace(/\/$/,'')+'/
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const image='/assets/images/news/gn24-default-news.svg';
 const bg=v=>'style="background-image:url(\''+esc(v||image)+'\'),url(\''+image+'\')"';
-const url=id=>'/share/'+encodeURIComponent(id)+'/';
+const url=id=>'/pages/article/?id='+encodeURIComponent(id);
 const card=a=>'<a class="regional-card" href="'+url(a.id)+'"><div class="regional-thumb" '+bg(a.image)+'></div><div class="regional-card-body"><span>'+esc(a.category||'뉴스')+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.summary||'')+'</p><small>'+esc(String(a.date||'').replaceAll('-','.'))+' · '+esc(a.author||'Global News24')+'</small></div></a>';
 async function rest(path){const r=await fetch(root+path,{cache:'no-store',headers:{apikey:cfg.anonKey}});if(!r.ok)throw new Error('Junior news request failed: '+r.status);return r.json()}
 async function loadAll(path){const rows=[];for(let offset=0;;offset+=1000){const batch=await rest(path+'&limit=1000&offset='+offset);rows.push(...batch);if(batch.length<1000)break}return rows}
