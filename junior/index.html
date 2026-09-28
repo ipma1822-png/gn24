@@ -46,7 +46,7 @@
 
     <section class="section" id="news" aria-labelledby="news-title"><div class="wrap">
       <div class="section-head"><div><span class="kicker">02 JUNIOR NEWS</span><h2 id="news-title">오늘의 주니어 뉴스</h2><p class="section-lead">친구들이 발견한 소중한 이야기가 뉴스가 됩니다.</p></div><span class="demo">DEMO</span></div>
-      <div class="grid">
+      <div class="grid" id="juniorNewsList">
         <article class="card news-card"><span class="demo">DEMO</span><h3>우리 동네의 작은 친절</h3><p>서로 돕는 이웃을 만나 질문하고 기록해 보는 뉴스 예시입니다.</p></article>
         <article class="card news-card"><span class="demo">DEMO</span><h3>내가 해낸 오늘의 도전</h3><p>새로운 목표에 도전한 과정과 배운 점을 전하는 뉴스 예시입니다.</p></article>
         <article class="card news-card"><span class="demo">DEMO</span><h3>친구에게 듣는 멋진 꿈</h3><p>친구의 꿈을 존중하며 인터뷰하는 뉴스 예시입니다.</p></article>
@@ -81,7 +81,7 @@
     const box=document.getElementById('juniorNewsList'),cfg=window.GN24_SUPABASE;if(!box||!cfg)return;
     const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
     try{
-      const url=cfg.url+'/rest/v1/gn24_articles?select=id,date,title,summary,image,author,reporter_id&region_code=eq.junior&is_published=eq.true&workflow_status=eq.published&visibility_scope=eq.public&order=date.desc,created_at.desc&limit=12';
+      const url=cfg.url+'/rest/v1/gn24_articles?select=id,date,title,summary,image,author,reporter_id&region_code=eq.junior&is_published=eq.true&visibility_scope=eq.public&order=date.desc,created_at.desc&limit=12';
       const r=await fetch(url,{headers:{apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey}});
       if(!r.ok)throw new Error('load failed');
       const rows=await r.json();
