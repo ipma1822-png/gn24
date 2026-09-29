@@ -932,7 +932,7 @@ async function setupArticleReporter(article){
   }
   if(/^GN24-JR-/.test(article.reporterId)){
     try{
-      const res=await fetch('https://plqqowwdbgixtczzyanr.supabase.co/functions/v1/gn24-junior-public-reporters',{cache:'no-store'});
+      const res=await fetch('https://plqqowwdbgixtczzyanr.supabase.co/functions/v1/gn24-junior-public-reporters?reporter_id='+encodeURIComponent(article.reporterId),{cache:'no-store'});
       if(!res.ok)return;
       const payload=await res.json();
       const r=(payload.reporters||[]).find(x=>x.reporter_id===article.reporterId);
