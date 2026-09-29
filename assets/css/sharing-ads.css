@@ -11,5 +11,9 @@
 .gn24-sharing-media img{width:100%;height:100%;object-fit:cover;display:block}
 
 .gn24-sharing-card.is-featured-image{display:block}
-.gn24-sharing-card.is-featured-image .gn24-sharing-media{width:100%;aspect-ratio:16/9;display:block;background:#101d2c}
+.gn24-sharing-card.is-featured-image .gn24-sharing-media{width:76%;height:auto;aspect-ratio:16/9;display:block;margin:6px auto 0;background:#101d2c}
 .gn24-sharing-card.is-featured-image .gn24-sharing-media img{object-fit:contain}
+.gn24-sharing-card.is-featured-image .gn24-sharing-copy{padding:5px 10px 8px}
+.gn24-sharing-card.is-featured-image .gn24-sharing-copy small{font-size:9px;margin-bottom:2px}
+.gn24-sharing-card.is-featured-image .gn24-sharing-copy b{font-size:14px;margin-bottom:2px}
+.gn24-sharing-card.is-featured-image .gn24-sharing-copy span{font-size:11px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
