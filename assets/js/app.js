@@ -920,6 +920,12 @@ async function setupArticleReporter(article){
   const lang=edition?.type==='global'?articleUiLang(edition.code):'ko';
   const tail=GN24_ARTICLE_TAIL[lang]||GN24_ARTICLE_TAIL.en;
   authorName.textContent=article?.author&&article.author!=='Global News24 편집부'?article.author:lang==='ko'?'Global News24 편집부':tail.desk;
+  if(!article?.reporterId&&article?.id){
+    try{
+      const rows=await gn24DbFetch(`gn24_articles?id=eq.${encodeURIComponent(article.id)}&select=reporter_id,author&limit=1`)||[];
+      if(rows[0]?.reporter_id) article.reporterId=rows[0].reporter_id;
+    }catch(e){}
+  }
   if(!article?.reporterId){
     if(more) more.href='/pages/reporters/';
     return;
