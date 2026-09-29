@@ -924,6 +924,27 @@ async function setupArticleReporter(article){
     if(more) more.href='/pages/reporters/';
     return;
   }
+  if(/^GN24-JR-/.test(article.reporterId)){
+    try{
+      const res=await fetch('https://plqqowwdbgixtczzyanr.supabase.co/functions/v1/gn24-junior-public-reporters',{cache:'no-store'});
+      if(!res.ok)return;
+      const payload=await res.json();
+      const r=(payload.reporters||[]).find(x=>x.reporter_id===article.reporterId);
+      if(!r)return;
+      authorName.textContent=(r.real_name||article.author||'꿈나무')+' 기자';
+      if(avatar&&r.photo_url){
+        avatar.textContent='';
+        avatar.style.backgroundImage=`url("${String(r.photo_url).replace(/"/g,'%22')}")`;
+        avatar.classList.add('reporter-photo');
+      }
+      const span=info?.querySelector('span');
+      const p=info?.querySelector('p');
+      if(span)span.textContent='GN24 꿈나무 기자단 · '+r.reporter_id;
+      if(p)p.textContent='취재·작성: '+(r.real_name||article.author||'꿈나무')+' 기자 · 편집·발행: GLOBAL NEWS24';
+      if(more){more.href='/junior/news/';more.textContent='주니어신문으로 ›';}
+    }catch(e){console.warn('GN24 Junior reporter profile load failed',e)}
+    return;
+  }
   try{
     const rows=await gn24DbFetch(`gn24_reporters?id=eq.${encodeURIComponent(article.reporterId)}&status=eq.active&select=id,name,role,affiliation,photo_url,bio,specialties,region,public_email&limit=1`)||[];
     const r=rows[0]; if(!r)return;
