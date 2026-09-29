@@ -2,6 +2,171 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-950595/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>우리 학교 앞은 왜 하교시간에 자동차가 멈출까요?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-854753/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>Maestro Ricardo Lee fortalece el intercambio de las artes marciales coreanas en Panamá</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-547049/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>신정시장에 가면 무엇을 만날 수 있을까요?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-492748/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>우리 집에서 학교까지 걸어보니, 어디를 가장 조심해야 할까요?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-429786/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>놀이터일까, 운동장일까? 어린이 눈으로 본 신정공원</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-395690/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>Panamá refuerza la prevención y la cooperación comunitaria frente a los desafíos de seguridad</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-350055/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>주하분식에서 친구들이 좋아하는 메뉴는 무엇일까요?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-342375/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>Emprendedores panameños ganan protagonismo en la transformación de la economía nacional</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-280299/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>학교가 끝나면 생각나는 간식, 월봉분식에서 친구들에게 물어봤어요</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-251224/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>Canal de Panamá avanza con su planificación para 2027 y prepara nuevas inversiones</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-167199/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>고양이가 귀엽다고 아무 음식이나 줘도 될까요?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-141477/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>Panamá fortalece su estrategia para atraer inversión internacional y generar empleo</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-114366/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>신정동 골목에서 만난 길고양이, 어디에서 살고 있을까요?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-077209/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>학교 앞 월봉문구, 친구들은 무엇을 가장 좋아할까요?</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260929-064616/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-29</news:publication_date>
+      <news:title>차량통제가 끝나면 학교 앞은 정말 안전할까요?</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260928-930169/</loc>
     <news:news>
       <news:publication>
@@ -230,6 +395,17 @@
       </news:publication>
       <news:publication_date>2026-09-28</news:publication_date>
       <news:title>Canadian Dollar Falls to Eight-Week Low as Markets Weigh Economic Slowdown</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260928-184755/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28</news:publication_date>
+      <news:title>Panamá impulsa la producción nacional y fortalece el futuro de su sector agropecuario</news:title>
     </news:news>
   </url>
   <url>
