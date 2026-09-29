@@ -942,6 +942,10 @@ async function setupArticleReporter(article){
       if(span)span.textContent='GN24 꿈나무 기자단 · '+r.reporter_id;
       if(p)p.textContent='취재·작성: '+(r.real_name||article.author||'꿈나무')+' 기자 · 편집·발행: GLOBAL NEWS24';
       if(more){more.href='/junior/news/';more.textContent='주니어신문으로 ›';}
+      const meta=document.getElementById('aMeta');
+      if(meta){
+        meta.innerHTML='<span>'+esc(fmt(article.date))+'</span><span class="junior-top-reporter"><img src="'+esc(r.photo_url||'')+'" alt="" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin:0 7px 0 4px"><b>'+esc(r.real_name||article.author||'꿈나무')+' 기자</b> · GN24 꿈나무 기자단 · '+esc(r.reporter_id)+'</span>';
+      }
     }catch(e){console.warn('GN24 Junior reporter profile load failed',e)}
     return;
   }
