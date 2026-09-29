@@ -55,7 +55,7 @@
     cache: 'no-store', headers
   }).then(response => {
     if (!response.ok) throw new Error('Country feed HTTP ' + response.status);
-    return response.json();
+    return response.json().then(rows => (Array.isArray(rows) ? rows : []).filter(row => String(row.region_code || '').trim().toLowerCase() !== 'junior'));
   });
 
   const localParams = {
@@ -69,6 +69,7 @@
 
   const networkParams = {
     select: fields,
+    region_code: 'not.eq.junior',
     is_published: 'eq.true',
     visibility_scope: 'eq.public',
     order: 'date.desc,id.desc',
