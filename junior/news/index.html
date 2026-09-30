@@ -37,7 +37,7 @@ try{
  const q=new URLSearchParams(location.search),cat=q.get('cat');
  const path='gn24_articles?select=id,date,title,category,author,reporter_id,summary,image,region_code,is_published&is_published=eq.true&region_code=eq.junior&order=date.desc,created_at.desc';
  try{const rr=await fetch('https://plqqowwdbgixtczzyanr.supabase.co/functions/v1/gn24-junior-public-reporters',{cache:'no-store'});if(rr.ok){const data=await rr.json();reporterMap=new Map((data.reporters||[]).map(p=>[p.reporter_id,p]))}}catch(e){console.warn('GN24 Junior reporters',e)}
- const all=await loadAll(path),rows=cat?all.filter(a=>a.category===cat):all;
+ const all=await loadAll(path),reporterId=q.get('reporter'),rows=all.filter(a=>(!cat||a.category===cat)&&(!reporterId||a.reporter_id===reporterId));
  document.getElementById('regionalCount').textContent='주니어 기사 '+rows.length+'건';
  if(rows.length){const a=rows[0];lead.href=url(a.id);lead.innerHTML='<div class="regional-lead-image" '+bg(a.image)+'></div><div><span>'+esc(a.category||'주니어뉴스')+'</span><h2>'+esc(a.title)+'</h2><p>'+esc(a.summary||'')+'</p><small>'+esc(String(a.date||'').replaceAll('-','.'))+' · '+esc(a.author||'Global News24')+'</small></div>'}
  else{lead.removeAttribute('href');lead.innerHTML=''}
