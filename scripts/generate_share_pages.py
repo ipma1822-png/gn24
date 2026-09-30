@@ -189,6 +189,7 @@ def page(a, reporter_photos=None):
     <h1>{esc(title)}</h1>
     <div class="subtitle">{esc(str(a.get("subtitle") or a.get("summary") or ""))}</div>
     <div class="meta" style="display:flex;align-items:center;min-height:60px;overflow:visible">{reporter_meta}</div>
+    {('<div style="margin:10px 0 4px"><a href="/junior/news/" style="display:inline-flex;align-items:center;padding:7px 12px;border:1px solid #d7e0ea;border-radius:8px;font-size:13px;font-weight:800;text-decoration:none">← 꿈나무 기자단 뉴스로 돌아가기</a></div>' if junior_reporter else '')}
     <figure class="article-figure">
       <img class="hero" src="{esc(image)}" alt="{esc(title)}">
       {f'<figcaption class="caption">{esc(caption)}</figcaption>' if caption else ''}
