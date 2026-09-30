@@ -73,6 +73,10 @@ def page(a):
     date = str(a.get("date") or "")
     category = str(a.get("category") or "뉴스")
     author_name = str(a.get("author") or "Global News24 편집부").strip()
+    reporter_id = str(a.get("reporter_id") or "").strip()
+    reporter_photo = str(a.get("reporter_photo_url") or "").strip()
+    junior_reporter = reporter_id.startswith("GN24-JR-")
+    reporter_meta = (f'<span class="junior-static-reporter">' + (f'<img src="{esc(reporter_photo)}" alt="" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px">' if reporter_photo else '') + f'<b>{esc(author_name)} 기자</b> · GN24 꿈나무 기자단 · {esc(reporter_id)}</span>') if junior_reporter else f'{esc(author_name)} · Global News24'
     author_type = "Organization" if author_name in ("Global News24", "Global News24 편집부", "글로벌뉴스24", "글로벌뉴스24 편집부") else "Person"
     modified = str(a.get("updated_at") or "").strip()
     structured = {
@@ -191,7 +195,7 @@ def page(a):
     <span class="badge">{esc(category)}</span>
     <h1>{esc(title)}</h1>
     <div class="subtitle">{esc(str(a.get("subtitle") or a.get("summary") or ""))}</div>
-    <div class="meta">{esc(date)} · {esc(author_name)} · Global News24</div>
+    <div class="meta">{esc(date)} · {reporter_meta}</div>
     <figure class="article-figure">
       <img class="hero" src="{esc(image)}" alt="{esc(title)}">
       {f'<figcaption class="caption">{esc(caption)}</figcaption>' if caption else ''}
@@ -218,7 +222,7 @@ def load_config():
 def load_remote():
     url, key = load_config()
     q = urllib.parse.urlencode({
-        "select":"id,title,subtitle,summary,image,image_caption,date,category,author,content,source_name,source_url,is_published,updated_at,search_priority",
+        "select":"id,title,subtitle,summary,image,image_caption,date,category,author,reporter_id,content,source_name,source_url,is_published,updated_at,search_priority",
         "is_published":"eq.true",
         "order":"date.desc,id.desc"
     })
