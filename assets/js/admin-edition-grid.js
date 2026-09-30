@@ -6,7 +6,6 @@
 
   const DOMESTIC = new Set(['seoul','busan','daegu','incheon','gwangju','daejeon','ulsan','sejong','gyeonggi','gangwon','chungbuk','chungnam','jeonbuk','jeonnam','gyeongbuk','gyeongnam','jeju']);
   const EXPECTED_DOMESTIC = 17;
-  const EXPECTED_GLOBAL = 36;
   let root = null;
   let select = null;
   let lastValue = Symbol('init');
@@ -95,9 +94,9 @@
     if (!select || root) return false;
 
     const { national, junior, domestic, global } = classifyOptions();
-    if (!national || !junior || domestic.length !== EXPECTED_DOMESTIC || global.length !== EXPECTED_GLOBAL) return false;
+    if (!national || !junior || domestic.length !== EXPECTED_DOMESTIC || global.length === 0) return false;
     const allValues = [...domestic, ...global].map(o => o.value);
-    if (new Set(allValues).size !== EXPECTED_DOMESTIC + EXPECTED_GLOBAL) {
+    if (new Set(allValues).size !== domestic.length + global.length) {
       fail('duplicate or missing edition values');
       return false;
     }
@@ -113,7 +112,7 @@
     root.className = 'gn24-edition-grid-selector';
     root.innerHTML = `
       <div class="gn24-edition-grid-head">
-        <div><b>배포판 선택</b><small>전국 공통 + 대한민국 지역판 17 + GLOBAL EDITION 36</small></div>
+        <div><b>배포판 선택</b><small>전국 공통 + 대한민국 지역판 17 + GLOBAL EDITION ${global.length}</small></div>
         <div class="gn24-edition-current"><span>현재 배포판</span><strong data-gn24-current-edition></strong></div>
       </div>
     `;
@@ -123,7 +122,7 @@
     root.appendChild(nationalWrap);
     root.appendChild(section('📰 GN24 JUNIOR PRESS', [junior], 'junior'));
     root.appendChild(section('🇰🇷 대한민국 지역판 · 17', domestic, 'domestic'));
-    root.appendChild(section('🌐 GLOBAL EDITION · 36', global, 'global'));
+    root.appendChild(section('🌐 GLOBAL EDITION · ' + global.length, global, 'global'));
 
     row.insertAdjacentElement('beforebegin', root);
     select.classList.add('gn24-select-compat-hidden');
@@ -141,7 +140,7 @@
       if (s) {
         select = s;
         const counts = classifyOptions();
-        if (counts.junior && counts.domestic.length === EXPECTED_DOMESTIC && counts.global.length === EXPECTED_GLOBAL) {
+        if (counts.junior && counts.domestic.length === EXPECTED_DOMESTIC && counts.global.length > 0) {
           clearInterval(timer);
           try {
             if (!build()) fail('initialization did not complete');
