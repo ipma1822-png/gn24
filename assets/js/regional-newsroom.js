@@ -9,7 +9,12 @@ function setRegionalToday(){
  el.textContent=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',weekday:'long'}).format(new Date());
 }
 function renderBreaking(all){
- const box=$('.regional-breaking .ticker');if(!box)return;
+ let box=$('.regional-breaking .ticker');
+ if(!box){
+  const header=$('.regional-site-header');if(!header)return;
+  header.insertAdjacentHTML('afterend','<div class="breaking regional-breaking" id="breaking"><div class="wrap breaking-inner"><strong><i></i> 속보</strong><div class="ticker" aria-label="GLOBAL NEWS24 실시간 주요뉴스"><span id="regionalBreakingText">Global News24 실시간 주요뉴스</span></div><a href="/pages/newsroom/">전체보기</a></div></div>');
+  box=$('.regional-breaking .ticker');
+ }
  const rows=all.filter(a=>a.title).slice(0,10);if(!rows.length)return;
  const one=rows.map((a,i)=>`<a class="gn24-breaking-item" href="${articleURL(a.id)}"><em>${i?'NEWS':'속보'}</em><span>${esc(a.title)}</span><i>◆</i></a>`).join('');
  box.innerHTML=`<div class="gn24-breaking-track">${one}${one}</div>`;
