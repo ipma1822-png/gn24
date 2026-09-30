@@ -78,7 +78,7 @@ def page(a, reporter_photos=None):
     if not reporter_photo and reporter_photos:
         reporter_photo = str(reporter_photos.get(reporter_id) or "").strip()
     junior_reporter = reporter_id.startswith("GN24-JR-")
-    reporter_meta = (f'<span class="junior-static-reporter" style="display:inline-flex;align-items:center;gap:9px;flex-wrap:wrap">' + (f'<img src="{esc(reporter_photo)}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid #e5e7eb">' if reporter_photo else '') + f'<b style="font-size:14px">{esc(author_name)} 꿈나무기자</b><span>·</span><span>GN24 꿈나무 기자단</span><span>·</span><b>🥉 BRONZE REPORTER</b><span>·</span><span>LV.1 체험기자</span></span>') if junior_reporter else f'{esc(author_name)} · Global News24'
+    reporter_meta = (f'<span class="junior-static-reporter" style="display:inline-flex;align-items:center;gap:10px;white-space:nowrap">' + (f'<img src="{esc(reporter_photo)}" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid #e5e7eb;flex:0 0 auto">' if reporter_photo else '') + f'<b style="font-size:14px">{esc(author_name)} 꿈나무기자</b><span>·</span><span>GN24 꿈나무 기자단</span><span>·</span><b>🥉 BRONZE REPORTER</b><span>·</span><span>LV.1 체험기자</span></span>') if junior_reporter else f'{esc(author_name)} · Global News24'
     author_type = "Organization" if author_name in ("Global News24", "Global News24 편집부", "글로벌뉴스24", "글로벌뉴스24 편집부") else "Person"
     modified = str(a.get("updated_at") or "").strip()
     structured = {
