@@ -292,6 +292,38 @@ function applyArticleEditionContext(a,data){
   const relatedLink=document.querySelector('.article-related .section-head a');if(relatedLink){relatedLink.href=info.href;relatedLink.textContent=info.home+' →';}
   return peers.length?peers:data.filter(x=>x.id!==a.id);
 }
+async function setupArticleReporter(a){
+  if(!a || a.reporterId !== 'GN24-JR-0055') return;
+
+  const photo='https://static.wixstatic.com/media/abf917_40a4561f2ad14a61a61649445cd482c4~mv2.png';
+  const name='오승윤';
+  const reporterId='GN24-JR-0055';
+
+  const meta=document.querySelector('#aMeta');
+
+  if(meta){
+    meta.innerHTML=`
+      <span>${esc(fmt(a.date))}</span>
+      <span style="display:inline-flex;align-items:center;gap:8px">
+        <img
+          src="${photo}"
+          alt="${name} 기자"
+          style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid #e5e7eb"
+        >
+        <span>
+          <b style="display:block">${name} 기자</b>
+          <small style="display:block">GN24 꿈나무 기자단 · ${reporterId}</small>
+        </span>
+      </span>
+      <span>Global News24</span>
+    `;
+  }
+
+  const authorName=document.querySelector('#articleAuthorName');
+  if(authorName){
+    authorName.textContent=`${name} 기자`;
+  }
+}
 async function loadArticle(){const shell=$('#articleShell');if(!shell)return;const id=new URLSearchParams(location.search).get('id'),data=sortNews(await loadNewsData()),a=data.find(x=>x.id===id)||data[0];if(!a)return;document.title=`${a.title} | Global News24`;$('#aCat').textContent=a.category||'뉴스';$('#aTitle').textContent=a.title;$('#aSub').textContent=a.subtitle||a.summary||'';const edition=articleEditionInfo(a),articleLang=edition?.type==='global'?articleUiLang(edition.code):'ko';const metaAuthor=a.author&&a.author!=='Global News24 편집부'?a.author:articleLang==='ko'?'Global News24 편집부':(GN24_ARTICLE_TAIL[articleLang]||GN24_ARTICLE_TAIL.en).desk;$('#aMeta').innerHTML=`<span>${esc(fmt(a.date))}</span><span>${esc(metaAuthor)}</span><span>Global News24</span>`;applyBg($('#aHero'),a.image);const caption=$('#aCaption');if(caption)caption.textContent=a.imageCaption||`▲ ${a.title} 관련 이미지`;const body=Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[a.summary||'']);const rawBody=body.flatMap(p=>String(p||'').split(/\n\s*\n|\r?\n(?=\S)/)).map(p=>p.trim()).filter(Boolean);const isSubheadText=p=>p.length<=48&&!/[.!?。！？]$/.test(p)&&!/(다|요)[.!?]?$/.test(p);const sentenceSplit=p=>{if(isSubheadText(p))return [p];const parts=(p.match(/[^.!?。！？]+[.!?。！？]+(?:[\"'”’)]*)|[^.!?。！？]+$/g)||[p]).map(x=>x.trim()).filter(Boolean);if(parts.length<=1)return [p];const groups=[];let buf='';let count=0;for(const sent of parts){const next=(buf?buf+' ':'')+sent;if(buf&&(count>=2||next.length>190)){groups.push(buf);buf=sent;count=1}else{buf=next;count++}}if(buf)groups.push(buf);return groups};const cleanBody=rawBody.flatMap(sentenceSplit);let paraIndex=0;$('#aBody').innerHTML=cleanBody.map((p)=>{if(isSubheadText(p))return `<h2 class="article-subhead">${esc(p)}</h2>`;const cls=paraIndex++===0?' class="article-lead"':'';return `<p${cls}>${esc(p)}</p>`}).join('');$('#aSource')&&($('#aSource').innerHTML=`<strong>자료·출처</strong><br>${esc(a.sourceName||'Global News24')}${a.sourceUrl?` · <a href="${esc(a.sourceUrl)}" target="_blank" rel="noopener">원문/관련자료</a>`:''}`);const tags=a.tags||[];
 const oldViewline=document.querySelector('.article-shell>.article-viewline');
 if(oldViewline)oldViewline.remove();
