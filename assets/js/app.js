@@ -323,12 +323,12 @@ if(bottomLatest){
   bottomLatest.innerHTML=editionData.slice(0,6).map(x=>`<a class="bottom-latest-item" href="${seoArticleURL(x)}">${esc(x.title)}</a>`).join('');
 }
 
+await setupArticleReporter(a);
 setArticleSocialMeta(a);
 gn24PromoteStaticShareUrl(a);
 setupArticleTools(a);
 setupArticleCommunity(a);
 setupArticleViewsAndPopular(a,data);
-setupArticleReporter(a);
 const articleEdition=articleEditionInfo(a);
 if(articleEdition?.type==='global')localizeArticleUi(articleEdition);
 }
