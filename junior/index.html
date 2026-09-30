@@ -90,7 +90,9 @@
       const r=await fetch(url,{headers:{apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey}});
       if(!r.ok)throw new Error('load failed');
       const rows=await r.json();
-      box.innerHTML=rows.length?rows.map(a=>`<a class="card news-card" href="/pages/article/?id=${encodeURIComponent(a.id)}" style="text-decoration:none;color:inherit">${a.image?`<div style="aspect-ratio:16/9;border-radius:12px;background:url('${esc(a.image)}') center/cover no-repeat;margin-bottom:14px"></div>`:''}<span class="kicker">GN24 JUNIOR PRESS</span><h3>${esc(a.title)}</h3><p>${esc(a.summary||'')}</p><small>${esc(a.author||'GN24 주니어 기자')}</small></a>`).join(''):'<article class="card news-card"><h3>첫 뉴스를 기다리고 있어요.</h3><p>GN24 편집부가 발행한 주니어 기사가 이곳에 표시됩니다.</p></article>';
+      let reporterMap=new Map();
+      try{const pr=await fetch('https://plqqowwdbgixtczzyanr.supabase.co/functions/v1/gn24-junior-public-reporters',{cache:'no-store'});if(pr.ok){const pd=await pr.json();reporterMap=new Map((pd.reporters||[]).map(p=>[p.reporter_id,p]))}}catch(e){console.warn('GN24 Junior reporters',e)}
+      box.innerHTML=rows.length?rows.map(a=>{const p=reporterMap.get(a.reporter_id);const by=p?((p.photo_url?`<img src="${esc(p.photo_url)}" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:cover;display:inline-block;vertical-align:middle;margin-right:6px">`:'')+`<b>${esc(p.real_name)} 꿈나무기자</b>`):esc(a.author||'GN24 주니어 기자');return `<a class="card news-card" href="/share/${encodeURIComponent(a.id)}/" style="text-decoration:none;color:inherit">${a.image?`<div style="aspect-ratio:16/9;border-radius:12px;background:url('${esc(a.image)}') center/cover no-repeat;margin-bottom:14px"></div>`:''}<span class="kicker">GN24 JUNIOR PRESS</span><h3>${esc(a.title)}</h3><p>${esc(a.summary||'')}</p><small>${by}</small></a>`}).join(''):'<article class="card news-card"><h3>첫 뉴스를 기다리고 있어요.</h3><p>GN24 편집부가 발행한 주니어 기사가 이곳에 표시됩니다.</p></article>';
     }catch(e){console.warn('GN24 Junior news',e);}
   })();
   </script>
