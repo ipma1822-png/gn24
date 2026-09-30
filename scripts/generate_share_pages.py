@@ -75,6 +75,8 @@ def page(a):
     author_name = str(a.get("author") or "Global News24 편집부").strip()
     reporter_id = str(a.get("reporter_id") or "").strip()
     reporter_photo = str(a.get("reporter_photo_url") or "").strip()
+    if not reporter_photo and reporter_id == "GN24-JR-0055":
+        reporter_photo = "https://static.wixstatic.com/media/abf917_40a4561f2ad14a61a61649445cd482c4~mv2.png"
     junior_reporter = reporter_id.startswith("GN24-JR-")
     reporter_meta = (f'<span class="junior-static-reporter">' + (f'<img src="{esc(reporter_photo)}" alt="" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px">' if reporter_photo else '') + f'<b>{esc(author_name)} 기자</b> · GN24 꿈나무 기자단 · {esc(reporter_id)}</span>') if junior_reporter else f'{esc(author_name)} · Global News24'
     author_type = "Organization" if author_name in ("Global News24", "Global News24 편집부", "글로벌뉴스24", "글로벌뉴스24 편집부") else "Person"
