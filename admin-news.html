@@ -282,7 +282,7 @@
   <script src="/assets/js/news-admin.js?v=3.23.5"></script>
   <script src="/assets/js/news-cms.js?v=3.5.6"></script>
   <script src="/assets/js/admin-edition-grid.js?v=3.22.2"></script>
-  <script src="/assets/global-edition/country-registry.js?v=1.4.0"></script>
+  <script src="/assets/global-edition/country-registry.js?v=1.4.1"></script>
 <script>
 /* Search UI adapter: #articleRegionFilter remains the existing filter source. */
 (()=>{
@@ -291,7 +291,7 @@
   const domestic=[
     ['seoul','서울'],['busan','부산'],['daegu','대구'],['incheon','인천'],['gwangju','광주'],['daejeon','대전'],['ulsan','울산'],['sejong','세종'],['gyeonggi','경기'],['gangwon','강원'],['chungbuk','충북'],['chungnam','충남'],['jeonbuk','전북'],['jeonnam','전남'],['gyeongbuk','경북'],['gyeongnam','경남'],['jeju','제주']
   ];
-  const ko={china:'중국',japan:'일본',philippines:'필리핀',indonesia:'인도네시아',malaysia:'말레이시아',thailand:'태국',vietnam:'베트남',nepal:'네팔',india:'인도',pakistan:'파키스탄',iran:'이란',uae:'아랍에미리트', 'saudi-arabia':'사우디아라비아',turkiye:'튀르키예',morocco:'모로코',egypt:'이집트','south-africa':'남아프리카공화국',spain:'스페인',uk:'영국',france:'프랑스',germany:'독일',italy:'이탈리아',canada:'캐나다',usa:'미국',mexico:'멕시코',brazil:'브라질',argentina:'아르헨티나',colombia:'콜롬비아',australia:'호주','new-zealand':'뉴질랜드',kenya:'케냐',nigeria:'나이지리아',mongolia:'몽골',russia:'러시아'};
+  const ko={china:'중국',japan:'일본',philippines:'필리핀',indonesia:'인도네시아',malaysia:'말레이시아',thailand:'태국',vietnam:'베트남',nepal:'네팔',india:'인도',pakistan:'파키스탄',iran:'이란',uae:'아랍에미리트', 'saudi-arabia':'사우디아라비아',turkiye:'튀르키예',morocco:'모로코',egypt:'이집트','south-africa':'남아프리카공화국',spain:'스페인',uk:'영국',france:'프랑스',germany:'독일',italy:'이탈리아',canada:'캐나다',usa:'미국',mexico:'멕시코',brazil:'브라질',argentina:'아르헨티나',colombia:'콜롬비아',cuba:'쿠바',australia:'호주','new-zealand':'뉴질랜드',kenya:'케냐',nigeria:'나이지리아',mongolia:'몽골',russia:'러시아'};
   const english={uae:'UAE','saudi-arabia':'Saudi Arabia',turkiye:'Türkiye',uk:'UK',usa:'USA','south-africa':'South Africa','new-zealand':'New Zealand'};
   const dset=new Set(domestic.map(x=>x[0]));
   const trigger=document.createElement('button');trigger.type='button';trigger.className='gn24-filter-open';trigger.setAttribute('aria-haspopup','dialog');trigger.setAttribute('aria-expanded','false');
