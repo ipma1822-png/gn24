@@ -25,7 +25,7 @@
     var x=0,last=0;
     function move(ts){
       if(!last)last=ts;
-      x+=(ts-last)*0.055;
+      x+=(ts-last)*0.12;
       last=ts;
       track.style.transform='translate3d('+(-x)+'px,0,0)';
       if(x>track.scrollWidth+bar.clientWidth){x=0;last=ts}
