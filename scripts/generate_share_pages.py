@@ -232,19 +232,15 @@ def load_local():
     return rows if isinstance(rows, list) else rows.get("articles", [])
 
 def load_reporter_photos():
-    url, key = load_config()
-    q = urllib.parse.urlencode({
-        "select":"reporter_id,photo_url",
-        "status":"eq.ACTIVE",
-        "photo_url":"not.is.null"
-    })
+    url, _ = load_config()
     req = urllib.request.Request(
-        url + "/rest/v1/gn24_junior_reporters?" + q,
-        headers={"apikey":key, "Authorization":"Bearer " + key}
+        url + "/functions/v1/gn24-junior-public-reporters",
+        headers={"Accept":"application/json"}
     )
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            rows = json.loads(r.read().decode("utf-8"))
+            payload = json.loads(r.read().decode("utf-8"))
+        rows = payload.get("reporters", []) if isinstance(payload, dict) else []
         return {str(x.get("reporter_id") or "").strip(): str(x.get("photo_url") or "").strip()
                 for x in rows if x.get("reporter_id") and x.get("photo_url")}
     except Exception as e:
