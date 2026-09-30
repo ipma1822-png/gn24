@@ -185,10 +185,10 @@ def page(a, reporter_photos=None):
 <div class="breaking"><div class="wrap breaking-inner"><strong>GLOBAL NEWS24</strong><span>지역에서 세계로 · FROM LOCAL TO GLOBAL</span></div></div>
 <main class="share-static-main">
   <div class="article-card">
-    <span class="badge">{esc(category)}</span>
+    <div style="display:flex;align-items:center;gap:10px"><span class="badge">{esc(category)}</span><span style="font-size:12px;color:#64748b">{esc(date)}</span></div>
     <h1>{esc(title)}</h1>
     <div class="subtitle">{esc(str(a.get("subtitle") or a.get("summary") or ""))}</div>
-    <div class="meta">{esc(date)} · {reporter_meta}</div>
+    <div class="meta" style="display:flex;align-items:center">{reporter_meta}</div>
     <figure class="article-figure">
       <img class="hero" src="{esc(image)}" alt="{esc(title)}">
       {f'<figcaption class="caption">{esc(caption)}</figcaption>' if caption else ''}
