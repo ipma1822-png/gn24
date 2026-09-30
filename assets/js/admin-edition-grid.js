@@ -6,7 +6,7 @@
 
   const DOMESTIC = new Set(['seoul','busan','daegu','incheon','gwangju','daejeon','ulsan','sejong','gyeonggi','gangwon','chungbuk','chungnam','jeonbuk','jeonnam','gyeongbuk','gyeongnam','jeju']);
   const EXPECTED_DOMESTIC = 17;
-  const EXPECTED_GLOBAL = 35;
+  const EXPECTED_GLOBAL = 36;
   let root = null;
   let select = null;
   let lastValue = Symbol('init');
@@ -113,7 +113,7 @@
     root.className = 'gn24-edition-grid-selector';
     root.innerHTML = `
       <div class="gn24-edition-grid-head">
-        <div><b>배포판 선택</b><small>전국 공통 + 대한민국 지역판 17 + GLOBAL EDITION 35</small></div>
+        <div><b>배포판 선택</b><small>전국 공통 + 대한민국 지역판 17 + GLOBAL EDITION 36</small></div>
         <div class="gn24-edition-current"><span>현재 배포판</span><strong data-gn24-current-edition></strong></div>
       </div>
     `;
@@ -123,7 +123,7 @@
     root.appendChild(nationalWrap);
     root.appendChild(section('📰 GN24 JUNIOR PRESS', [junior], 'junior'));
     root.appendChild(section('🇰🇷 대한민국 지역판 · 17', domestic, 'domestic'));
-    root.appendChild(section('🌐 GLOBAL EDITION · 35', global, 'global'));
+    root.appendChild(section('🌐 GLOBAL EDITION · 36', global, 'global'));
 
     row.insertAdjacentElement('beforebegin', root);
     select.classList.add('gn24-select-compat-hidden');
@@ -153,7 +153,7 @@
       }
       if (tries >= 80) {
         clearInterval(timer);
-        fail('35-country SELECT was not ready; fallback SELECT remains visible');
+        fail('36-country SELECT was not ready; fallback SELECT remains visible');
       }
     }, 100);
   }
