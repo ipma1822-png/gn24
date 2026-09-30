@@ -14,3 +14,11 @@
 @media(prefers-reduced-motion:reduce){.gn24-quick-menu *{scroll-behavior:auto!important}}
 
 .gn24-quick-subheading{padding:10px 15px 7px;border-bottom:1px solid #ffffff15;color:#d8b15a;font-size:10px;font-weight:800;letter-spacing:.08em}
+
+/* GLOBAL NEWS24 international edition welcome ticker */
+.gn24-edition-ticker{position:relative;z-index:20;width:100%;overflow:hidden;background:#071b32;border-top:1px solid #ffffff12;border-bottom:1px solid #d8b15a55;color:#e5bd63;white-space:nowrap;font-family:Arial,'Noto Sans KR',sans-serif}
+.gn24-edition-ticker-track{display:inline-flex;align-items:center;width:max-content;min-width:200%;animation:gn24EditionTicker 32s linear infinite;will-change:transform}
+.gn24-edition-ticker-item{display:inline-block;padding:9px 46px;font-size:12px;font-weight:800;letter-spacing:.035em}
+@keyframes gn24EditionTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:700px){.gn24-edition-ticker-item{padding:8px 28px;font-size:11px}.gn24-edition-ticker-track{animation-duration:26s}}
+@media(prefers-reduced-motion:reduce){.gn24-edition-ticker-track{animation:none}}
