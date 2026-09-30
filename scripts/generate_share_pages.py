@@ -60,7 +60,7 @@ def share_version(a):
         out = chars[rem] + out
     return out
 
-def page(a):
+def page(a, reporter_photos=None):
     aid = str(a.get("id") or "")
     s = slug(aid)
     version = share_version(a)
@@ -75,8 +75,8 @@ def page(a):
     author_name = str(a.get("author") or "Global News24 편집부").strip()
     reporter_id = str(a.get("reporter_id") or "").strip()
     reporter_photo = str(a.get("reporter_photo_url") or "").strip()
-    if not reporter_photo and reporter_id == "GN24-JR-0055":
-        reporter_photo = "https://static.wixstatic.com/media/abf917_40a4561f2ad14a61a61649445cd482c4~mv2.png"
+    if not reporter_photo and reporter_photos:
+        reporter_photo = str(reporter_photos.get(reporter_id) or "").strip()
     junior_reporter = reporter_id.startswith("GN24-JR-")
     reporter_meta = (f'<span class="junior-static-reporter">' + (f'<img src="{esc(reporter_photo)}" alt="" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:7px">' if reporter_photo else '') + f'<b>{esc(author_name)} 기자</b> · GN24 꿈나무 기자단 · {esc(reporter_id)}</span>') if junior_reporter else f'{esc(author_name)} · Global News24'
     author_type = "Organization" if author_name in ("Global News24", "Global News24 편집부", "글로벌뉴스24", "글로벌뉴스24 편집부") else "Person"
@@ -231,8 +231,29 @@ def load_local():
     rows = json.loads(p.read_text(encoding="utf-8"))
     return rows if isinstance(rows, list) else rows.get("articles", [])
 
+def load_reporter_photos():
+    url, key = load_config()
+    q = urllib.parse.urlencode({
+        "select":"reporter_id,photo_url",
+        "status":"eq.ACTIVE",
+        "photo_url":"not.is.null"
+    })
+    req = urllib.request.Request(
+        url + "/rest/v1/gn24_junior_reporters?" + q,
+        headers={"apikey":key, "Authorization":"Bearer " + key}
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            rows = json.loads(r.read().decode("utf-8"))
+        return {str(x.get("reporter_id") or "").strip(): str(x.get("photo_url") or "").strip()
+                for x in rows if x.get("reporter_id") and x.get("photo_url")}
+    except Exception as e:
+        print(f"warning: junior reporter photos unavailable: {e}", file=sys.stderr)
+        return {}
+
 def main():
     rows = load_local() if "--local" in sys.argv else load_remote()
+    reporter_photos = {} if "--local" in sys.argv else load_reporter_photos()
     SHARE.mkdir(exist_ok=True)
 
     wanted=set()
@@ -243,7 +264,7 @@ def main():
         wanted.add(s)
         d=SHARE/s
         d.mkdir(parents=True,exist_ok=True)
-        (d/"index.html").write_text(page(a),encoding="utf-8")
+        (d/"index.html").write_text(page(a, reporter_photos),encoding="utf-8")
 
     # remove stale generated article dirs
     for d in SHARE.iterdir():
