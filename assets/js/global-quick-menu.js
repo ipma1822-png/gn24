@@ -18,6 +18,20 @@
     var msg=welcome[slug]||('Welcome to GLOBAL NEWS24 '+editionLabel()+' Edition');
     for(var i=0;i<4;i++){var span=element('span','gn24-edition-ticker-item','✦ '+msg+' · GLOBAL NEWS24 · FROM LOCAL TO GLOBAL');track.appendChild(span)}
     bar.appendChild(track);
+    /* Force ticker motion inline so edition pages cannot override shared CSS animation. */
+    track.style.position='relative';
+    track.style.left='100%';
+    track.style.animation='none';
+    var x=0,last=0;
+    function move(ts){
+      if(!last)last=ts;
+      x+=(ts-last)*0.055;
+      last=ts;
+      track.style.transform='translate3d('+(-x)+'px,0,0)';
+      if(x>track.scrollWidth+bar.clientWidth){x=0;last=ts}
+      requestAnimationFrame(move);
+    }
+    requestAnimationFrame(move);
     var header=document.querySelector('.site-header,header');if(header&&header.parentNode)header.parentNode.insertBefore(bar,header.nextSibling);else document.body.insertBefore(bar,document.body.firstChild);
   }
   function init(){
