@@ -68,6 +68,28 @@
     </news:news>
   </url>
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20260930-673558/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-30</news:publication_date>
+      <news:title>Enrique Carlos Berumen Chávez, maestro de artes marciales de Guanajuato, abre un nuevo camino de cooperación internacional</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260930-420963/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-30</news:publication_date>
+      <news:title>GLOBAL NEWS24 nombra al Maestro Enrique como Presidente de su edición en México</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260930-280802/</loc>
     <news:news>
       <news:publication>
@@ -76,6 +98,17 @@
       </news:publication>
       <news:publication_date>2026-09-30</news:publication_date>
       <news:title>캐나다 현지서 한–캐나다 국제협력 공식 발표… 전성권 WTKF 총재, 국제자문 위촉</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20260930-211237/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-30</news:publication_date>
+      <news:title>Grand Master Fabián Burgoa Expands Martial Arts Leadership from Houston</news:title>
     </news:news>
   </url>
   <url>
