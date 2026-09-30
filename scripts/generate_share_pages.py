@@ -167,7 +167,19 @@ def page(a, reporter_photos=None):
 </style>
 </head>
 <body>
-<header class="site-header share-static-header">
+{(f'''<header class="site-header share-static-header">
+  <div class="mast">
+    <a class="brand" href="/junior/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>주니어신문</small></span></a>
+    <div class="tools"><span style="font-size:11px;font-weight:800;color:#9a6b16">GN24 JUNIOR PRESS</span></div>
+  </div>
+  <nav class="primary-nav share-static-nav"><div class="nav-scroll">
+    <div class="nav-item"><a class="nav-link" href="/junior/">주니어 홈</a></div>
+    <div class="nav-item"><a class="nav-link" href="/junior/news/">주니어 뉴스</a></div>
+    <div class="nav-item"><a class="nav-link" href="/junior/news/">🎓 기자학교</a></div>
+    <div class="nav-item"><a class="nav-link" href="/junior/my/">나의 기자실</a></div>
+    <div class="nav-item"><a class="nav-link" href="/junior/">나도 기자 되기</a></div>
+  </div></nav>
+</header>''' if junior_reporter else '''<header class="site-header share-static-header">
   <div class="mast">
     <a class="brand" href="/"><img src="/assets/images/logos/gn24-icon.svg" alt="GN24"><span><b>GLOBAL NEWS24</b><small>글로벌뉴스24</small></span></a>
     <div class="tools"><a class="iconbtn" href="/pages/newsroom/">전체기사</a></div>
@@ -182,7 +194,7 @@ def page(a, reporter_photos=None):
     <div class="nav-item"><a class="nav-link" href="/ulsan/">울산뉴스</a></div>
   </div></nav>
 </header>
-<div class="breaking"><div class="wrap breaking-inner"><strong>GLOBAL NEWS24</strong><span>지역에서 세계로 · FROM LOCAL TO GLOBAL</span></div></div>
+<div class="breaking"><div class="wrap breaking-inner"><strong>GLOBAL NEWS24</strong><span>지역에서 세계로 · FROM LOCAL TO GLOBAL</span></div></div>''')}
 <main class="share-static-main">
   <div class="article-card">
     <div style="display:flex;align-items:center;gap:10px"><span class="badge">{esc(category)}</span><span style="font-size:12px;color:#64748b">{esc(date)}</span></div>
