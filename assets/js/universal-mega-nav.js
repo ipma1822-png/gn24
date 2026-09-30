@@ -32,7 +32,7 @@ var groups=[
 ['AFRICA',[['🇲🇦','MOROCCO','morocco',1],['🇪🇬','EGYPT','egypt',1],['🇿🇦','SOUTH AFRICA','south-africa',1],['🇰🇪','KENYA','kenya',1],['🇳🇬','NIGERIA','nigeria',1]]],
 ['EUROPE',[['🇪🇸','SPAIN','spain',1],['🇬🇧','UNITED KINGDOM','uk',1],['🇫🇷','FRANCE','france',1],['🇩🇪','GERMANY','germany',1],['🇮🇹','ITALY','italy',1],['🇷🇺','RUSSIA','russia',1]]],
 ['NORTH AMERICA',[['🇨🇦','CANADA','canada',1],['🇺🇸','USA','usa',1],['🇲🇽','MEXICO','mexico',1]]],
-['LATIN AMERICA',[['🇵🇦','PANAMA','panama',1]]],
+['LATIN AMERICA',[['🇵🇦','PANAMA','panama',1],['🇨🇺','CUBA','cuba',1]]],
 ['SOUTH AMERICA',[['🇧🇷','BRAZIL','brazil',1],['🇦🇷','ARGENTINA','argentina',1],['🇨🇴','COLOMBIA','colombia',1]]],
 ['OCEANIA',[['🇦🇺','AUSTRALIA','australia',1],['🇳🇿','NEW ZEALAND','new-zealand',1]]]
 ];
