@@ -78,7 +78,7 @@ def page(a, reporter_photos=None):
     if not reporter_photo and reporter_photos:
         reporter_photo = str(reporter_photos.get(reporter_id) or "").strip()
     junior_reporter = reporter_id.startswith("GN24-JR-")
-    reporter_meta = (f'<span class="junior-static-reporter" style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:6px"><span style="display:inline-flex;align-items:center;gap:10px;white-space:nowrap">' + (f'<img src="{esc(reporter_photo)}" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:1px solid #e5e7eb;flex:0 0 auto">' if reporter_photo else '') + f'<b style="font-size:15px">{esc(author_name)} 꿈나무기자</b><span>·</span><span>GN24 꿈나무 기자단</span><span>·</span><b>🥉 BRONZE REPORTER</b><span>·</span><span>LV.1 체험기자</span></span><span style="display:flex;align-items:center;gap:8px;margin-left:62px"><a href="/junior/news/?reporter={esc(reporter_id)}" style="font-weight:700">기자글보기</a><span>·</span><a href="/junior/my/" style="font-weight:700">기자실 바로가기</a></span></span>') if junior_reporter else f'{esc(author_name)} · Global News24'
+    reporter_meta = (f'<span class="junior-static-reporter" style="display:inline-flex;align-items:center;gap:12px">' + (f'<img src="{esc(reporter_photo)}" alt="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:1px solid #e5e7eb;flex:0 0 60px">' if reporter_photo else '') + f'<span style="height:60px;display:flex;flex-direction:column;justify-content:center;gap:5px"><span style="display:flex;align-items:center;gap:9px;white-space:nowrap"><b style="font-size:15px">{esc(author_name)} 꿈나무기자</b><span>·</span><span>GN24 꿈나무 기자단</span><span>·</span><b>🥉 BRONZE REPORTER</b><span>·</span><span>LV.1 체험기자</span></span><span style="display:flex;align-items:center;gap:8px"><a href="/junior/news/?reporter={esc(reporter_id)}" style="font-weight:700">기자글보기</a><span>·</span><a href="/junior/my/" style="font-weight:700">기자실 바로가기</a></span></span></span>') if junior_reporter else f'{esc(author_name)} · Global News24'
     author_type = "Organization" if author_name in ("Global News24", "Global News24 편집부", "글로벌뉴스24", "글로벌뉴스24 편집부") else "Person"
     modified = str(a.get("updated_at") or "").strip()
     structured = {
@@ -188,7 +188,7 @@ def page(a, reporter_photos=None):
     <div style="display:flex;align-items:center;gap:10px"><span class="badge">{esc(category)}</span><span style="font-size:12px;color:#64748b">{esc(date)}</span></div>
     <h1>{esc(title)}</h1>
     <div class="subtitle">{esc(str(a.get("subtitle") or a.get("summary") or ""))}</div>
-    <div class="meta" style="display:flex;align-items:center;min-height:78px;overflow:visible">{reporter_meta}</div>
+    <div class="meta" style="display:flex;align-items:center;min-height:60px;overflow:visible">{reporter_meta}</div>
     <figure class="article-figure">
       <img class="hero" src="{esc(image)}" alt="{esc(title)}">
       {f'<figcaption class="caption">{esc(caption)}</figcaption>' if caption else ''}
