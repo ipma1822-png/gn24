@@ -12,7 +12,7 @@ function renderBreaking(all){
  const box=$('.regional-breaking .ticker');if(!box)return;
  const rows=all.filter(a=>a.title).slice(0,10);if(!rows.length)return;
  const one=rows.map((a,i)=>`<a class="gn24-breaking-item" href="${articleURL(a.id)}"><em>${i?'NEWS':'속보'}</em><span>${esc(a.title)}</span><i>◆</i></a>`).join('');
- box.innerHTML=`<div class="gn24-breaking-track">${one}<div class="regional-breaking-repeat" aria-hidden="true">${one}</div></div>`;
+ box.innerHTML=`<div class="gn24-breaking-track">${one}${one}</div>`;
 }
 function cfg(){return window.GN24_SUPABASE||{}}
 async function rest(path){const c=cfg();if(!c.url||!c.anonKey)throw new Error('Regional data connection unavailable');const r=await fetch(c.url.replace(/\/$/,'')+'/rest/v1/'+path,{cache:'no-store',headers:{apikey:c.anonKey}});if(!r.ok)throw new Error('Regional data request failed: '+r.status);return r.json()}
