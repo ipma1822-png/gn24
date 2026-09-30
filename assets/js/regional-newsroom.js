@@ -4,6 +4,16 @@ const $=(s,p=document)=>p.querySelector(s);
 const esc=(s='')=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const region=(document.body.dataset.region||'').toLowerCase(),regionName=document.body.dataset.regionName||region,hqCode=(document.body.dataset.hqCode||region).toUpperCase();
 const DEFAULT_IMAGE='/assets/images/news/gn24-default-news.svg';
+function setRegionalToday(){
+ const el=$('#regionalTodayLabel');if(!el)return;
+ el.textContent=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',weekday:'long'}).format(new Date());
+}
+function renderBreaking(all){
+ const box=$('.regional-breaking .ticker');if(!box)return;
+ const rows=all.filter(a=>a.title).slice(0,10);if(!rows.length)return;
+ const one=rows.map((a,i)=>`<a class="gn24-breaking-item" href="${articleURL(a.id)}"><em>${i?'NEWS':'속보'}</em><span>${esc(a.title)}</span><i>◆</i></a>`).join('');
+ box.innerHTML=`<div class="gn24-breaking-track">${one}<div class="regional-breaking-repeat" aria-hidden="true">${one}</div></div>`;
+}
 function cfg(){return window.GN24_SUPABASE||{}}
 async function rest(path){const c=cfg();if(!c.url||!c.anonKey)throw new Error('Regional data connection unavailable');const r=await fetch(c.url.replace(/\/$/,'')+'/rest/v1/'+path,{cache:'no-store',headers:{apikey:c.anonKey}});if(!r.ok)throw new Error('Regional data request failed: '+r.status);return r.json()}
 function articleURL(id){return '/share/'+encodeURIComponent(id)+'/'}
@@ -18,6 +28,7 @@ async function loadNews(){try{
   rest(articles+'&region_code=eq.'+encodeURIComponent(region)+'&limit=100'),
   rest(articles+'&limit=100')
  ]);
+ renderBreaking(all);
  const hq=all.filter(a=>(a.region_code||'').toLowerCase()!==region);
  window.GN24_REGIONAL_LOCAL=local;renderCategoryMega();
  const q=new URLSearchParams(location.search),cat=q.get('cat');const localView=cat?local.filter(a=>a.category===cat):local,hqView=cat?hq.filter(a=>a.category===cat):hq;
@@ -38,5 +49,5 @@ let activeMegaCat='';
 function renderCategoryMega(cat=activeMegaCat){const mega=$('#regionalCategoryMega'),items=$('#regionalCategoryItems'),title=$('#regionalCategoryTitle'),allLink=$('#regionalCategoryAll');if(!mega||!items||!cat)return;activeMegaCat=cat;const local=window.GN24_REGIONAL_LOCAL||[];const rows=local.filter(a=>a.category===cat).slice(0,4);title.textContent=(catLabels[cat]||cat)+' · '+regionName;allLink.href=location.pathname+'?cat='+encodeURIComponent(cat);items.innerHTML=rows.length?rows.map(compact).join(''):'<div class="regional-category-empty">등록된 '+esc(regionName)+' 기사를 준비 중입니다.</div>';}
 function categoryNav(){const mega=$('#regionalCategoryMega'),buttons=[...document.querySelectorAll('[data-regional-menu-cat]')];if(!mega||!buttons.length)return;const open=(btn)=>{buttons.forEach(b=>b.classList.toggle('active',b===btn));activeMegaCat=btn.dataset.regionalMenuCat;renderCategoryMega();mega.hidden=false;btn.setAttribute('aria-expanded','true');buttons.filter(b=>b!==btn).forEach(b=>b.setAttribute('aria-expanded','false'))};const close=()=>{mega.hidden=true;buttons.forEach(b=>{b.classList.remove('active');b.setAttribute('aria-expanded','false')})};buttons.forEach(btn=>{btn.setAttribute('aria-expanded','false');btn.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches)open(btn)});btn.addEventListener('focus',()=>open(btn));btn.addEventListener('click',e=>{e.preventDefault();if(!mega.hidden&&activeMegaCat===btn.dataset.regionalMenuCat)close();else open(btn)})});mega.addEventListener('mouseleave',()=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches)close()});document.addEventListener('click',e=>{if(!mega.hidden&&!e.target.closest('.regional-tabs'))close()})}
 function nav(){document.querySelectorAll('[data-regional-cat]').forEach(a=>{const cat=a.dataset.regionalCat||'';a.href=cat?location.pathname+'?cat='+encodeURIComponent(cat):location.pathname})}
-nav();categoryNav();loadEditor();loadNews();
+setRegionalToday();setInterval(setRegionalToday,60000);nav();categoryNav();loadEditor();loadNews();
 })();
