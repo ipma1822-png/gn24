@@ -1,0 +1,1 @@
+ALTER TABLE public.gn24_local_ads ADD COLUMN kakao_url text NOT NULL DEFAULT '' CHECK(kakao_url='' OR kakao_url ~ '^https?://');

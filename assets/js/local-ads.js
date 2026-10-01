@@ -14,6 +14,7 @@ function open(a,button){
  returnFocus=button;dialog.querySelector('h2').textContent=a.business_name;
  const thumbs=dialog.querySelector('.local-ad-thumbs');thumbs.replaceChildren();images.forEach((url,n)=>{const b=make('button');b.type='button';b.className='local-ad-thumb';b.setAttribute('aria-label','사진 '+(n+1));const img=make('img');img.src=url;img.alt='사진 '+(n+1);b.append(img);b.onclick=()=>showImage(n);thumbs.append(b)});
  const info=dialog.querySelector('.local-ad-info');info.replaceChildren();[a.introduction,a.phone?'연락: '+a.phone:'',a.address?'주소: '+a.address:''].filter(Boolean).forEach(t=>info.append(make('p',t)));if(safe(a.target_url)){const link=make('a','홈페이지 →');link.href=safe(a.target_url);info.append(link)}
+ if(a.kakao_url&&safe(a.kakao_url)){const link=make('a','카카오톡 문의');link.href=safe(a.kakao_url);const row=make('p');row.append(link);info.append(row)}
  showImage(0);dialog.showModal();
 }
 window.GN24LocalAds={

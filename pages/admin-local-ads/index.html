@@ -6,6 +6,7 @@
 <label>대표이미지<input id="cover" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label><label>상세사진 (최대 12장)<input id="photos" type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif"></label>
 <div id="photoPreview" class="local-preview local-wide"></div><p class="local-wide">이미지는 원본 그대로 저장됩니다. 편집 시 새 파일을 선택하지 않으면 기존 사진을 유지합니다. 상세사진 선택 시 기존 상세사진을 교체합니다.</p>
 <label class="local-wide">소개<textarea id="intro" rows="5" maxlength="10000"></textarea></label><label>연락처<input id="phone" maxlength="100"></label><label>주소<input id="address" maxlength="500"></label><label class="local-wide">링크 (LINK 방식 필수)<input id="target" type="url" placeholder="https://"></label>
+<label class="local-wide">카카오톡 문의 URL (선택)<input id="kakao" type="url" placeholder="https://"></label>
 <label>시작일시 (한국시간)<input id="starts" type="datetime-local" required></label><label>종료일시 (선택)<input id="ends" type="datetime-local"></label>
 <div class="local-wide"><button class="btn primary" id="save" type="submit">저장</button> <button class="btn" id="newAd" type="button">신규 광고</button><p id="saveStatus" role="status"></p></div></form><h2>등록 광고</h2><div id="adList" class="cardbox"></div></section></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="/assets/js/gn24-supabase-config.js?v=3.22.3"></script><script src="/assets/js/local-ads-admin.js?v=1"></script></body></html>
