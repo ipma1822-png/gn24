@@ -1,0 +1,21 @@
+<!doctype html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>회의 · 임원 소통 | IPMA</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080f20;color:#f3f1eb;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;line-height:1.7}[hidden]{display:none!important}
+.wrap{width:min(100% - 40px,1040px);margin:auto}header{padding:22px 0;border-bottom:1px solid #c9ad7226}header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+a{color:#d6c196;text-decoration:none}a:hover{text-decoration:underline}.brand{font-size:12px;color:#c9ad72;letter-spacing:2px;font-weight:700}main{padding:36px 0 60px}h1{font-size:clamp(26px,5vw,36px);margin:0 0 24px}h2{font-size:22px}
+.panel{padding:24px;background:#16202e;border:1px solid #c9ad7226;border-radius:8px}ul{list-style:none;margin:20px 0 0;padding:0}li{padding:18px 0;border-top:1px solid #c9ad7226}.meta,.status{color:#b8bec8;font-size:13px}.text{white-space:pre-wrap;overflow-wrap:anywhere}.badge{font-size:12px;color:#d6c196;margin-right:10px}
+.opinions{margin-top:32px}.opinions h3{font-size:17px;margin:0 0 6px}.opinions p{margin:0}form{margin-top:28px}label{display:block;margin-bottom:8px}
+textarea{display:block;width:100%;min-height:130px;resize:vertical;background:#080f20;border:1px solid #c9ad7255;border-radius:6px;color:#fff;padding:12px;font:inherit;font-size:16px}
+button{margin-top:14px;padding:12px 22px;color:#d6c196;border:1px solid #c9ad7255;border-radius:6px;background:#c9ad7215;font:inherit;cursor:pointer}button:disabled{opacity:.6;cursor:wait}
+.pages{display:flex;justify-content:space-between;margin-top:24px}footer{text-align:center;padding:24px;color:#b8bec8;font-size:12px}
+</style></head><body>
+<div id="meetingShell" hidden><header><div class="wrap"><span class="brand">IPMA EXECUTIVE LOUNGE</span><a href="../">라운지 HOME →</a></div></header>
+<main class="wrap"><h1>회의 · 임원 소통</h1><section class="panel"><a href="./">회의 목록 →</a>
+<ul id="meetingList"></ul><nav id="meetingPages" class="pages" aria-label="회의 페이지"><a id="meetingPrevious" hidden>← 이전</a><a id="meetingNext" hidden>다음 →</a></nav>
+<article id="meetingDetail" hidden><h2 id="meetingTitle"></h2><p id="meetingMeta" class="meta"></p><h3>회의 안건</h3><div id="meetingAgenda" class="text"></div>
+<section class="opinions"><h2>임원 의견</h2><p id="opinionCount" class="meta"></p><ul id="meetingOpinions"></ul></section>
+<p id="meetingClosed" class="status" hidden>종료된 회의입니다. 안건과 의견을 기록으로 열람할 수 있습니다.</p>
+<form id="opinionForm" hidden><label for="opinionBody">의견 작성</label><textarea id="opinionBody" maxlength="3000" required placeholder="회의 안건에 대한 의견을 작성해 주세요."></textarea><button id="opinionSubmit" type="submit">의견 등록</button><p id="opinionStatus" class="status" role="status"></p></form>
+</article><p id="meetingStatus" class="status" role="status"></p></section></main><footer>Powered by GLOBAL NEWS24</footer></div>
+<noscript><a href="/ipma-executive-lounge/">공개 대문으로 돌아가기</a></noscript><script src="./meeting.js?v=1"></script></body></html>
