@@ -23,9 +23,8 @@
   if(session.status!=="ACTIVE") throw new Error("INVALID_SESSION");
   if(session.scope==="pin_change"){show("pin_change");document.getElementById("personalPin").focus();}
   else if(session.scope==="lounge" && session.must_change_pin===false){
-   document.getElementById("executiveWelcome").textContent=(session.name || "")+" 임원님, 환영합니다.";
-   document.getElementById("executiveProfile").textContent=[session.position,session.organization].filter(Boolean).join(" · ");
-   show("lounge");
+   sessionStorage.setItem("ipma_executive_session",token);
+   location.assign("/ipma-executive-lounge/lounge/");
   } else throw new Error("INVALID_SESSION");
  }
  function failure(error,run){
