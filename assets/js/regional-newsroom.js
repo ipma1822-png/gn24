@@ -59,7 +59,7 @@ function installHQAds(){
  if(!national||document.getElementById('gn24SharingTrack'))return;
  const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/css/sharing-ads.css?v=0.1.2';document.head.appendChild(css);
  national.insertAdjacentHTML('beforebegin','<section class="gn24-sharing-ads" aria-label="GN24 상생광고"><div class="wrap"><div class="gn24-sharing-head"><div></div></div><div class="gn24-sharing-viewport"><div id="gn24SharingTrack" data-ads-context="hq" class="gn24-sharing-track" style="justify-content:safe center"></div></div></div></section>');
- const script=document.createElement('script');script.src='/assets/js/sharing-ads.js?v=1.0.2';document.body.appendChild(script);
+ const script=document.createElement('script');script.src='/assets/js/sharing-ads.js?v=1.0.3';const local=document.createElement('script');local.src='/assets/js/local-ads.js?v=1';local.onload=local.onerror=()=>document.body.appendChild(script);document.body.appendChild(local);
 }
 installHQAds();
 setRegionalToday();setInterval(setRegionalToday,60000);nav();categoryNav();loadEditor();loadNews();
