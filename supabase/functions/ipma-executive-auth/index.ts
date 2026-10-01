@@ -27,7 +27,13 @@ Deno.serve(async (req: Request) => {
   for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
   const body=JSON.parse(new TextDecoder().decode(bytes));
   let rpc: string; let args: Record<string,string>;
-  if(body.action==="session"){
+  if(body.action==="change_pin"){
+   if(typeof body.token!=="string" || !/^[a-f0-9]{64}$/.test(body.token))
+    return reply({ok:false,error:"INVALID_SESSION"},401);
+   if(typeof body.new_pin!=="string" || !/^[0-9]{6}$/.test(body.new_pin))
+    return reply({ok:false,error:"INVALID_PIN"},400);
+   rpc="ipma_change_executive_pin";args={p_token:body.token,p_new_pin:body.new_pin};
+  } else if(body.action==="session"){
    if(typeof body.token!=="string" || !/^[a-f0-9]{64}$/.test(body.token))
     return reply({ok:false,error:"INVALID_SESSION"},401);
    rpc="ipma_validate_executive_session";args={p_token:body.token};
@@ -46,7 +52,7 @@ Deno.serve(async (req: Request) => {
   });
   if(!result.ok) return reply({ok:false,error:"UNAVAILABLE"},503);
   const data=await result.json();
-  return reply(data,data.ok?200:data.error==="RATE_LIMITED"?429:401);
+  return reply(data,data.ok?200:data.error==="RATE_LIMITED"?429:["INVALID_PIN","PIN_UNCHANGED"].includes(data.error)?400:401);
  } catch {
   return reply({ok:false,error:"INVALID_REQUEST"},400);
  }
