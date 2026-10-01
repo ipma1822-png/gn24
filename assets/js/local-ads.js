@@ -2,7 +2,8 @@
 'use strict';
 const region=document.body.dataset.region,regions=["seoul","busan","daegu","incheon","gwangju","daejeon","ulsan","sejong","gyeonggi","gangwon","chungbuk","chungnam","jeonbuk","jeonnam","gyeongbuk","gyeongnam","jeju"];
 if(!regions.includes(region))return;
-let dialog,images=[],index=0,returnFocus;
+let dialog,images=[],index=0,returnFocus,directOpened=false;
+const directId=new URLSearchParams(location.search).get('ad');
 function safe(url){try{const u=new URL(url,location.origin);return ['https:','http:'].includes(u.protocol)?u.href:''}catch{return ''}}
 function make(tag,text){const el=document.createElement(tag);if(text)el.textContent=text;return el}
 function showImage(i){index=(i+images.length)%images.length;dialog.querySelector('.local-ad-large').src=images[index];dialog.querySelector('.local-ad-counter').textContent=(index+1)+' / '+images.length;dialog.querySelectorAll('.local-ad-thumb').forEach((b,n)=>b.setAttribute('aria-pressed',String(n===index)))}
@@ -18,7 +19,7 @@ function open(a,button){
  showImage(0);dialog.showModal();
 }
 window.GN24LocalAds={
- async load(hq){try{const cfg=window.GN24_SUPABASE;if(!cfg)return hq;const url=cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_local_ads?select=*&region_code=eq.'+encodeURIComponent(region)+'&order=created_at.asc';const r=await fetch(url,{cache:'no-store',headers:{apikey:cfg.anonKey}});if(!r.ok)return hq;const rows=await r.json();return hq.concat(rows.map(a=>Object.assign(a,{_local:true})))}catch{return hq}},
+ async load(hq){try{const cfg=window.GN24_SUPABASE;if(!cfg)return hq;const url=cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_local_ads?select=*&region_code=eq.'+encodeURIComponent(region)+'&order=created_at.asc';const r=await fetch(url,{cache:'no-store',headers:{apikey:cfg.anonKey}});if(!r.ok)return hq;const rows=await r.json();const selected=rows.find(a=>a.id===directId);if(selected&&!directOpened){directOpened=true;setTimeout(()=>open(selected),0)}return hq.concat(rows.map(a=>Object.assign(a,{_local:true})))}catch{return hq}},
  card(a){const el=make(a.mode==='LINK'?'a':'button');el.className='gn24-sharing-card is-featured-image';if(a.mode==='LINK')el.href=safe(a.target_url);else{el.type='button';el.style.cssText='text-align:left;font:inherit;padding:0;cursor:pointer';el.onclick=()=>open(a,el)}
  const media=make('div');media.className='gn24-sharing-media';const img=make('img');img.src=safe(a.image_url);img.alt=a.business_name;img.loading='lazy';media.append(img);
  const copy=make('div');copy.className='gn24-sharing-copy';copy.style.textAlign='center';copy.append(make('small','GN24 지역상생광고'),make('b',a.business_name),make('span',a.introduction));el.append(media,copy);return el}
