@@ -18,6 +18,7 @@ dt{font-size:12px;color:#b8bec8}dd{margin:4px 0 0;overflow-wrap:anywhere}#execut
 footer{text-align:center;padding:24px;font-size:12px;color:#b8bec8;border-top:1px solid #c9ad7226}
 @media(min-width:720px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.profile{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
+<link rel="stylesheet" href="./notices/notice.css?v=1">
 </head>
 <body>
 <div id="loungeShell" hidden>
@@ -25,14 +26,15 @@ footer{text-align:center;padding:24px;font-size:12px;color:#b8bec8;border-top:1p
 <main class="wrap"><p class="eyebrow">REPUBLIC OF KOREA</p><h1>대한민국 본부 임원라운지</h1>
 <dl class="profile"><div><dt>성명</dt><dd id="executiveName"></dd></div><div><dt>직책</dt><dd id="executivePosition"></dd></div><div><dt>소속</dt><dd id="executiveOrganization"></dd></div><div><dt>활동상태</dt><dd id="executiveStatus"></dd></div></dl>
 <div class="cards" aria-label="임원라운지 메뉴">
-<article class="card"><p class="eyebrow">NOTICE</p><h2>본부 공지</h2><p>준비 중</p></article>
+<article class="card"><p class="eyebrow">NOTICE</p><h2><a href="./notices/" style="color:inherit;text-decoration:none">본부 공지</a></h2><p>공지 목록 보기 →</p></article>
 <article class="card"><p class="eyebrow">IPMA NEWS</p><h2>IPMA NEWS</h2><p>준비 중</p></article>
 <article class="card"><p class="eyebrow">COMMUNICATION</p><h2>임원 소통</h2><p>준비 중</p></article>
 <article class="card"><p class="eyebrow">ACTIVITY</p><h2>활동 제보</h2><p>준비 중</p></article>
 <article class="card"><p class="eyebrow">NEWS PROPOSAL</p><h2>기사 제안</h2><p>준비 중</p></article>
 <article class="card"><p class="eyebrow">OFFICIAL NETWORK</p><h2>공식 네트워크</h2><p>준비 중</p></article>
-</div></main><footer>Powered by GLOBAL NEWS24</footer>
+</div><section id="noticeHome" class="notice-panel" hidden><div class="notice-heading"><h2>본부 공지</h2><a href="./notices/">전체 보기 →</a></div><ul id="noticeList" class="notice-list"></ul><p id="noticeStatus" class="notice-status" role="status"></p></section></main><footer>Powered by GLOBAL NEWS24</footer>
 </div>
 <noscript><p>입장하려면 JavaScript를 활성화해 주세요. <a href="/ipma-executive-lounge/">공개 대문으로 돌아가기</a></p></noscript>
 <script src="./lounge.js?v=1"></script>
+<script src="./notices/notice.js?v=1"></script>
 </body></html>
