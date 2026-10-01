@@ -13,6 +13,17 @@
     </news:news>
   </url>
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20261001-327022/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-01</news:publication_date>
+      <news:title>نشست همکاری دانشگاهی و ورزشی در مشهد؛ گامی تازه برای توسعه ورزش و حمایت از قهرمانان</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20260930-996154/</loc>
     <news:news>
       <news:publication>
