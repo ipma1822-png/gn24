@@ -17,13 +17,25 @@
 .footer{background:#080f20}
 @keyframes gold-drift{from{transform:translateY(12px);opacity:.25}to{transform:translateY(-18px);opacity:.65}}
 @media(prefers-reduced-motion:reduce){.lounge-access::before,.lounge-access::after{animation:none;opacity:.35}}
+
+.lounge-access>.wrap>.eyebrow{font-size:14px}
+.lounge-access h1{font-size:clamp(25px,4.5vw,36px)}
+.lounge-access .button{font-size:18px;padding:16px 30px}
+.official-network{margin-top:64px;padding-top:30px;border-top:1px solid #c9ad7226}
+.official-network h2{font-size:13px}
+.network-primary{display:flex;justify-content:center;margin:24px 0 30px}
+.network-primary img{width:clamp(120px,20vw,170px);height:auto}
+.network-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;gap:clamp(10px,3vw,32px);max-width:760px;margin:0 auto}
+.network-row img{display:block;width:100%;max-width:125px;height:auto;justify-self:center}
+.official-network img{transition:filter .25s ease}
+.official-network img:hover{filter:drop-shadow(0 0 8px #c9ad724d)}
 </style>
 </head>
 <body>
 <header class="masthead"><div class="wrap"><a class="brand" href="/">GLOBAL NEWS24</a><span class="edition">IPMA · REPUBLIC OF KOREA</span></div></header>
 <main>
 <section aria-label="IPMA EXECUTIVE LOUNGE"><img src="./hero.png" alt="IPMA EXECUTIVE LOUNGE · 국제경찰무도연합회 본부 임원라운지" style="display:block;width:100%;height:auto"></section>
-<section class="lounge-access" aria-label="IPMA EXECUTIVE ACCESS"><div class="wrap"><p class="eyebrow">IPMA EXECUTIVE ACCESS</p><h1>대한민국 본부 임원 전용</h1><button class="button" type="button" disabled>🔒 임원 전용 입장</button></div></section>
+<section class="lounge-access" aria-label="IPMA EXECUTIVE ACCESS"><div class="wrap"><p class="eyebrow">IPMA EXECUTIVE ACCESS</p><h1>대한민국 본부 임원 전용</h1><button class="button" type="button" disabled>🔒 임원 전용 입장</button><div class="official-network"><h2 class="eyebrow">OFFICIAL NETWORK</h2><div class="network-primary"><img src="./network/ipma.jpg" alt="IPMA"></div><div class="network-row"><img src="./network/wtkf.png" alt="WTKF"><img src="./network/ica.png" alt="ICA"><img src="./network/idp.png" alt="IDP"><img src="./network/acts.png" alt="ACTS"><img src="./network/gn24.jpg" alt="GLOBAL NEWS24"></div></div></div></section>
 </main>
 <footer class="footer"><div class="wrap">Powered by GLOBAL NEWS24</div></footer>
 </body>
