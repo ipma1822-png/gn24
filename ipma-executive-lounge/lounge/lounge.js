@@ -16,6 +16,7 @@
    if(!response.ok || session.ok!==true || session.status!=="ACTIVE" || session.scope!=="lounge" || session.must_change_pin!==false){leave();return;}
    if(sessionStorage.getItem(key)!==token){leave();return;}
    document.getElementById("executiveName").textContent=session.name || "";
+   document.getElementById("executiveTitle").textContent=session.position || "임원";
    document.getElementById("executivePosition").textContent=session.position || "—";
    document.getElementById("executiveOrganization").textContent=session.organization || "—";
    document.getElementById("executiveStatus").textContent=session.status;
