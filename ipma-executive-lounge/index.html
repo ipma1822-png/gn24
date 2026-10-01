@@ -29,14 +29,44 @@
 .network-row img{display:block;width:auto;max-width:100%;height:clamp(38px,9vw,90px);object-fit:contain;justify-self:center}
 .official-network img{transition:filter .25s ease}
 .official-network img:hover{filter:drop-shadow(0 0 8px #c9ad724d)}
+
+#executiveEntry{cursor:pointer}
+#executiveAccess{width:min(440px,calc(100% - 32px));max-height:calc(100dvh - 40px);overflow:auto;padding:26px;border:1px solid #c9ad7266;border-radius:10px;background:#101722;color:#f3f1eb}
+#executiveAccess::backdrop{background:#030813b3}
+#executiveAccess .entry-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+#executiveAccess h2{font-size:15px;letter-spacing:1px;color:#c9ad72;margin:0}
+#executiveClose{border:0;background:transparent;color:#f3f1eb;font-size:28px;cursor:pointer}
+#executiveAccess label{display:block;margin:14px 0 6px}
+#executiveAccess input{width:100%;padding:12px;border:1px solid #c9ad7255;border-radius:6px;background:#080f20;color:#fff;font:inherit;font-size:16px}
+#executiveAccess .button{width:100%;margin-top:22px;cursor:pointer}
+#executiveAccess .button:disabled{cursor:wait;opacity:.65}
+#executiveMessage{margin:18px 0 0;font-size:14px;color:#d6c196}
 </style>
 </head>
 <body>
 <header class="masthead"><div class="wrap"><a class="brand" href="/">GLOBAL NEWS24</a><span class="edition">IPMA · REPUBLIC OF KOREA</span></div></header>
 <main>
 <section aria-label="IPMA EXECUTIVE LOUNGE"><img src="./hero.png" alt="IPMA EXECUTIVE LOUNGE · 국제경찰무도연합회 본부 임원라운지" style="display:block;width:100%;height:auto"></section>
-<section class="lounge-access" aria-label="IPMA EXECUTIVE ACCESS"><div class="wrap"><p class="eyebrow">IPMA EXECUTIVE ACCESS</p><h1>대한민국 본부 임원 전용</h1><button class="button" type="button" disabled>🔒 임원 전용 입장</button><div class="official-network"><h2 class="eyebrow">OFFICIAL NETWORK</h2><div class="network-primary"><img src="./network/ipma.jpg" alt="IPMA"></div><div class="network-row"><img src="./network/wtkf.png" alt="WTKF"><img src="./network/ica.png" alt="ICA"><img src="./network/idp.png" alt="IDP"><img src="./network/acts.png" alt="ACTS"><img src="./network/gn24.jpg" alt="GLOBAL NEWS24"></div></div></div></section>
+<section class="lounge-access" aria-label="IPMA EXECUTIVE ACCESS"><div class="wrap"><p class="eyebrow">IPMA EXECUTIVE ACCESS</p><h1>대한민국 본부 임원 전용</h1><button id="executiveEntry" class="button" type="button">🔒 임원 전용 입장</button><div class="official-network"><h2 class="eyebrow">OFFICIAL NETWORK</h2><div class="network-primary"><img src="./network/ipma.jpg" alt="IPMA"></div><div class="network-row"><img src="./network/wtkf.png" alt="WTKF"><img src="./network/ica.png" alt="ICA"><img src="./network/idp.png" alt="IDP"><img src="./network/acts.png" alt="ACTS"><img src="./network/gn24.jpg" alt="GLOBAL NEWS24"></div></div></div></section>
 </main>
 <footer class="footer"><div class="wrap">Powered by GLOBAL NEWS24</div></footer>
+
+<dialog id="executiveAccess" aria-labelledby="executiveAccessTitle">
+<div class="entry-heading"><h2 id="executiveAccessTitle">IPMA EXECUTIVE ACCESS</h2><button id="executiveClose" type="button" aria-label="닫기">×</button></div>
+<form id="executiveLogin">
+<label for="executiveName">성명</label><input id="executiveName" name="name" autocomplete="username" maxlength="80" required>
+<label for="executivePin">6자리 PIN</label><input id="executivePin" name="pin" type="password" inputmode="numeric" autocomplete="current-password" pattern="[0-9]{6}" minlength="6" maxlength="6" required>
+<button class="button" type="submit">🔒 임원 전용 입장</button>
+</form>
+<form id="executivePinChange" hidden>
+<p>초기 PIN을 개인 PIN으로 변경해 주세요.</p>
+<label for="personalPin">새 개인 PIN (숫자 6자리)</label><input id="personalPin" name="new_pin" type="password" inputmode="numeric" autocomplete="new-password" pattern="[0-9]{6}" minlength="6" maxlength="6" required>
+<label for="personalPinConfirm">개인 PIN 확인</label><input id="personalPinConfirm" type="password" inputmode="numeric" autocomplete="new-password" pattern="[0-9]{6}" minlength="6" maxlength="6" required>
+<button class="button" type="submit">PIN 변경 후 입장</button>
+</form>
+<div id="executiveLounge" hidden><p class="eyebrow">IPMA EXECUTIVE LOUNGE</p><h3 id="executiveWelcome"></h3><p id="executiveProfile" class="muted"></p><p>임원라운지 입장이 완료되었습니다.</p><p class="muted">내부 서비스는 준비 중입니다.</p></div>
+<p id="executiveMessage" role="status" aria-live="polite"></p>
+</dialog>
+<script src="./access.js?v=1"></script>
 </body>
 </html>
