@@ -416,5 +416,26 @@
     autoCategory
   };
 
-  loadSite().catch(err=>{els.list.innerHTML=`<div class="empty">${err.message}<br>상단의 news.json 불러오기를 이용해 주세요.</div>`;newArticle()});
+
+  async function applyLocalTip(){
+    if(new URLSearchParams(location.search).get('localTip')!=='1')return;
+    const key='gn24-local-tip-editor-bridge';
+    let draft;try{draft=JSON.parse(sessionStorage.getItem(key)||'null')}catch{return}
+    if(!draft)return;
+    let region=document.getElementById('fRegionCode');
+    for(let tries=0;!region&&tries<60;tries++){await new Promise(resolve=>setTimeout(resolve,100));region=document.getElementById('fRegionCode');}
+    if(!region){els.saveMessage.textContent='지역 선택 준비가 지연되었습니다. 새로고침하면 제보 초안을 다시 불러옵니다.';return;}
+    newArticle();
+    applyPending({title:String(draft.title||''),content:[String(draft.facts||'')],visibilityScope:'admin',isPublished:false});
+    if(region){region.value=String(draft.region_code||'');region.dispatchEvent(new Event('change',{bubbles:true}));}
+    let reference=document.getElementById('localTipReference');
+    if(!reference){reference=document.createElement('p');reference.id='localTipReference';reference.style.whiteSpace='pre-wrap';els.form.before(reference);}
+    reference.textContent='제보 작성 참고정보\n'+String(draft.reference||'');
+    setDirty(true);saveDraft('manual');
+    els.saveMessage.textContent='지역 제보 초안을 불러왔습니다. 내용을 검토한 뒤 기존 저장·발행 기능을 이용해 주세요.';
+    sessionStorage.removeItem(key);
+    els.title.focus();
+  }
+
+  loadSite().then(applyLocalTip).catch(err=>{els.list.innerHTML=`<div class="empty">${err.message}<br>상단의 news.json 불러오기를 이용해 주세요.</div>`;newArticle();applyLocalTip()});
 })();
