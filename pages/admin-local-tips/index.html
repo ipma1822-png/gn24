@@ -34,11 +34,12 @@ function detail(id){
  $('detail').hidden=false;$('detailFields').replaceChildren();
  const fields=[['접수일',selected.created_at],['지역',selected.region],['제목',selected.title],['제보내용',selected.facts],['이름',selected.name],['연락처',selected.phone],['추가정보 (구·군 / 유형 / 장소 / 일자 / 이메일)',selected.source_notes],['자료URL',(selected.media_urls||[]).join('\n')],['활동번호',selected.activity_number],['자료 제공 동의',selected.consent_original_work?'동의':'미동의'],['편집 검토 동의',selected.consent_publication_review?'동의':'미동의']];
  for(const [label,value] of fields){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=value||'-';dd.style.whiteSpace='pre-wrap';$('detailFields').append(dt,dd);}
+ if(selected.linked_article_id){const dt=document.createElement('dt'),dd=document.createElement('dd'),link=document.createElement('a');dt.textContent='발행기사';link.textContent='발행기사 보기';link.href='/pages/article/?id='+encodeURIComponent(selected.linked_article_id);link.target='_blank';link.rel='noopener';dd.append(link);$('detailFields').append(dt,dd);}
  $('detailStatus').value=selected.status;$('reviewerNotes').value=selected.reviewer_notes||'';$('saveMessage').textContent='';
  $('detail').scrollIntoView({behavior:'smooth',block:'start'});
 }
 async function load(){
- const data=await req('/rest/v1/gn24_participant_submissions?select=id,participant_type,activity_number,name,phone,region,title,facts,source_notes,media_urls,consent_original_work,consent_publication_review,status,reviewer_notes,created_at&order=created_at.desc');
+ const data=await req('/rest/v1/gn24_participant_submissions?select=id,participant_type,activity_number,name,phone,region,title,facts,source_notes,media_urls,consent_original_work,consent_publication_review,status,reviewer_notes,linked_article_id,created_at&order=created_at.desc');
  rows=data||[];
  const previous=$('regionFilter').value;$('regionFilter').replaceChildren(new Option('전체 지역',''),...Array.from(new Set(rows.map(r=>r.region).filter(Boolean))).sort().map(region=>new Option(region,region)));
  if(Array.from($('regionFilter').options).some(o=>o.value===previous))$('regionFilter').value=previous;
@@ -51,7 +52,7 @@ $('writeArticle').addEventListener('click',()=>{
  const regionCode=codeLine.slice('지역코드: '.length).trim();
  const reference=notes.filter(line=>/^(구·군|유형|장소|일자): /.test(line)).join('\n');
  try{
- sessionStorage.setItem('gn24-local-tip-editor-bridge',JSON.stringify({title:selected.title||'',facts:selected.facts||'',region_code:regionCode,reference}));
+ sessionStorage.setItem('gn24-local-tip-editor-bridge',JSON.stringify({submissionId:selected.id,title:selected.title||'',facts:selected.facts||'',region_code:regionCode,reference}));
  location.href='/admin-news.html?localTip=1';
  }catch(e){$('saveMessage').textContent='기사 초안을 전달하지 못했습니다. 브라우저 저장 공간을 확인해 주세요.';}
 });
