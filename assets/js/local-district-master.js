@@ -30,7 +30,9 @@ async function load(){
  const tags=district.tags||['district:'+district.code];query.set('or','('+tags.map(t=>'tags.cs.{'+JSON.stringify(t)+'}').join(',')+')');
  const cat=params.get('cat');if(cat)query.set('category','eq.'+cat);
  const response=await fetch(c.url.replace(/\/$/,'')+'/rest/v1/gn24_articles?'+query,{cache:'no-store',headers:{apikey:c.anonKey}});if(!response.ok)throw Error('District request failed');
- const data=await response.json();rows=data.filter(a=>a.region_code===region&&Array.isArray(a.tags)&&tags.some(t=>a.tags.includes(t)));
+ const data=await response.json();const local=data.filter(a=>a.region_code===region&&Array.isArray(a.tags)&&tags.some(t=>a.tags.includes(t)));
+ const junior=window.GN24_LOCAL_JUNIOR?await window.GN24_LOCAL_JUNIOR(district.code):[];
+ rows=[...new Map([...local,...junior].filter(a=>!cat||a.category===cat).map(a=>[a.id,a])).values()].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
  }catch(e){error=true;console.warn('GN24 district news',e)}
  render();
 }

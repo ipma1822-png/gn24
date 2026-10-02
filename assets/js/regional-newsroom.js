@@ -29,10 +29,12 @@ function compact(a){return `<a class="regional-compact" href="${articleURL(a.id)
 async function loadEditor(){const box=$('#regionalEditor');if(!box)return;try{const rs=await rest(`gn24_reporters?select=id,name,role,status,regional_hq_code,organization_position&status=eq.active&regional_hq_code=eq.${encodeURIComponent(hqCode)}&order=display_order.asc&limit=10`);const head=(rs||[]).find(r=>(r.organization_position||'').includes('지사장'));const reporters=(rs||[]).filter(r=>r.id!==head?.id);const parts=[];if(head)parts.push(`${head.name} ${head.organization_position||head.role||'지사장'}`);if(reporters.length)parts.push(reporters.map(r=>`${r.name} ${r.role||'지역기자'}`).join(' · '));box.textContent=parts.length?parts.join(' / '):'본사 관리'}catch(e){box.textContent='본사 관리'}}
 async function loadNews(){try{
  const articles='gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published&is_published=eq.true&order=date.desc,created_at.desc';
- const [local,all]=await Promise.all([
+ const [regional,all,junior]=await Promise.all([
   rest(articles+'&region_code=eq.'+encodeURIComponent(region)+'&limit=100'),
-  rest(articles+'&limit=100')
+  rest(articles+'&limit=100'),
+  window.GN24_LOCAL_JUNIOR?window.GN24_LOCAL_JUNIOR():Promise.resolve([])
  ]);
+ const local=[...new Map([...regional,...junior].map(a=>[a.id,a])).values()];
  renderBreaking(all);
  const hq=all.filter(a=>(a.region_code||'').toLowerCase()!==region);
  window.GN24_REGIONAL_LOCAL=local;renderCategoryMega();
