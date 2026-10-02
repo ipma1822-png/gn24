@@ -438,6 +438,24 @@
     reference.textContent='제보 작성 참고정보\n'+String(draft.reference||'');
     setDirty(true);saveDraft('manual');
     els.saveMessage.textContent='지역 제보 초안을 불러왔습니다. 내용을 검토한 뒤 기존 저장·발행 기능을 이용해 주세요.';
+    const tipArticleId=els.id.value;
+    let photoMessage='';
+    if(draft.media_urls?.length){
+      try{
+        const cfg=window.GN24_SUPABASE,client=window.supabase.createClient(cfg.url,cfg.anonKey);
+        const photos=await window.GN24LocalTipMedia.files(client,draft.media_urls);
+        if(els.id.value!==tipArticleId)throw Error('선택 기사가 변경되었습니다.');
+        const gallery=document.getElementById('galleryInput');
+        if(!gallery||!window.GN24GalleryAdmin)throw Error('기사 사진 입력 준비 실패');
+        const transfer=new DataTransfer();photos.forEach(file=>transfer.items.add(file));
+        gallery.files=transfer.files;gallery.dispatchEvent(new Event('change',{bubbles:true}));
+        photoMessage=' 제보사진 '+photos.length+'장을 기존 갤러리에 전달했습니다.';
+      }catch(e){
+        els.saveMessage.textContent='제보 초안은 입력되었지만 사진 전달에 실패했습니다. 다시 시도하려면 새로고침해 주세요.';
+        return;
+      }
+    }
+    els.saveMessage.textContent+=photoMessage;
     if(draft.submissionId)localStorage.setItem('gn24-local-tip-publish-link',JSON.stringify({submissionId:draft.submissionId,articleId:els.id.value}));
     sessionStorage.removeItem(key);
     els.title.focus();
