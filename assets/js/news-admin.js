@@ -427,7 +427,12 @@
     if(!region){els.saveMessage.textContent='지역 선택 준비가 지연되었습니다. 새로고침하면 제보 초안을 다시 불러옵니다.';return;}
     newArticle();
     applyPending({title:String(draft.title||''),content:[String(draft.facts||'')],visibilityScope:'admin',isPublished:false});
-    if(region){region.value=String(draft.region_code||'');region.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(region){
+      const code=String(draft.region_code||draft.regionCode||'').trim();
+      region.dataset.localTipArticleId=els.id.value;
+      region.dataset.localTipRegionCode=code;
+      region.value=code;region.dispatchEvent(new Event('change',{bubbles:true}));
+    }
     let reference=document.getElementById('localTipReference');
     if(!reference){reference=document.createElement('p');reference.id='localTipReference';reference.style.whiteSpace='pre-wrap';els.form.before(reference);}
     reference.textContent='제보 작성 참고정보\n'+String(draft.reference||'');
