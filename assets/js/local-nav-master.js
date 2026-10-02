@@ -4,6 +4,8 @@
 function init(){
  const nav=document.getElementById('gn24LocalNav'),source=document.getElementById('gn24LocalConfig');
  if(!nav||!source)return;
+ const version='GN24 LOCAL MASTER · v2.3';
+ document.querySelectorAll('[data-local-master-version]').forEach(el=>{el.textContent=version});
  const config=JSON.parse(source.textContent),region=document.body.dataset.region,name=document.body.dataset.regionName||region;
  if(!region)return;
  const home='/'+encodeURIComponent(region)+'/',office=home+'#'+encodeURIComponent(config.officeAnchor||'regionalEditor');
