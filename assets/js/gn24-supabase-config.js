@@ -86,8 +86,8 @@ window.GN24_SUPABASE = {
   }
   async function loadRegion(articleId){
     if(!articleId||loadingId===articleId||!select())return;loadingId=articleId;
-    try{const cfg=window.GN24_SUPABASE;const url=cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_articles?select=region_code&id=eq.'+encodeURIComponent(articleId)+'&limit=1';const r=await fetch(url,{cache:'no-store',headers:{apikey:cfg.anonKey}});if(!r.ok)return;const rows=await r.json();if(id()===articleId)select().value=rows?.[0]?.region_code||'';}catch(e){console.warn('GN24 region load',e)}finally{loadingId=''}}
-  function watch(){if(!installUI())return;const current=id();if(!current||current===lastId)return;lastId=current;select().value='';setTimeout(()=>loadRegion(current),60)}
+    try{const cfg=window.GN24_SUPABASE;const url=cfg.url.replace(/\/$/,'')+'/rest/v1/gn24_articles?select=region_code&id=eq.'+encodeURIComponent(articleId)+'&limit=1';const r=await fetch(url,{cache:'no-store',headers:{apikey:cfg.anonKey}});if(!r.ok)return;const rows=await r.json();if(id()===articleId)select().value=select().dataset.localTipArticleId===articleId?select().dataset.localTipRegionCode:(rows?.[0]?.region_code||'');}catch(e){console.warn('GN24 region load',e)}finally{loadingId=''}}
+  function watch(){if(!installUI())return;const current=id();if(!current||current===lastId)return;lastId=current;if(select().dataset.localTipArticleId===current){select().value=select().dataset.localTipRegionCode;select().dispatchEvent(new Event('change',{bubbles:true}));return}delete select().dataset.localTipArticleId;delete select().dataset.localTipRegionCode;select().value='';setTimeout(()=>loadRegion(current),60)}
   function patchSupabase(){
     if(!window.supabase?.createClient||window.supabase.__gn24RegionPatched)return;
     const original=window.supabase.createClient.bind(window.supabase);
