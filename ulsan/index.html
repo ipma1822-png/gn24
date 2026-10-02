@@ -11,7 +11,30 @@ window.GN24_LOCAL_GRID=function(rows){
  return general.length?grid(general):'<div class="regional-empty"><b>등록된 울산 지역뉴스가 없습니다.</b></div>';
 };
 }());
-</script><script src="/assets/js/gn24-supabase-config.js?v=3.19.0"></script><script src="/assets/js/regional-newsroom.js?v=1.4.2"></script><script defer src="/assets/js/universal-mega-nav.js?v=1.0.0"></script><script defer src="/assets/js/gn24-account-header.js?v=3.21.6"></script><script>document.addEventListener("click",function(e){const link=e.target.closest("a");if(!link||link.getAttribute("href")!=="#ulsanBranchOffice"||link.textContent.trim()!=="지사장"||!link.closest("#gn24LocalNav, #gn24LocalAll"))return;const office=document.getElementById("ulsanBranchOffice");if(!office)return;e.preventDefault();e.stopImmediatePropagation();const drawer=document.getElementById("regionalMenuDrawer");if(drawer&&!drawer.hidden)document.getElementById("regionalMenuClose").click();const mega=document.getElementById("gn24LocalMega");if(mega&&!mega.hidden){const button=document.querySelector('#gn24LocalNav button[data-group][aria-expanded="true"]');if(button)button.click()}if(location.hash!=="#ulsanBranchOffice")history.pushState(null,"","#ulsanBranchOffice");requestAnimationFrame(()=>{const header=document.querySelector(".regional-site-header");window.scrollTo({top:Math.max(0,window.scrollY+office.getBoundingClientRect().top-(header?header.getBoundingClientRect().height:0)-12),behavior:"instant"})})},true);</script><script>document.addEventListener("click",function(e){const link=e.target.closest("a");if(!link||!link.closest("#gn24LocalNav, #gn24LocalAll"))return;const targets={"소개":"ulsanBranchOffice","조직":"ulsanBranchOffice","활동":"regionalNews","공지":"ulsanBranchOffice"},id=targets[link.textContent.trim()];if(!id||link.getAttribute("href")!=="#"+id)return;const target=document.getElementById(id);if(!target)return;e.preventDefault();e.stopImmediatePropagation();const drawer=document.getElementById("regionalMenuDrawer");if(drawer&&!drawer.hidden)document.getElementById("regionalMenuClose").click();const mega=document.getElementById("gn24LocalMega");if(mega&&!mega.hidden){const button=document.querySelector('#gn24LocalNav button[data-group][aria-expanded="true"]');if(button)button.click()}if(location.hash!=="#"+id)history.pushState(null,"","#"+id);requestAnimationFrame(()=>{const header=document.querySelector(".regional-site-header");window.scrollTo({top:Math.max(0,window.scrollY+target.getBoundingClientRect().top-(header?header.getBoundingClientRect().height:0)-12),behavior:"instant"})})},true);</script><script>(function(){
+</script><script>(function(){
+'use strict';
+const code=new URLSearchParams(location.search).get('district');
+if(!code||!window.GN24_LOCAL_GRID)return;
+const config=JSON.parse(document.getElementById('gn24LocalConfig').textContent);
+const district=(config.districts||[]).find(d=>d.code===code);
+if(!district)return;
+const split=window.GN24_LOCAL_GRID;
+window.GN24_ULSAN_SPLIT_GRID=split;
+const isJunior=a=>String(a.region_code||'').toLowerCase()==='junior'||/^GN24-JR-/i.test(String(a.reporter_id||''));
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+window.GN24_LOCAL_GRID=function(rows){
+ const html=split(rows),empty=!rows.some(a=>!isJunior(a));
+ const national=document.querySelector('.regional-national-section');
+ if(national)national.hidden=empty;
+ if(!empty||!config.integratedDistrictFallback)return html;
+ const target=document.getElementById('ulsanJuniorNews'),juniorHTML=target&&target.innerHTML;
+ const cat=new URLSearchParams(location.search).get('cat');
+ const fallback=(window.GN24_REGIONAL_LOCAL||[]).filter(a=>!isJunior(a)&&(!cat||a.category===cat)).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+ const fallbackHTML=split(fallback);
+ if(target&&target.innerHTML!==juniorHTML)target.innerHTML=juniorHTML;
+ return '<div class="regional-empty"><b>현재 '+esc(district.name)+' 지역뉴스는 GN24 울산 지역본부에서 통합 운영하고 있습니다.</b><p>'+esc(config.integratedFallbackTitle||'GN24 울산 지역본부 최신뉴스')+'</p></div>'+fallbackHTML;
+};
+}());</script><script src="/assets/js/gn24-supabase-config.js?v=3.19.0"></script><script src="/assets/js/regional-newsroom.js?v=1.4.2"></script><script defer src="/assets/js/universal-mega-nav.js?v=1.0.0"></script><script defer src="/assets/js/gn24-account-header.js?v=3.21.6"></script><script>document.addEventListener("click",function(e){const link=e.target.closest("a");if(!link||link.getAttribute("href")!=="#ulsanBranchOffice"||link.textContent.trim()!=="지사장"||!link.closest("#gn24LocalNav, #gn24LocalAll"))return;const office=document.getElementById("ulsanBranchOffice");if(!office)return;e.preventDefault();e.stopImmediatePropagation();const drawer=document.getElementById("regionalMenuDrawer");if(drawer&&!drawer.hidden)document.getElementById("regionalMenuClose").click();const mega=document.getElementById("gn24LocalMega");if(mega&&!mega.hidden){const button=document.querySelector('#gn24LocalNav button[data-group][aria-expanded="true"]');if(button)button.click()}if(location.hash!=="#ulsanBranchOffice")history.pushState(null,"","#ulsanBranchOffice");requestAnimationFrame(()=>{const header=document.querySelector(".regional-site-header");window.scrollTo({top:Math.max(0,window.scrollY+office.getBoundingClientRect().top-(header?header.getBoundingClientRect().height:0)-12),behavior:"instant"})})},true);</script><script>document.addEventListener("click",function(e){const link=e.target.closest("a");if(!link||!link.closest("#gn24LocalNav, #gn24LocalAll"))return;const targets={"소개":"ulsanBranchOffice","조직":"ulsanBranchOffice","활동":"regionalNews","공지":"ulsanBranchOffice"},id=targets[link.textContent.trim()];if(!id||link.getAttribute("href")!=="#"+id)return;const target=document.getElementById(id);if(!target)return;e.preventDefault();e.stopImmediatePropagation();const drawer=document.getElementById("regionalMenuDrawer");if(drawer&&!drawer.hidden)document.getElementById("regionalMenuClose").click();const mega=document.getElementById("gn24LocalMega");if(mega&&!mega.hidden){const button=document.querySelector('#gn24LocalNav button[data-group][aria-expanded="true"]');if(button)button.click()}if(location.hash!=="#"+id)history.pushState(null,"","#"+id);requestAnimationFrame(()=>{const header=document.querySelector(".regional-site-header");window.scrollTo({top:Math.max(0,window.scrollY+target.getBoundingClientRect().top-(header?header.getBoundingClientRect().height:0)-12),behavior:"instant"})})},true);</script><script>(function(){
 'use strict';
 const district=new URLSearchParams(location.search).get('district');
 if(!district||!window.GN24_LOCAL_JUNIOR||!window.GN24_LOCAL_GRID)return;
@@ -26,7 +49,7 @@ window.GN24_LOCAL_JUNIOR(district).then(rows=>{
   observer.disconnect();
   list.querySelectorAll('a.regional-card').forEach(card=>{if(urls.has(card.getAttribute('href')))card.remove();});
   // Reuse the existing Ulsan split renderer; it populates the Junior grid.
-  window.GN24_LOCAL_GRID(junior);
+  (window.GN24_ULSAN_SPLIT_GRID||window.GN24_LOCAL_GRID)(junior);
   observer.observe(list,{childList:true,subtree:true});
  }
  render();
