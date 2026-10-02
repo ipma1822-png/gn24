@@ -3,25 +3,25 @@
 const params=new URLSearchParams(location.search);
 let requested=params.get('region');
 if(!requested&&document.referrer){try{const from=new URL(document.referrer);if(from.origin===location.origin&&/^\/daegu(?:\/|$)/.test(from.pathname))requested='daegu';}catch(e){}}
-if(requested==='daegu'){
+if(requested==='daegu'||requested==='busan'){
  const guard=document.getElementById('guard');
  function preserveRegion(){
   guard.querySelectorAll('a[href]').forEach(a=>{
    const url=new URL(a.getAttribute('href'),location.origin);
    if(url.origin===location.origin&&url.searchParams.get('next')==='/regional-center/'){
-    url.searchParams.set('next','/regional-center/?region=daegu');
+    url.searchParams.set('next','/regional-center/?region='+requested);
     a.setAttribute('href',url.pathname+url.search);
    }
   });
  }
  if(guard){new MutationObserver(preserveRegion).observe(guard,{childList:true,subtree:true});preserveRegion();}
 }
-if(requested&&requested!=='ulsan'&&requested!=='daegu')return;
-const region=requested||'ulsan',name=region==='daegu'?'대구':'울산',home='/'+region+'/';
+if(requested&&requested!=='ulsan'&&requested!=='daegu'&&requested!=='busan')return;
+const region=requested||'ulsan',name=region==='busan'?'부산':region==='daegu'?'대구':'울산',home='/'+region+'/';
 document.title=name+' 지역운영센터 | GLOBAL NEWS24';
 document.querySelector('.hero h1').textContent=name+' 지역운영센터';
 const brand=document.querySelector('a.brand');if(brand)brand.href=home;
 const homeLink=document.querySelector('nav[aria-label="홈 이동"] a');if(homeLink){homeLink.href=home;homeLink.textContent=name+' 홈';}
 const news=document.querySelector('.grid a[href="/ulsan/"]');if(news){news.href=home;news.querySelector('b').textContent=name+'뉴스';}
-const room=document.querySelector('.grid a[href="/ulsan/newsroom/"]');if(room){room.href=region==='ulsan'?'/ulsan/newsroom/':'/pages/reporter-submit/?region=daegu';room.querySelector('b').textContent=name+' 기사제작실';}
+const room=document.querySelector('.grid a[href="/ulsan/newsroom/"]');if(room){room.href=region==='ulsan'?'/ulsan/newsroom/':'/pages/reporter-submit/?region='+region;room.querySelector('b').textContent=name+' 기사제작실';}
 }());</script><script src="/assets/js/gn24-supabase-config.js?v=3.19.0"></script><script src="/assets/js/gn24-reporter-auth.js?v=3.12.10"></script><script src="/assets/js/regional-center.js?v=1.0.0"></script></body></html>
