@@ -41,3 +41,15 @@
 @media(max-width:900px){.gn24-mega-countries.gn24-country-flat{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.gn24-mega-countries.gn24-country-flat{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:380px){.gn24-mega-countries.gn24-country-flat{grid-template-columns:minmax(0,1fr)}}
+
+/* Country editions only: full-width continents with compact existing country cards. */
+body.global-edition .gn24-universal-panel .gn24-mega-countries{grid-template-columns:minmax(0,1fr);min-width:0;box-sizing:border-box}
+body.global-edition .gn24-country-group{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;width:100%;min-width:0;box-sizing:border-box}
+body.global-edition .gn24-country-group h3{grid-column:1/-1;margin:0}
+body.global-edition .gn24-country-group .gn24-country-link{margin:0;min-width:0;gap:4px;box-sizing:border-box}
+body.global-edition .gn24-country-group .gn24-country-link span{min-width:0;overflow-wrap:anywhere}
+body.global-edition .gn24-country-group .gn24-country-link small{flex-shrink:0}
+body.global-edition .gn24-universal-panel{box-sizing:border-box;overflow-x:hidden}
+@media(max-width:900px){body.global-edition .gn24-country-group{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){body.global-edition .gn24-country-group{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:380px){body.global-edition .gn24-country-group{grid-template-columns:minmax(0,1fr)}}
