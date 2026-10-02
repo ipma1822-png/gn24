@@ -60,7 +60,7 @@ form.addEventListener('submit',async function(event){
  const data=new FormData(form),value=key=>String(data.get(key)||'').trim();
  const urls=value('media_urls').split(/[\n,]+/).map(s=>s.trim()).filter(Boolean);
  if(urls.length>10||urls.some(s=>{try{return !['http:','https:'].includes(new URL(s).protocol)}catch(e){return true}})){message.hidden=false;message.textContent='자료URL은 http 또는 https 주소로 최대 10개 입력해 주세요.';return;}
- const payload={participant_type:'citizen',activity_number:'',name:value('name'),phone:value('phone'),region:form.elements.region.selectedOptions[0].textContent,title:value('title'),facts:value('facts'),source_notes:['지역코드: '+value('region'),'구·군: '+value('district'),'유형: '+value('type'),'장소: '+value('place'),'일자: '+value('date'),'이메일: '+value('email')].join('\n'),media_urls:urls,consent_original_work:true,consent_publication_review:true,status:'submitted'};
+ const payload={participant_type:'citizen',activity_number:null,name:value('name'),phone:value('phone'),region:form.elements.region.selectedOptions[0].textContent,title:value('title'),facts:value('facts'),source_notes:['지역코드: '+value('region'),'구·군: '+value('district'),'유형: '+value('type'),'장소: '+value('place'),'일자: '+value('date'),'이메일: '+value('email')].join('\n'),media_urls:urls,consent_original_work:true,consent_publication_review:true,status:'submitted'};
  button.disabled=true;message.hidden=false;message.textContent='접수 중…';
  try{
  const cfg=window.GN24_SUPABASE;if(!cfg||!cfg.url||!cfg.anonKey)throw Error('Connection unavailable');
