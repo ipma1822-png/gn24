@@ -3,7 +3,7 @@
 const params=new URLSearchParams(location.search);
 let requested=params.get('region');
 if(!requested&&document.referrer){try{const from=new URL(document.referrer);if(from.origin===location.origin&&/^\/daegu(?:\/|$)/.test(from.pathname))requested='daegu';}catch(e){}}
-if(requested==='daegu'||requested==='busan'){
+if(requested==='daegu'||requested==='busan'||requested==='gyeongbuk'||requested==='gyeongnam'){
  const guard=document.getElementById('guard');
  function preserveRegion(){
   guard.querySelectorAll('a[href]').forEach(a=>{
@@ -16,8 +16,8 @@ if(requested==='daegu'||requested==='busan'){
  }
  if(guard){new MutationObserver(preserveRegion).observe(guard,{childList:true,subtree:true});preserveRegion();}
 }
-if(requested&&requested!=='ulsan'&&requested!=='daegu'&&requested!=='busan')return;
-const region=requested||'ulsan',name=region==='busan'?'부산':region==='daegu'?'대구':'울산',home='/'+region+'/';
+if(requested&&requested!=='ulsan'&&requested!=='daegu'&&requested!=='busan'&&requested!=='gyeongbuk'&&requested!=='gyeongnam')return;
+const region=requested||'ulsan',name=region==='gyeongbuk'?'경북':region==='gyeongnam'?'경남':region==='busan'?'부산':region==='daegu'?'대구':'울산',home='/'+region+'/';
 document.title=name+' 지역운영센터 | GLOBAL NEWS24';
 document.querySelector('.hero h1').textContent=name+' 지역운영센터';
 const brand=document.querySelector('a.brand');if(brand)brand.href=home;
