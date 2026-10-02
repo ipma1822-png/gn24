@@ -10,9 +10,12 @@ const url=a=>'/share/'+encodeURIComponent(a.id)+'/',image=a=>`style="background-
 let rows=null,error=false;
 function render(){
  if(rows===null&&!error){hero.removeAttribute('href');hero.replaceChildren();list.innerHTML='<div class="regional-empty"><b>지역뉴스를 불러오는 중입니다.</b></div>';return}
+ const integrated=!error&&district&&rows&&rows.length===0&&config.integratedDistrictFallback&&window.GN24_LOCAL_GRID;
+ const fallback=integrated?[...(window.GN24_REGIONAL_LOCAL||[])].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))):[];
+ const integratedHTML=integrated?'<div class="regional-empty"><b>현재 '+esc(district.name)+' 지역뉴스는 GN24 '+esc(name)+' 지역본부에서 통합 운영하고 있습니다.</b><p>GN24 '+esc(name)+' 최신뉴스</p></div>'+window.GN24_LOCAL_GRID(fallback):'';
  const lead=window.GN24_LOCAL_GRID?null:rows&&rows[0];
  const leadHTML=lead?`<div class="regional-lead-image" ${image(lead)}></div><div><span>${esc(lead.category||'뉴스')}</span><h2>${esc(lead.title)}</h2><p>${esc(lead.summary)}</p><small>${date(lead)} · ${esc(lead.author||'Global News24')}</small></div>`:'';
- const listHTML=error?'<div class="regional-empty"><b>지역뉴스를 불러오지 못했습니다.</b><p>잠시 후 다시 확인해 주세요.</p></div>':rows.length&&window.GN24_LOCAL_GRID?window.GN24_LOCAL_GRID(rows):rows.length?rows.slice(1).map(a=>`<a class="regional-card" href="${url(a)}"><div class="regional-thumb" ${image(a)}></div><div class="regional-card-body"><span>${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p><small>${date(a)} · ${esc(a.author||'Global News24')}</small></div></a>`).join(''):'<div class="regional-empty"><b>등록된 지역뉴스가 없습니다</b><p><a href="/'+encodeURIComponent(region)+'/">전체 '+esc(name)+'뉴스 보기</a></p></div>';
+ const listHTML=error?'<div class="regional-empty"><b>지역뉴스를 불러오지 못했습니다.</b><p>잠시 후 다시 확인해 주세요.</p></div>':rows.length&&window.GN24_LOCAL_GRID?window.GN24_LOCAL_GRID(rows):rows.length?rows.slice(1).map(a=>`<a class="regional-card" href="${url(a)}"><div class="regional-thumb" ${image(a)}></div><div class="regional-card-body"><span>${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p><small>${date(a)} · ${esc(a.author||'Global News24')}</small></div></a>`).join(''):integratedHTML||'<div class="regional-empty"><b>등록된 지역뉴스가 없습니다</b><p><a href="/'+encodeURIComponent(region)+'/">전체 '+esc(name)+'뉴스 보기</a></p></div>';
  if(hero.innerHTML!==leadHTML)hero.innerHTML=leadHTML;if(lead)hero.href=url(lead);else hero.removeAttribute('href');
  if(list.innerHTML!==listHTML)list.innerHTML=listHTML;
  const label=name+' · '+(district?district.name:'지역')+' 기사 '+(rows?rows.length:0)+'건';if(count&&count.textContent!==label)count.textContent=label;
