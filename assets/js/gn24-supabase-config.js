@@ -31,6 +31,31 @@ window.GN24_SUPABASE = {
     CO:'콜롬비아',CU:'쿠바',PA:'파나마',AU:'호주',NZ:'뉴질랜드',KE:'케냐',NG:'나이지리아',MN:'몽골',RU:'러시아'
   });
 
+  // Admin article destinations only; the public 36-country registry stays unchanged.
+  const additionalGlobal=[
+    ['algeria','🌍 GLOBAL · 🇩🇿 알제리'],
+    ['tunisia','🌍 GLOBAL · 🇹🇳 튀니지'],
+    ['ghana','🌍 GLOBAL · 🇬🇭 가나'],
+    ['ethiopia','🌍 GLOBAL · 🇪🇹 에티오피아'],
+    ['netherlands','🌍 GLOBAL · 🇳🇱 네덜란드'],
+    ['portugal','🌍 GLOBAL · 🇵🇹 포르투갈'],
+    ['poland','🌍 GLOBAL · 🇵🇱 폴란드'],
+    ['greece','🌍 GLOBAL · 🇬🇷 그리스'],
+    ['georgia','🌍 GLOBAL · 🇬🇪 조지아'],
+    ['bangladesh','🌍 GLOBAL · 🇧🇩 방글라데시'],
+    ['sri-lanka','🌍 GLOBAL · 🇱🇰 스리랑카'],
+    ['singapore','🌍 GLOBAL · 🇸🇬 싱가포르'],
+    ['iraq','🌍 GLOBAL · 🇮🇶 이라크'],
+    ['jordan','🌍 GLOBAL · 🇯🇴 요르단'],
+    ['kazakhstan','🌍 GLOBAL · 🇰🇿 카자흐스탄'],
+    ['syria','🌍 GLOBAL · 🇸🇾 시리아'],
+    ['costa-rica','🌍 GLOBAL · 🇨🇷 코스타리카'],
+    ['chile','🌍 GLOBAL · 🇨🇱 칠레'],
+    ['peru','🌍 GLOBAL · 🇵🇪 페루'],
+    ['uruguay','🌍 GLOBAL · 🇺🇾 우루과이'],
+    ['venezuela','🌍 GLOBAL · 🇻🇪 베네수엘라']
+  ];
+
   let regions=[...domesticRegions,...legacyGlobal];
   let lastId='',loadingId='',registryReady=false;
 
@@ -53,7 +78,7 @@ window.GN24_SUPABASE = {
       country.slug,
       '🌍 GLOBAL · '+(koByCode[country.countryCode]||country.countryLabel||country.countryName||country.editionName||country.slug)
     ]);
-    regions=[...domesticRegions,...globals];
+    regions=[...domesticRegions,...globals,...additionalGlobal];
     registryReady=true;
     return true;
   }
@@ -68,7 +93,7 @@ window.GN24_SUPABASE = {
     if(select())return true;
     const category=document.querySelector('#fCategory');if(!category)return false;
     const row=document.createElement('div');row.className='form-grid two gn24-region-select-row';
-    row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${optionHTML()}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION 36</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
+    row.innerHTML=`<label>배포판 선택<select id="fRegionCode">${optionHTML()}</select><small style="display:block;margin-top:6px;color:#6c7a8c">국내: 실제 취재 시·도 선택 · 해외: GLOBAL EDITION 국가 선택</small></label><div class="reporter-link-guide"><b>17개 지역판 + GLOBAL EDITION 57</b><span>국내 기사 흐름은 그대로 유지합니다. 해외판 기사는 해당 GLOBAL EDITION 국가만 선택하세요.</span></div>`;
     category.closest('.form-grid.two')?.insertAdjacentElement('afterend',row);
     document.querySelectorAll('.admin-brand small').forEach(x=>x.textContent='기사 편집실 · v3.21.0');
     const notice=document.querySelector('.notice strong');if(notice)notice.textContent='온라인 편집국 CMS · v3.21.0';
