@@ -10,7 +10,7 @@ function init(){
  const link=(label,url)=>({label,url}),contact='/pages/contact/',news='/junior/news/',reporters='/pages/reporters/';
  const groups=[
  {label:'지역뉴스',links:[link('주요뉴스',home+'#regionalNews'),link('최신뉴스',home+'#regionalLatest'),...['행정·정책','사회·안전','경제·산업','교육·문화','스포츠·무도','지역소식'].map((label,i)=>link(label,home+'?cat='+encodeURIComponent(['국내소식','사회','경제','청소년·문화','무도·스포츠','공익'][i])))]},
- {label:'시·군·구',note:name+' 행정구역 · 공식 홈페이지',links:(config.districts||[]).map(d=>link(d.name,d.url))},
+ {label:'시·군·구',note:name+' 지역뉴스',links:[link('전체 '+name+'뉴스',home),...(config.districts||[]).map(d=>link(d.name,home+'?district='+encodeURIComponent(d.code)+'#regionalNews'))]},
  {label:'지역본부',links:[link('소개',office),link('지사장',home+'#regionalEditor'),link('조직',office),link('활동',home+'#regionalNews'),link('공지','/regional-center/'),link('운영','/regional-center/rules/')]},
  {label:'기자단',links:[link('소개','/pages/reporter-guide/'),link('기자찾기',reporters),link('지역·전문기자',reporters),link('기자별기사',reporters),link('교육','/regional-center/training/'),link('참여','/pages/reporter-apply/')]},
  {label:'꿈나무',links:[link('뉴스',news),link('동네',news),link('학교',news),link('기자','/junior/'),link('우수기사',news),link('참여','/junior/join/')]},
