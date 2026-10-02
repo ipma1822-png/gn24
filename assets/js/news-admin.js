@@ -438,6 +438,7 @@
     reference.textContent='제보 작성 참고정보\n'+String(draft.reference||'');
     setDirty(true);saveDraft('manual');
     els.saveMessage.textContent='지역 제보 초안을 불러왔습니다. 내용을 검토한 뒤 기존 저장·발행 기능을 이용해 주세요.';
+    if(draft.submissionId)localStorage.setItem('gn24-local-tip-publish-link',JSON.stringify({submissionId:draft.submissionId,articleId:els.id.value}));
     sessionStorage.removeItem(key);
     els.title.focus();
   }
