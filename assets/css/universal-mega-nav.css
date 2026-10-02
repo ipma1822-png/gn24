@@ -31,3 +31,13 @@
   body.gn24-hq-mega-ready .gn24-home-network-nav{display:none!important}
   body.gn24-hq-mega-ready .gn24-universal-bar{display:block!important}
 }
+
+/* HQ world menu: one continuous country grid, using existing cards and scrolling. */
+.gn24-mega-countries.gn24-country-flat{grid-template-columns:repeat(5,minmax(0,1fr));box-sizing:border-box;min-width:0}
+.gn24-country-flat .gn24-country-link{margin:0;min-width:0;box-sizing:border-box;gap:4px}
+.gn24-country-flat .gn24-country-link span{min-width:0;overflow-wrap:anywhere}
+.gn24-country-flat .gn24-country-link small{flex-shrink:0}
+.gn24-universal-panel:has(.gn24-country-flat){box-sizing:border-box;overflow-x:hidden}
+@media(max-width:900px){.gn24-mega-countries.gn24-country-flat{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.gn24-mega-countries.gn24-country-flat{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:380px){.gn24-mega-countries.gn24-country-flat{grid-template-columns:minmax(0,1fr)}}
