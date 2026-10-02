@@ -43,6 +43,23 @@ if(!list||!target)return;
 window.GN24_LOCAL_JUNIOR(district).then(rows=>{
  const cat=new URLSearchParams(location.search).get('cat');
  const junior=rows.filter(a=>!cat||a.category===cat).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+ const count=document.getElementById('regionalCount');
+ const config=JSON.parse(document.getElementById('gn24LocalConfig').textContent);
+ const districtInfo=(config.districts||[]).find(d=>d.code===district);
+ if(count&&districtInfo){
+  const separated=document.createElement('span');
+  separated.id='ulsanDistrictSeparatedCount';
+  count.insertAdjacentElement('afterend',separated);
+  function updateCount(){
+   const match=count.textContent.match(/기사 (\d+)건/);
+   if(!match||!count.textContent.includes(districtInfo.name))return;
+   const total=Number(match[1]),juniorCount=new Set(junior.map(a=>a.id)).size;
+   separated.textContent=districtInfo.name+' 일반뉴스 '+Math.max(0,total-juniorCount)+'건 · 꿈나무 뉴스 '+juniorCount+'건';
+   count.hidden=true;
+  }
+  new MutationObserver(updateCount).observe(count,{childList:true,subtree:true,characterData:true});
+  updateCount();
+ }
  const urls=new Set(junior.map(a=>'/share/'+encodeURIComponent(a.id)+'/'));
  const observer=new MutationObserver(render);
  function render(){
