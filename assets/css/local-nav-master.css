@@ -1,0 +1,14 @@
+/* GN24 LOCAL MASTER v1 — isolated from other editions. */
+.gn24-local-nav{position:relative;z-index:140;background:#fff;border-top:1px solid #e5e7eb;border-bottom:2px solid #b18432;color:#172333}
+.gn24-local-row{display:flex;align-items:center;gap:4px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+.gn24-local-row>a,.gn24-local-row>button{flex:0 0 auto;white-space:nowrap;display:block;padding:14px 13px;background:transparent;border:0;color:inherit;text-decoration:none;font:inherit;font-size:14px;font-weight:700;cursor:pointer;min-height:46px}
+.gn24-local-row>button:last-child{margin-left:auto}
+.gn24-local-row>button[aria-expanded=true],.gn24-local-row>a:hover,.gn24-local-row>button:hover{background:#f5f6f8;color:#8b671f}
+.gn24-local-row :focus-visible,.gn24-local-grid a:focus-visible{outline:2px solid #b18432;outline-offset:-2px}
+.gn24-local-mega{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid #dfe3e8;box-shadow:0 16px 28px #10182826;max-height:65vh;overflow-y:auto}
+.gn24-local-mega[hidden]{display:none}
+.gn24-local-mega>.wrap{padding-top:20px;padding-bottom:24px}
+.gn24-local-mega h2{font-size:18px;margin:0 0 14px}.gn24-local-mega p{font-size:14px;color:#667085;margin:0 0 12px}
+.gn24-local-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.gn24-local-grid>a{padding:12px;background:#f5f6f8;border:1px solid #e8ebef;color:#172333;font-size:14px;text-decoration:none;overflow-wrap:anywhere}
+@media(max-width:800px){.gn24-local-row{width:100%;max-width:100%;padding:0 12px;box-sizing:border-box}.gn24-local-row>a,.gn24-local-row>button{padding:12px 11px}.gn24-local-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gn24-local-mega{max-height:55vh}}
