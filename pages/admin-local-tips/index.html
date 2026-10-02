@@ -2,7 +2,7 @@
 'use strict';
 const cfg=window.GN24_SUPABASE||{},base=String(cfg.url||'').replace(/\/$/,''),key=String(cfg.anonKey||''),$=id=>document.getElementById(id);
 const labels={submitted:'신규',reviewing:'검토중',clarification_requested:'추가확인',accepted:'채택',published:'기사발행',rejected:'반려'};
-let token='',rows=[],selected=null;
+let token='',rows=[],selected=null,regionalRegion='';
 const sb=window.supabase.createClient(cfg.url,cfg.anonKey);
 async function req(path,opt={}){
  const {data,error}=await sb.auth.getSession();
@@ -14,7 +14,7 @@ async function req(path,opt={}){
 }
 function submissionType(row){return (String(row.source_notes||'').match(/^유형:\s*([^\r\n]*)/m)?.[1]||'').trim();}
 function render(){
- const region=$('regionFilter').value,status=$('statusFilter').value,type=$('typeFilter').value,query=$('tipSearch').value.trim().toLocaleLowerCase('ko-KR');
+ const region=regionalRegion||$('regionFilter').value,status=$('statusFilter').value,type=$('typeFilter').value,query=$('tipSearch').value.trim().toLocaleLowerCase('ko-KR');
  const visible=rows.filter(r=>(!region||r.region===region)&&(!status||r.status===status)&&(!type||submissionType(r)===type)&&(!query||(String(r.title||'')+' '+String(r.name||'')).toLocaleLowerCase('ko-KR').includes(query)));
  $('count').textContent=visible.length+'건';$('list').replaceChildren();
  for(const row of visible){
@@ -57,10 +57,10 @@ function detail(id){
  $('detail').scrollIntoView({behavior:'smooth',block:'start'});
 }
 async function load(){
- const data=await req('/rest/v1/gn24_participant_submissions?select=id,participant_type,activity_number,name,phone,region,title,facts,source_notes,media_urls,consent_original_work,consent_publication_review,status,reviewer_notes,linked_article_id,created_at&order=created_at.desc');
+ const data=await req('/rest/v1/gn24_participant_submissions?select=id,participant_type,activity_number,name,phone,region,title,facts,source_notes,media_urls,consent_original_work,consent_publication_review,status,reviewer_notes,linked_article_id,created_at&order=created_at.desc'+(regionalRegion?'&region=eq.'+encodeURIComponent(regionalRegion):''));
  rows=data||[];
- const previous=$('regionFilter').value;$('regionFilter').replaceChildren(new Option('전체 지역',''),...Array.from(new Set(rows.map(r=>r.region).filter(Boolean))).sort().map(region=>new Option(region,region)));
- if(Array.from($('regionFilter').options).some(o=>o.value===previous))$('regionFilter').value=previous;
+ if(regionalRegion){$('regionFilter').replaceChildren(new Option(regionalRegion+' · 담당 지역',regionalRegion));$('regionFilter').value=regionalRegion;$('regionFilter').disabled=true;}
+ else{const previous=$('regionFilter').value;$('regionFilter').replaceChildren(new Option('전체 지역',''),...Array.from(new Set(rows.map(r=>r.region).filter(Boolean))).sort().map(region=>new Option(region,region)));if(Array.from($('regionFilter').options).some(o=>o.value===previous))$('regionFilter').value=previous;}
  const previousType=$('typeFilter').value;
  $('typeFilter').replaceChildren(new Option('전체 유형',''),...Array.from(new Set(rows.map(submissionType).filter(Boolean))).sort().map(type=>new Option(type,type)));
  if(Array.from($('typeFilter').options).some(o=>o.value===previousType))$('typeFilter').value=previousType;
@@ -92,7 +92,14 @@ $('reload').addEventListener('click',()=>load().catch(()=>{$('count').textConten
  token=error?'':data.session?.access_token||'';
  if(!token){$('guard').textContent='온라인 편집국에서 관리자 로그인 후 이용해 주세요.';return;}
  try{
- if(await req('/rest/v1/rpc/is_gn24_admin',{method:'POST',body:'{}'})!==true){$('guard').textContent='본사 최종관리자만 이용할 수 있습니다.';return;}
+ if(await req('/rest/v1/rpc/is_gn24_admin',{method:'POST',body:'{}'})!==true){
+  const scopes=await req('/rest/v1/rpc/gn24_my_regional_scope',{method:'POST',body:'{}'});
+  const scope=Array.isArray(scopes)?scopes[0]:scopes;
+  if(scope?.scope_type!=='regional_hq'||!scope.regional_hq_code){$('guard').textContent='본사 관리자 또는 시·도본부장만 이용할 수 있습니다.';return;}
+  const headquarters=await req('/rest/v1/gn24_regional_headquarters?select=region_name&code=eq.'+encodeURIComponent(scope.regional_hq_code)+'&limit=1');
+  regionalRegion=headquarters?.[0]?.region_name||'';
+  if(!regionalRegion){$('guard').textContent='담당 지역을 확인할 수 없습니다.';return;}
+ }
  await load();$('guard').hidden=true;$('content').hidden=false;
  }catch(e){$('guard').textContent='권한 확인 또는 제보 조회에 실패했습니다. 온라인 편집국에서 다시 로그인해 주세요.';}
 })();
