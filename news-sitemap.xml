@@ -1,37 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-  <url>
-    <loc>https://news24.ai.kr/share/gn24-20261007-784943/</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Global News24</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-10-07</news:publication_date>
-      <news:title>گسترش همکاری دانشگاه آزاد اسلامی مشهد با مجموعه ورزشی مهدی نمازی؛ برنامه‌ریزی برای همایش بزرگ و ثبت رکورد محمدامین</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://news24.ai.kr/share/gn24-20261007-422688/</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Global News24</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-10-07</news:publication_date>
-      <news:title>이란 마슈하드 이슬람 아자드대학교, 마흐디 나마지 측과 교육·스포츠 협력 확대 논의</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://news24.ai.kr/share/gn24-20261007-322113/</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Global News24</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-10-07</news:publication_date>
-      <news:title>전성권 칼럼 | 나는 왜 태권검도를 만들었는가</news:title>
-    </news:news>
-  </url>
 </urlset>
