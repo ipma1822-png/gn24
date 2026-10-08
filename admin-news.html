@@ -192,7 +192,7 @@
           <p>기자를 등록하고 활동상태·프로필을 관리합니다. 활동 기자는 기사 작성자 선택 목록과 기자소개 페이지에 표시됩니다.</p>
         </div>
         <div class="reporter-manager-actions">
-          <button id="reporterNewBtn" class="btn primary small" type="button">＋ 새 기자</button>
+          <button id="reporterNewBtn" class="btn primary small" type="button">＋ 기자 직접 등록</button>
           <button id="reporterRefreshBtn" class="btn small" type="button">↻ 새로고침</button>
           <button id="reporterCloseBtn" class="btn small" type="button">닫기</button>
         </div>
@@ -204,13 +204,13 @@
             <button type="button" data-reporter-filter="pending">승인대기 <b id="reporterPendingCount">0</b></button>
             <button type="button" data-reporter-filter="suspended">활동정지 <b id="reporterSuspendedCount">0</b></button>
           </div>
-          <div id="adminReporterList" class="admin-reporter-list"></div>
+          <input id="reporterSearch" type="search" placeholder="기자번호·성명·지역·소속 검색" aria-label="기자 검색"><button type="button" data-reporter-filter="all">전체·해촉 포함</button><div id="adminReporterList" class="admin-reporter-list"></div>
         </aside>
         <form id="reporterForm" class="reporter-form" autocomplete="off">
           <div class="form-grid two">
-            <label>기자 ID<input id="rId" required placeholder="예: gn24-jeon"></label>
+            <label>기자 ID<input id="rId" readonly placeholder="저장 시 기존 번호 규칙으로 자동 발급"></label><label>공식 기자번호<input id="rReporterNumber" readonly placeholder="저장 시 자동 발급 · 변경 불가"></label>
             <label>상태
-              <select id="rStatus"><option value="active">활동</option><option value="pending">승인대기</option><option value="suspended">활동정지</option></select>
+              <select id="rStatus"><option value="active">활동</option><option value="pending">승인대기</option><option value="suspended">활동정지</option><option value="terminated">해촉</option></select>
             </label>
           </div>
           <div class="form-grid two">
@@ -219,19 +219,19 @@
           </div>
           <div class="form-grid two">
             <label>권한
-              <select id="rAccessLevel">
+              <select id="rAccessLevel" disabled>
                 <option value="editor">편집국 · 전체 기사 관리/발행</option>
                 <option value="reporter" selected>정식기자 · 자기 기사 작성/수정</option>
                 <option value="contributor">객원기자 · 작성 후 승인요청</option>
               </select>
             </label>
-            <label>로그인 이메일<input id="rLoginEmail" type="email" placeholder="기자 로그인용 이메일"></label>
+            <label>로그인 이메일<input id="rLoginEmail" type="email" readonly placeholder="기자 로그인용 이메일"></label>
           </div>
           <div class="form-grid two">
             <label>소속<input id="rAffiliation" value="Global News24"></label>
             <label>지역·담당<input id="rRegion" placeholder="서울 / 울산 / 중국 / 국제"></label>
           </div>
-          <label>프로필 사진 URL<input id="rPhoto" placeholder="https://... 또는 /assets/..."></label>
+          <div class="form-grid two"><label>임명일<input id="rAppointedAt" type="date"></label><label>생년월일 · ICA 이름 조회용<input id="rBirthDate" type="date"></label></div><label>상태 변경 사유<input id="rStatusReason" placeholder="정지·해촉 시 필수"></label><label>프로필 사진 URL<input id="rPhoto" placeholder="https://... 또는 /assets/..."></label>
           <label>전문분야 <small>쉼표로 구분</small><input id="rSpecialties" placeholder="무도·스포츠, 안전·드론, 공익"></label>
           <label>공개 이메일<input id="rEmail" type="email" placeholder="선택사항"></label>
           <label>기자 소개<textarea id="rBio" rows="5" placeholder="취재 분야, 경력, 소개"></textarea></label>
@@ -239,7 +239,7 @@
             <label>표시 순서<input id="rOrder" type="number" value="100" min="0"></label>
             <div class="reporter-form-actions">
               <button class="btn primary" type="submit">기자 저장</button>
-              <button id="reporterDeleteBtn" class="btn danger" type="button">기자 삭제</button>
+              <a id="reporterPersonnelLink" class="btn" hidden>인사·수습 관리</a>
             </div>
           </div>
           <div id="reporterManagerStatus" class="reporter-manager-status">기자를 선택하거나 새 기자를 등록하세요.</div>
@@ -283,7 +283,7 @@
   <script src="/assets/js/gallery-admin.js?v=3.5.2"></script>
   <script src="/assets/js/news-image-light.js?v=1.0.0"></script>
   <script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script src="/assets/js/news-admin.js?v=3.23.9"></script>
-  <script src="/assets/js/news-cms.js?v=3.5.7"></script>
+  <script src="/assets/js/news-cms.js?v=3.5.8-reporter-entry"></script>
   <script src="/assets/js/admin-edition-grid.js?v=3.22.5"></script>
   <script src="/assets/global-edition/country-registry.js?v=1.4.1"></script>
 <script>

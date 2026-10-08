@@ -301,20 +301,24 @@ commentList?.addEventListener('click',e=>{
 /* ===== GN24 v3.3.1 · 기자 관리자 ===== */
 const reporterManageBtn=$('#reporterManageBtn'), reporterManager=$('#reporterManager'),
       reporterList=$('#adminReporterList'), reporterForm=$('#reporterForm');
-let reporterRows=[], juniorReporterRows=[], reporterFilter='active', selectedReporterId='';
+let reporterRows=[], juniorReporterRows=[], reporterFilter='active', selectedReporterId='', reporterSaving=false;
 
 function reporterEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 function reporterValue(id){return ($(id)?.value||'').trim()}
 function reporterBlank(){
+  if(reporterSaving)return;
   selectedReporterId='';
+  $('#rReporterNumber').value=''; $('#rAppointedAt').value=''; $('#rBirthDate').value=''; $('#rStatusReason').value=''; $('#reporterPersonnelLink').hidden=true;
   $('#rId').value=''; $('#rName').value=''; $('#rRole').value='기자'; $('#rAffiliation').value='Global News24';
   $('#rRegion').value=''; $('#rPhoto').value=''; $('#rSpecialties').value=''; $('#rEmail').value='';
-  $('#rBio').value=''; $('#rStatus').value='active'; $('#rAccessLevel').value='reporter'; $('#rLoginEmail').value=''; $('#rOrder').value='100';
+  $('#rBio').value=''; $('#rStatus').value='pending'; $('#rAccessLevel').value='reporter'; $('#rLoginEmail').value=''; $('#rOrder').value='100';
   $('#reporterManagerStatus').textContent='새 기자 정보를 입력하세요.';
 }
 function reporterFill(r){
+  if(reporterSaving)return;
   if(!r)return reporterBlank();
   selectedReporterId=r.id;
+  $('#rReporterNumber').value=r.reporter_number||''; $('#rAppointedAt').value=(r.appointed_at||'').slice(0,10); $('#rBirthDate').value=r.birth_date||''; $('#rStatusReason').value=''; $('#reporterPersonnelLink').hidden=false; $('#reporterPersonnelLink').href='/pages/admin-reporter-detail/?id='+encodeURIComponent(r.id);
   $('#rId').value=r.id||''; $('#rName').value=r.name||''; $('#rRole').value=r.role||'기자';
   $('#rAffiliation').value=r.affiliation||'Global News24'; $('#rRegion').value=r.region||'';
   $('#rPhoto').value=r.photo_url||''; $('#rSpecialties').value=(r.specialties||[]).join(', ');
@@ -327,11 +331,12 @@ function reporterRender(){
   $('#reporterActiveCount').textContent=reporterRows.filter(r=>r.status==='active').length;
   $('#reporterPendingCount').textContent=reporterRows.filter(r=>r.status==='pending').length;
   $('#reporterSuspendedCount').textContent=reporterRows.filter(r=>r.status==='suspended').length;
-  const rows=reporterRows.filter(r=>r.status===reporterFilter);
+  const q=reporterValue('#reporterSearch').toLowerCase();
+  const rows=reporterRows.filter(r=>(reporterFilter==='all'||r.status===reporterFilter)&&(!q||[r.reporter_number,r.name,r.region,r.affiliation].some(v=>String(v||'').toLowerCase().includes(q))));
   reporterList.innerHTML=rows.length?rows.map(r=>`
     <button type="button" class="admin-reporter-item ${r.id===selectedReporterId?'active':''}" data-reporter-id="${reporterEsc(r.id)}">
       <span class="admin-reporter-avatar" ${r.photo_url?`style="background-image:url('${reporterEsc(r.photo_url)}')"`:''}>${r.photo_url?'':reporterEsc((r.name||'기').slice(0,1))}</span>
-      <span><b>${reporterEsc(r.name)}</b><small>${reporterEsc(r.role||'기자')} · ${reporterEsc(({editor:'편집국',reporter:'정식기자',contributor:'객원기자'})[r.access_level]||'정식기자')} · ${reporterEsc(r.affiliation||'Global News24')}</small></span>
+      <span><b>${reporterEsc(r.name)}</b><small>${reporterEsc(r.reporter_number||'번호 미부여')} · ${reporterEsc(r.region||'지역 미지정')}</small><small>${reporterEsc(r.role||'기자')} · ${reporterEsc(({editor:'편집국',reporter:'정식기자',contributor:'객원기자'})[r.access_level]||'정식기자')} · ${reporterEsc(r.affiliation||'Global News24')}</small></span>
     </button>`).join(''):'<div class="admin-comment-empty">해당 기자가 없습니다.</div>';
 }
 async function loadReporters(){
@@ -350,24 +355,38 @@ function refreshReporterSelect(){
   if([...sel.options].some(o=>o.value===old))sel.value=old;
 }
 async function saveReporter(e){
-  e.preventDefault();
+  e.preventDefault();if(reporterSaving)return;
+  reporterSaving=true;
+  const button=reporterForm.querySelector('[type="submit"]');if(button)button.disabled=true;
+  try{
   if(!(await requireAdmin()))return;
-  const id=reporterValue('#rId').replace(/[^A-Za-z0-9._-]+/g,'-');
-  const name=reporterValue('#rName');
-  if(!id||!name)return alert('기자 ID와 이름은 필수입니다.');
-  const row={
-    id,name,role:reporterValue('#rRole')||'기자',affiliation:reporterValue('#rAffiliation')||'Global News24',
-    photo_url:reporterValue('#rPhoto'),bio:reporterValue('#rBio'),
-    specialties:reporterValue('#rSpecialties').split(',').map(x=>x.trim()).filter(Boolean),
-    region:reporterValue('#rRegion'),public_email:reporterValue('#rEmail'),
-    status:$('#rStatus').value||'active',access_level:$('#rAccessLevel').value||'reporter',login_email:reporterValue('#rLoginEmail')||null,display_order:Number($('#rOrder').value||100),
-    updated_at:new Date().toISOString()
-  };
-  const {error}=await sb.from('gn24_reporters').upsert(row,{onConflict:'id'});
-  if(error)return alert('기자 저장 실패: '+error.message);
-  selectedReporterId=id;
-  $('#reporterManagerStatus').textContent='기자 정보가 저장되었습니다.';
-  await loadReporters();
+  let before=null;
+  if(selectedReporterId){const {data,error}=await sb.from('gn24_reporters').select('*').eq('id',selectedReporterId).single();if(error)throw error;before=data;if(!before)throw Error('기자를 다시 선택해 주세요.');
+    const snapshot=reporterRows.find(r=>r.id===selectedReporterId);if(snapshot?.updated_at!==before.updated_at)throw Error('다른 관리자가 변경했습니다. 새로고침 후 다시 선택해 주세요.');}
+  const name=reporterValue('#rName');if(!name)throw Error('성명은 필수입니다.');
+  const row={name,role:reporterValue('#rRole')||'기자',affiliation:reporterValue('#rAffiliation')||'Global News24',photo_url:reporterValue('#rPhoto'),bio:reporterValue('#rBio'),specialties:reporterValue('#rSpecialties').split(',').map(x=>x.trim()).filter(Boolean),region:reporterValue('#rRegion'),public_email:reporterValue('#rEmail'),status:$('#rStatus').value,display_order:Number($('#rOrder').value||100),birth_date:reporterValue('#rBirthDate')||null,appointed_at:reporterValue('#rAppointedAt')?reporterValue('#rAppointedAt')+'T00:00:00+09:00':null};
+  if(!['active','pending','suspended','terminated'].includes(row.status)||(!before&&row.status==='terminated'))throw Error('신규 기자는 승인대기·활동·활동정지 중에서 선택하세요.');
+  if(!Number.isInteger(row.display_order)||row.display_order<0)throw Error('표시 순서는 0 이상의 정수로 입력하세요.');
+  if(before&&(before.appointed_at||'').slice(0,10)===reporterValue('#rAppointedAt'))row.appointed_at=before.appointed_at;
+  const reason=reporterValue('#rStatusReason');if(row.status!==before?.status&&['suspended','terminated'].includes(row.status)&&!reason)throw Error('활동정지·해촉에는 사유를 입력하세요.');
+  if(row.photo_url&&!/^(https?:\/\/|\/(?!\/))/.test(row.photo_url))throw Error('사진 URL은 HTTP·HTTPS 또는 사이트 내 경로를 입력하세요.');
+  const labels={name:'성명',role:'직책',affiliation:'소속',photo_url:'사진 URL',bio:'소개',specialties:'전문분야',region:'지역',public_email:'공개 이메일',status:'상태',display_order:'표시 순서',birth_date:'생년월일',appointed_at:'임명일'};
+  const changed=Object.keys(row).filter(k=>!before||JSON.stringify(before[k]??null)!==JSON.stringify(row[k]));
+  if(!changed.length){$('#reporterManagerStatus').textContent='변경된 정보가 없습니다.';return;}
+  const summary=changed.map(k=>`${labels[k]}: ${before?(before[k]||'(없음)')+' → ':''}${row[k]||'(없음)'}`).join('\n');
+  if(!confirm(`${before?.reporter_number||'기존 규칙에 따른 기자번호 자동 발급'}\n${before?'기자 정보를 수정':'기자를 직접 등록'}할까요?\n\n${summary}\n\n${before?'기자번호·기존 계정·수습 이력은 유지됩니다.':'기자 계정은 생성하지 않습니다. 기존 제도에 따라 3개월 수습으로 등록됩니다.'}`))return;
+  $('#reporterManagerStatus').textContent='기자 정보를 저장하는 중입니다.';
+  let result;
+  if(before){const patch=Object.fromEntries(changed.map(k=>[k,row[k]]));patch.updated_at=new Date().toISOString();if(changed.includes('status'))patch.status_reason=reason;
+    result=await sb.from('gn24_reporters').update(patch).eq('id',before.id).eq('updated_at',before.updated_at).select('*').single();
+  }else{row.status_reason=reason;result=await sb.rpc('gn24_admin_register_reporter',{p_data:row});}
+  if(result.error)throw result.error;
+  const saved=Array.isArray(result.data)?result.data[0]:result.data;
+  if(!saved?.id||(!before&&!saved.reporter_number)||(before&&saved.reporter_number!==before.reporter_number))throw Error('저장 결과를 확인할 수 없습니다.');
+  selectedReporterId=saved.id;reporterFilter=saved.status;await loadReporters();
+  reporterSaving=false;reporterFill(saved);$('#reporterManagerStatus').textContent=`기자 정보가 정상적으로 저장되었습니다. · ${saved.reporter_number||'기존 번호 미부여'}`;
+  }catch(error){$('#reporterManagerStatus').textContent=error.code==='23505'?'이미 등록된 기자번호 또는 기자 ID입니다.':'기자 저장 실패: '+error.message;}
+  finally{reporterSaving=false;if(button)button.disabled=false;}
 }
 async function deleteReporter(){
   if(!(await requireAdmin()))return;
@@ -389,7 +408,7 @@ $('#reporterCloseBtn')?.addEventListener('click',()=>reporterManager.hidden=true
 $('#reporterRefreshBtn')?.addEventListener('click',loadReporters);
 $('#reporterNewBtn')?.addEventListener('click',reporterBlank);
 reporterForm?.addEventListener('submit',saveReporter);
-$('#reporterDeleteBtn')?.addEventListener('click',deleteReporter);
+$('#reporterSearch')?.addEventListener('input',reporterRender);
 document.querySelectorAll('[data-reporter-filter]').forEach(b=>b.addEventListener('click',()=>{reporterFilter=b.dataset.reporterFilter;reporterRender()}));
 reporterList?.addEventListener('click',e=>{const b=e.target.closest('[data-reporter-id]');if(!b)return;reporterFill(reporterRows.find(r=>r.id===b.dataset.reporterId));reporterRender()});
 let juniorSearchTimer=0,juniorSearchSeq=0;
