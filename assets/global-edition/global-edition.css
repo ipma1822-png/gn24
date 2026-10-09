@@ -75,3 +75,20 @@
 .global-edition[dir="rtl"] .global-edition-header,.global-edition[dir="rtl"] .global-edition-article{text-align:start}
 @media(max-width:850px){.global-edition .global-edition-lead-grid{grid-template-columns:1fr}.global-edition .global-edition-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.global-edition .global-edition-devbar{flex-wrap:wrap}.global-edition .global-edition-mast{min-height:90px;align-items:flex-start;flex-direction:column;padding-block:16px;gap:9px}.global-edition .global-edition-brand strong{font-size:19px}.global-edition .global-edition-header-side{flex-wrap:wrap}.global-edition .global-edition-cards{grid-template-columns:1fr}.global-edition .global-edition-news-row{grid-template-columns:100px minmax(0,1fr);gap:10px}.global-edition .global-edition-news-row h3{font-size:15px}.global-edition .global-edition-news-row p{display:none}.global-edition .global-edition-lead-copy{padding:18px}.global-edition .global-edition-footer-inner{flex-direction:column}.global-edition .global-edition-section-head h2{font-size:18px}}
+
+/* Compact news portal: country editions except China, which has its own presentation. */
+body.gn24-country-overview .global-edition-lead-grid{display:block;margin-bottom:20px}
+body.gn24-country-overview .global-edition-lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+body.gn24-country-overview .global-edition-lead h2{font-size:clamp(19px,2.5vw,27px);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+body.gn24-country-overview .global-edition-lead p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+body.gn24-country-overview .global-edition-side{display:none}
+.gn24-country-overview-heading{font-size:21px;margin:22px 0 15px}
+.gn24-country-overview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.gn24-country-overview-card{display:block;min-width:0;background:#10263d;border:1px solid #28425c;border-radius:13px;overflow:hidden;color:#eaf3fb;text-decoration:none}
+.gn24-country-overview-card .global-edition-media{aspect-ratio:16/9}
+.gn24-country-overview-copy{padding:11px}
+.gn24-country-overview-copy small{display:block;color:#e0bd76;font-size:11px;margin-bottom:6px}
+.gn24-country-overview-copy strong{font-size:14px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.gn24-country-overview-copy time{display:block;color:#9db4c7;font-size:11px;margin-top:8px}
+@media(max-width:850px){.gn24-country-overview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){body.gn24-country-overview .global-edition-lead{grid-template-columns:1fr}body.gn24-country-overview .global-edition-lead-copy{padding:13px}body.gn24-country-overview .global-edition-lead h2{font-size:20px}.gn24-country-overview-grid{gap:10px}.gn24-country-overview-copy{padding:9px}.gn24-country-overview-copy strong{font-size:13px}}
