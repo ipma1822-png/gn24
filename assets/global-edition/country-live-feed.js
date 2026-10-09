@@ -7,9 +7,15 @@
   const loadRenderer = () => {
     if (document.querySelector('script[data-gn24-country-renderer]')) return;
     const script = document.createElement('script');
-    script.src = '/assets/global-edition/country-edition.js?v=0.3.0';
+    script.src = '/assets/global-edition/country-edition.js?v=0.3.1';
     script.defer = true;
     script.dataset.gn24CountryRenderer = 'live-feed';
+    if (window.GN24_COUNTRY_CONFIG?.slug !== 'china') {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = '/assets/global-edition/global-edition.css?v=1.0.1';
+      document.head.appendChild(css);
+    }
     document.head.appendChild(script);
   };
 
