@@ -48,6 +48,26 @@
     fill(network,4).forEach(a=>{const item=link('',storyHref(a));item.append(text('span',a.title),text('small',formatDate(a.date)));side.append(item)});
     layout.append(featured,side);main.append(layout);
 
+    // Shared compact newsroom for country editions other than the separately maintained China page.
+    if(config.slug!=='china'){
+      document.body.classList.add('gn24-country-overview');
+      const picks=articles.filter(a=>a.id!==lead.id).slice(0,12);
+      if(picks.length){
+        const overview=text('section','','gn24-country-overview-section');
+        const heading=text('h2',ui.latest+' · '+ui.global,'gn24-country-overview-heading');
+        const grid=text('div','','gn24-country-overview-grid');
+        picks.forEach(a=>{
+          const item=link('',storyHref(a),'gn24-country-overview-card');
+          item.append(media(a));
+          const details=text('div','','gn24-country-overview-copy');
+          details.append(text('small',a.scope==='country-local'?ui.country:ui.feed),text('strong',a.title),text('time',formatDate(a.date)));
+          item.append(details);grid.append(item);
+        });
+        overview.append(heading,grid);main.append(overview);
+      }
+      return;
+    }
+
     section(ui.main,fill(network,3),'main-news');
     section(ui.local,take(local,3),'local-news');
     section(ui.global,take(network,3),'global-news');
