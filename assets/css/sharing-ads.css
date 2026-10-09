@@ -17,3 +17,6 @@
 .gn24-sharing-card.is-featured-image .gn24-sharing-copy small{font-size:9px;margin-bottom:2px}
 .gn24-sharing-card.is-featured-image .gn24-sharing-copy b{font-size:14px;margin-bottom:2px}
 .gn24-sharing-card.is-featured-image .gn24-sharing-copy span{font-size:11px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Continuous leftward motion is handled by JS; disable snap only while active. */
+.gn24-sharing-track.is-auto-flow{scroll-snap-type:none;scroll-behavior:auto}
