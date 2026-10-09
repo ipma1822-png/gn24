@@ -3,29 +3,29 @@
 'use strict';
 var regions=[['서울','/seoul/'],['부산','/busan/'],['대구','/daegu/'],['인천','/incheon/'],['광주','/gwangju/'],['대전','/daejeon/'],['울산','/ulsan/'],['세종','/sejong/'],['경기','/gyeonggi/'],['강원','/gangwon/'],['충북','/chungbuk/'],['충남','/chungnam/'],['전북','/jeonbuk/'],['전남','/jeonnam/'],['경북','/gyeongbuk/'],['경남','/gyeongnam/'],['제주','/jeju/']];
 var navI18n={
-ko:{world:'세계 36개국',korea:'대한민국 17개 시·도',koreaTitle:'대한민국 17개 시·도 지역판',worldTitle:'세계 36개 국가판',regionsAll:'지역판 전체보기 →',worldAll:'세계 국가판 전체보기 →'},
-en:{world:'36 Countries',korea:'17 Regions of South Korea',koreaTitle:'17 Regions of South Korea',worldTitle:'36 Global Editions',regionsAll:'View all Korea regions →',worldAll:'View all global editions →'},
-zh:{world:'全球36个国家',korea:'韩国17个地区',koreaTitle:'韩国17个地区新闻版',worldTitle:'全球36个国家版',regionsAll:'查看韩国全部地区 →',worldAll:'查看全部国家版 →'},
-ja:{world:'世界36か国',korea:'韓国17地域',koreaTitle:'韓国17地域版',worldTitle:'世界36か国版',regionsAll:'韓国の全地域を見る →',worldAll:'すべての国別版を見る →'},
-id:{world:'36 Negara',korea:'17 Wilayah Korea Selatan',koreaTitle:'17 Wilayah Korea Selatan',worldTitle:'36 Edisi Negara',regionsAll:'Lihat semua wilayah Korea →',worldAll:'Lihat semua edisi negara →'},
-th:{world:'36 ประเทศทั่วโลก',korea:'17 ภูมิภาคเกาหลีใต้',koreaTitle:'17 ภูมิภาคของเกาหลีใต้',worldTitle:'36 ฉบับประเทศทั่วโลก',regionsAll:'ดูทุกภูมิภาคของเกาหลี →',worldAll:'ดูฉบับประเทศทั้งหมด →'},
-vi:{world:'36 quốc gia',korea:'17 khu vực Hàn Quốc',koreaTitle:'17 khu vực của Hàn Quốc',worldTitle:'36 ấn bản quốc gia',regionsAll:'Xem tất cả khu vực Hàn Quốc →',worldAll:'Xem tất cả ấn bản quốc gia →'},
-ne:{world:'विश्वका ३६ देश',korea:'दक्षिण कोरियाका १७ क्षेत्र',koreaTitle:'दक्षिण कोरियाका १७ क्षेत्रीय संस्करण',worldTitle:'विश्वका ३६ देश संस्करण',regionsAll:'कोरियाका सबै क्षेत्र हेर्नुहोस् →',worldAll:'सबै देश संस्करण हेर्नुहोस् →'},
-fa:{world:'۳۶ کشور جهان',korea:'۱۷ منطقه کره جنوبی',koreaTitle:'۱۷ نسخه منطقه‌ای کره جنوبی',worldTitle:'۳۶ نسخه کشوری جهان',regionsAll:'مشاهده همه مناطق کره →',worldAll:'مشاهده همه نسخه‌های کشوری →'},
-ar:{world:'36 دولة حول العالم',korea:'17 منطقة في كوريا الجنوبية',koreaTitle:'17 منطقة في كوريا الجنوبية',worldTitle:'36 نسخة دولية',regionsAll:'عرض جميع مناطق كوريا →',worldAll:'عرض جميع النسخ الدولية →'},
-tr:{world:'Dünyada 36 Ülke',korea:'Güney Kore’de 17 Bölge',koreaTitle:'Güney Kore’nin 17 Bölgesel Yayını',worldTitle:'36 Ülke Edisyonu',regionsAll:'Tüm Kore bölgelerini görüntüle →',worldAll:'Tüm ülke edisyonlarını görüntüle →'},
-es:{world:'36 países',korea:'17 regiones de Corea del Sur',koreaTitle:'17 regiones de Corea del Sur',worldTitle:'36 ediciones nacionales',regionsAll:'Ver todas las regiones de Corea →',worldAll:'Ver todas las ediciones nacionales →'},
-fr:{world:'36 pays',korea:'17 régions de Corée du Sud',koreaTitle:'17 régions de Corée du Sud',worldTitle:'36 éditions nationales',regionsAll:'Voir toutes les régions de Corée →',worldAll:'Voir toutes les éditions nationales →'},
-de:{world:'36 Länder',korea:'17 Regionen Südkoreas',koreaTitle:'17 Regionen Südkoreas',worldTitle:'36 Länderausgaben',regionsAll:'Alle Regionen Koreas anzeigen →',worldAll:'Alle Länderausgaben anzeigen →'},
-it:{world:'36 Paesi',korea:'17 regioni della Corea del Sud',koreaTitle:'17 regioni della Corea del Sud',worldTitle:'36 edizioni nazionali',regionsAll:'Vedi tutte le regioni della Corea →',worldAll:'Vedi tutte le edizioni nazionali →'},
-pt:{world:'36 países',korea:'17 regiões da Coreia do Sul',koreaTitle:'17 regiões da Coreia do Sul',worldTitle:'36 edições nacionais',regionsAll:'Ver todas as regiões da Coreia →',worldAll:'Ver todas as edições nacionais →'},
-ru:{world:'36 страны мира',korea:'17 регионов Южной Кореи',koreaTitle:'17 регионов Южной Кореи',worldTitle:'36 национальных издания',regionsAll:'Все регионы Кореи →',worldAll:'Все национальные издания →'}
+ko:{world:'세계 57개국',korea:'대한민국 17개 시·도',koreaTitle:'대한민국 17개 시·도 지역판',worldTitle:'세계 57개 국가판',regionsAll:'지역판 전체보기 →',worldAll:'세계 국가판 전체보기 →'},
+en:{world:'57 Countries',korea:'17 Regions of South Korea',koreaTitle:'17 Regions of South Korea',worldTitle:'57 Global Editions',regionsAll:'View all Korea regions →',worldAll:'View all global editions →'},
+zh:{world:'全球57个国家',korea:'韩国17个地区',koreaTitle:'韩国17个地区新闻版',worldTitle:'全球57个国家版',regionsAll:'查看韩国全部地区 →',worldAll:'查看全部国家版 →'},
+ja:{world:'世界57か国',korea:'韓国17地域',koreaTitle:'韓国17地域版',worldTitle:'世界57か国版',regionsAll:'韓国の全地域を見る →',worldAll:'すべての国別版を見る →'},
+id:{world:'57 Negara',korea:'17 Wilayah Korea Selatan',koreaTitle:'17 Wilayah Korea Selatan',worldTitle:'57 Edisi Negara',regionsAll:'Lihat semua wilayah Korea →',worldAll:'Lihat semua edisi negara →'},
+th:{world:'57 ประเทศทั่วโลก',korea:'17 ภูมิภาคเกาหลีใต้',koreaTitle:'17 ภูมิภาคของเกาหลีใต้',worldTitle:'57 ฉบับประเทศทั่วโลก',regionsAll:'ดูทุกภูมิภาคของเกาหลี →',worldAll:'ดูฉบับประเทศทั้งหมด →'},
+vi:{world:'57 quốc gia',korea:'17 khu vực Hàn Quốc',koreaTitle:'17 khu vực của Hàn Quốc',worldTitle:'57 ấn bản quốc gia',regionsAll:'Xem tất cả khu vực Hàn Quốc →',worldAll:'Xem tất cả ấn bản quốc gia →'},
+ne:{world:'विश्वका ५७ देश',korea:'दक्षिण कोरियाका १७ क्षेत्र',koreaTitle:'दक्षिण कोरियाका १७ क्षेत्रीय संस्करण',worldTitle:'विश्वका ५७ देश संस्करण',regionsAll:'कोरियाका सबै क्षेत्र हेर्नुहोस् →',worldAll:'सबै देश संस्करण हेर्नुहोस् →'},
+fa:{world:'۵۷ کشور جهان',korea:'۱۷ منطقه کره جنوبی',koreaTitle:'۱۷ نسخه منطقه‌ای کره جنوبی',worldTitle:'۵۷ نسخه کشوری جهان',regionsAll:'مشاهده همه مناطق کره →',worldAll:'مشاهده همه نسخه‌های کشوری →'},
+ar:{world:'57 دولة حول العالم',korea:'17 منطقة في كوريا الجنوبية',koreaTitle:'17 منطقة في كوريا الجنوبية',worldTitle:'57 نسخة دولية',regionsAll:'عرض جميع مناطق كوريا →',worldAll:'عرض جميع النسخ الدولية →'},
+tr:{world:'Dünyada 57 Ülke',korea:'Güney Kore’de 17 Bölge',koreaTitle:'Güney Kore’nin 17 Bölgesel Yayını',worldTitle:'57 Ülke Edisyonu',regionsAll:'Tüm Kore bölgelerini görüntüle →',worldAll:'Tüm ülke edisyonlarını görüntüle →'},
+es:{world:'57 países',korea:'17 regiones de Corea del Sur',koreaTitle:'17 regiones de Corea del Sur',worldTitle:'57 ediciones nacionales',regionsAll:'Ver todas las regiones de Corea →',worldAll:'Ver todas las ediciones nacionales →'},
+fr:{world:'57 pays',korea:'17 régions de Corée du Sud',koreaTitle:'17 régions de Corée du Sud',worldTitle:'57 éditions nationales',regionsAll:'Voir toutes les régions de Corée →',worldAll:'Voir toutes les éditions nationales →'},
+de:{world:'57 Länder',korea:'17 Regionen Südkoreas',koreaTitle:'17 Regionen Südkoreas',worldTitle:'57 Länderausgaben',regionsAll:'Alle Regionen Koreas anzeigen →',worldAll:'Alle Länderausgaben anzeigen →'},
+it:{world:'57 Paesi',korea:'17 regioni della Corea del Sud',koreaTitle:'17 regioni della Corea del Sud',worldTitle:'57 edizioni nazionali',regionsAll:'Vedi tutte le regioni della Corea →',worldAll:'Vedi tutte le edizioni nazionali →'},
+pt:{world:'57 países',korea:'17 regiões da Coreia do Sul',koreaTitle:'17 regiões da Coreia do Sul',worldTitle:'57 edições nacionais',regionsAll:'Ver todas as regiões da Coreia →',worldAll:'Ver todas as edições nacionais →'},
+ru:{world:'57 страны мира',korea:'17 регионов Южной Кореи',koreaTitle:'17 регионов Южной Кореи',worldTitle:'57 национальных издания',regionsAll:'Все регионы Кореи →',worldAll:'Все национальные издания →'}
 };
 function navLanguage(){
  var parts=location.pathname.toLowerCase().split('/').filter(Boolean),registry=window.GN24_COUNTRY_REGISTRY||{},cfg=registry[parts[0]];
  var raw=(cfg&&cfg.language)||document.documentElement.lang||'ko';var lang=String(raw).toLowerCase().split('-')[0];
  var t=navI18n[lang]||navI18n.en;
- if(document.querySelector('.global-edition-header'))t=Object.assign({},t,{world:t.world.replace(/36/g,'57').replace(/३६/g,'५७').replace(/۳۶/g,'۵۷'),worldTitle:t.worldTitle.replace(/36/g,'57').replace(/३६/g,'५७').replace(/۳۶/g,'۵۷')});
+ if(document.querySelector('.global-edition-header'))t=Object.assign({},t,{world:t.world.replace(/57/g,'57').replace(/५७/g,'५७').replace(/۵۷/g,'۵۷'),worldTitle:t.worldTitle.replace(/57/g,'57').replace(/५७/g,'५७').replace(/۵۷/g,'۵۷')});
  return t;
 }
 var groups=[
@@ -70,12 +70,12 @@ if(location.pathname==='/'||location.pathname==='/index.html'||document.querySel
  Object.assign(hqCountryNames,{"algeria": "알제리", "tunisia": "튀니지", "ghana": "가나", "ethiopia": "에티오피아", "netherlands": "네덜란드", "portugal": "포르투갈", "poland": "폴란드", "greece": "그리스", "georgia": "조지아", "bangladesh": "방글라데시", "sri-lanka": "스리랑카", "singapore": "싱가포르", "iraq": "이라크", "jordan": "요르단", "kazakhstan": "카자흐스탄", "syria": "시리아", "costa-rica": "코스타리카", "chile": "칠레", "peru": "페루", "uruguay": "우루과이", "venezuela": "베네수엘라"});
 }
 function usesKoreanGlobalMenu(){return location.pathname==='/'||location.pathname==='/index.html'||!!document.querySelector('.regional-site-header')}
-function countryMarkup(){var isMain=usesKoreanGlobalMenu();var lang=currentLang(),dict=isMain?hqCountryNames:(countryNames[lang]||{}),gd=groupNames[lang]||{},sd=statusNames[lang]||statusNames.en;var flat=location.pathname==='/'||location.pathname==='/index.html';var displayGroups=flat?[['',groups.flatMap(function(g){return g[1]}).sort(function(a,b){return (dict[a[2]]||a[1]).localeCompare(dict[b[2]]||b[1],'ko')})]]:groups;return displayGroups.map(function(g){return (flat?'':'<section class="gn24-country-group"><h3>'+(gd[g[0]]||g[0])+'</h3>')+g[1].map(function(x){var name=dict[x[2]]||(x[4]&&!isMain?x[2].replace(/-/g,' ').toUpperCase():x[1]);var flag=x[0];if(isMain||document.querySelector('.global-edition-header')){var flagCode=Array.from(x[0]).map(function(c){return String.fromCharCode(c.codePointAt(0)-127397)}).join('').toLowerCase();flag='<img src="https://flagcdn.com/w40/'+flagCode+'.png" alt="'+x[0]+'" width="20" height="14" style="vertical-align:-2px;object-fit:cover">'}return '<a class="gn24-country-link is-open" href="/'+x[2]+'/"><span>'+flag+' '+name+'</span><small>'+sd.open+' ↗</small></a>'}).join('')+(flat?'':'</section>')}).join('')}
+function countryMarkup(){var isMain=usesKoreanGlobalMenu();var lang=currentLang(),dict=isMain?hqCountryNames:(countryNames[lang]||{}),gd=groupNames[lang]||{},sd=statusNames[lang]||statusNames.en;var flat=location.pathname==='/'||location.pathname==='/index.html';var displayGroups=flat?[['',groups.flatMap(function(g){return g[1]}).sort(function(a,b){return (dict[a[2]]||a[1]).localeCompare(dict[b[2]]||b[1],'ko')})]]:groups;return displayGroups.map(function(g){return (flat?'':'<section class="gn24-country-group"><h3>'+(gd[g[0]]||g[0])+'</h3>')+g[1].map(function(x){var name=dict[x[2]];if(!name&&!isMain&&typeof Intl!=='undefined'&&Intl.DisplayNames){try{var iso=Array.from(x[0]).map(function(ch){return String.fromCharCode(ch.codePointAt(0)-127397)}).join('');var dn=new Intl.DisplayNames([lang],{type:'region'});name=dn.of(iso)}catch(_){}}if(!name)name=x[4]&&!isMain?x[2].replace(/-/g,' ').toUpperCase():x[1];var flag=x[0];if(isMain||document.querySelector('.global-edition-header')){var flagCode=Array.from(x[0]).map(function(c){return String.fromCharCode(c.codePointAt(0)-127397)}).join('').toLowerCase();flag='<img src="https://flagcdn.com/w40/'+flagCode+'.png" alt="'+x[0]+'" width="20" height="14" style="vertical-align:-2px;object-fit:cover">'}return '<a class="gn24-country-link is-open" href="/'+x[2]+'/"><span>'+flag+' '+name+'</span><small>'+sd.open+' ↗</small></a>'}).join('')+(flat?'':'</section>')}).join('')}
 function regionMarkup(){var lang=currentLang(),names=regionNames[lang]||regionNames.en;return '<div class="gn24-mega-grid">'+regions.map(function(r,i){return '<a href="'+r[1]+'">'+(names[i]||r[0])+'</a>'}).join('')+'</div>'}
 function fillHome(){var box=document.getElementById('gn24MegaCountries');if(box){box.classList.add('gn24-country-flat');box.innerHTML=countryMarkup()}}
 function installBar(){
  var t=navLanguage();
- if(usesKoreanGlobalMenu())t=Object.assign({},t,{world:'세계 36개국',worldTitle:'세계 36개 국가판'});
+ if(usesKoreanGlobalMenu())t=Object.assign({},t,{world:'세계 57개국',worldTitle:'세계 57개 국가판'});
  if(location.pathname==='/'||location.pathname==='/index.html')t=Object.assign({},t,{world:'세계 57개국',worldTitle:'세계 57개 국가판'});
  if(document.querySelector('.gn24-universal-bar'))return;
  var isHQ=!!document.getElementById('gn24MegaCountries');
