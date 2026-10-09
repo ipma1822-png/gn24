@@ -11,4 +11,10 @@ function apply(){
 }
 let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;apply()})}).observe(document.body,{childList:true,subtree:true});apply();
 })();
+</script><script>
+/* Japan-only corrections for the shared navigation's legacy region labels. */
+(()=>{const fixes={'韓国17地域':'韓国の17地域','韓国17地域版':'韓国の17地域版','世界57か国':'世界57か国','世界36か国':'世界57か国','韓国17個地域':'韓国の17地域'};
+function apply(){document.querySelectorAll('body *').forEach(e=>{if(e.children.length||!e.textContent)return;const t=e.textContent.trim();if(fixes[t])e.textContent=e.textContent.replace(t,fixes[t]);});}
+let busy=false;new MutationObserver(()=>{if(busy)return;busy=true;requestAnimationFrame(()=>{busy=false;apply()})}).observe(document.body,{childList:true,subtree:true});apply();
+})();
 </script></body></html>
