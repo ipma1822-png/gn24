@@ -53,3 +53,8 @@ body.global-edition .gn24-universal-panel{box-sizing:border-box;overflow-x:hidde
 @media(max-width:900px){body.global-edition .gn24-country-group{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){body.global-edition .gn24-country-group{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:380px){body.global-edition .gn24-country-group{grid-template-columns:minmax(0,1fr)}}
+
+/* Desktop category dropdowns must sit above the network switcher below them. */
+@media(min-width:901px){
+  .site-header .primary-nav{position:relative;z-index:81}
+}
