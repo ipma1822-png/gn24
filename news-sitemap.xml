@@ -56,15 +56,4 @@
       <news:title>태권검도, 태권검도창시자, 전성권, 전성권총재, 세계태권검도연맹, WTKF, 태권검도기본검법, 태권검도12식, TaekwonKumdo, JeonSeongKweon</news:title>
     </news:news>
   </url>
-  <url>
-    <loc>https://news24.ai.kr/share/gn24-20261016-475514/</loc>
-    <news:news>
-      <news:publication>
-        <news:name>Global News24</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-10-16</news:publication_date>
-      <news:title>USA Martial Arts Team Prepares for 2026 Pan American Club Championships in Florida</news:title>
-    </news:news>
-  </url>
 </urlset>
