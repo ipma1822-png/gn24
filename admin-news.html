@@ -131,7 +131,7 @@
                 <option value="독자기고">독자기고</option>
               </select>
             </label>
-            <div class="reporter-link-guide"><b>오피니언 분류</b><span>오피니언 기사에만 적용됩니다. 기존 태그 저장 구조를 재사용하여 DB 변경 없이 홈페이지 하위 메뉴와 연결합니다.</span></div>
+            <div class="reporter-link-guide"><b>오피니언 분류</b><span>선택한 분류의 오피니언 메뉴에서 기사를 볼 수 있습니다. 기존 기사는 세부 분류 없이도 저장할 수 있습니다.</span></div>
           </div>
           <div class="form-grid two">
             <label>기사 표시 작성자<input id="fAuthor" value="Global News24 편집부"></label>
@@ -282,7 +282,7 @@
   <script src="/assets/js/gn24-supabase-config.js?v=3.22.5"></script>
   <script src="/assets/js/gallery-admin.js?v=3.5.2"></script>
   <script src="/assets/js/news-image-light.js?v=1.0.0"></script>
-  <script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script src="/assets/js/news-admin.js?v=3.23.9"></script>
+  <script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script src="/assets/js/news-admin.js?v=3.23.10"></script>
   <script src="/assets/js/news-cms.js?v=3.5.8-reporter-entry"></script>
   <script src="/assets/js/admin-edition-grid.js?v=3.22.5"></script>
   <script src="/assets/global-edition/country-registry.js?v=1.4.1"></script>
@@ -362,6 +362,8 @@
     const syncFromArticle=()=>{
       const isOpinion=cat.value==='오피니언';
       row.hidden=!isOpinion;
+      row.style.display=isOpinion?'':'none';
+      sub.disabled=!isOpinion;
       if(!isOpinion){sub.value='';return;}
       const found=SUBS.find(x=>readTags().includes(x))||'';
       sub.value=found;
@@ -372,14 +374,11 @@
       tags.value=base.join(', ');
       tags.dispatchEvent(new Event('input',{bubbles:true}));
     };
-    cat.addEventListener('change',()=>{syncFromArticle();writeSubcategory();});
+    cat.addEventListener('change',syncFromArticle);
     sub.addEventListener('change',writeSubcategory);
-    document.querySelector('#articleList')?.addEventListener('click',()=>setTimeout(syncFromArticle,0));
-    document.querySelector('#newBtn')?.addEventListener('click',()=>setTimeout(syncFromArticle,0));
-    document.querySelector('#cmsLoadBtn')?.addEventListener('click',()=>setTimeout(syncFromArticle,500));
+    document.addEventListener('gn24:article-form-loaded',syncFromArticle);
+    tags.addEventListener('input',syncFromArticle);
     tags.addEventListener('change',syncFromArticle);
-    const observer=new MutationObserver(()=>setTimeout(syncFromArticle,0));
-    observer.observe(document.querySelector('#editorTitle'),{childList:true,subtree:true,characterData:true});
     syncFromArticle();
   })();
   </script>
