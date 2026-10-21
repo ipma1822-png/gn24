@@ -46,6 +46,17 @@
     </news:news>
   </url>
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20261021-781430/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-21</news:publication_date>
+      <news:title>태권검도 창시자 전성권, ‘배후검화·무한역자·삼방일참’ 3대 검술 기술 지도</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20261021-565966/</loc>
     <news:news>
       <news:publication>
