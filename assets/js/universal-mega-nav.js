@@ -80,7 +80,7 @@ function installBar(){
  if(document.querySelector('.gn24-universal-bar'))return;
  var isHQ=!!document.getElementById('gn24MegaCountries');
  var header=isHQ?document.getElementById('siteHeader'):document.querySelector('.global-edition-header,.regional-site-header,.site-header');
- var showJunior=isHQ||!!(header&&header.classList.contains('regional-site-header'));
+ var showJunior=!isHQ&&!!(header&&header.classList.contains('regional-site-header'));
  if(!header)return;
  if(isHQ)document.body.classList.add('gn24-hq-mega-ready');
  var bar=document.createElement('nav');bar.className='gn24-universal-bar';bar.setAttribute('aria-label','GLOBAL NEWS24 network editions');
