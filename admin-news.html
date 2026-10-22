@@ -172,6 +172,7 @@
           <label>태그 <small>쉼표로 구분</small><input id="fTags" placeholder="태권검도, 무도, 교육"></label>
           <div class="home-edit-guide"><b>메인 자동편집</b><span>TOP NEWS 고정 = 메인 대형기사 · 주요뉴스 = EDITOR’S PICK/주목뉴스 우선 · 표시 스타일 ‘속보 강조’ = 상단 속보 자동 노출</span></div>
           <div class="form-grid three checks">
+            <label>메인 노출 <select id="fShowOnHome"><option value="on">ON</option><option value="off">OFF</option></select></label>
             <label><input id="fFeatured" type="checkbox"> 주요뉴스</label>\n            <label><input id="fSearchPriority" type="checkbox"> 🔥 검색 집중노출</label>
             <label><input id="fPinned" type="checkbox"> TOP NEWS 고정</label>
             <label>공개범위<select id="fVisibility"><option value="public">전체 공개</option><option value="staff">관계자 공개 · 기자/지사장</option><option value="branch_head">지사장 공개 · 지사장/본사 관리자</option><option value="admin">관리자 전용 · 나만 보기</option></select></label>
@@ -282,8 +283,8 @@
   <script src="/assets/js/gn24-supabase-config.js?v=3.22.5"></script>
   <script src="/assets/js/gallery-admin.js?v=3.5.2"></script>
   <script src="/assets/js/news-image-light.js?v=1.0.0"></script>
-  <script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script src="/assets/js/news-admin.js?v=3.23.10"></script>
-  <script src="/assets/js/news-cms.js?v=3.5.8-reporter-entry"></script>
+  <script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script src="/assets/js/news-admin.js?v=3.23.11"></script>
+  <script src="/assets/js/news-cms.js?v=3.5.9-home-visibility"></script>
   <script src="/assets/js/admin-edition-grid.js?v=3.22.5"></script>
   <script src="/assets/global-edition/country-registry.js?v=1.4.1"></script>
 <script>

@@ -9,7 +9,7 @@
   const state={articles:[],selectedId:null,dirty:false,imageFile:null,imageObjectUrl:null,saveTimer:null,restored:false,duplicateContentIds:new Set(),duplicateContentGroups:new Map()};
   const els={
     list:$('#articleList'),count:$('#articleCount'),listCount:$('#listCount'),dirty:$('#dirtyState'),search:$('#searchInput'),regionFilter:$('#articleRegionFilter'),categoryFilter:$('#articleCategoryFilter'),sortFilter:$('#articleSortFilter'),issueFilter:$('#articleIssueFilter'),form:$('#articleForm'),
-    id:$('#fId'),date:$('#fDate'),title:$('#fTitle'),subtitle:$('#fSubtitle'),category:$('#fCategory'),reporter:$('#fReporterId'),author:$('#fAuthor'),summary:$('#fSummary'),image:$('#fImage'),caption:$('#fImageCaption'),content:$('#fContent'),sourceName:$('#fSourceName'),sourceUrl:$('#fSourceUrl'),tags:$('#fTags'),featured:$('#fFeatured'),searchPriority:$('#fSearchPriority'),pinned:$('#fPinned'),visibility:$('#fVisibility'),visualStyle:$('#fVisualStyle'),preview:$('#imagePreview'),imageInput:$('#imageInput'),imageFilename:$('#imageFilename'),downloadImage:$('#downloadImageBtn'),clearDraftImage:$('#clearDraftImageBtn'),saveMessage:$('#saveMessage'),draftInfo:$('#draftInfo')
+    id:$('#fId'),date:$('#fDate'),title:$('#fTitle'),subtitle:$('#fSubtitle'),category:$('#fCategory'),reporter:$('#fReporterId'),author:$('#fAuthor'),summary:$('#fSummary'),image:$('#fImage'),caption:$('#fImageCaption'),content:$('#fContent'),sourceName:$('#fSourceName'),sourceUrl:$('#fSourceUrl'),tags:$('#fTags'),showOnHome:$('#fShowOnHome'),featured:$('#fFeatured'),searchPriority:$('#fSearchPriority'),pinned:$('#fPinned'),visibility:$('#fVisibility'),visualStyle:$('#fVisualStyle'),preview:$('#imagePreview'),imageInput:$('#imageInput'),imageFilename:$('#imageFilename'),downloadImage:$('#downloadImageBtn'),clearDraftImage:$('#clearDraftImageBtn'),saveMessage:$('#saveMessage'),draftInfo:$('#draftInfo')
   };
   const clean=s=>String(s??'').trim();
   const clone=x=>JSON.parse(JSON.stringify(x));
@@ -91,7 +91,7 @@
   }
   function formData(){
     const paragraphs=els.content.value.split(/\n\s*\n/).map(clean).filter(Boolean);
-    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value===AUTO_CATEGORY?autoCategory():(els.category.value||'국내소식'),summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,galleryImages:window.GN24GalleryAdmin?.value?.()||[],reporterId:clean(els.reporter?.value),author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,featured:els.featured.checked,searchPriority:!!els.searchPriority?.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,visibilityScope:els.visibility?.value||'public',isPublished:els.visibility?els.visibility.value==='public':true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
+    return {id:clean(els.id.value)||makeId(els.date.value),title:clean(els.title.value),subtitle:clean(els.subtitle.value),date:els.date.value||today(),category:els.category.value===AUTO_CATEGORY?autoCategory():(els.category.value||'국내소식'),summary:clean(els.summary.value),image:clean(els.image.value)||DEFAULT_IMAGE,galleryImages:window.GN24GalleryAdmin?.value?.()||[],reporterId:clean(els.reporter?.value),author:clean(els.author.value)||'Global News24 편집부',sourceName:clean(els.sourceName.value)||'Global News24',sourceUrl:clean(els.sourceUrl.value),tags:els.tags.value.split(',').map(clean).filter(Boolean),content:paragraphs,showOnHome:els.showOnHome.value!=='off',featured:els.featured.checked,searchPriority:!!els.searchPriority?.checked,visualStyle:els.visualStyle.value||'normal',pinned:els.pinned.checked,visibilityScope:els.visibility?.value||'public',isPublished:els.visibility?els.visibility.value==='public':true,relatedOrgs:current()?.relatedOrgs||[],...(clean(els.caption.value)?{imageCaption:clean(els.caption.value)}:{})};
   }
 
   function pendingForm(){
@@ -135,7 +135,7 @@
     els.id.value=p.id||els.id.value;els.date.value=p.date||els.date.value;els.title.value=p.title||'';els.subtitle.value=p.subtitle||'';
     if(p.category){if(![...els.category.options].some(o=>o.value===p.category)){const o=document.createElement('option');o.value=o.textContent=p.category;els.category.append(o)}els.category.value=p.category}
     window.GN24GalleryAdmin?.load?.(p.galleryImages||[]);
-    if(els.reporter)els.reporter.value=p.reporterId||'';els.author.value=p.author||'Global News24 편집부';els.summary.value=p.summary||'';els.image.value=p.image||DEFAULT_IMAGE;els.caption.value=p.imageCaption||'';els.content.value=(p.content||[]).join('\n\n');els.sourceName.value=p.sourceName||'';els.sourceUrl.value=p.sourceUrl||'';els.tags.value=(p.tags||[]).join(', ');els.featured.checked=!!p.featured;if(els.searchPriority)els.searchPriority.checked=!!p.searchPriority;els.pinned.checked=!!p.pinned;if(els.visibility)els.visibility.value=p.visibilityScope||(p.isPublished===false?'admin':'public');els.visualStyle.value=p.visualStyle||'normal';els.imageFilename.value=p._imageFilename||(p.image||'').split('/').pop()||'';imageBg(p.image||DEFAULT_IMAGE);
+    if(els.reporter)els.reporter.value=p.reporterId||'';els.author.value=p.author||'Global News24 편집부';els.summary.value=p.summary||'';els.image.value=p.image||DEFAULT_IMAGE;els.caption.value=p.imageCaption||'';els.content.value=(p.content||[]).join('\n\n');els.sourceName.value=p.sourceName||'';els.sourceUrl.value=p.sourceUrl||'';els.tags.value=(p.tags||[]).join(', ');els.showOnHome.value=p.showOnHome===false?'off':'on';els.featured.checked=!!p.featured;if(els.searchPriority)els.searchPriority.checked=!!p.searchPriority;els.pinned.checked=!!p.pinned;if(els.visibility)els.visibility.value=p.visibilityScope||(p.isPublished===false?'admin':'public');els.visualStyle.value=p.visualStyle||'normal';els.imageFilename.value=p._imageFilename||(p.image||'').split('/').pop()||'';imageBg(p.image||DEFAULT_IMAGE);
     document.dispatchEvent(new Event('gn24:article-form-loaded'));
   }
 
@@ -144,7 +144,7 @@
     els.id.value=a.id||'';els.date.value=a.date||today();els.title.value=a.title||'';els.subtitle.value=a.subtitle||'';els.category.value=a.category||'국내소식';
     if(![...els.category.options].some(o=>o.value===(a.category||''))){const o=document.createElement('option');o.value=o.textContent=a.category||'뉴스';els.category.append(o);els.category.value=o.value}
     window.GN24GalleryAdmin?.load?.(a.galleryImages||[]);
-    if(els.reporter)els.reporter.value=a.reporterId||'';els.author.value=a.author||'Global News24 편집부';els.summary.value=a.summary||'';els.image.value=a.image||'';els.caption.value=a.imageCaption||'';els.content.value=(Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[])).join('\n\n');els.sourceName.value=a.sourceName||'';els.sourceUrl.value=a.sourceUrl||'';els.tags.value=(a.tags||[]).join(', ');els.featured.checked=!!a.featured;if(els.searchPriority)els.searchPriority.checked=!!a.searchPriority;els.pinned.checked=!!a.pinned;if(els.visibility)els.visibility.value=a.visibilityScope||(a.isPublished===false?'admin':'public');els.visualStyle.value=a.visualStyle||'normal';els.imageFilename.value=(a.image||'').split('/').pop()||`${ymd(a.date)}-news.jpg`;imageBg(a.image);$('#editorTitle').textContent=`기사 편집 · ${a.category||'뉴스'}`;if(!opts.keepMessage)els.saveMessage.textContent='편집 후 저장을 눌러주세요.';renderList();restoreDraftImage(id);
+    if(els.reporter)els.reporter.value=a.reporterId||'';els.author.value=a.author||'Global News24 편집부';els.summary.value=a.summary||'';els.image.value=a.image||'';els.caption.value=a.imageCaption||'';els.content.value=(Array.isArray(a.content)?a.content:(Array.isArray(a.body)?a.body:[])).join('\n\n');els.sourceName.value=a.sourceName||'';els.sourceUrl.value=a.sourceUrl||'';els.tags.value=(a.tags||[]).join(', ');els.showOnHome.value=a.showOnHome===false?'off':'on';els.featured.checked=!!a.featured;if(els.searchPriority)els.searchPriority.checked=!!a.searchPriority;els.pinned.checked=!!a.pinned;if(els.visibility)els.visibility.value=a.visibilityScope||(a.isPublished===false?'admin':'public');els.visualStyle.value=a.visualStyle||'normal';els.imageFilename.value=(a.image||'').split('/').pop()||`${ymd(a.date)}-news.jpg`;imageBg(a.image);$('#editorTitle').textContent=`기사 편집 · ${a.category||'뉴스'}`;if(!opts.keepMessage)els.saveMessage.textContent='편집 후 저장을 눌러주세요.';renderList();restoreDraftImage(id);
     document.dispatchEvent(new Event('gn24:article-form-loaded'));
   }
 
@@ -197,9 +197,9 @@
       b.querySelectorAll('small span')[1].textContent=a.category||'뉴스';
       b.querySelectorAll('small span')[2].textContent=a.id||'';
       const exactDup=state.duplicateContentIds.has(String(a.id));
-      const warnings=[];if(dup)warnings.push('⚠ 같은 경로');if(exactDup)warnings.push('⚠ 실제 사진 중복');if(noTags)warnings.push('⚠ 태그 없음');if(!clean(a.image)||a.image===DEFAULT_IMAGE)warnings.push('NO IMAGE');
+      const warnings=['메인 '+(a.showOnHome===false?'OFF':'ON')];if(dup)warnings.push('⚠ 같은 경로');if(exactDup)warnings.push('⚠ 실제 사진 중복');if(noTags)warnings.push('⚠ 태그 없음');if(!clean(a.image)||a.image===DEFAULT_IMAGE)warnings.push('NO IMAGE');
       b.querySelector('.article-warnings').textContent=warnings.join(' · ');
-      b.onclick=()=>{select(a.id);scheduleDraft()};els.list.append(b);
+      b.onclick=()=>{select(a.id);scheduleDraft()};els.list.append(b);const view=document.createElement('a');view.href='/pages/'+(a.isPublished===false?'private-article':'article')+'/?id='+encodeURIComponent(a.id);view.textContent='기사 보기';view.target='_blank';view.rel='noopener';els.list.append(view);
     }
   }
 
@@ -334,6 +334,7 @@
       sourceUrl:x.source_url||x.sourceUrl||'',
       tags:Array.isArray(x.tags)?x.tags:[],
       content,
+      showOnHome:(x.show_on_home??x.showOnHome)!==false,
       featured:!!x.featured,
       searchPriority:!!(x.search_priority??x.searchPriority),
       pinned:!!x.pinned,
