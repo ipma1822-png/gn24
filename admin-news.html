@@ -180,6 +180,9 @@
           </div>
           <div class="savebar">
             <button class="btn primary large" type="submit">현재 기사 저장</button>
+            <button id="publicArticleView" class="btn" type="button" disabled>공개 기사 보기</button>
+            <button id="publicArticleCopy" class="btn" type="button" disabled>기사 주소 복사</button>
+            <small id="publicArticleStatus" role="status">공개 발행 확인 전</small>
             <span id="saveMessage">편집 후 저장을 눌러주세요.</span>
           </div>
         </form>
@@ -413,5 +416,6 @@
     },200);
   })();
   </script>
+<script src="/assets/js/article-public-actions.js?v=1.0.0"></script>
 </body>
 </html>
