@@ -90,6 +90,28 @@ function installBar(){
  bar.addEventListener('click',function(e){var b=e.target.closest('[data-kind]');if(!b)return;var same=panel.dataset.kind===b.dataset.kind&&!panel.hidden;panel.dataset.kind=b.dataset.kind;panel.innerHTML=b.dataset.kind==='korea'?'<h2>'+t.koreaTitle+'</h2>'+regionMarkup()+'<a class="gn24-mega-all" href="/region/#korea-regions">'+t.regionsAll+'</a>':'<h2>'+t.worldTitle+'</h2><div class="gn24-mega-countries'+(isHQ?' gn24-country-flat':'')+'">'+countryMarkup()+'</div><a class="gn24-mega-all" href="/region/#global-editions">'+t.worldAll+'</a>';panel.hidden=same});
  document.addEventListener('click',function(e){if(!bar.contains(e.target))panel.hidden=true});
 }
-function init(){fillHome();installBar()}
+// Representative-city clocks: Intl applies the browser's IANA/DST rules.
+var editionTimezones={
+china:['베이징','Asia/Shanghai'],japan:['도쿄','Asia/Tokyo'],philippines:['마닐라','Asia/Manila'],indonesia:['자카르타','Asia/Jakarta'],malaysia:['쿠알라룸푸르','Asia/Kuala_Lumpur'],thailand:['방콕','Asia/Bangkok'],vietnam:['하노이','Asia/Ho_Chi_Minh'],nepal:['카트만두','Asia/Kathmandu'],india:['뉴델리','Asia/Kolkata'],pakistan:['이슬라마바드','Asia/Karachi'],mongolia:['울란바토르','Asia/Ulaanbaatar'],iran:['테헤란','Asia/Tehran'],uae:['아부다비','Asia/Dubai'],'saudi-arabia':['리야드','Asia/Riyadh'],turkiye:['앙카라','Europe/Istanbul'],morocco:['라바트','Africa/Casablanca'],egypt:['카이로','Africa/Cairo'],'south-africa':['프리토리아','Africa/Johannesburg'],kenya:['나이로비','Africa/Nairobi'],nigeria:['아부자','Africa/Lagos'],spain:['마드리드','Europe/Madrid'],uk:['런던','Europe/London'],france:['파리','Europe/Paris'],germany:['베를린','Europe/Berlin'],italy:['로마','Europe/Rome'],russia:['모스크바','Europe/Moscow'],canada:['오타와','America/Toronto'],usa:['워싱턴 D.C.','America/New_York'],mexico:['멕시코시티','America/Mexico_City'],panama:['파나마시티','America/Panama'],cuba:['아바나','America/Havana'],brazil:['브라질리아','America/Sao_Paulo'],argentina:['부에노스아이레스','America/Argentina/Buenos_Aires'],colombia:['보고타','America/Bogota'],australia:['캔버라','Australia/Sydney'],'new-zealand':['웰링턴','Pacific/Auckland'],algeria:['알제','Africa/Algiers'],tunisia:['튀니스','Africa/Tunis'],ghana:['아크라','Africa/Accra'],ethiopia:['아디스아바바','Africa/Addis_Ababa'],netherlands:['암스테르담','Europe/Amsterdam'],portugal:['리스본','Europe/Lisbon'],poland:['바르샤바','Europe/Warsaw'],greece:['아테네','Europe/Athens'],georgia:['트빌리시','Asia/Tbilisi'],bangladesh:['다카','Asia/Dhaka'],'sri-lanka':['콜롬보','Asia/Colombo'],singapore:['싱가포르','Asia/Singapore'],iraq:['바그다드','Asia/Baghdad'],jordan:['암만','Asia/Amman'],kazakhstan:['아스타나','Asia/Almaty'],syria:['다마스쿠스','Asia/Damascus'],'costa-rica':['산호세','America/Costa_Rica'],chile:['산티아고','America/Santiago'],peru:['리마','America/Lima'],uruguay:['몬테비데오','America/Montevideo'],venezuela:['카라카스','America/Caracas']
+};
+function installEditionClocks(){
+ var slug=location.pathname.toLowerCase().split('/').filter(Boolean)[0],local=editionTimezones[slug];
+ if(!local||document.getElementById('gn24EditionClocks'))return;
+ var header=document.querySelector('.global-edition-header,.site-header');if(!header)return;
+ var style=document.createElement('style');
+ style.textContent='.gn24-edition-clocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;box-sizing:border-box;width:100%;padding:8px max(12px,calc((100% - 1200px)/2));direction:ltr;background:#f1f5f9;color:#172b43;font-family:system-ui,sans-serif;position:relative}.gn24-edition-clock{min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;padding:7px 10px;border:1px solid #dbe3ec;border-radius:7px;background:#fff;line-height:1.4}.gn24-edition-clock b{font-size:12px;overflow-wrap:anywhere}.gn24-edition-clock time{font-size:18px;font-weight:750;font-variant-numeric:tabular-nums}.gn24-edition-clock small{font-size:11px;white-space:normal}@media(max-width:760px){.gn24-edition-clock{display:block;padding:6px 8px}.gn24-edition-clock b,.gn24-edition-clock small{display:block}.gn24-edition-clock time{display:block;font-size:20px}}';
+ document.head.appendChild(style);
+ var box=document.createElement('div');box.id='gn24EditionClocks';box.className='gn24-edition-clocks';box.setAttribute('aria-label','한국 및 대표 도시 현재 시간');
+ var entries=[['대한민국 서울','Asia/Seoul'],[(hqCountryNames[slug]||slug)+' '+local[0],local[1]]];
+ var updateCards=entries.map(function(entry){
+  var card=document.createElement('div');card.className='gn24-edition-clock';var label=document.createElement('b');label.textContent=entry[0];var time=document.createElement('time'),date=document.createElement('small');card.append(label,time,date);box.appendChild(card);
+  var tf=new Intl.DateTimeFormat('ko-KR',{timeZone:entry[1],hour:'2-digit',minute:'2-digit',hourCycle:'h23'}),df=new Intl.DateTimeFormat('ko-KR',{timeZone:entry[1],year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
+  return function(now){time.textContent=tf.format(now);time.dateTime=now.toISOString();date.textContent=df.format(now);};
+ });
+ function tick(){var now=new Date();updateCards.forEach(function(update){update(now);});}
+ tick();header.insertBefore(box,header.firstChild);setInterval(tick,1000);document.addEventListener('visibilitychange',function(){if(!document.hidden)tick();});
+}
+
+function init(){fillHome();installBar();installEditionClocks()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 }());
