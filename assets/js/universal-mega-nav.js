@@ -109,7 +109,8 @@ function installEditionClocks(){
   return function(now){time.textContent=tf.format(now);time.dateTime=now.toISOString();date.textContent=df.format(now);};
  });
  function tick(){var now=new Date();updateCards.forEach(function(update){update(now);});}
- tick();header.insertBefore(box,header.firstChild);setInterval(tick,1000);document.addEventListener('visibilitychange',function(){if(!document.hidden)tick();});
+ function placeClocks(){if(window.matchMedia('(min-width:901px)').matches)header.insertAdjacentElement('afterend',box);else header.insertBefore(box,header.firstChild);}
+ tick();placeClocks();window.matchMedia('(min-width:901px)').addEventListener('change',placeClocks);setInterval(tick,1000);document.addEventListener('visibilitychange',function(){if(!document.hidden)tick();});
 }
 
 function init(){fillHome();installBar();installEditionClocks()}
