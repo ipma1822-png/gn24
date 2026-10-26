@@ -5,17 +5,22 @@ window.GN24_KAKAO = {
   javascriptKey: "8622bbffea31804f3bd4f03c89f5d0c1"
 };
 
-// GN24 SHARE URL FINAL · all article share actions use the generated OG share page.
+// Use the static OG URL only after app.js has verified and promoted it.
+// New articles remain shareable through their public reader URL during generation.
 // This listener is registered before app.js's DOMContentLoaded handler, so the
 // shared app functions are replaced before loadArticle() binds article tools.
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof shareArticleURL !== 'function') return;
 
+  const verifiedShareURL = (article) => location.pathname.startsWith('/share/')
+    ? shareArticleURL(article?.id, article)
+    : new URL(articleURL(article?.id), location.origin).href;
+
   gn24ShareKakao = async function(article) {
     const title = String(article?.title || 'Global News24');
     const desc = gn24ArticleDescription(article);
     const image = gn24AbsoluteUrl(article?.image);
-    const url = shareArticleURL(article?.id, article);
+    const url = verifiedShareURL(article);
     try {
       await gn24InitKakao();
       Kakao.Share.sendDefault({
@@ -35,11 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   setupArticleTools = function(article) {
-    const canonicalShareUrl = shareArticleURL(article?.id, article);
     const title = article?.title || document.title || 'Global News24';
 
     const shareUrl = (kind) => {
-      const url = canonicalShareUrl;
+      const url = verifiedShareURL(article);
       if (kind === 'kakao') {
         gn24ShareKakao(article);
         return;
@@ -73,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const shareHubMessage = document.getElementById('shareHubMessage');
 
     async function copyCurrentArticle() {
-      const url = canonicalShareUrl;
+      const url = verifiedShareURL(article);
       try {
         await navigator.clipboard.writeText(url);
         if (shareHubMessage) {
