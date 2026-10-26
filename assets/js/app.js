@@ -865,7 +865,7 @@ async function gn24ShareKakao(article){
   const desc=gn24ArticleDescription(article);
   const image=gn24AbsoluteUrl(article?.image);
   // v3.4.4: 미리보기는 기사 대표이미지, 클릭은 실제 기사 페이지로 연결
-  const url=articleURL(article?.id);
+  const url=new URL(articleURL(article?.id),location.origin).href;
   try{
     await gn24InitKakao();
     Kakao.Share.sendDefault({
@@ -904,7 +904,7 @@ async function gn24PromoteStaticShareUrl(article){
 
   async function sharePageReady(){
     try{
-      const r=await fetch(share+'?ogcheck='+Date.now(),{
+      const r=await fetch(share+(share.includes('?')?'&':'?')+'ogcheck='+Date.now(),{
         method:'GET',
         cache:'no-store',
         redirect:'follow'
