@@ -2,6 +2,61 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20261028-959017/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-28</news:publication_date>
+      <news:title>Texas Taekwondo Master Rafael Fabian Lopez Burgoa Completes 127th Kukkiwon International Master Course in New Jersey</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20261028-921303/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-28</news:publication_date>
+      <news:title>رکوردشکنی محمدامین نمازی در ایران؛ شکستن ۱۰۰ تخته چوب با ساق پا در ۱۱۹ ثانیه</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20261028-873044/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-28</news:publication_date>
+      <news:title>미국 TAAG 로열 무술팀, 2026 팬아메리칸 태권도대회서 금메달 4개·은메달 2개 성과</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20261028-801997/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-28</news:publication_date>
+      <news:title>TAAG Royal Martial Arts Burgoa Athletes Win Four Golds and Two Silvers at 2026 Pan American Taekwondo Championships</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news24.ai.kr/share/gn24-20261028-085862/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-28</news:publication_date>
+      <news:title>미국 파비안 부르고아 사범, 국기원 국제태권도사범 2급 자격 취득</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20261027-241369/</loc>
     <news:news>
       <news:publication>
