@@ -21,7 +21,7 @@ function renderBreaking(all){
 }
 function cfg(){return window.GN24_SUPABASE||{}}
 async function rest(path){const c=cfg();if(!c.url||!c.anonKey)throw new Error('Regional data connection unavailable');const r=await fetch(c.url.replace(/\/$/,'')+'/rest/v1/'+path,{cache:'no-store',headers:{apikey:c.anonKey}});if(!r.ok)throw new Error('Regional data request failed: '+r.status);return r.json()}
-function articleURL(id){return '/share/'+encodeURIComponent(id)+'/'}
+function articleURL(id){return '/pages/article/?id='+encodeURIComponent(id)}
 function fmt(d){return d?String(d).replaceAll('-','.') : ''}
 function bg(src){return `style="background-image:url('${esc(src||DEFAULT_IMAGE)}'),url('${DEFAULT_IMAGE}')"`}
 function card(a){return `<a class="regional-card" href="${articleURL(a.id)}"><div class="regional-thumb" ${bg(a.image)}></div><div class="regional-card-body"><span>${esc(a.category||'뉴스')}</span><h3>${esc(a.title||'')}</h3><p>${esc(a.summary||'')}</p><small>${esc(fmt(a.date))} · ${esc(a.author||'Global News24')}</small></div></a>`}

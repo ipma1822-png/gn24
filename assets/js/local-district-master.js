@@ -6,7 +6,7 @@ if(!source||!code)return;
 const config=JSON.parse(source.textContent),district=(config.districts||[]).find(d=>d.code===code),region=document.body.dataset.region,name=document.body.dataset.regionName||region;
 const list=document.getElementById('regionalNews'),hero=document.getElementById('regionalLead'),count=document.getElementById('regionalCount');if(!list||!hero||!region)return;
 const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const url=a=>'/share/'+encodeURIComponent(a.id)+'/',image=a=>`style="background-image:url('${esc(a.image||'/assets/images/news/gn24-default-news.svg')}'),url('/assets/images/news/gn24-default-news.svg')"`,date=a=>esc(String(a.date||'').replaceAll('-','.'));
+const url=a=>'/pages/article/?id='+encodeURIComponent(a.id),image=a=>`style="background-image:url('${esc(a.image||'/assets/images/news/gn24-default-news.svg')}'),url('/assets/images/news/gn24-default-news.svg')"`,date=a=>esc(String(a.date||'').replaceAll('-','.'));
 let rows=null,error=false;
 function render(){
  if(rows===null&&!error){hero.removeAttribute('href');hero.replaceChildren();list.innerHTML='<div class="regional-empty"><b>지역뉴스를 불러오는 중입니다.</b></div>';return}
