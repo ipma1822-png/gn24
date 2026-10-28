@@ -13,6 +13,17 @@
     </news:news>
   </url>
   <url>
+    <loc>https://news24.ai.kr/share/gn24-20261029-854047/</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Global News24</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-10-29</news:publication_date>
+      <news:title>울산 성남동 커피페스티벌 30일 개막…원도심에 커피 향기 가득</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://news24.ai.kr/share/gn24-20261029-631347/</loc>
     <news:news>
       <news:publication>
