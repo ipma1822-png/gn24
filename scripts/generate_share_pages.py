@@ -227,17 +227,31 @@ def load_config():
 
 def load_remote():
     url, key = load_config()
-    q = urllib.parse.urlencode({
-        "select":"id,title,subtitle,summary,image,image_caption,date,category,author,reporter_id,content,source_name,source_url,is_published,updated_at,search_priority",
-        "is_published":"eq.true",
-        "order":"date.desc,id.desc"
-    })
-    req = urllib.request.Request(
-        url + "/rest/v1/gn24_articles?" + q,
-        headers={"apikey":key, "Authorization":"Bearer " + key}
-    )
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode("utf-8"))
+    rows = []
+    offset = 0
+    while True:
+        q = urllib.parse.urlencode({
+            "select":"id,title,subtitle,summary,image,image_caption,date,category,author,reporter_id,content,source_name,source_url,is_published,updated_at,search_priority",
+            "is_published":"eq.true",
+            "order":"date.desc,id.desc",
+            "limit":1000,
+            "offset":offset
+        })
+        req = urllib.request.Request(
+            url + "/rest/v1/gn24_articles?" + q,
+            headers={"apikey":key, "Authorization":"Bearer " + key}
+        )
+        with urllib.request.urlopen(req, timeout=30) as r:
+            batch = json.loads(r.read().decode("utf-8"))
+        if not isinstance(batch, list):
+            raise RuntimeError("Invalid article response; existing share pages were not changed")
+        if not batch:
+            break
+        rows.extend(batch)
+        offset += len(batch)
+    if not rows:
+        raise RuntimeError("Empty article response; existing share pages and sitemaps were not changed")
+    return rows
 
 def load_local():
     p = ROOT / "data/news.json"
@@ -275,11 +289,8 @@ def main():
         d.mkdir(parents=True,exist_ok=True)
         (d/"index.html").write_text(page(a, reporter_photos),encoding="utf-8")
 
-    # remove stale generated article dirs
-    for d in SHARE.iterdir():
-        if d.is_dir() and d.name not in wanted:
-            import shutil
-            shutil.rmtree(d)
+    # Never delete existing share pages from a polling response. A partial
+    # response or a local fixture must not turn already shared URLs into 404s.
 
     index = """<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <title>Global News24 공유</title><meta name="robots" content="noindex">
