@@ -3,6 +3,8 @@
 const cfg=window.GN24_SUPABASE||{},base=String(cfg.url||'').replace(/\/$/,''),key=String(cfg.anonKey||''),$=id=>document.getElementById(id);
 const labels={submitted:'신규',reviewing:'검토중',clarification_requested:'추가확인',accepted:'채택',published:'기사발행',rejected:'반려'};
 let token='',rows=[],selected=null,regionalRegion='';
+const daejeonCommunityMode=new URLSearchParams(location.search).get('community')==='daejeon';
+const communityTypes=new Set(['경조사','행사 소식','인물 동정','개업·이전','단체 소식','지역 알림']);
 const sb=window.supabase.createClient(cfg.url,cfg.anonKey);
 async function req(path,opt={}){
  const {data,error}=await sb.auth.getSession();
@@ -15,7 +17,7 @@ async function req(path,opt={}){
 function submissionType(row){return (String(row.source_notes||'').match(/^유형:\s*([^\r\n]*)/m)?.[1]||'').trim();}
 function render(){
  const region=regionalRegion||$('regionFilter').value,status=$('statusFilter').value,type=$('typeFilter').value,query=$('tipSearch').value.trim().toLocaleLowerCase('ko-KR');
- const visible=rows.filter(r=>(!region||r.region===region)&&(!status||r.status===status)&&(!type||submissionType(r)===type)&&(!query||(String(r.title||'')+' '+String(r.name||'')).toLocaleLowerCase('ko-KR').includes(query)));
+ const visible=rows.filter(r=>(!daejeonCommunityMode||(r.region==='대전'&&communityTypes.has(submissionType(r))))&&(!region||r.region===region)&&(!status||r.status===status)&&(!type||submissionType(r)===type)&&(!query||(String(r.title||'')+' '+String(r.name||'')).toLocaleLowerCase('ko-KR').includes(query)));
  $('count').textContent=visible.length+'건';$('list').replaceChildren();
  for(const row of visible){
   const tr=document.createElement('tr');
@@ -58,7 +60,8 @@ function detail(id){
 }
 async function load(){
  const data=await req('/rest/v1/gn24_participant_submissions?select=id,participant_type,activity_number,name,phone,region,title,facts,source_notes,media_urls,consent_original_work,consent_publication_review,status,reviewer_notes,linked_article_id,created_at&order=created_at.desc'+(regionalRegion?'&region=eq.'+encodeURIComponent(regionalRegion):''));
- rows=data||[];
+ rows=(data||[]).filter(r=>!daejeonCommunityMode||(r.region==='대전'&&communityTypes.has(submissionType(r))));
+ if(daejeonCommunityMode){const title=document.querySelector('h1');if(title)title.textContent='대전 우리지역 소식 검토함';const note=document.createElement('p');note.className='note';note.textContent='대전 소식 6개 유형만 표시합니다. 이 화면의 상태 변경은 최종 공개 승인이 아닙니다. 본사 최종 승인과 공개 게시 기능은 별도 서버 검증 후 연결합니다.';document.querySelector('.hero')?.after(note);}
  if(regionalRegion){$('regionFilter').replaceChildren(new Option(regionalRegion+' · 담당 지역',regionalRegion));$('regionFilter').value=regionalRegion;$('regionFilter').disabled=true;}
  else{const previous=$('regionFilter').value;$('regionFilter').replaceChildren(new Option('전체 지역',''),...Array.from(new Set(rows.map(r=>r.region).filter(Boolean))).sort().map(region=>new Option(region,region)));if(Array.from($('regionFilter').options).some(o=>o.value===previous))$('regionFilter').value=previous;}
  const previousType=$('typeFilter').value;
