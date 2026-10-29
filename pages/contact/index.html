@@ -53,6 +53,19 @@
 </footer><script src="/assets/js/app.js?v=3.1.6"></script><script src="/assets/js/gn24-supabase-config.js?v=3.19.0"></script><script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script>(function(){
 'use strict';
 const form=document.getElementById('localTipForm'),message=document.getElementById('localTipMessage'),button=form.querySelector('button[type="submit"]');
+const communityPilot=new URLSearchParams(location.search).get('community')==='daejeon';
+if(communityPilot){
+ const regionField=form.elements.region;
+ regionField.value='daejeon';
+ // Preserve the normal public intake endpoint and database schema.
+ // The six pilot categories are stored in the existing '유형:' source_notes field.
+ const typeField=form.elements.type;
+ typeField.replaceChildren(...['경조사','행사 소식','인물 동정','개업·이전','단체 소식','지역 알림'].map(label=>new Option(label,label)));
+ const heading=document.querySelector('main h1');if(heading)heading.textContent='대전 우리지역 소식 제보';
+ const intro=document.querySelector('main .article-body > p');if(intro)intro.textContent='대전 시범 접수입니다. 본사 검토 후 게시 여부가 결정되며, 제출 즉시 공개되지 않습니다. 부고 등 제3자 개인정보는 게시 권한을 확인해 주세요.';
+ const regionLabel=regionField.closest('label');if(regionLabel){const hint=document.createElement('small');hint.textContent='대전 시범 접수 전용';regionLabel.append(hint)}
+ regionField.addEventListener('change',()=>{if(regionField.value!=='daejeon')regionField.value='daejeon'});
+}
 const requested=new URLSearchParams(location.search).get('region');
 if(requested&&Array.from(form.elements.region.options).some(o=>o.value===requested))form.elements.region.value=requested;
 
