@@ -5,24 +5,21 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: domestic-link-guard-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   regional-links:
     name: Domestic article navigation guard
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.sha }}
       - name: Check all domestic navigation sources
         run: |
           python3 scripts/check_regional_links.py
@@ -42,6 +39,19 @@ jobs:
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           node tests/regional-links/check.cjs
+      - name: Wait for this commit's existing Pages deployment
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 60); do
+            state=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$GITHUB_SHA&per_page=30" --jq '[.workflow_runs[] | select(.name == "pages build and deployment")][0] | if . == null then "pending" else (.status + ":" + (.conclusion // "pending")) end')
+            if [ "$state" = "completed:success" ]; then exit 0; fi
+            if [[ "$state" == completed:* ]]; then echo "Pages deployment failed: $state"; exit 1; fi
+            sleep 5
+          done
+          echo "Pages deployment was not confirmed for $GITHUB_SHA"
+          exit 1
       - name: Verify representative live article clicks after Pages deployment
-        if: github.event_name == 'workflow_run'
+        if: github.event_name != 'pull_request'
         run: node tests/regional-links/check.cjs --live
