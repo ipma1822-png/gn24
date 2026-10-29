@@ -2,7 +2,7 @@
 'use strict';
 const cfg=window.GN24_SUPABASE||{},base=String(cfg.url||'').replace(/\/$/,''),key=String(cfg.anonKey||''),$=id=>document.getElementById(id);
 const labels={submitted:'신규',reviewing:'검토중',clarification_requested:'추가확인',accepted:'채택',published:'기사발행',rejected:'반려'};
-let token='',rows=[],selected=null,regionalRegion='';
+let token='',rows=[],selected=null,regionalRegion='',isHq=false;
 const daejeonCommunityMode=new URLSearchParams(location.search).get('community')==='daejeon';
 const communityTypes=new Set(['경조사','행사 소식','인물 동정','개업·이전','단체 소식','지역 알림']);
 const sb=window.supabase.createClient(cfg.url,cfg.anonKey);
@@ -54,6 +54,7 @@ function detail(id){
  $('detail').hidden=false;$('detailFields').replaceChildren();previewMedia(selected);
  const fields=[['접수일',selected.created_at],['지역',selected.region],['제목',selected.title],['제보내용',selected.facts],['이름',selected.name],['연락처',selected.phone],['추가정보 (구·군 / 유형 / 장소 / 일자 / 이메일)',selected.source_notes],['자료URL',(selected.media_urls||[]).join('\n')],['활동번호',selected.activity_number],['자료 제공 동의',selected.consent_original_work?'동의':'미동의'],['편집 검토 동의',selected.consent_publication_review?'동의':'미동의']];
  for(const [label,value] of fields){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=value||'-';dd.style.whiteSpace='pre-wrap';$('detailFields').append(dt,dd);}
+ if(daejeonCommunityMode&&isHq&&selected.region==='대전'&&selected.status==='accepted'&&communityTypes.has(submissionType(selected))){const dt=document.createElement('dt'),dd=document.createElement('dd'),link=document.createElement('a');dt.textContent='본사 최종 게시';link.textContent='채택된 소식 게시 화면으로 이동';link.href='/daejeon/community/hq/?submission_id='+encodeURIComponent(selected.id)+'&category='+encodeURIComponent(submissionType(selected));dd.append(link);$('detailFields').append(dt,dd);}
  if(selected.linked_article_id){const dt=document.createElement('dt'),dd=document.createElement('dd'),link=document.createElement('a');dt.textContent='발행기사';link.textContent='발행기사 보기';link.href='/pages/article/?id='+encodeURIComponent(selected.linked_article_id);link.target='_blank';link.rel='noopener';dd.append(link);$('detailFields').append(dt,dd);}
  $('detailStatus').value=selected.status;$('reviewerNotes').value=selected.reviewer_notes||'';$('saveMessage').textContent='';
  $('detail').scrollIntoView({behavior:'smooth',block:'start'});
@@ -95,7 +96,8 @@ $('reload').addEventListener('click',()=>load().catch(()=>{$('count').textConten
  token=error?'':data.session?.access_token||'';
  if(!token){$('guard').textContent='온라인 편집국에서 관리자 로그인 후 이용해 주세요.';return;}
  try{
- if(await req('/rest/v1/rpc/is_gn24_admin',{method:'POST',body:'{}'})!==true){
+ isHq=await req('/rest/v1/rpc/is_gn24_admin',{method:'POST',body:'{}'})===true;
+ if(!isHq){
   const scopes=await req('/rest/v1/rpc/gn24_my_regional_scope',{method:'POST',body:'{}'});
   const scope=Array.isArray(scopes)?scopes[0]:scopes;
   if(scope?.scope_type!=='regional_hq'||!scope.regional_hq_code){$('guard').textContent='본사 관리자 또는 시·도본부장만 이용할 수 있습니다.';return;}
