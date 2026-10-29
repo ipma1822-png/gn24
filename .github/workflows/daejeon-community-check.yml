@@ -1,0 +1,28 @@
+name: Daejeon community pilot checks
+on:
+  pull_request:
+    paths:
+      - 'daejeon/**'
+      - 'pages/contact/index.html'
+      - 'pages/admin-local-tips/index.html'
+      - 'assets/js/daejeon-community-*.js'
+      - 'docs/daejeon-community-publication.sql'
+      - 'tests/daejeon-community.test.cjs'
+      - '.github/workflows/daejeon-community-check.yml'
+  workflow_dispatch:
+jobs:
+  static-regression:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax check
+        run: |
+          node --check assets/js/daejeon-community-hq.js
+          node --check assets/js/daejeon-community-public.js
+      - name: Daejeon community regression tests
+        run: node --test tests/daejeon-community.test.cjs
