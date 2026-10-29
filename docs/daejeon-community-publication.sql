@@ -18,7 +18,18 @@ create policy "daejeon community public read" on public.gn24_daejeon_community_p
 for select to anon, authenticated using (true);
 -- Existing HQ admins only. Regional directors have no INSERT/UPDATE/DELETE policy.
 create policy "daejeon community HQ publish" on public.gn24_daejeon_community_posts
-for insert to authenticated with check ((select public.is_gn24_admin()));
+for insert to authenticated with check (
+ (select public.is_gn24_admin())
+ and exists (
+   select 1 from public.gn24_participant_submissions source
+   where source.id = submission_id
+     and source.region = '대전'
+     and source.status = 'accepted'
+     and source.consent_original_work
+     and source.consent_publication_review
+     and source.source_notes ~ ('(^|\\n)유형: ' || category || '(\\n|$)')
+ )
+);
 create policy "daejeon community HQ edit" on public.gn24_daejeon_community_posts
 for update to authenticated using ((select public.is_gn24_admin()))
 with check ((select public.is_gn24_admin()));
