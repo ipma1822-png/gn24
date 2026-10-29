@@ -2,6 +2,7 @@
 const cfg=window.GN24_SUPABASE,form=document.getElementById('communityPublishForm'),message=document.getElementById('communityPublishMessage');
 if(!form||!cfg?.url||!cfg?.anonKey)return;
 const api=cfg.url.replace(/\/$/,'');
+const params=new URLSearchParams(location.search);const sourceParam=params.get('submission_id'),categoryParam=params.get('category');if(sourceParam&&/^[0-9a-f-]{36}$/i.test(sourceParam))form.elements.submission_id.value=sourceParam;if(categoryParam&&Array.from(form.elements.category.options).some(o=>o.value===categoryParam))form.elements.category.value=categoryParam;
 const auth=()=>window.supabase.createClient(cfg.url,cfg.anonKey).auth.getSession();
 async function request(path,token,options={}){const response=await fetch(api+path,{...options,headers:{apikey:cfg.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json',Prefer:'return=minimal'}});if(!response.ok)throw Error('HTTP '+response.status);return response.status===204?null:response.json()}
 form.addEventListener('submit',async event=>{
