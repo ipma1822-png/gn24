@@ -40,3 +40,5 @@ assert.match(region,/regional-newsroom\.js/);
 const admin=read('pages/admin-local-tips/index.html');
 assert.match(admin,/pages\/article\/\?id=/);
 });
+
+test('HQ publisher warns on duplicate source and update policy retains consent checks',()=>{const js=read('assets/js/daejeon-community-hq.js'),sql=read('docs/daejeon-community-publication.sql');assert.match(js,/already published/);assert.match(sql,/for update to authenticated[\s\S]*consent_original_work[\s\S]*consent_publication_review/);});
