@@ -3,13 +3,14 @@ const cfg=window.GN24_SUPABASE,form=document.getElementById('communityPublishFor
 if(!form||!cfg?.url||!cfg?.anonKey)return;
 const api=cfg.url.replace(/\/$/,'');
 const params=new URLSearchParams(location.search);const sourceParam=params.get('submission_id'),categoryParam=params.get('category');if(sourceParam&&/^[0-9a-f-]{36}$/i.test(sourceParam))form.elements.submission_id.value=sourceParam;if(categoryParam&&Array.from(form.elements.category.options).some(o=>o.value===categoryParam))form.elements.category.value=categoryParam;
-const auth=()=>window.supabase.createClient(cfg.url,cfg.anonKey).auth.getSession();
+const authClient=window.supabase.createClient(cfg.url,cfg.anonKey);const auth=()=>authClient.auth.getSession();
 async function request(path,token,options={}){const response=await fetch(api+path,{...options,headers:{apikey:cfg.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json',Prefer:'return=minimal'}});if(!response.ok)throw Error('HTTP '+response.status);if(response.status===204||response.status===201||options.method==='POST'&&path.startsWith('/rest/v1/gn24_daejeon_community_posts'))return null;return response.json()}
 form.addEventListener('submit',async event=>{
 event.preventDefault();message.textContent='본사 권한을 확인하는 중입니다.';
 try{const {data}=await auth(),token=data.session?.access_token;if(!token)throw Error('login');
 const allowed=await request('/rest/v1/rpc/is_gn24_admin',token,{method:'POST',body:'{}'});if(allowed!==true)throw Error('hq only');
 const sourceId=form.elements.submission_id.value.trim(),category=form.elements.category.value;
+if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(sourceId))throw Error('invalid source id');
 const source=await request('/rest/v1/gn24_participant_submissions?select=id,region,status,source_notes,consent_original_work,consent_publication_review&id=eq.'+encodeURIComponent(sourceId)+'&limit=1',token);
 const row=source?.[0];if(!row||row.region!=='대전'||row.status!=='accepted'||!row.consent_original_work||!row.consent_publication_review||!row.source_notes.split(/\r?\n/).includes('유형: '+category))throw Error('not eligible');
 const existing=await request('/rest/v1/gn24_daejeon_community_posts?select=id&submission_id=eq.'+encodeURIComponent(sourceId)+'&limit=1',token);if(existing?.length)throw Error('already published');
