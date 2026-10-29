@@ -11,7 +11,7 @@ else if(path.includes('/gn24_daejeon_community_posts')&&opt.method==='POST'){pos
 else if(path.includes('/gn24_daejeon_community_posts'))body=existing?[{id:'published'}]:[];
 else throw Error('unexpected fetch '+path);
 return {ok:true,status,json:async()=>body};};
-const context={window:{GN24_SUPABASE:{url:'https://example.invalid',anonKey:'public'},supabase:{createClient:()=>({auth:{getSession:async()=>({data:{session:{access_token:'fake-token'}}})}})}},document:{getElementById:id=>id==='communityPublishForm'?form:message},location:{search:''},URLSearchParams,fetch,confirm:()=>true,console};
+const context={window:{GN24_SUPABASE:{url:'https://example.invalid',anonKey:'public'},supabase:{createClient:()=>({auth:{getSession:async()=>({data:{session:{access_token:'fake-token'}}})}})}},document:{getElementById:id=>id==='communityPublishForm'?form:id==='communityPublishMessage'?message:null},location:{search:''},URLSearchParams,fetch,confirm:()=>true,console};
 vm.runInNewContext(script,context);
 return {submit:async()=>handler({preventDefault(){}}),get posts(){return posts},get message(){return message.textContent}};
 }
@@ -21,3 +21,5 @@ test('non-accepted submission cannot publish',async()=>{const h=harness({sourceS
 test('duplicate source cannot publish',async()=>{const h=harness({existing:true});await h.submit();assert.equal(h.posts,0);assert.match(h.message,/중복/);});
 
 test('malformed submission UUID never reaches publication',async()=>{const h=harness({sourceId:'invalid-uuid'});await h.submit();assert.equal(h.posts,0);});
+
+test('withdrawal requires HQ role and explicit confirmation',()=>{const js=fs.readFileSync('assets/js/daejeon-community-hq.js','utf8');assert.match(js,/communityWithdrawButton/);assert.match(js,/rpc\/is_gn24_admin[\s\S]*method:'DELETE'/);assert.match(js,/confirm\('다음 공개 소식을 취소/);});
