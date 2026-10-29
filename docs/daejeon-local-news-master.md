@@ -28,3 +28,11 @@
 
 ## 구현 순서
 현행 코드/DB 조사 → 기존 구조 재사용 설계 → 대전 기능 개발 → 브랜치 검증 → 승인 후 배포 → 대전 실사용 검증 → 전국 확대 별도 승인.
+
+## 2026-10-29 실사 확인
+- 실제 대전판: `daejeon/index.html`, `body[data-region=daejeon]`, `data-hq-code=DAEJEON`.
+- 기존 지사 운영센터 링크: `/regional-center/?region=daejeon`. 따라서 별도 관리자 시스템을 신설하기보다 기존 인증/권한 구조 확인 후 재사용.
+- Supabase 프로젝트 `GLOBAL-NEWS24` 확인. 공개 스키마에 `gn24_articles`, `gn24_regional_branches`, `gn24_regional_headquarters` 등 존재. `gn24_regional_branches`에는 code, hq_code, head_reporter_id, status 필드 존재.
+- **주의:** 테이블 존재만으로 지사장 로그인과 본사 승인 권한이 안전하게 구현됐다는 뜻은 아님. RLS와 기존 관리자 권한 로직을 조사한 후 접수·승인 연결.
+- 현재 대전 커뮤니티 화면은 개인정보를 수집하지 않는 프리뷰. 데이터베이스 쓰기/게시 기능 미구현. 운영 main 미배포.
+- 다음 단계: 기존 지역 운영센터의 실제 파일·인증/권한 구조 파악, 신규 접수 데이터의 별도 저장 및 비공개 접근 정책 설계, 브랜치에서 E2E 테스트 후 배포 승인.
