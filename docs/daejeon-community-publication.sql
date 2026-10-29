@@ -27,7 +27,7 @@ for insert to authenticated with check (
      and source.status = 'accepted'
      and source.consent_original_work
      and source.consent_publication_review
-     and source.source_notes ~ ('(^|\\n)유형: ' || category || '(\\n|$)')
+     and strpos(chr(10) || source.source_notes || chr(10), chr(10) || '유형: ' || category || chr(10)) > 0
  )
 );
 create policy "daejeon community HQ edit" on public.gn24_daejeon_community_posts
