@@ -32,7 +32,7 @@ for insert to authenticated with check (
 );
 create policy "daejeon community HQ edit" on public.gn24_daejeon_community_posts
 for update to authenticated using ((select public.is_gn24_admin()))
-with check ((select public.is_gn24_admin()) and exists (select 1 from public.gn24_participant_submissions source where source.id=submission_id and source.region='대전' and source.status='accepted'));
+with check ((select public.is_gn24_admin()) and exists (select 1 from public.gn24_participant_submissions source where source.id=submission_id and source.region='대전' and source.status='accepted' and source.consent_original_work and source.consent_publication_review and strpos(chr(10)||source.source_notes||chr(10),chr(10)||'유형: '||category||chr(10))>0));
 create policy "daejeon community HQ delete" on public.gn24_daejeon_community_posts
 for delete to authenticated using ((select public.is_gn24_admin()));
 -- IMPORTANT: HQ publication UI must manually remove personal information before copying
