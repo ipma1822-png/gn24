@@ -1,0 +1,47 @@
+name: Domestic article navigation guard
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+permissions:
+  contents: read
+concurrency:
+  group: domestic-link-guard-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  regional-links:
+    name: Domestic article navigation guard
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Check all domestic navigation sources
+        run: |
+          python3 scripts/check_regional_links.py
+          python3 tests/regional-links/mutations.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser test dependencies
+        working-directory: tests/regional-links
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install Chromium
+        working-directory: tests/regional-links
+        run: npx playwright install --with-deps chromium --only-shell
+      - name: Test 17 editions without any static share HTML
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/gn24-link-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          node tests/regional-links/check.cjs
+      - name: Verify representative live article clicks after Pages deployment
+        if: github.event_name == 'workflow_run'
+        run: node tests/regional-links/check.cjs --live
