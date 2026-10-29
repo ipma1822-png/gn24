@@ -40,8 +40,11 @@ const fixture = regions.map((region, i) => ({id:`gn24-link-guard-${region}`, reg
         await card.waitFor({state:'visible',timeout:30000});
         const href=await card.getAttribute('href');
         assert.match(href,/^\/pages\/article\/\?id=[^&]+$/,`${region} card`);
+        const category=page.locator('[data-regional-menu-cat="사회"]');
+        if (await category.count()) await category.click();
         const bad=await page.locator('a[href*="/share/"]').evaluateAll(as=>as.filter(a=>!a.closest('[data-share],[data-share-external],.article-share-group,.article-share-panel,.share-buttons')).map(a=>a.outerHTML));
-        assert.deepEqual(bad,[],`${region} card/ticker/banner/news navigation`);
+        assert.deepEqual(bad,[],`${region} card/ticker/banner/category/news navigation`);
+        if (await category.count()) await category.click();
         const title=await card.locator('h3,h2,b').first().innerText();
         const navigation=page.waitForResponse(r=>r.request().isNavigationRequest() && r.url().includes('/pages/article/?id='));
         await card.click();

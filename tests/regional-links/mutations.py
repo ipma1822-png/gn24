@@ -1,8 +1,8 @@
 """Negative tests run only in a temporary source copy; production is untouched."""
-import contextlib
 import importlib.util
-import io
 import shutil
+import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -14,9 +14,10 @@ with tempfile.TemporaryDirectory() as tmp:
     root = Path(tmp) / 'repo'
     shutil.copytree(ROOT, root, ignore=shutil.ignore_patterns('.git', 'share', 'images', 'node_modules', '__pycache__'))
     def result(expected):
-        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-            actual = guard.check(root)
-        assert actual is expected
+        proc = subprocess.run([sys.executable, str(root / 'scripts/check_regional_links.py')], cwd=root, text=True, capture_output=True)
+        assert proc.returncode == (0 if expected else 1), proc.stdout + proc.stderr
+        if not expected:
+            print('Expected exit 1:', proc.stderr.splitlines()[0])
     result(True)
     for name in guard.CORE:
         path = root / 'assets/js' / (name + '.js')
