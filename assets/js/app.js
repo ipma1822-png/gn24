@@ -122,8 +122,7 @@ async function loadHome(){
 
 function fitHomeAttention(list) {
   const latest = $('#latestNews');
-  const notices = $('#gn24CommunityNotices');
-  if (!latest || !notices) return;
+  if (!latest) return;
   const panel = list.closest('.attention-panel');
   const desktop = window.matchMedia('(min-width: 901px)');
   const rows = [...list.children];
@@ -133,7 +132,7 @@ function fitHomeAttention(list) {
     const bottom = latest.getBoundingClientRect().bottom;
     const padding = parseFloat(getComputedStyle(panel).paddingBottom);
     for (let i = rows.length - 1; i >= 6; i--) {
-      if (notices.getBoundingClientRect().bottom + padding <= bottom + 1) break;
+      if (list.getBoundingClientRect().bottom + padding <= bottom + 1) break;
       rows[i].hidden = true;
     }
   };
@@ -143,14 +142,58 @@ function fitHomeAttention(list) {
   document.fonts.ready.then(fit);
 }
 
-function renderCommunityNotices(data){
-  const host=$('#gn24CommunityEntries');if(!host)return;
-  const terms=/경조사|부고|별세|추모|결혼|혼인|출산|취임|승진|수상/;
-  const items=data.filter(a=>a.isPublished!==false&&a.id&&terms.test(String(a.category||'')+' '+String(a.title||'')+' '+String(a.tags||''))).slice(0,3);
-  host.innerHTML = items.map(a => {
-    const label = /부고|별세|추모/.test(String(a.title || '') + ' ' + String(a.category || '')) ? '조사' : '경사';
-    return `<a href="${seoArticleURL(a)}"><b>${label} · ${esc(fmt(a.date))}</b><strong>${esc(a.title)}</strong></a>`;
-  }).join('') || '<p class="gn24-community-empty">등록된 경조사 소식이 없습니다.</p>';
+function renderCommunityNotices(data) {
+  const host = $('#gn24CommunityEntries');
+  if (!host) return;
+
+  const categories = new Set(['경조사', '경사', '조사', '부고', '경조사 · 사람과 소식']);
+  const seen = new Set();
+  const items = data.filter(article => {
+    const tags = Array.isArray(article.tags) ? article.tags : [];
+    if (!article.id || seen.has(String(article.id)) || article.isPublished === false ||
+        (!categories.has(String(article.category || '').trim()) && !tags.includes('경조사'))) return false;
+    seen.add(String(article.id));
+    return true;
+  });
+  if (!items.length) return;
+
+  const card = article => {
+    const condolence = /부고|별세|추모|^조사$/.test(article.category || '') ||
+      /부고|별세|추모/.test(article.title || '') || (Array.isArray(article.tags) && article.tags.includes('조사'));
+    const label = condolence ? '조사' : '경사';
+    const summary = String(article.summary || article.subtitle || '').trim();
+    return `<a class="gn24-community-card" href="${seoArticleURL(article)}"><span class="gn24-community-meta"><b${condolence ? ' class="is-condolence"' : ''}>${label}</b><time datetime="${esc(article.date || '')}">${esc(fmt(article.date))}</time></span><strong>${esc(article.title)}</strong><small>${esc(summary)}</small></a>`;
+  };
+  host.innerHTML = items.slice(0, 3).map(card).join('');
+  if (items.length <= 3) return;
+
+  const board = host.closest('#gn24CommunityNotices');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let next = 3;
+  let touching = false;
+  let hovering = false;
+  board.addEventListener('pointerenter', e => { hovering = e.pointerType === 'mouse'; });
+  board.addEventListener('pointerleave', () => { hovering = false; });
+  board.addEventListener('touchstart', () => { touching = true; }, { passive: true });
+  for (const event of ['touchend', 'touchcancel']) {
+    board.addEventListener(event, e => { touching = e.touches.length > 0; }, { passive: true });
+  }
+  window.setInterval(() => {
+    if (document.hidden || reducedMotion.matches || touching || hovering || board.matches(':focus-within')) return;
+
+    const previous = new Map([...host.children].map(el => [el, el.getBoundingClientRect()]));
+    host.firstElementChild.remove();
+    host.insertAdjacentHTML('beforeend', card(items[next]));
+    next = (next + 1) % items.length;
+    for (const el of host.children) {
+      const before = previous.get(el);
+      const after = el.getBoundingClientRect();
+      const x = before ? before.left - after.left : 0;
+      const y = before ? before.top - after.top : 18;
+      el.animate([{ transform: `translate(${x}px, ${y}px)`, opacity: before ? 1 : 0 },
+        { transform: 'translate(0, 0)', opacity: 1 }], { duration: 380, easing: 'ease-out' });
+    }
+  }, 5000);
 }
 async function renderHomePopular(data){
   const box=$('#topLatest');if(!box)return;
