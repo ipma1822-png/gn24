@@ -55,7 +55,7 @@ async function login(){
 }
 function formArticle(){
   const value=id=>$(id)?.value??'';
-  const tags=value('#fTags').split(',').map(x=>x.trim()).filter(Boolean);
+  const tags=window.GN24Admin?.articleTags?.() ?? value('#fTags').split(',').map(x=>x.trim()).filter(Boolean);
   return {
     id:value('#fId').trim(), date:value('#fDate'), title:value('#fTitle').trim(), subtitle:value('#fSubtitle').trim(),
     category:(value('#fCategory')==='__auto__'?(window.GN24Admin?.autoCategory?.()||'국내소식'):value('#fCategory')), reporter_id:value('#fReporterId').trim()||null, author:value('#fAuthor').trim()||'Global News24 편집부', summary:value('#fSummary').trim(),
@@ -125,6 +125,8 @@ async function uploadSelectedImage(article){
 async function publish(){
   if(!(await requireAdmin()))return;
   let a=formArticle(); if(!a.id||!a.title||!a.date)return alert('기사 ID·날짜·제목은 필수입니다.');
+  const communityError = window.GN24Admin?.communityError?.(a.is_published);
+  if (communityError) return alert(communityError);
   try{a=await uploadSelectedImage(a);}catch(e){setStatus('이미지 업로드 오류','off',e.message);return alert(e.message);}
   try{
     if(window.GN24GalleryAdmin){

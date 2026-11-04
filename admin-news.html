@@ -108,7 +108,7 @@
           <div class="form-grid two">
             <label>카테고리
               <select id="fCategory">
-                <option value="__auto__">자동분류 (권장)</option><option>속보</option><option>공지</option><option>국내소식</option><option>국제뉴스</option><option>경제</option><option>사회</option><option>청소년·문화</option><option>무도·스포츠</option><option>안전·드론</option><option>안전·구조</option><option>공익</option><option>AI·혁신기술</option><option>오피니언</option><option>보도자료</option>
+                <option value="__auto__">자동분류 (권장)</option><option>속보</option><option>공지</option><option>국내소식</option><option>국제뉴스</option><option>경제</option><option>사회</option><option>청소년·문화</option><option>무도·스포츠</option><option>안전·드론</option><option>안전·구조</option><option>공익</option><option>AI·혁신기술</option><option>오피니언</option><option>보도자료</option><option>경조사</option>
               </select>
             </label>
             <label>등록 기자
@@ -119,6 +119,16 @@
               <div id="juniorReporterResults" role="status" aria-live="polite"></div>
             </label>
           </div>
+          <fieldset id="communityFields" hidden disabled>
+            <legend>경조사 정보</legend>
+            <div class="form-grid two">
+              <label>구분<select id="fCommunityKind"><option>경사</option><option>조사</option></select></label>
+              <label>세부 유형<select id="fCommunityType"></select></label>
+              <label>경조사 날짜<input id="fCommunityDate" type="date"></label>
+            </div>
+            <p>경조사 날짜는 위의 기사 날짜와 별도로 저장됩니다. 공개 동의를 받은 내용만 기재하고 연락처·상세 주소·계좌번호는 공개하지 마세요.</p>
+            <label><input id="fCommunityConsent" type="checkbox"> 당사자 또는 권한 있는 관계자의 공개 동의를 확인했습니다.</label>
+          </fieldset>
           <div id="opinionSubcategoryRow" class="form-grid two" hidden>
             <label>오피니언 세부 분류
               <select id="fOpinionSubcategory">
@@ -286,8 +296,8 @@
   <script src="/assets/js/gn24-supabase-config.js?v=3.22.5"></script>
   <script src="/assets/js/gallery-admin.js?v=3.5.2"></script>
   <script src="/assets/js/news-image-light.js?v=1.0.0"></script>
-  <script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script src="/assets/js/news-admin.js?v=3.23.11"></script>
-  <script src="/assets/js/news-cms.js?v=3.5.9-home-visibility"></script>
+  <script src="/assets/js/local-tip-media.js?v=2.0.0"></script><script src="/assets/js/news-admin.js?v=3.23.12"></script>
+  <script src="/assets/js/news-cms.js?v=3.5.10-community"></script>
   <script src="/assets/js/admin-edition-grid.js?v=3.22.5"></script>
   <script src="/assets/global-edition/country-registry.js?v=1.4.1"></script>
 <script>

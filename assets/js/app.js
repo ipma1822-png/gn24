@@ -142,56 +142,91 @@ function fitHomeAttention(list) {
   document.fonts.ready.then(fit);
 }
 
+function isCommunityNotice(article) {
+  const category = String(article.category || '').trim();
+  const tags = Array.isArray(article.tags) ? article.tags : [];
+  return ['경조사', '경사', '조사', '부고', '경조사 · 사람과 소식'].includes(category) || tags.includes('경조사');
+}
+
+function communityMetadata(article) {
+  const tags = Array.isArray(article.tags) ? article.tags : [];
+  const tag = tags.find(value => typeof value === 'string' && value.startsWith('gn24-community:'));
+  const [, kind, type, date] = (tag || '').split(':');
+  if (kind === '경사' || kind === '조사') return { condolence: kind === '조사', type, date };
+  const descriptors = [article.category, ...tags, article.title].join(' ');
+  const memorial = /부고|별세|추모/.exec(descriptors);
+  const condolence = Boolean(memorial) || [article.category, ...tags].includes('조사');
+  const fallbackType = condolence ? memorial?.[0] || '조의' : /결혼|혼인|출산|취임|수상|승진/.exec(descriptors)?.[0] || '축하 소식';
+  return { condolence, type: fallbackType, date: article.date };
+}
+
 function renderCommunityNotices(data) {
   const host = $('#gn24CommunityEntries');
-  if (!host) return;
+  if (!host || host.dataset.ready) return;
+  host.dataset.ready = 'true';
 
-  const categories = new Set(['경조사', '경사', '조사', '부고', '경조사 · 사람과 소식']);
   const seen = new Set();
   const items = data.filter(article => {
-    const tags = Array.isArray(article.tags) ? article.tags : [];
-    if (!article.id || seen.has(String(article.id)) || article.isPublished === false ||
-        (!categories.has(String(article.category || '').trim()) && !tags.includes('경조사'))) return false;
+    if (!article.id || seen.has(String(article.id)) || !isCommunityNotice(article)) return false;
     seen.add(String(article.id));
     return true;
   });
   if (!items.length) return;
 
   const card = article => {
-    const condolence = /부고|별세|추모|^조사$/.test(article.category || '') ||
-      /부고|별세|추모/.test(article.title || '') || (Array.isArray(article.tags) && article.tags.includes('조사'));
-    const label = condolence ? '조사' : '경사';
+    const { condolence, type, date } = communityMetadata(article);
+    const label = condolence ? '조사 · 삼가 고인의 명복을 빕니다' : '경사 · 축하합니다';
     const summary = String(article.summary || article.subtitle || '').trim();
-    return `<a class="gn24-community-card" href="${seoArticleURL(article)}"><span class="gn24-community-meta"><b${condolence ? ' class="is-condolence"' : ''}>${label}</b><time datetime="${esc(article.date || '')}">${esc(fmt(article.date))}</time></span><strong>${esc(article.title)}</strong><small>${esc(summary)}</small></a>`;
+    return `<a class="gn24-community-card${condolence ? ' is-condolence' : ''}" href="${seoArticleURL(article)}"><span class="gn24-community-meta"><b>${label}</b><span>${esc(type)}</span><time datetime="${esc(date || '')}">${esc(fmt(date))}</time></span><strong>${esc(article.title)}</strong><small>${esc(summary)}</small></a>`;
   };
-  host.innerHTML = items.slice(0, 3).map(card).join('');
-  if (items.length <= 3) return;
 
   const board = host.closest('#gn24CommunityNotices');
+  const mobile = window.matchMedia('(max-width: 640px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let next = 3;
+  const render = () => {
+    host.innerHTML = (mobile.matches ? items : items.slice(0, 3)).map(card).join('');
+    host.scrollLeft = 0;
+    next = 3;
+  };
+  render();
+  mobile.addEventListener('change', render);
+  if (items.length <= 3) return;
+
   let touching = false;
   let hovering = false;
-  board.addEventListener('pointerenter', e => { hovering = e.pointerType === 'mouse'; });
+  let resumeAt = 0;
+  board.addEventListener('pointerenter', event => { hovering = event.pointerType === 'mouse'; });
   board.addEventListener('pointerleave', () => { hovering = false; });
-  board.addEventListener('touchstart', () => { touching = true; }, { passive: true });
+  host.addEventListener('touchstart', () => { touching = true; }, { passive: true });
   for (const event of ['touchend', 'touchcancel']) {
-    board.addEventListener(event, e => { touching = e.touches.length > 0; }, { passive: true });
+    host.addEventListener(event, e => {
+      touching = e.touches.length > 0;
+      resumeAt = Date.now() + 5000;
+    }, { passive: true });
   }
-  window.setInterval(() => {
-    if (document.hidden || reducedMotion.matches || touching || hovering || board.matches(':focus-within')) return;
+  host.addEventListener('wheel', () => { resumeAt = Date.now() + 5000; }, { passive: true });
 
-    const previous = new Map([...host.children].map(el => [el, el.getBoundingClientRect()]));
+  window.setInterval(() => {
+    if (document.hidden || reducedMotion.matches || touching || hovering ||
+        board.matches(':focus-within') || Date.now() < resumeAt) return;
+    if (mobile.matches) {
+      const cards = [...host.children];
+      const start = cards[0].offsetLeft;
+      const step = cards[1].offsetLeft - start;
+      const index = (Math.round(host.scrollLeft / step) + 1) % cards.length;
+      host.scrollTo({ left: cards[index].offsetLeft - start, behavior: index ? 'smooth' : 'instant' });
+      return;
+    }
+
+    const previous = [...host.children].map(el => el.getBoundingClientRect().left);
     host.firstElementChild.remove();
     host.insertAdjacentHTML('beforeend', card(items[next]));
     next = (next + 1) % items.length;
+    const step = previous[1] - previous[0];
     for (const el of host.children) {
-      const before = previous.get(el);
-      const after = el.getBoundingClientRect();
-      const x = before ? before.left - after.left : 0;
-      const y = before ? before.top - after.top : 18;
-      el.animate([{ transform: `translate(${x}px, ${y}px)`, opacity: before ? 1 : 0 },
-        { transform: 'translate(0, 0)', opacity: 1 }], { duration: 380, easing: 'ease-out' });
+      el.animate([{ transform: `translateX(${step}px)` }, { transform: 'translateX(0)' }],
+        { duration: 380, easing: 'ease-out' });
     }
   }, 5000);
 }
@@ -205,7 +240,7 @@ async function renderHomePopular(data){
   }catch(e){console.warn('GN24 home popular fallback',e)}
   box.innerHTML=data.slice(0,10).map(a=>`<li><a href="${seoArticleURL(a)}">${esc(a.title)}</a></li>`).join('');
 }
-async function loadNewsroom(){const list=$('#articleList');if(!list)return;let data=sortNews(await loadNewsData());const q=new URLSearchParams(location.search),cat=q.get('cat'),term=(q.get('q')||'').trim().toLowerCase();if(cat)data=data.filter(x=>x.category===cat);if(term)data=data.filter(x=>JSON.stringify(x).toLowerCase().includes(term));list.innerHTML=data.map(a=>`<a class="article-row" href="${seoArticleURL(a)}"><div class="thumb" ${bgStyle(a.image)}></div><div class="body"><span class="badge">${esc(a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="muted">${esc(fmt(a.date))} · ${esc(a.author||'편집부')}</div><p>${esc(a.summary||'')}</p></div></a>`).join('')||'<p>해당 조건의 기사가 없습니다.</p>'}
+async function loadNewsroom(){const list=$('#articleList');if(!list)return;let data=sortNews(await loadNewsData());const q=new URLSearchParams(location.search),cat=q.get('cat'),term=(q.get('q')||'').trim().toLowerCase(),community=q.get('community')==='1';if(community)data=data.filter(isCommunityNotice);if(cat)data=data.filter(x=>x.category===cat);if(term)data=data.filter(x=>JSON.stringify(x).toLowerCase().includes(term));list.innerHTML=data.map(a=>`<a class="article-row" href="${seoArticleURL(a)}"><div class="thumb" ${bgStyle(a.image)}></div><div class="body"><span class="badge">${esc(community ? (communityMetadata(a).condolence ? '조사' : '경사') : a.category||'뉴스')}</span><h3>${esc(a.title)}</h3><div class="muted">${esc(fmt(a.date))} · ${esc(a.author||'편집부')}</div><p>${esc(a.summary||'')}</p></div></a>`).join('')||'<p>해당 조건의 기사가 없습니다.</p>'}
 const GN24_DOMESTIC_EDITIONS=Object.freeze({seoul:'서울',busan:'부산',daegu:'대구',incheon:'인천',gwangju:'광주',daejeon:'대전',ulsan:'울산',sejong:'세종',gyeonggi:'경기',gangwon:'강원',chungbuk:'충북',chungnam:'충남',jeonbuk:'전북',jeonnam:'전남',gyeongbuk:'경북',gyeongnam:'경남',jeju:'제주'});
 const GN24_GLOBAL_EDITIONS=Object.freeze({china:['🇨🇳','CHINA EDITION','中国'],japan:['🇯🇵','JAPAN EDITION','日本'],philippines:['🇵🇭','PHILIPPINES EDITION','Philippines'],indonesia:['🇮🇩','INDONESIA EDITION','Indonesia'],malaysia:['🇲🇾','MALAYSIA EDITION','Malaysia'],thailand:['🇹🇭','THAILAND EDITION','ประเทศไทย'],vietnam:['🇻🇳','VIETNAM EDITION','Việt Nam'],nepal:['🇳🇵','NEPAL EDITION','नेपाल'],india:['🇮🇳','INDIA EDITION','India'],pakistan:['🇵🇰','PAKISTAN EDITION','Pakistan'],iran:['🇮🇷','IRAN EDITION','ایران'],uae:['🇦🇪','UAE EDITION','UAE'],'saudi-arabia':['🇸🇦','SAUDI ARABIA EDITION','Saudi Arabia'],turkiye:['🇹🇷','TÜRKİYE EDITION','Türkiye'],morocco:['🇲🇦','MOROCCO EDITION','Morocco'],egypt:['🇪🇬','EGYPT EDITION','Egypt'],'south-africa':['🇿🇦','SOUTH AFRICA EDITION','South Africa'],spain:['🇪🇸','SPAIN EDITION','España'],uk:['🇬🇧','UK EDITION','United Kingdom'],france:['🇫🇷','FRANCE EDITION','France'],germany:['🇩🇪','GERMANY EDITION','Deutschland'],italy:['🇮🇹','ITALY EDITION','Italia'],canada:['🇨🇦','CANADA EDITION','Canada'],usa:['🇺🇸','USA EDITION','United States'],mexico:['🇲🇽','MEXICO EDITION','México'],brazil:['🇧🇷','BRAZIL EDITION','Brasil'],argentina:['🇦🇷','ARGENTINA EDITION','Argentina'],colombia:['🇨🇴','COLOMBIA EDITION','Colombia'],australia:['🇦🇺','AUSTRALIA EDITION','Australia'],'new-zealand':['🇳🇿','NEW ZEALAND EDITION','New Zealand'],kenya:['🇰🇪','KENYA EDITION','Kenya'],nigeria:['🇳🇬','NIGERIA EDITION','Nigeria'],mongolia:['🇲🇳','MONGOLIA EDITION','Монгол'],russia:['🇷🇺','RUSSIA EDITION','Россия'],panama:['🇵🇦','PANAMA EDITION','Panamá'],cuba:['🇨🇺','CUBA EDITION','Cuba']});
 const GN24_EDITION_I18N=Object.freeze({
