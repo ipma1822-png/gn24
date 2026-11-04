@@ -111,7 +111,7 @@ async function loadHome(){
 function renderCommunityNotices(data){
   const host=$('#gn24CommunityEntries');if(!host)return;
   const terms=/경조사|부고|별세|추모|결혼|혼인|출산|취임|승진|수상/;
-  const items=data.filter(a=>a.isPublished!==false&&a.id&&terms.test(String(a.category||'')+' '+String(a.title||'')+' '+String(a.tags||''))).slice(0,8);
+  const items=data.filter(a=>a.isPublished!==false&&a.id&&terms.test(String(a.category||'')+' '+String(a.title||'')+' '+String(a.tags||''))).slice(0,3);
   if(!items.length){host.innerHTML='<p class="gn24-community-empty">등록된 경조사 소식이 없습니다. 경조사 소식을 접수해 주세요.</p>';host.classList.remove('gn24-community-scrolling');return;}
   const row=a=>{
     const label=/부고|별세|추모/.test(String(a.title||'')+' '+String(a.category||''))?'조사':'경사';
@@ -121,7 +121,7 @@ function renderCommunityNotices(data){
   const html=items.map(row).join('');
   host.classList.remove('gn24-community-scrolling');
   host.innerHTML=html;
-  if(items.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  if(false&&items.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     host.innerHTML=html+html;
     host.style.setProperty('--gn24-community-duration',Math.max(28,items.length*9)+'s');
     host.classList.add('gn24-community-scrolling');
