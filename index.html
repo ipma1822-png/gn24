@@ -18,7 +18,7 @@
   .news-columns .attention-panel{contain:size;overflow:hidden;min-height:0;max-height:100%}
   .news-columns .gn24-community-sidebar{min-height:0;flex:1;display:flex;flex-direction:column}
   .news-columns .gn24-community-viewport{position:relative;overflow:hidden;min-height:0;flex:1}
-  .news-columns .gn24-community-entries{position:relative;animation:gn24NoticeTravel 22s linear infinite;will-change:transform}
+  .news-columns .gn24-community-entries:has(a:nth-child(2)){position:relative;animation:gn24NoticeTravel 22s linear infinite;will-change:transform}
   .news-columns .gn24-community-viewport:hover .gn24-community-entries,.news-columns .gn24-community-viewport:focus-within .gn24-community-entries{animation-play-state:paused}
   @keyframes gn24NoticeTravel{0%,12%{transform:translateY(0)}78%,100%{transform:translateY(-30%)}}
 }
