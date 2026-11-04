@@ -98,34 +98,59 @@ async function loadHome(){
     }
     $('#latestNews').innerHTML=latest.map(a=>latestRow(a,global.includes(a))).join('');
   }
-  const attention=[...featured,...data.filter(x=>(!lead||x.id!==lead.id)&&!x.featured)].slice(0,6);
-  $('#attentionList')&&($('#attentionList').innerHTML=attention.map(a=>`<li><a href="${seoArticleURL(a)}">${esc(a.title)}</a></li>`).join(''));
+  const seenAttention = new Set();
+  const attention = [...featured, ...data.filter(a => a.id !== lead?.id && !a.featured)]
+    .filter(a => {
+      if (!a.id || seenAttention.has(String(a.id))) return false;
+      seenAttention.add(String(a.id));
+      return true;
+    }).slice(0, 10);
+  const attentionList = $('#attentionList');
+  if (attentionList) {
+    attentionList.innerHTML = attention.map((a, i) =>
+      `<li${i >= 6 ? ' hidden' : ''}><a href="${seoArticleURL(a)}">${esc(a.title)}</a></li>`
+    ).join('');
+  }
   const by=(test)=>data.filter(test).slice(0,4).map(mini).join('');
   $('#beatMartial')&&($('#beatMartial').innerHTML=by(a=>(a.category||'').includes('무도')||JSON.stringify(a).includes('태권')));
   $('#beatSafety')&&($('#beatSafety').innerHTML=by(a=>JSON.stringify(a).includes('드론')||JSON.stringify(a).includes('안전')));
   $('#beatActs')&&($('#beatActs').innerHTML=by(a=>(a.category||'')==='공익'||JSON.stringify(a).includes('공익')||JSON.stringify(a).includes('봉사')||JSON.stringify(a).includes('지역사회'))||data.slice(0,3).map(mini).join(''));
   renderCommunityNotices(data);
+  if (attentionList) fitHomeAttention(attentionList);
   await renderHomePopular(data);
+}
+
+function fitHomeAttention(list) {
+  const latest = $('#latestNews');
+  const notices = $('#gn24CommunityNotices');
+  if (!latest || !notices) return;
+  const panel = list.closest('.attention-panel');
+  const desktop = window.matchMedia('(min-width: 901px)');
+  const rows = [...list.children];
+  const fit = () => {
+    rows.forEach((row, i) => { row.hidden = !desktop.matches && i >= 6; });
+    if (!desktop.matches) return;
+    const bottom = latest.getBoundingClientRect().bottom;
+    const padding = parseFloat(getComputedStyle(panel).paddingBottom);
+    for (let i = rows.length - 1; i >= 6; i--) {
+      if (notices.getBoundingClientRect().bottom + padding <= bottom + 1) break;
+      rows[i].hidden = true;
+    }
+  };
+  fit();
+  new ResizeObserver(fit).observe(latest);
+  desktop.addEventListener('change', fit);
+  document.fonts.ready.then(fit);
 }
 
 function renderCommunityNotices(data){
   const host=$('#gn24CommunityEntries');if(!host)return;
   const terms=/경조사|부고|별세|추모|결혼|혼인|출산|취임|승진|수상/;
   const items=data.filter(a=>a.isPublished!==false&&a.id&&terms.test(String(a.category||'')+' '+String(a.title||'')+' '+String(a.tags||''))).slice(0,3);
-  if(!items.length){host.innerHTML='<p class="gn24-community-empty">등록된 경조사 소식이 없습니다. 경조사 소식을 접수해 주세요.</p>';host.classList.remove('gn24-community-scrolling');return;}
-  const row=a=>{
-    const label=/부고|별세|추모/.test(String(a.title||'')+' '+String(a.category||''))?'조사':'경사';
-    const summary=String(a.summary||a.subtitle||'').replace(/\\s+/g,' ').trim().slice(0,75);
-    return '<a href="'+seoArticleURL(a)+'"><b>'+label+' · '+esc(fmt(a.date))+'</b><strong>'+esc(a.title)+'</strong>'+(summary?'<small>'+esc(summary)+'</small>':'')+'</a>';
-  };
-  const html=items.map(row).join('');
-  host.classList.remove('gn24-community-scrolling');
-  host.innerHTML=html;
-  if(false&&items.length>1&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    host.innerHTML=html+html;
-    host.style.setProperty('--gn24-community-duration',Math.max(28,items.length*9)+'s');
-    host.classList.add('gn24-community-scrolling');
-  }
+  host.innerHTML = items.map(a => {
+    const label = /부고|별세|추모/.test(String(a.title || '') + ' ' + String(a.category || '')) ? '조사' : '경사';
+    return `<a href="${seoArticleURL(a)}"><b>${label} · ${esc(fmt(a.date))}</b><strong>${esc(a.title)}</strong></a>`;
+  }).join('') || '<p class="gn24-community-empty">등록된 경조사 소식이 없습니다.</p>';
 }
 async function renderHomePopular(data){
   const box=$('#topLatest');if(!box)return;
