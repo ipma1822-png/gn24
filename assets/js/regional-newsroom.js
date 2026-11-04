@@ -19,6 +19,12 @@ function renderBreaking(all){
  const one=rows.map((a,i)=>`<a class="gn24-breaking-item" href="${articleURL(a.id)}"><em>${i?'NEWS':'속보'}</em><span>${esc(a.title)}</span><i>◆</i></a>`).join('');
  box.innerHTML=`<div class="gn24-breaking-track">${one}${one}</div>`;
 }
+function compactJuniorSection(){
+ const target=document.querySelector('[id$="JuniorFallback"]');if(!target)return;
+ const section=target.closest('.regional-feed-section');if(!section)return;
+ section.classList.add('gn24-junior-one-line');
+ const style=document.createElement('style');style.textContent='.gn24-junior-one-line{padding-top:10px!important;padding-bottom:10px!important}.gn24-junior-one-line .regional-section-head{margin-bottom:4px!important}.gn24-junior-one-line .regional-section-head h2{font-size:15px!important}.gn24-junior-one-line .regional-list{display:block!important}.gn24-junior-one-line .regional-list>*:not(:first-child){display:none!important}.gn24-junior-one-line .regional-list>a:first-child{display:block!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:6px 0!important}.gn24-junior-one-line .regional-list>a:first-child .regional-thumb,.gn24-junior-one-line .regional-list>a:first-child img,.gn24-junior-one-line .regional-list>a:first-child p,.gn24-junior-one-line .regional-list>a:first-child small{display:none!important}.gn24-junior-one-line .regional-list>a:first-child h3,.gn24-junior-one-line .regional-list>a:first-child b{font-size:13px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0!important}.gn24-junior-one-line .regional-list .regional-card-body{padding:0!important}';document.head.appendChild(style);
+}
 function cfg(){return window.GN24_SUPABASE||{}}
 async function rest(path){const c=cfg();if(!c.url||!c.anonKey)throw new Error('Regional data connection unavailable');const r=await fetch(c.url.replace(/\/$/,'')+'/rest/v1/'+path,{cache:'no-store',headers:{apikey:c.anonKey}});if(!r.ok)throw new Error('Regional data request failed: '+r.status);return r.json()}
 function articleURL(id){return '/pages/article/?id='+encodeURIComponent(id)}
@@ -29,14 +35,15 @@ function compact(a){return `<a class="regional-compact" href="${articleURL(a.id)
 async function loadEditor(){const box=$('#regionalEditor');if(!box)return;try{const rs=await rest(`gn24_reporters?select=id,name,role,status,regional_hq_code,organization_position&status=eq.active&regional_hq_code=eq.${encodeURIComponent(hqCode)}&order=display_order.asc&limit=10`);const head=(rs||[]).find(r=>(r.organization_position||'').includes('지사장'));const reporters=(rs||[]).filter(r=>r.id!==head?.id);const parts=[];if(head)parts.push(`${head.name} ${head.organization_position||head.role||'지사장'}`);if(reporters.length)parts.push(reporters.map(r=>`${r.name} ${r.role||'지역기자'}`).join(' · '));box.textContent=parts.length?parts.join(' / '):'본사 관리'}catch(e){box.textContent='본사 관리'}}
 async function loadNews(){try{
  const articles='gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published&is_published=eq.true&order=date.desc,created_at.desc';
+ compactJuniorSection();
  const [regional,all,junior]=await Promise.all([
   rest(articles+'&region_code=eq.'+encodeURIComponent(region)+'&limit=100'),
   rest(articles+'&limit=100'),
   window.GN24_LOCAL_JUNIOR?window.GN24_LOCAL_JUNIOR():Promise.resolve([])
  ]);
- const local=[...new Map([...regional,...junior].map(a=>[a.id,a])).values()];
+ const local=[...new Map(regional.filter(a=>String(a.region_code||'').toLowerCase()!=='junior').map(a=>[a.id,a])).values()];
  renderBreaking(all);
- const hq=all.filter(a=>(a.region_code||'').toLowerCase()!==region);
+ const hq=all.filter(a=>!['junior',region].includes(String(a.region_code||'').toLowerCase()));
  window.GN24_REGIONAL_LOCAL=local;renderCategoryMega();
  const q=new URLSearchParams(location.search),cat=q.get('cat');const localView=cat?local.filter(a=>a.category===cat):local,hqView=cat?hq.filter(a=>a.category===cat):hq;
  const localSorted=[...localView].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
