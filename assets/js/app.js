@@ -116,7 +116,7 @@ async function loadHome(){
   $('#beatMartial')&&($('#beatMartial').innerHTML=by(a=>(a.category||'').includes('무도')||JSON.stringify(a).includes('태권')));
   $('#beatSafety')&&($('#beatSafety').innerHTML=by(a=>JSON.stringify(a).includes('드론')||JSON.stringify(a).includes('안전')));
   $('#beatActs')&&($('#beatActs').innerHTML=by(a=>(a.category||'')==='공익'||JSON.stringify(a).includes('공익')||JSON.stringify(a).includes('봉사')||JSON.stringify(a).includes('지역사회'))||data.slice(0,3).map(mini).join(''));
-  renderCommunityNotices(sorted.filter(a => !isJunior(a)));
+  renderCommunityNotices(sorted.filter(a => !isJunior(a) && (a.regionCode || a.region_code) !== 'daegu'));
   if (attentionList) fitHomeAttention(attentionList);
   await renderHomePopular(data);
 }
