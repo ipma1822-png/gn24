@@ -188,60 +188,75 @@ function renderCommunityNotices(data) {
   host.addEventListener('error', event => {
     if (event.target instanceof HTMLImageElement) event.target.remove();
   }, true);
-  const board = host.closest('#gn24CommunityNotices');
-  const mobile = window.matchMedia('(max-width: 640px)');
+  const track = document.createElement('div');
+  track.className = 'gn24-community-track';
+  host.replaceChildren(track);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let visible = 0;
-  let next = 0;
-  const render = () => {
-    const capacity = Number(getComputedStyle(host).getPropertyValue('--community-visible'));
-    if (capacity === visible) return;
-    visible = capacity;
-    host.innerHTML = (mobile.matches ? items : items.slice(0, visible)).map(card).join('');
-    host.scrollLeft = 0;
-    next = visible;
+  const markup = items.map(card);
+  const pauses = new Set();
+  const speed = 35; // Match the sharing-ad track in CSS pixels per second.
+  let motion;
+  let duration = 0;
+  let repeatAt = 0;
+
+  const sync = () => {
+    if (!motion) return;
+    if (pauses.size || reducedMotion.matches || document.hidden) motion.pause();
+    else motion.play();
   };
-  render();
-  new ResizeObserver(render).observe(host);
-  if (items.length <= 1) return;
+  const pause = (reason, active) => {
+    if (active) pauses.add(reason);
+    else pauses.delete(reason);
+    sync();
+  };
+  const render = () => {
+    const slots = Number(getComputedStyle(host).getPropertyValue('--community-visible'));
+    const copies = Math.max(1, Math.ceil(slots / items.length));
+    const cycle = Array.from({ length: copies }, () => markup).flat();
+    const count = cycle.length;
+    if (repeatAt !== count) {
+      const duplicate = html => html.replace('<a ', '<a data-repeat aria-hidden="true" tabindex="-1" ');
+      track.innerHTML = cycle.map((html, index) => index < items.length ? html : duplicate(html)).join('') +
+        cycle.map(duplicate).join('');
+      repeatAt = count;
+    }
+    const phase = motion && duration ? (Number(motion.currentTime || 0) % duration) / duration : 0;
+    motion?.cancel();
+    motion = undefined;
+    if (reducedMotion.matches) return;
+    host.scrollLeft = 0;
+    const span = track.children[count].getBoundingClientRect().left - track.firstElementChild.getBoundingClientRect().left;
+    if (!span) return;
+    duration = span / speed * 1000;
+    motion = track.animate([{ transform: `translateX(${-span}px)` }, { transform: 'translateX(0)' }],
+      { duration, iterations: Infinity, easing: 'linear' });
+    motion.currentTime = phase * duration;
+    sync();
+  };
 
-  let touching = false;
-  let hovering = false;
-  let resumeAt = 0;
-  board.addEventListener('pointerenter', event => { hovering = event.pointerType === 'mouse'; });
-  board.addEventListener('pointerleave', () => { hovering = false; });
-  host.addEventListener('touchstart', () => { touching = true; }, { passive: true });
+  host.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') pause('mouse', true); });
+  host.addEventListener('pointerleave', () => pause('mouse', false));
+  host.addEventListener('focusin', e => {
+    pause('focus', true);
+    if (motion && e.target.matches('.gn24-community-card')) {
+      const cardBox = e.target.getBoundingClientRect();
+      const view = host.getBoundingClientRect();
+      if (cardBox.left < view.left || cardBox.right > view.right) {
+        const offset = cardBox.left - track.firstElementChild.getBoundingClientRect().left;
+        motion.currentTime = Math.max(0, duration - (offset + 1) / speed * 1000);
+        host.scrollLeft = 0;
+      }
+    }
+  });
+  host.addEventListener('focusout', e => { if (!host.contains(e.relatedTarget)) pause('focus', false); });
+  host.addEventListener('touchstart', () => pause('touch', true), { passive: true });
   for (const event of ['touchend', 'touchcancel']) {
-    host.addEventListener(event, e => {
-      touching = e.touches.length > 0;
-      resumeAt = Date.now() + 5000;
-    }, { passive: true });
+    host.addEventListener(event, e => pause('touch', e.touches.length > 0), { passive: true });
   }
-  host.addEventListener('wheel', () => { resumeAt = Date.now() + 5000; }, { passive: true });
-
-  window.setInterval(() => {
-    if (items.length <= visible || document.hidden || reducedMotion.matches || touching || hovering ||
-        board.matches(':focus-within') || Date.now() < resumeAt) return;
-    if (mobile.matches) {
-      const cards = [...host.children];
-      const start = cards[0].offsetLeft;
-      const step = cards[1].offsetLeft - start;
-      const index = (Math.round(host.scrollLeft / step) + 1) % cards.length;
-      host.scrollTo({ left: cards[index].offsetLeft - start, behavior: index ? 'smooth' : 'instant' });
-      if (index === 0) cards[0].animate([{ opacity: .55 }, { opacity: 1 }], { duration: 280 });
-      return;
-    }
-
-    const previous = [...host.children].map(el => el.getBoundingClientRect().left);
-    host.firstElementChild.remove();
-    host.insertAdjacentHTML('beforeend', card(items[next]));
-    next = (next + 1) % items.length;
-    const step = previous[1] - previous[0];
-    for (const el of host.children) {
-      el.animate([{ transform: `translateX(${step}px)` }, { transform: 'translateX(0)' }],
-        { duration: 380, easing: 'ease-out' });
-    }
-  }, 5000);
+  document.addEventListener('visibilitychange', sync);
+  reducedMotion.addEventListener('change', render);
+  new ResizeObserver(render).observe(host);
+  render();
 }
 async function renderHomePopular(data){
   const box=$('#topLatest');if(!box)return;
