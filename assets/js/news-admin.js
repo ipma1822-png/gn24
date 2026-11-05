@@ -100,7 +100,7 @@
   const communityDate = $('#fCommunityDate');
   const communityConsent = $('#fCommunityConsent');
   const communityTypes = {
-    경사: ['결혼', '출산', '취임', '수상', '승진', '기타 경사'],
+    경사: ['결혼', '출산', '취임', '수상', '승진', '개업', '행사', '기타 경사'],
     조사: ['부고', '별세', '추모', '기타 조사']
   };
   const communityPrefix = 'gn24-community:';
