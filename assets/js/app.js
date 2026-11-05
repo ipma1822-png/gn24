@@ -72,7 +72,8 @@ async function loadHome(){
   const target=$('#homeNews');if(!target)return;
   const raw=await loadNewsData(), sorted=sortNews(raw).filter(a=>a.showOnHome!==false&&a.show_on_home!==false);
   const isJunior=a=>String(a.regionCode||a.region_code||'').trim().toLowerCase()==='junior';
-  const junior=sorted.find(isJunior), data=sorted.filter(a=>!isJunior(a));
+  const general = sorted.filter(a => !isCommunityNotice(a));
+  const junior=general.find(isJunior), data=general.filter(a=>!isJunior(a));
   const lead=data.find(x=>x.pinned)||data.find(x=>x.featured)||data[0];
   const featured=data.filter(x=>x.featured&&(!lead||x.id!==lead.id));
   const editorPicks=[...featured,...data.filter(x=>(!lead||x.id!==lead.id)&&!x.featured)].slice(0,8);
@@ -115,7 +116,7 @@ async function loadHome(){
   $('#beatMartial')&&($('#beatMartial').innerHTML=by(a=>(a.category||'').includes('무도')||JSON.stringify(a).includes('태권')));
   $('#beatSafety')&&($('#beatSafety').innerHTML=by(a=>JSON.stringify(a).includes('드론')||JSON.stringify(a).includes('안전')));
   $('#beatActs')&&($('#beatActs').innerHTML=by(a=>(a.category||'')==='공익'||JSON.stringify(a).includes('공익')||JSON.stringify(a).includes('봉사')||JSON.stringify(a).includes('지역사회'))||data.slice(0,3).map(mini).join(''));
-  renderCommunityNotices(data);
+  renderCommunityNotices(sorted.filter(a => !isJunior(a)));
   if (attentionList) fitHomeAttention(attentionList);
   await renderHomePopular(data);
 }
@@ -144,8 +145,7 @@ function fitHomeAttention(list) {
 
 function isCommunityNotice(article) {
   const category = String(article.category || '').trim();
-  const tags = Array.isArray(article.tags) ? article.tags : [];
-  return ['경조사', '경사', '조사', '부고', '경조사 · 사람과 소식'].includes(category) || tags.includes('경조사');
+  return ['경조사', '경사', '조사', '부고', '경조사 · 사람과 소식'].includes(category);
 }
 
 function communityMetadata(article) {
@@ -174,12 +174,20 @@ function renderCommunityNotices(data) {
   if (!items.length) return;
 
   const card = article => {
-    const { condolence, type, date } = communityMetadata(article);
-    const label = condolence ? '조사 · 삼가 고인의 명복을 빕니다' : '경사 · 축하합니다';
-    const summary = String(article.summary || article.subtitle || '').trim();
-    return `<a class="gn24-community-card${condolence ? ' is-condolence' : ''}" href="${seoArticleURL(article)}"><span class="gn24-community-meta"><b>${label}</b><span>${esc(type)}</span><time datetime="${esc(date || '')}">${esc(fmt(date))}</time></span><strong>${esc(article.title)}</strong><small>${esc(summary)}</small></a>`;
+    const { condolence, date } = communityMetadata(article);
+    const label = condolence ? '조사' : '경사';
+    const symbol = condolence
+      ? '<path d="M24 6c5 6 6 9 3 12a5 5 0 0 1-8-4c0-3 3-5 5-8Z"/><path d="M19 22h10v20H19zM14 42h20"/>'
+      : '<path d="M24 9v30M9 24h30M14 14l20 20m0-20L14 34"/><circle cx="24" cy="24" r="17"/>';
+    const image = String(article.image || '').trim();
+    const photo = /^(?:https?:\/\/|\/(?!\/)|assets\/)/i.test(image) && image !== DEFAULT_NEWS_IMAGE
+      ? `<img src="${esc(image)}" alt="" decoding="async">` : '';
+    return `<a class="gn24-community-card${condolence ? ' is-condolence' : ''}" href="${seoArticleURL(article)}"><span class="gn24-community-media"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">${symbol}</svg>${photo}</span><span class="gn24-community-meta"><b>${label}</b><time datetime="${esc(date || '')}">${esc(fmt(date))}</time></span><strong>${esc(article.title)}</strong></a>`;
   };
 
+  host.addEventListener('error', event => {
+    if (event.target instanceof HTMLImageElement) event.target.remove();
+  }, true);
   const board = host.closest('#gn24CommunityNotices');
   const mobile = window.matchMedia('(max-width: 640px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -216,6 +224,7 @@ function renderCommunityNotices(data) {
       const step = cards[1].offsetLeft - start;
       const index = (Math.round(host.scrollLeft / step) + 1) % cards.length;
       host.scrollTo({ left: cards[index].offsetLeft - start, behavior: index ? 'smooth' : 'instant' });
+      if (index === 0) cards[0].animate([{ opacity: .55 }, { opacity: 1 }], { duration: 280 });
       return;
     }
 
