@@ -41,10 +41,12 @@ async function loadNews(){try{
   rest(articles+'&limit=100'),
   window.GN24_LOCAL_JUNIOR?window.GN24_LOCAL_JUNIOR():Promise.resolve([])
  ]);
- const daeguNotice=a=>a.region_code==='daegu'&&['경조사','경사','조사','부고','경조사 · 사람과 소식'].includes(String(a.category||'').trim());
- if(region==='daegu'&&typeof renderCommunityNotices==='function')renderCommunityNotices(regional.filter(daeguNotice));
- const all=nationalRows.filter(a=>!daeguNotice(a));
- const local=[...new Map(regional.filter(a=>!daeguNotice(a)&&String(a.region_code||'').toLowerCase()!=='junior').map(a=>[a.id,a])).values()];
+ const isNotice=a=>['경조사','경사','조사','부고','경조사 · 사람과 소식'].includes(String(a.category||'').trim());
+ const isDaeguNotice=a=>a.region_code==='daegu'&&isNotice(a);
+ const excludeNotice=region==='daegu'?isNotice:isDaeguNotice;
+ if(region==='daegu'&&typeof renderCommunityNotices==='function')renderCommunityNotices(regional.filter(isDaeguNotice));
+ const all=nationalRows.filter(a=>!excludeNotice(a));
+ const local=[...new Map(regional.filter(a=>!excludeNotice(a)&&String(a.region_code||'').toLowerCase()!=='junior').map(a=>[a.id,a])).values()];
  renderBreaking(all);
  const hq=all.filter(a=>!['junior',region].includes(String(a.region_code||'').toLowerCase()));
  window.GN24_REGIONAL_LOCAL=local;renderCategoryMega();
