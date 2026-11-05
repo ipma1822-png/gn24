@@ -174,7 +174,7 @@ function renderCommunityNotices(data) {
   if (!items.length) return;
 
   const card = article => {
-    const { condolence, date } = communityMetadata(article);
+    const { condolence, type, date } = communityMetadata(article);
     const label = condolence ? '조사' : '경사';
     const symbol = condolence
       ? '<path d="M24 6c5 6 6 9 3 12a5 5 0 0 1-8-4c0-3 3-5 5-8Z"/><path d="M19 22h10v20H19zM14 42h20"/>'
@@ -182,7 +182,7 @@ function renderCommunityNotices(data) {
     const image = String(article.image || '').trim();
     const photo = /^(?:https?:\/\/|\/(?!\/)|assets\/)/i.test(image) && image !== DEFAULT_NEWS_IMAGE
       ? `<img src="${esc(image)}" alt="" decoding="async">` : '';
-    return `<a class="gn24-community-card${condolence ? ' is-condolence' : ''}" href="${seoArticleURL(article)}"><span class="gn24-community-media"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">${symbol}</svg>${photo}</span><span class="gn24-community-meta"><b>${label}</b><time datetime="${esc(date || '')}">${esc(fmt(date))}</time></span><strong>${esc(article.title)}</strong></a>`;
+    return `<a class="gn24-community-card${condolence ? ' is-condolence' : ''}" href="${seoArticleURL(article)}"><span class="gn24-community-media"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">${symbol}</svg>${photo}</span><span class="gn24-community-meta"><b>${label}</b><span>${esc(type)}</span><time datetime="${esc(date || '')}">${esc(fmt(date))}</time></span><strong>${esc(article.title)}</strong></a>`;
   };
 
   host.addEventListener('error', event => {
@@ -191,15 +191,19 @@ function renderCommunityNotices(data) {
   const board = host.closest('#gn24CommunityNotices');
   const mobile = window.matchMedia('(max-width: 640px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let next = 3;
+  let visible = 0;
+  let next = 0;
   const render = () => {
-    host.innerHTML = (mobile.matches ? items : items.slice(0, 3)).map(card).join('');
+    const capacity = Number(getComputedStyle(host).getPropertyValue('--community-visible'));
+    if (capacity === visible) return;
+    visible = capacity;
+    host.innerHTML = (mobile.matches ? items : items.slice(0, visible)).map(card).join('');
     host.scrollLeft = 0;
-    next = 3;
+    next = visible;
   };
   render();
-  mobile.addEventListener('change', render);
-  if (items.length <= 3) return;
+  new ResizeObserver(render).observe(host);
+  if (items.length <= 1) return;
 
   let touching = false;
   let hovering = false;
@@ -216,7 +220,7 @@ function renderCommunityNotices(data) {
   host.addEventListener('wheel', () => { resumeAt = Date.now() + 5000; }, { passive: true });
 
   window.setInterval(() => {
-    if (document.hidden || reducedMotion.matches || touching || hovering ||
+    if (items.length <= visible || document.hidden || reducedMotion.matches || touching || hovering ||
         board.matches(':focus-within') || Date.now() < resumeAt) return;
     if (mobile.matches) {
       const cards = [...host.children];
