@@ -44,7 +44,7 @@ async function loadNews(){try{
  const isNotice=a=>['경조사','경사','조사','부고','경조사 · 사람과 소식'].includes(String(a.category||'').trim());
  const isDaeguNotice=a=>a.region_code==='daegu'&&isNotice(a);
  const excludeNotice=region==='daegu'?isNotice:isDaeguNotice;
- if(region==='daegu'&&typeof renderCommunityNotices==='function')renderCommunityNotices(regional.filter(isDaeguNotice));
+ if(region==='daegu'&&typeof renderCommunityNotices==='function')renderCommunityNotices(nationalRows.filter(a=>isNotice(a)&&String(a.region_code||'').toLowerCase()!=='junior'));
  const all=nationalRows.filter(a=>!excludeNotice(a));
  const local=[...new Map(regional.filter(a=>!excludeNotice(a)&&String(a.region_code||'').toLowerCase()!=='junior').map(a=>[a.id,a])).values()];
  renderBreaking(all);
