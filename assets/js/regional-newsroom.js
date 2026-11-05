@@ -34,7 +34,7 @@ function card(a){return `<a class="regional-card" href="${articleURL(a.id)}"><di
 function compact(a){return `<a class="regional-compact" href="${articleURL(a.id)}"><div class="regional-compact-thumb" ${bg(a.image)}></div><div><span>${esc(a.category||'뉴스')}</span><b>${esc(a.title||'')}</b><small>${esc(fmt(a.date))}</small></div></a>`}
 async function loadEditor(){const box=$('#regionalEditor');if(!box)return;try{const rs=await rest(`gn24_reporters?select=id,name,role,status,regional_hq_code,organization_position&status=eq.active&regional_hq_code=eq.${encodeURIComponent(hqCode)}&order=display_order.asc&limit=10`);const head=(rs||[]).find(r=>(r.organization_position||'').includes('지사장'));const reporters=(rs||[]).filter(r=>r.id!==head?.id);const parts=[];if(head)parts.push(`${head.name} ${head.organization_position||head.role||'지사장'}`);if(reporters.length)parts.push(reporters.map(r=>`${r.name} ${r.role||'지역기자'}`).join(' · '));box.textContent=parts.length?parts.join(' / '):'본사 관리'}catch(e){box.textContent='본사 관리'}}
 async function loadNews(){try{
- const articles='gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published'+(region==='daegu'?',tags':'')+'&is_published=eq.true&order=date.desc,created_at.desc';
+ const articles='gn24_articles?select=id,date,title,category,author,summary,image,region_code,is_published'+',tags'+'&is_published=eq.true&order=date.desc,created_at.desc';
  compactJuniorSection();
  const [regional,nationalRows,junior]=await Promise.all([
   rest(articles+'&region_code=eq.'+encodeURIComponent(region)+'&limit=100'),
@@ -42,9 +42,8 @@ async function loadNews(){try{
   window.GN24_LOCAL_JUNIOR?window.GN24_LOCAL_JUNIOR():Promise.resolve([])
  ]);
  const isNotice=a=>['경조사','경사','조사','부고','경조사 · 사람과 소식'].includes(String(a.category||'').trim());
- const isDaeguNotice=a=>a.region_code==='daegu'&&isNotice(a);
- const excludeNotice=region==='daegu'?isNotice:isDaeguNotice;
- if(region==='daegu'&&typeof renderCommunityNotices==='function')renderCommunityNotices(nationalRows.filter(a=>isNotice(a)&&String(a.region_code||'').toLowerCase()!=='junior'));
+ const excludeNotice=isNotice;
+ if($('#gn24CommunityEntries')&&typeof renderCommunityNotices==='function')renderCommunityNotices(nationalRows.filter(a=>isNotice(a)&&String(a.region_code||'').toLowerCase()!=='junior'));
  const all=nationalRows.filter(a=>!excludeNotice(a));
  const local=[...new Map(regional.filter(a=>!excludeNotice(a)&&String(a.region_code||'').toLowerCase()!=='junior').map(a=>[a.id,a])).values()];
  renderBreaking(all);
