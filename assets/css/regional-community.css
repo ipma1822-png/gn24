@@ -1,0 +1,12 @@
+/* Regional fixed community columns, based on the Daegu edition. */
+
+#gn24CommunityEntries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;overflow:visible;padding:0;touch-action:auto}
+.gn24-community-column{min-width:0}
+.gn24-community-column h3{margin:0 0 12px;font-size:17px;color:#71480d}
+.gn24-community-column.is-condolence h3{color:#343842}
+.gn24-community-column .gn24-community-card{margin-bottom:10px;padding:12px;max-width:none!important;animation:none;translate:none}
+.gn24-community-column .gn24-community-card::before{display:none}
+.gn24-community-column .gn24-community-card strong{display:block;height:auto;overflow:visible;-webkit-line-clamp:unset;white-space:normal;overflow-wrap:anywhere;font-size:14px;line-height:1.6}
+.gn24-community-column .gn24-community-meta{flex-wrap:wrap;white-space:normal;gap:4px 6px;line-height:1.6}
+.gn24-community-column time{display:block;font-size:12px;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:640px){#gn24CommunityEntries{gap:10px}.gn24-community-column .gn24-community-card{padding:9px}.gn24-community-column h3{font-size:16px}}
